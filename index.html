@@ -65,16 +65,17 @@
         .card-official-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 15px; }
         .card-official h4 { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: #fff; letter-spacing: 1px; }
 
+        /* CAPAS CLARAS: Removido o background escuro que cobria toda a imagem */
         .card-portrait { flex: 0 0 160px; height: 240px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; justify-content: center; padding: 5px; text-align: center; }
+        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
 
         .card-landscape { flex: 0 0 260px; height: 146px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; justify-content: center; padding: 5px 15px; text-align: left; }
+        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
 
         .card-portrait:hover, .card-landscape:hover, .card-official:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); }
 
-        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0;}
-        .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0;}
+        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
         .p-stranger { background-image: url('stranger_pings.jpg'); }
         .p-dragon { background-image: url('como_treinar_ia.jpg'); }
@@ -88,7 +89,7 @@
         .p-metaverso { background-image: url('fuga_metaverso.jpg'); }
         .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
 
-        /* TELA DE DETALHES */
+        /* TELA DE DETALHES E EPISÓDIOS */
         #series-details-screen { background: var(--netflix-bg); z-index: 45; overflow-y: auto; overflow-x: hidden; }
         .details-hero { height: 50vh; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('background_hero.jpg') center/cover; }
         .details-content { max-width: 600px; z-index: 2; margin-top: 50px; }
@@ -97,12 +98,15 @@
         .episodes-list { padding: 20px 4% 50px 4%; background: #141414; }
         .ep-item { display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s;}
         .ep-item:hover { background: rgba(255,255,255,0.05); }
-        .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background-size: cover; background-position: center; position: relative;}
-        .ep-thumb::after { content: '\f144'; font-family: 'Font Awesome 6 Free'; position: absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size: 2rem; color: #fff; opacity: 0.8;}
+        
+        /* Thumbnails organizadas baseadas no Background Hero */
+        .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('background_hero.jpg') center/cover; position: relative; display: flex; align-items: center; justify-content: center;}
+        .ep-number { font-family: 'Bebas Neue'; font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 5px #000; z-index: 2; }
+        .ep-thumb::after { content: '\f144'; font-family: 'Font Awesome 6 Free'; position: absolute; font-size: 1.5rem; color: #fff; opacity: 0.4; z-index: 1;}
         .ep-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: #fff;}
         .ep-info p { font-size: 0.9rem; color: var(--text-dim); }
 
-        /* ==================== A TELA DE ANÚNCIO (TRAILER) ==================== */
+        /* TELA DE ANÚNCIO (TRAILER) */
         #ad-screen { background: #000; z-index: 55; justify-content: center; align-items: center; position: relative; }
         #ad-video { width: 100%; height: 100vh; object-fit: contain; background: #000; }
         .btn-skip-ad { position: absolute; bottom: 50px; right: 50px; background: rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.5); color: #fff; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s; z-index: 60;}
@@ -155,12 +159,10 @@
 </head>
 <body>
 
-    <!-- OS ÁUDIOS LOCAIS (Coloque o arquivo tudum.mp3 no GitHub!) -->
     <audio id="tudum-audio" preload="auto"><source src="tudum.mp3" type="audio/mpeg"></audio>
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
-    <!-- 1. PERFIS -->
     <div id="profile-screen" class="screen active">
         <h1>Quem está assistindo?</h1>
         <div class="profiles-container">
@@ -172,7 +174,6 @@
         </div>
     </div>
 
-    <!-- 2. HOME CATÁLOGO -->
     <div id="home-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" id="btn-nav-logo">IFPIFLIX</div>
@@ -216,7 +217,6 @@
         </div>
     </div>
 
-    <!-- 3. DETALHES DA SÉRIE (COM IMAGENS AUTOMÁTICAS) -->
     <div id="series-details-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" onclick="switchScreen('home-screen')">IFPIFLIX</div>
@@ -228,30 +228,26 @@
                 <div style="color: #fff; font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">SÉRIE ORIGINAL</div>
                 <h1>SEGURANÇA DA INFORMAÇÃO</h1>
                 <p>A equipe explora vulnerabilidades em PHP, SOC, Cloud e a nova fronteira de Inteligência Artificial Generativa.</p>
-                <!-- Botão de Tocar alterado para iniciar a partir do Episódio 0 (O que dispara o Trailer) -->
                 <button class="btn-play" onclick="startPresentationAt(0)"><i class="fa-solid fa-play"></i> Tocar Ep. 1</button>
             </div>
         </div>
 
         <div class="episodes-list">
             <h3>Episódios (Tópicos)</h3>
-            <div class="ep-item" onclick="startPresentationAt(0)"><div class="ep-thumb" style="background-image: url('https://picsum.photos/seed/tech1/140/80');"></div><div class="ep-info"><h4>1. Vulnerabilidades PHP</h4><p>O PHP move a web, mas falhas permitem ataques.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(1)"><div class="ep-thumb" style="background-image: url('https://picsum.photos/seed/cyber/140/80');"></div><div class="ep-info"><h4>2. O Coração da Defesa</h4><p>O S.O.C. protege as empresas 24 horas por dia.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(2)"><div class="ep-thumb" style="background-image: url('https://picsum.photos/seed/cloud/140/80');"></div><div class="ep-info"><h4>3. Guerra nas Nuvens</h4><p>Responsabilidade compartilhada em Cloud.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(3)"><div class="ep-thumb" style="background-image: url('https://picsum.photos/seed/ai/140/80');"></div><div class="ep-info"><h4>4. Ilusão Artificial</h4><p>O perigo dos Deepfakes e Engenharia Social.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(4)"><div class="ep-thumb" style="background-image: url('https://picsum.photos/seed/security/140/80');"></div><div class="ep-info"><h4>5. A Lei e a Ordem</h4><p>O papel do CISO, LGPD e ISO 27001.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(5)"><div class="ep-thumb" style="background-image: url('https://picsum.photos/seed/code/140/80');"></div><div class="ep-info"><h4>6. Veredicto Final</h4><p>Conclusões e revisão da literatura.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(0)"><div class="ep-thumb"><span class="ep-number">1</span></div><div class="ep-info"><h4>1. Vulnerabilidades PHP</h4><p>O PHP move a web, mas falhas permitem ataques.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(1)"><div class="ep-thumb"><span class="ep-number">2</span></div><div class="ep-info"><h4>2. O Coração da Defesa</h4><p>O S.O.C. protege as empresas 24 horas por dia.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(2)"><div class="ep-thumb"><span class="ep-number">3</span></div><div class="ep-info"><h4>3. Guerra nas Nuvens</h4><p>Responsabilidade compartilhada em Cloud.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(3)"><div class="ep-thumb"><span class="ep-number">4</span></div><div class="ep-info"><h4>4. Ilusão Artificial</h4><p>O perigo dos Deepfakes e Engenharia Social.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(4)"><div class="ep-thumb"><span class="ep-number">5</span></div><div class="ep-info"><h4>5. A Lei e a Ordem</h4><p>O papel do CISO, LGPD e ISO 27001.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(5)"><div class="ep-thumb"><span class="ep-number">6</span></div><div class="ep-info"><h4>6. Veredicto Final</h4><p>Conclusões e revisão da literatura.</p></div></div>
         </div>
     </div>
 
-    <!-- TELA DO ANÚNCIO / TRAILER -->
     <div id="ad-screen" class="screen">
-        <!-- Coloque o vídeo trailer.mp4 no GitHub -->
         <video id="ad-video" src="trailer.mp4" playsinline></video>
         <button class="btn-skip-ad" id="btn-skip-ad">Pular Anúncio <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
-    <!-- 4. APRESENTAÇÃO -->
     <div id="player-screen" class="screen">
         <div class="player-header">
             <button id="btn-back-to-home" class="control-btn"><i class="fa-solid fa-arrow-left"></i></button>
@@ -319,9 +315,7 @@
         </div>
     </div>
 
-    <!-- 5. LOBBY DO QUIZ E AUTOMAÇÃO (UM CLIQUE FAZ TUDO) -->
     <div id="quiz-overlay">
-        
         <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
             <i class="fa-solid fa-xmark" id="btn-close-qr" style="position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: #fff; cursor: pointer;"></i>
             <h2 style="font-family: 'Bebas Neue'; font-size: 5rem; color: #3b82f6; margin: 0;">IFPIFLIX QUIZ</h2>
@@ -338,14 +332,12 @@
         </div>
     </div>
 
-    <!-- TELA HACKED DO PROJETOR CAMUFLADA -->
     <div id="proj-evt-screen">
         <div id="p-dyn-icon" style="font-size: 8rem; color: #fff; margin-bottom: 20px;"></div>
         <h1 style="font-family: 'Share Tech Mono'; font-size: 4rem; color: #fff;" id="p-dyn-title"></h1>
         <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração concluída com sucesso.</p>
     </div>
 
-    <!-- ERRO E CRÉDITOS -->
     <div id="error-screen" class="screen">
         <div class="glitch-layer"></div>
         <div class="error-box" id="error-content">
@@ -370,16 +362,14 @@
         </div>
     </div>
 
-    <!-- LÓGICA E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+        import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
 
         const firebaseConfig = { apiKey: "AIzaSyAYd1ZFIRPLGIsNQnGZ5plSsQYeac171vg", authDomain: "ifpiflix-grupo6.firebaseapp.com", databaseURL: "https://ifpiflix-grupo6-default-rtdb.firebaseio.com", projectId: "ifpiflix-grupo6", storageBucket: "ifpiflix-grupo6.firebasestorage.app", messagingSenderId: "1014663396170", appId: "1:1014663396170:web:9baa564bb45528d97e5fb3" };
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // NOVA ORDEM DE APRESENTADORES
         const script = [ 
             { id: 0, title: "T1:E1 - Vulnerabilidades", presenter: "Francisco" }, 
             { id: 1, title: "T1:E2 - O S.O.C.", presenter: "JP Santos" }, 
@@ -390,7 +380,7 @@
         ];
 
         let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
-        let adPlayed = false; // Controle para tocar o anúncio apenas 1 vez
+        let adPlayed = false;
 
         function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const t = document.getElementById(id); if(t) t.classList.add('active'); }
         window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
@@ -414,16 +404,23 @@
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); document.getElementById(`slide-${idx}`).classList.add('active');
         }
 
-        // ==========================================
-        // LÓGICA DO ANÚNCIO (TRAILER) E ÁUDIO TUDUM
-        // ==========================================
+        function simulateLoading(callback) {
+            switchScreen('loading-screen');
+            let p = 0; 
+            const txt = document.getElementById('loading-perc');
+            const int = setInterval(() => {
+                p += Math.floor(Math.random() * 30) + 15;
+                if(p >= 100) { p = 100; clearInterval(int); setTimeout(callback, 300); }
+                txt.innerText = p + '%';
+            }, 150);
+        }
+
         window.startPresentationAt = function(index) {
             targetSlide = index;
             if(activeProfile !== script[index].presenter) {
                 triggerInterruption(activeProfile, script[index].presenter, index);
             } else {
                 started = true;
-                // Se for o slide 0 e o anúncio ainda não tocou
                 if(index === 0 && !adPlayed) {
                     simulateLoading(() => playAd(index));
                 } else {
@@ -438,19 +435,16 @@
             const vid = document.getElementById('ad-video');
             vid.currentTime = 0;
             vid.volume = 1.0;
-            // Tenta tocar o vídeo. Se der erro (bloqueio do navegador), pula o ad.
-            vid.play().catch(e => { console.log("Vídeo bloqueado pelo navegador", e); finishAd(); });
+            vid.play().catch(e => { console.log("Vídeo bloqueado", e); finishAd(); });
             vid.onended = finishAd;
         }
 
         function finishAd() {
             adPlayed = true;
             document.getElementById('ad-video').pause();
-            
-            // Toca o áudio Ta-Dum da Netflix!
             const tudum = document.getElementById('tudum-audio');
             tudum.volume = 1.0;
-            tudum.play().catch(e => console.log('Áudio Ta-dum bloqueado pelo navegador'));
+            tudum.play().catch(e => console.log('Áudio Ta-dum bloqueado'));
 
             simulateLoading(() => {
                 renderSlide(targetSlide);
@@ -459,7 +453,6 @@
         }
 
         document.getElementById('btn-skip-ad').addEventListener('click', finishAd);
-        // ==========================================
 
         function triggerInterruption(oldP, newP, nextIdx) {
             targetSlide = nextIdx; started = true; 
@@ -477,14 +470,20 @@
         document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
 
         // ==========================================
-        // AUTOMAÇÃO DO QUIZ E DO HACKER
+        // AUTOMAÇÃO DO QUIZ E LIMPEZA DE DADOS!
         // ==========================================
         onValue(ref(db, 'participantes'), (snap) => {
             const count = snap.val() ? Object.keys(snap.val()).length : 0;
             document.getElementById('player-count').innerHTML = `<i class="fa-solid fa-users"></i> Jogadores: ${count}`;
         });
 
-        document.getElementById('btn-open-quiz').addEventListener('click', () => { document.getElementById('quiz-overlay').style.display = 'flex'; set(ref(db, 'quiz_state'), 'waiting'); });
+        // AO CLICAR EM "ABRIR SALA", APAGA O HISTÓRICO DE JOGADORES PARA ZERAR O CONTADOR!
+        document.getElementById('btn-open-quiz').addEventListener('click', () => { 
+            remove(ref(db, 'participantes')); // <--- A MÁGICA DA LIMPEZA ESTÁ AQUI
+            document.getElementById('quiz-overlay').style.display = 'flex'; 
+            set(ref(db, 'quiz_state'), 'waiting'); 
+        });
+        
         document.getElementById('btn-close-qr').addEventListener('click', () => { document.getElementById('quiz-overlay').style.display = 'none'; });
 
         let timerInt;
@@ -498,38 +497,32 @@
             }, 1000);
         }
 
-        // O GRANDE BOTÃO DE AUTOMAÇÃO DO QUIZ
         document.getElementById('btn-master-start').addEventListener('click', () => {
             document.getElementById('quiz-lobby').style.display = 'none';
             document.getElementById('quiz-active-view').style.display = 'flex';
             
-            // FASE 1: PERGUNTA 1
             set(ref(db, 'quiz_state'), 'q1');
             document.getElementById('proj-q-text').innerText = "Qual é o 'elo mais fraco' na Segurança da Informação?";
             document.getElementById('proj-result-area').style.display = 'none';
             
             runProjectorTimer(20, () => {
-                // RESULTADO 1
                 set(ref(db, 'quiz_state'), 'q1_result');
                 document.getElementById('proj-timer').innerText = "0";
                 document.getElementById('proj-result-area').style.display = 'block';
                 document.getElementById('proj-answer-text').innerText = "Alternativa C: O Usuário (Fator Humano)";
                 
                 setTimeout(() => {
-                    // FASE 2: PERGUNTA 2
                     set(ref(db, 'quiz_state'), 'q2');
                     document.getElementById('proj-q-text').innerText = "O que caracteriza essencialmente um ataque de Phishing?";
                     document.getElementById('proj-result-area').style.display = 'none';
                     
                     runProjectorTimer(20, () => {
-                        // RESULTADO 2
                         set(ref(db, 'quiz_state'), 'q2_result');
                         document.getElementById('proj-timer').innerText = "0";
                         document.getElementById('proj-result-area').style.display = 'block';
                         document.getElementById('proj-answer-text').innerText = "Alternativa B: Engenharia Social para roubar dados";
                         
                         setTimeout(() => {
-                            // FASE 3: O ATAQUE HACKER CAMUFLADO
                             set(ref(db, 'quiz_state'), 'final_evt');
                             
                             document.getElementById('quiz-overlay').style.display = 'none';
@@ -537,7 +530,6 @@
                             evtScreen.style.display = 'flex';
                             evtScreen.classList.add('blink');
                             
-                            // Montando o texto dinâmico para não alarmar o Google
                             const p1 = "SISTEMA"; const p2 = " COMPROMETIDO";
                             document.getElementById('p-dyn-icon').innerHTML = '<i class="fa-solid fa-skull-crossbones"></i>';
                             document.getElementById('p-dyn-title').innerText = p1 + p2;
@@ -549,9 +541,9 @@
                                 document.getElementById('quiz-lobby').style.display = 'flex';
                                 document.getElementById('quiz-active-view').style.display = 'none';
                             }, 10000);
-                        }, 5000); // 5 segundos mostrando a resposta 2
+                        }, 5000); 
                     });
-                }, 5000); // 5 segundos mostrando a resposta 1
+                }, 5000); 
             });
         });
 
