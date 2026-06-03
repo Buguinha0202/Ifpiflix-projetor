@@ -103,16 +103,22 @@
         .ep-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: #fff;}
         .ep-info p { font-size: 0.9rem; color: var(--text-dim); }
 
-        /* TELA DE ANÚNCIO (TRAILER BLINDADO CONTRA ERROS) */
+        /* ==================== TELA DE ANÚNCIO MELHORADA ==================== */
         #ad-screen { background: #000; z-index: 55; justify-content: center; align-items: center; position: relative; }
-        #ad-video { width: 100%; height: 100vh; object-fit: contain; background: #000; }
+        
+        /* Adicionei controls e estilos garantidos de vídeo */
+        #ad-video { width: 100%; max-width: 1200px; height: 100vh; object-fit: contain; background: #000; z-index: 56; }
+        
+        /* Mensagem de carregamento se a net estiver lenta */
+        #ad-loading-text { position: absolute; color: #fff; font-size: 1.5rem; font-weight: bold; z-index: 55; font-family: 'Share Tech Mono', monospace; }
+
         .btn-skip-ad { position: absolute; bottom: 50px; right: 50px; background: rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.5); color: #fff; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s; z-index: 60;}
         .btn-skip-ad:hover { background: #fff; color: #000; }
         
-        /* O Botão de Forçar Play caso o Tablet bloqueie */
+        /* Botão de força bruto */
         #btn-force-play { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--netflix-red); color: white; border: none; padding: 20px 40px; font-size: 2rem; font-weight: bold; border-radius: 8px; cursor: pointer; z-index: 70; box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5); }
 
-        /* APRESENTAÇÃO */
+        /* APRESENTAÇÃO / SLIDES */
         #player-screen { background: #000; z-index: 50; }
         .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
         .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; }
@@ -137,6 +143,7 @@
         #proj-evt-screen.blink { animation: blinkRed 0.2s infinite; }
         @keyframes blinkRed { 0% { background: #ff0000; } 50% { background: #000; } }
 
+        /* CONTROLES E PROGRESSO */
         .player-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px 4%; }
         .progress-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.2); }
         .progress-bar-fill { height: 100%; background: var(--netflix-red); width: 0%; transition: 0.3s; }
@@ -162,7 +169,6 @@
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
-    <!-- 1. PERFIS -->
     <div id="profile-screen" class="screen active">
         <h1>Quem está assistindo?</h1>
         <div class="profiles-container">
@@ -174,7 +180,6 @@
         </div>
     </div>
 
-    <!-- 2. HOME CATÁLOGO -->
     <div id="home-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" id="btn-nav-logo">IFPIFLIX</div>
@@ -218,7 +223,6 @@
         </div>
     </div>
 
-    <!-- 3. DETALHES DA SÉRIE -->
     <div id="series-details-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" onclick="switchScreen('home-screen')">IFPIFLIX</div>
@@ -245,22 +249,18 @@
         </div>
     </div>
 
-    <!-- TELA DO ANÚNCIO / TRAILER -->
     <div id="ad-screen" class="screen">
-        <!-- O Vídeo agora aceita MP4 e MOV nativamente, sem choro! -->
-        <video id="ad-video" playsinline>
+        <span id="ad-loading-text"><i class="fa-solid fa-spinner fa-spin"></i> Carregando vídeo...</span>
+        
+        <video id="ad-video" controls playsinline>
             <source src="trailer.mp4" type="video/mp4">
             <source src="trailer.mov" type="video/quicktime">
             Seu navegador não suporta vídeos.
         </video>
         
-        <!-- O SUPER BOTÃO: Se o tablet bloquear, você clica aqui e ele força o vídeo a rodar -->
-        <button id="btn-force-play">▶ INICIAR VÍDEO</button>
-        
         <button class="btn-skip-ad" id="btn-skip-ad">Pular Anúncio <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
-    <!-- 4. APRESENTAÇÃO -->
     <div id="player-screen" class="screen">
         <div class="player-header">
             <button id="btn-back-to-home" class="control-btn"><i class="fa-solid fa-arrow-left"></i></button>
@@ -328,7 +328,6 @@
         </div>
     </div>
 
-    <!-- 5. LOBBY DO QUIZ E AUTOMAÇÃO -->
     <div id="quiz-overlay">
         <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
             <i class="fa-solid fa-xmark" id="btn-close-qr" style="position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: #fff; cursor: pointer;"></i>
@@ -352,7 +351,6 @@
         <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração concluída com sucesso.</p>
     </div>
 
-    <!-- ERRO E CRÉDITOS -->
     <div id="error-screen" class="screen">
         <div class="glitch-layer"></div>
         <div class="error-box" id="error-content">
@@ -377,7 +375,6 @@
         </div>
     </div>
 
-    <!-- LÓGICA E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
@@ -446,7 +443,6 @@
             } else {
                 started = true;
                 if(index === 0 && !adPlayed) {
-                    // Sem tela de carregamento para não bloquear o vídeo!
                     playAd(index);
                 } else {
                     simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); });
@@ -464,25 +460,20 @@
             vid.currentTime = 0;
             vid.volume = 1.0;
             
+            // Oculta o texto de carregamento quando o vídeo tiver dados
+            vid.onloadeddata = function() {
+                document.getElementById('ad-loading-text').style.display = 'none';
+            };
+            
+            // Força a reprodução
             const playPromise = vid.play();
             if (playPromise !== undefined) {
                 playPromise.catch(e => {
-                    console.log("Autoplay bloqueado pelo Tablet ou Arquivo não encontrado.");
-                    // Faz o botão gigante de Play aparecer!
-                    document.getElementById('btn-force-play').style.display = 'block';
+                    console.log("Autoplay bloqueado pelo Tablet. O usuário precisa clicar no botão de Play nativo.");
                 });
             }
             vid.onended = finishAd;
         }
-
-        // Se o tablet bloquear, você aperta o botão e ele força o vídeo!
-        document.getElementById('btn-force-play').addEventListener('click', () => {
-            document.getElementById('btn-force-play').style.display = 'none';
-            document.getElementById('ad-video').play().catch(e => {
-                alert("Erro ao tocar o vídeo! Verifique no GitHub se ele se chama exatamente trailer.mp4 ou trailer.mov");
-                finishAd();
-            });
-        });
 
         function finishAd() {
             adPlayed = true;
