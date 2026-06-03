@@ -66,15 +66,15 @@
         .card-official h4 { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: #fff; letter-spacing: 1px; }
 
         .card-portrait { flex: 0 0 160px; height: 240px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; justify-content: center; padding: 5px; text-align: center; }
+        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
 
         .card-landscape { flex: 0 0 260px; height: 146px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; justify-content: center; padding: 5px 15px; text-align: left; }
+        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
 
         .card-portrait:hover, .card-landscape:hover, .card-official:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); }
 
-        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0;}
-        .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0;}
+        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
         .p-stranger { background-image: url('stranger_pings.jpg'); }
         .p-dragon { background-image: url('como_treinar_ia.jpg'); }
@@ -103,13 +103,16 @@
         .ep-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: #fff;}
         .ep-info p { font-size: 0.9rem; color: var(--text-dim); }
 
-        /* TELA DE ANÚNCIO (TRAILER) */
+        /* TELA DE ANÚNCIO (TRAILER BLINDADO CONTRA ERROS) */
         #ad-screen { background: #000; z-index: 55; justify-content: center; align-items: center; position: relative; }
         #ad-video { width: 100%; height: 100vh; object-fit: contain; background: #000; }
         .btn-skip-ad { position: absolute; bottom: 50px; right: 50px; background: rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.5); color: #fff; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s; z-index: 60;}
         .btn-skip-ad:hover { background: #fff; color: #000; }
+        
+        /* O Botão de Forçar Play caso o Tablet bloqueie */
+        #btn-force-play { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--netflix-red); color: white; border: none; padding: 20px 40px; font-size: 2rem; font-weight: bold; border-radius: 8px; cursor: pointer; z-index: 70; box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5); }
 
-        /* APRESENTAÇÃO / SLIDES */
+        /* APRESENTAÇÃO */
         #player-screen { background: #000; z-index: 50; }
         .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
         .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; }
@@ -120,7 +123,7 @@
         .info-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid #333; }
         .highlight { color: var(--netflix-red); font-weight: bold; }
 
-        /* LOBBY DO QUIZ E AUTOMAÇÃO */
+        /* LOBBY DO QUIZ */
         #quiz-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #090909; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; text-align: center;}
         .qr-image { width: 300px; height: 300px; background: url('qrcode.png') center/cover; margin: 20px 0; border-radius: 12px; border: 4px solid #3b82f6; }
         .btn-start-quiz { background: #10b981; color: white; border: none; padding: 20px 40px; font-weight: bold; font-size: 1.5rem; border-radius: 8px; cursor: pointer; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); transition: 0.2s;}
@@ -134,7 +137,6 @@
         #proj-evt-screen.blink { animation: blinkRed 0.2s infinite; }
         @keyframes blinkRed { 0% { background: #ff0000; } 50% { background: #000; } }
 
-        /* CONTROLES E PROGRESSO */
         .player-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px 4%; }
         .progress-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.2); }
         .progress-bar-fill { height: 100%; background: var(--netflix-red); width: 0%; transition: 0.3s; }
@@ -245,7 +247,16 @@
 
     <!-- TELA DO ANÚNCIO / TRAILER -->
     <div id="ad-screen" class="screen">
-        <video id="ad-video" src="trailer.mp4" playsinline></video>
+        <!-- O Vídeo agora aceita MP4 e MOV nativamente, sem choro! -->
+        <video id="ad-video" playsinline>
+            <source src="trailer.mp4" type="video/mp4">
+            <source src="trailer.mov" type="video/quicktime">
+            Seu navegador não suporta vídeos.
+        </video>
+        
+        <!-- O SUPER BOTÃO: Se o tablet bloquear, você clica aqui e ele força o vídeo a rodar -->
+        <button id="btn-force-play">▶ INICIAR VÍDEO</button>
+        
         <button class="btn-skip-ad" id="btn-skip-ad">Pular Anúncio <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
@@ -387,14 +398,6 @@
         let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
         let adPlayed = false;
 
-        // Desbloqueador de Mídia para Tablets e Celulares!
-        function unlockMedia() {
-            const vid = document.getElementById('ad-video');
-            vid.muted = true; vid.play().then(()=>{ vid.pause(); vid.currentTime=0; vid.muted=false; }).catch(()=>{});
-            const aud = document.getElementById('tudum-audio');
-            aud.muted = true; aud.play().then(()=>{ aud.pause(); aud.currentTime=0; aud.muted=false; }).catch(()=>{});
-        }
-
         function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const t = document.getElementById(id); if(t) t.classList.add('active'); }
         window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
         window.goToProfiles = function() { switchScreen('profile-screen'); }
@@ -443,7 +446,7 @@
             } else {
                 started = true;
                 if(index === 0 && !adPlayed) {
-                    // Sem tela de carregamento aqui para o navegador não bloquear o vídeo no tablet!
+                    // Sem tela de carregamento para não bloquear o vídeo!
                     playAd(index);
                 } else {
                     simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); });
@@ -451,15 +454,35 @@
             }
         }
 
+        // ==========================================
+        // O NOVO SISTEMA BLINDADO DO TRAILER
+        // ==========================================
         function playAd(index) {
             targetSlide = index;
             switchScreen('ad-screen');
             const vid = document.getElementById('ad-video');
             vid.currentTime = 0;
             vid.volume = 1.0;
-            vid.play().catch(e => { console.log("Vídeo bloqueado", e); finishAd(); });
+            
+            const playPromise = vid.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(e => {
+                    console.log("Autoplay bloqueado pelo Tablet ou Arquivo não encontrado.");
+                    // Faz o botão gigante de Play aparecer!
+                    document.getElementById('btn-force-play').style.display = 'block';
+                });
+            }
             vid.onended = finishAd;
         }
+
+        // Se o tablet bloquear, você aperta o botão e ele força o vídeo!
+        document.getElementById('btn-force-play').addEventListener('click', () => {
+            document.getElementById('btn-force-play').style.display = 'none';
+            document.getElementById('ad-video').play().catch(e => {
+                alert("Erro ao tocar o vídeo! Verifique no GitHub se ele se chama exatamente trailer.mp4 ou trailer.mov");
+                finishAd();
+            });
+        });
 
         function finishAd() {
             adPlayed = true;
@@ -483,11 +506,7 @@
             setTimeout(() => { document.getElementById('error-screen').classList.remove('glitching'); document.getElementById('error-content').classList.add('show'); }, 1000);
         }
 
-        document.querySelectorAll('.profile-card').forEach(c => c.addEventListener('click', () => {
-            unlockMedia();
-            selectProfile(c.getAttribute('data-profile'));
-        }));
-        
+        document.querySelectorAll('.profile-card').forEach(c => c.addEventListener('click', () => selectProfile(c.getAttribute('data-profile'))));
         document.getElementById('btn-start-presentation').addEventListener('click', () => startPresentationAt(0));
         document.getElementById('btn-next-slide').addEventListener('click', () => { let n = currentSlide + 1; if(n >= script.length) switchScreen('credits-screen'); else if(activeProfile !== script[n].presenter) triggerInterruption(activeProfile, script[n].presenter, n); else renderSlide(n); });
         document.getElementById('btn-prev-slide').addEventListener('click', () => { if(currentSlide > 0) renderSlide(currentSlide - 1); });
@@ -503,7 +522,6 @@
             document.getElementById('player-count').innerHTML = `<i class="fa-solid fa-users"></i> Jogadores: ${count}`;
         });
 
-        // Limpa o banco de dados e recomeça a contagem do zero!
         document.getElementById('btn-open-quiz').addEventListener('click', () => { 
             remove(ref(db, 'participantes')); 
             document.getElementById('quiz-overlay').style.display = 'flex'; 
@@ -576,4 +594,3 @@
     </script>
 </body>
 </html>
-
