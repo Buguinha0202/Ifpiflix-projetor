@@ -65,17 +65,16 @@
         .card-official-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 15px; }
         .card-official h4 { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: #fff; letter-spacing: 1px; }
 
-        /* CAPAS CLARAS: Removido o background escuro que cobria toda a imagem */
         .card-portrait { flex: 0 0 160px; height: 240px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
+        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; justify-content: center; padding: 5px; text-align: center; }
 
         .card-landscape { flex: 0 0 260px; height: 146px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
+        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; justify-content: center; padding: 5px 15px; text-align: left; }
 
         .card-portrait:hover, .card-landscape:hover, .card-official:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); }
 
-        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
-        .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0;}
+        .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0;}
 
         .p-stranger { background-image: url('stranger_pings.jpg'); }
         .p-dragon { background-image: url('como_treinar_ia.jpg'); }
@@ -89,7 +88,7 @@
         .p-metaverso { background-image: url('fuga_metaverso.jpg'); }
         .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
 
-        /* TELA DE DETALHES E EPISÓDIOS */
+        /* TELA DE DETALHES */
         #series-details-screen { background: var(--netflix-bg); z-index: 45; overflow-y: auto; overflow-x: hidden; }
         .details-hero { height: 50vh; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('background_hero.jpg') center/cover; }
         .details-content { max-width: 600px; z-index: 2; margin-top: 50px; }
@@ -98,8 +97,6 @@
         .episodes-list { padding: 20px 4% 50px 4%; background: #141414; }
         .ep-item { display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s;}
         .ep-item:hover { background: rgba(255,255,255,0.05); }
-        
-        /* Thumbnails organizadas baseadas no Background Hero */
         .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('background_hero.jpg') center/cover; position: relative; display: flex; align-items: center; justify-content: center;}
         .ep-number { font-family: 'Bebas Neue'; font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 5px #000; z-index: 2; }
         .ep-thumb::after { content: '\f144'; font-family: 'Font Awesome 6 Free'; position: absolute; font-size: 1.5rem; color: #fff; opacity: 0.4; z-index: 1;}
@@ -163,6 +160,7 @@
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
+    <!-- 1. PERFIS -->
     <div id="profile-screen" class="screen active">
         <h1>Quem está assistindo?</h1>
         <div class="profiles-container">
@@ -174,6 +172,7 @@
         </div>
     </div>
 
+    <!-- 2. HOME CATÁLOGO -->
     <div id="home-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" id="btn-nav-logo">IFPIFLIX</div>
@@ -217,6 +216,7 @@
         </div>
     </div>
 
+    <!-- 3. DETALHES DA SÉRIE -->
     <div id="series-details-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" onclick="switchScreen('home-screen')">IFPIFLIX</div>
@@ -243,11 +243,13 @@
         </div>
     </div>
 
+    <!-- TELA DO ANÚNCIO / TRAILER -->
     <div id="ad-screen" class="screen">
         <video id="ad-video" src="trailer.mp4" playsinline></video>
         <button class="btn-skip-ad" id="btn-skip-ad">Pular Anúncio <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
+    <!-- 4. APRESENTAÇÃO -->
     <div id="player-screen" class="screen">
         <div class="player-header">
             <button id="btn-back-to-home" class="control-btn"><i class="fa-solid fa-arrow-left"></i></button>
@@ -315,6 +317,7 @@
         </div>
     </div>
 
+    <!-- 5. LOBBY DO QUIZ E AUTOMAÇÃO -->
     <div id="quiz-overlay">
         <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
             <i class="fa-solid fa-xmark" id="btn-close-qr" style="position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: #fff; cursor: pointer;"></i>
@@ -338,6 +341,7 @@
         <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração concluída com sucesso.</p>
     </div>
 
+    <!-- ERRO E CRÉDITOS -->
     <div id="error-screen" class="screen">
         <div class="glitch-layer"></div>
         <div class="error-box" id="error-content">
@@ -362,6 +366,7 @@
         </div>
     </div>
 
+    <!-- LÓGICA E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
@@ -382,6 +387,14 @@
         let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
         let adPlayed = false;
 
+        // Desbloqueador de Mídia para Tablets e Celulares!
+        function unlockMedia() {
+            const vid = document.getElementById('ad-video');
+            vid.muted = true; vid.play().then(()=>{ vid.pause(); vid.currentTime=0; vid.muted=false; }).catch(()=>{});
+            const aud = document.getElementById('tudum-audio');
+            aud.muted = true; aud.play().then(()=>{ aud.pause(); aud.currentTime=0; aud.muted=false; }).catch(()=>{});
+        }
+
         function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const t = document.getElementById(id); if(t) t.classList.add('active'); }
         window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
         window.goToProfiles = function() { switchScreen('profile-screen'); }
@@ -395,7 +408,15 @@
             const nName = document.getElementById('nav-profile-name');
             if(nName) nName.innerText = name;
             
-            if (!started) { switchScreen('home-screen'); } else { renderSlide(targetSlide); switchScreen('player-screen'); }
+            if (!started) { 
+                switchScreen('home-screen'); 
+            } else { 
+                if(targetSlide === 0 && !adPlayed) {
+                    playAd(0);
+                } else {
+                    simulateLoading(() => { renderSlide(targetSlide); switchScreen('player-screen'); }); 
+                }
+            }
         }
 
         function renderSlide(idx) {
@@ -422,7 +443,8 @@
             } else {
                 started = true;
                 if(index === 0 && !adPlayed) {
-                    simulateLoading(() => playAd(index));
+                    // Sem tela de carregamento aqui para o navegador não bloquear o vídeo no tablet!
+                    playAd(index);
                 } else {
                     simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); });
                 }
@@ -461,7 +483,11 @@
             setTimeout(() => { document.getElementById('error-screen').classList.remove('glitching'); document.getElementById('error-content').classList.add('show'); }, 1000);
         }
 
-        document.querySelectorAll('.profile-card').forEach(c => c.addEventListener('click', () => selectProfile(c.getAttribute('data-profile'))));
+        document.querySelectorAll('.profile-card').forEach(c => c.addEventListener('click', () => {
+            unlockMedia();
+            selectProfile(c.getAttribute('data-profile'));
+        }));
+        
         document.getElementById('btn-start-presentation').addEventListener('click', () => startPresentationAt(0));
         document.getElementById('btn-next-slide').addEventListener('click', () => { let n = currentSlide + 1; if(n >= script.length) switchScreen('credits-screen'); else if(activeProfile !== script[n].presenter) triggerInterruption(activeProfile, script[n].presenter, n); else renderSlide(n); });
         document.getElementById('btn-prev-slide').addEventListener('click', () => { if(currentSlide > 0) renderSlide(currentSlide - 1); });
@@ -470,16 +496,16 @@
         document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
 
         // ==========================================
-        // AUTOMAÇÃO DO QUIZ E LIMPEZA DE DADOS!
+        // AUTOMAÇÃO DO QUIZ E LIMPEZA DE DADOS
         // ==========================================
         onValue(ref(db, 'participantes'), (snap) => {
             const count = snap.val() ? Object.keys(snap.val()).length : 0;
             document.getElementById('player-count').innerHTML = `<i class="fa-solid fa-users"></i> Jogadores: ${count}`;
         });
 
-        // AO CLICAR EM "ABRIR SALA", APAGA O HISTÓRICO DE JOGADORES PARA ZERAR O CONTADOR!
+        // Limpa o banco de dados e recomeça a contagem do zero!
         document.getElementById('btn-open-quiz').addEventListener('click', () => { 
-            remove(ref(db, 'participantes')); // <--- A MÁGICA DA LIMPEZA ESTÁ AQUI
+            remove(ref(db, 'participantes')); 
             document.getElementById('quiz-overlay').style.display = 'flex'; 
             set(ref(db, 'quiz_state'), 'waiting'); 
         });
@@ -550,3 +576,4 @@
     </script>
 </body>
 </html>
+
