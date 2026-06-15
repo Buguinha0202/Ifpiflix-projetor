@@ -44,41 +44,42 @@
         .loading-text { font-size: 1.5rem; font-weight: bold; color: var(--netflix-red); font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* CATÁLOGO NETFLIX */
+        /* CATÁLOGO NETFLIX REORGANIZADO (SEM ESPAÇO PRETO GIGANTE) */
         #home-screen { background: var(--netflix-dark); z-index: 40; overflow-y: auto; overflow-x: hidden; padding-top: 60px;}
         .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2rem; letter-spacing: 2px; cursor: pointer; }
         
-        .hero { height: 75vh; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #000 40%, transparent 100%), linear-gradient(to top, #000 0%, transparent 20%), url('background_hero.jpg') center/cover; }
-        .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; margin-bottom: 10px; text-shadow: 2px 2px 15px rgba(0,0,0,0.8); line-height: 1; }
+        /* Reduzido de 75vh para 45vh para puxar os filmes para cima na tela do tablet */
+        .hero { height: 45vh; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #000 40%, transparent 100%), linear-gradient(to top, #000 0%, transparent 20%), url('background_hero.jpg') center/cover; }
+        .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; margin-bottom: 10px; text-shadow: 2px 2px 15px rgba(0,0,0,0.8); line-height: 1; }
         .btn-play { background: #fff; color: #000; padding: 10px 25px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s;}
         .btn-play:hover { background: #ddd; }
         
-        .catalog-container { padding: 0 4% 50px 4%; margin-top: -30px; position: relative; z-index: 10; }
-        .row-title { font-size: 1.4rem; font-weight: bold; color: #e5e5e5; margin-bottom: 15px; margin-top: 30px; }
+        .catalog-container { padding: 0 4% 50px 4%; margin-top: 10px; position: relative; z-index: 10; }
+        .row-title { font-size: 1.3rem; font-weight: bold; color: #e5e5e5; margin-bottom: 12px; margin-top: 20px; }
         
         .main-row { display: flex; gap: 15px; }
         .posters-container, .landscape-row { display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; padding-bottom: 15px; width: 100%; }
         .posters-container::-webkit-scrollbar, .landscape-row::-webkit-scrollbar { display: none; }
         
-        .card-official { flex: 0 0 250px; height: 140px; border-radius: 6px; overflow: hidden; position: relative; background: url('background_hero.jpg') center/cover; cursor: pointer; border: 2px solid #333; transition: all 0.3s; }
+        .card-official { flex: 0 0 250px; height: 130px; border-radius: 6px; overflow: hidden; position: relative; background: url('background_hero.jpg') center/cover; cursor: pointer; border: 2px solid #333; transition: all 0.3s; }
         .card-official-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 15px; }
         .card-official h4 { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: #fff; letter-spacing: 1px; }
 
-        .card-portrait { flex: 0 0 160px; height: 240px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
+        .card-portrait { flex: 0 0 150px; height: 220px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
+        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
 
-        .card-landscape { flex: 0 0 260px; height: 146px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
+        .card-landscape { flex: 0 0 240px; height: 135px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
+        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
 
-        .card-portrait:hover, .card-landscape:hover, .card-official:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); }
+        .card-portrait:hover, .card-landscape:hover, .card-official:hover { transform: translateY(-5px) scale(1.02); border-color: var(--netflix-red); box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3); }
 
-        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
-        .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        .card-portrait h4 { font-size: 0.9rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
         .p-stranger { background-image: url('stranger_pings.jpg'); }
         .p-dragon { background-image: url('como_treinar_ia.jpg'); }
-        .p-maracuja { background-image: url('clautenis_maracuja.jpg'); }
+        .p-pix { background-image: url('deepfake_pix.jpg'); }
         .p-kpop { background-image: url('guerreiras_kpop.jpg'); }
         .p-nicolas { background-image: url('nicolas_o_grande.jpg'); }
         .p-lalalan { background-image: url('la_la_lan.jpg'); }
@@ -97,22 +98,22 @@
         .episodes-list { padding: 20px 4% 50px 4%; background: #141414; }
         .ep-item { display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s;}
         .ep-item:hover { background: rgba(255,255,255,0.05); }
+        
         .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('background_hero.jpg') center/cover; position: relative; display: flex; align-items: center; justify-content: center;}
         .ep-number { font-family: 'Bebas Neue'; font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 5px #000; z-index: 2; }
         .ep-thumb::after { content: '\f144'; font-family: 'Font Awesome 6 Free'; position: absolute; font-size: 1.5rem; color: #fff; opacity: 0.4; z-index: 1;}
         .ep-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: #fff;}
         .ep-info p { font-size: 0.9rem; color: var(--text-dim); }
 
-        /* TELA DE ANÚNCIO (TRAILER BLINDADO CONTRA ERROS) */
+        /* TELA DE ANÚNCIO (TRAILER) */
         #ad-screen { background: #000; z-index: 55; justify-content: center; align-items: center; position: relative; }
-        #ad-video { width: 100%; height: 100vh; object-fit: contain; background: #000; }
+        #ad-video { width: 100%; max-width: 1200px; height: 100vh; object-fit: contain; background: #000; z-index: 56; }
+        #ad-loading-text { position: absolute; color: #fff; font-size: 1.5rem; font-weight: bold; z-index: 55; font-family: 'Share Tech Mono', monospace; }
         .btn-skip-ad { position: absolute; bottom: 50px; right: 50px; background: rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.5); color: #fff; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s; z-index: 60;}
         .btn-skip-ad:hover { background: #fff; color: #000; }
-        
-        /* O Botão de Forçar Play caso o Tablet bloqueie */
         #btn-force-play { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--netflix-red); color: white; border: none; padding: 20px 40px; font-size: 2rem; font-weight: bold; border-radius: 8px; cursor: pointer; z-index: 70; box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5); }
 
-        /* APRESENTAÇÃO */
+        /* APRESENTAÇÃO / SLIDES */
         #player-screen { background: #000; z-index: 50; }
         .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
         .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; }
@@ -137,6 +138,7 @@
         #proj-evt-screen.blink { animation: blinkRed 0.2s infinite; }
         @keyframes blinkRed { 0% { background: #ff0000; } 50% { background: #000; } }
 
+        /* CONTROLES E PROGRESSO */
         .player-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px 4%; }
         .progress-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.2); }
         .progress-bar-fill { height: 100%; background: var(--netflix-red); width: 0%; transition: 0.3s; }
@@ -162,19 +164,17 @@
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
-    <!-- 1. PERFIS -->
     <div id="profile-screen" class="screen active">
         <h1>Quem está assistindo?</h1>
         <div class="profiles-container">
             <div class="profile-card" data-profile="Francisco"><div class="avatar av-francisco"></div><span>Francisco</span></div>
-            <div class="profile-card" data-profile="JP Santos"><div class="avatar av-jsantos"></div><span>JP Santos</span></div>
-            <div class="profile-card" data-profile="Pedro"><div class="avatar av-pedro"></div><span>Pedro</span></div>
             <div class="profile-card" data-profile="JP Silva"><div class="avatar av-jsilva"></div><span>JP Silva</span></div>
+            <div class="profile-card" data-profile="Pedro"><div class="avatar av-pedro"></div><span>Pedro</span></div>
+            <div class="profile-card" data-profile="JP Santos"><div class="avatar av-jsantos"></div><span>JP Santos</span></div>
             <div class="profile-card" data-profile="Nicolas"><div class="avatar av-nicolas"></div><span>Nicolas</span></div>
         </div>
     </div>
 
-    <!-- 2. HOME CATÁLOGO -->
     <div id="home-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" id="btn-nav-logo">IFPIFLIX</div>
@@ -201,7 +201,7 @@
             <div class="posters-container">
                 <div class="card-portrait p-stranger"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
                 <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a I.A.</h4></div></div>
-                <div class="card-portrait p-maracuja"><div class="card-portrait-content"><h4>Cláutenis e o Pé...</h4></div></div>
+                <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake:<br>O Preço do Pix</h4></div></div>
                 <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop</h4></div></div>
                 <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
                 <div class="card-portrait p-lalalan"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
@@ -218,7 +218,6 @@
         </div>
     </div>
 
-    <!-- 3. DETALHES DA SÉRIE -->
     <div id="series-details-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" onclick="switchScreen('home-screen')">IFPIFLIX</div>
@@ -245,22 +244,17 @@
         </div>
     </div>
 
-    <!-- TELA DO ANÚNCIO / TRAILER -->
     <div id="ad-screen" class="screen">
-        <!-- O Vídeo agora aceita MP4 e MOV nativamente, sem choro! -->
-        <video id="ad-video" playsinline>
+        <span id="ad-loading-text"><i class="fa-solid fa-spinner fa-spin"></i> Carregando vídeo...</span>
+        <video id="ad-video" controls playsinline>
             <source src="trailer.mp4" type="video/mp4">
             <source src="trailer.mov" type="video/quicktime">
             Seu navegador não suporta vídeos.
         </video>
-        
-        <!-- O SUPER BOTÃO: Se o tablet bloquear, você clica aqui e ele força o vídeo a rodar -->
         <button id="btn-force-play">▶ INICIAR VÍDEO</button>
-        
         <button class="btn-skip-ad" id="btn-skip-ad">Pular Anúncio <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
-    <!-- 4. APRESENTAÇÃO -->
     <div id="player-screen" class="screen">
         <div class="player-header">
             <button id="btn-back-to-home" class="control-btn"><i class="fa-solid fa-arrow-left"></i></button>
@@ -328,7 +322,6 @@
         </div>
     </div>
 
-    <!-- 5. LOBBY DO QUIZ E AUTOMAÇÃO -->
     <div id="quiz-overlay">
         <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
             <i class="fa-solid fa-xmark" id="btn-close-qr" style="position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: #fff; cursor: pointer;"></i>
@@ -352,7 +345,6 @@
         <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração concluída com sucesso.</p>
     </div>
 
-    <!-- ERRO E CRÉDITOS -->
     <div id="error-screen" class="screen">
         <div class="glitch-layer"></div>
         <div class="error-box" id="error-content">
@@ -369,15 +361,14 @@
             <p style="color: #888; font-size: 1.1rem;">Segurança da Informação — Grupo 6</p>
             <ul class="credits-list">
                 <li>Apresentador • <strong>Francisco</strong></li>
-                <li>Apresentador • <strong>JP Santos</strong></li>
-                <li>Apresentador • <strong>Pedro</strong></li>
                 <li>Apresentador • <strong>JP Silva</strong></li>
+                <li>Apresentador • <strong>Pedro</strong></li>
+                <li>Apresentador • <strong>JP Santos</strong></li>
                 <li>Apresentador • <strong>Nicolas</strong></li>
             </ul>
         </div>
     </div>
 
-    <!-- LÓGICA E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
@@ -386,6 +377,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        // MAPA DE ENGENHARIA ATUALIZADO EXATAMENTE CONFORME SEU VÍDEO
         const script = [ 
             { id: 0, title: "T1:E1 - Vulnerabilidades", presenter: "Francisco" }, 
             { id: 1, title: "T1:E2 - O S.O.C.", presenter: "JP Santos" }, 
@@ -397,6 +389,13 @@
 
         let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
         let adPlayed = false;
+
+        function unlockMedia() {
+            const vid = document.getElementById('ad-video');
+            vid.muted = true; vid.play().then(()=>{ vid.pause(); vid.currentTime=0; vid.muted=false; }).catch(()=>{});
+            const aud = document.getElementById('tudum-audio');
+            aud.muted = true; aud.play().then(()=>{ aud.pause(); aud.currentTime=0; aud.muted=false; }).catch(()=>{});
+        }
 
         function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const t = document.getElementById(id); if(t) t.classList.add('active'); }
         window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
@@ -446,7 +445,6 @@
             } else {
                 started = true;
                 if(index === 0 && !adPlayed) {
-                    // Sem tela de carregamento para não bloquear o vídeo!
                     playAd(index);
                 } else {
                     simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); });
@@ -454,32 +452,26 @@
             }
         }
 
-        // ==========================================
-        // O NOVO SISTEMA BLINDADO DO TRAILER
-        // ==========================================
         function playAd(index) {
             targetSlide = index;
             switchScreen('ad-screen');
             const vid = document.getElementById('ad-video');
             vid.currentTime = 0;
             vid.volume = 1.0;
+            vid.onloadeddata = function() { document.getElementById('ad-loading-text').style.display = 'none'; };
             
             const playPromise = vid.play();
             if (playPromise !== undefined) {
                 playPromise.catch(e => {
-                    console.log("Autoplay bloqueado pelo Tablet ou Arquivo não encontrado.");
-                    // Faz o botão gigante de Play aparecer!
                     document.getElementById('btn-force-play').style.display = 'block';
                 });
             }
             vid.onended = finishAd;
         }
 
-        // Se o tablet bloquear, você aperta o botão e ele força o vídeo!
         document.getElementById('btn-force-play').addEventListener('click', () => {
             document.getElementById('btn-force-play').style.display = 'none';
             document.getElementById('ad-video').play().catch(e => {
-                alert("Erro ao tocar o vídeo! Verifique no GitHub se ele se chama exatamente trailer.mp4 ou trailer.mov");
                 finishAd();
             });
         });
@@ -506,7 +498,11 @@
             setTimeout(() => { document.getElementById('error-screen').classList.remove('glitching'); document.getElementById('error-content').classList.add('show'); }, 1000);
         }
 
-        document.querySelectorAll('.profile-card').forEach(c => c.addEventListener('click', () => selectProfile(c.getAttribute('data-profile'))));
+        document.querySelectorAll('.profile-card').forEach(c => c.addEventListener('click', () => {
+            unlockMedia();
+            selectProfile(c.getAttribute('data-profile'));
+        }));
+        
         document.getElementById('btn-start-presentation').addEventListener('click', () => startPresentationAt(0));
         document.getElementById('btn-next-slide').addEventListener('click', () => { let n = currentSlide + 1; if(n >= script.length) switchScreen('credits-screen'); else if(activeProfile !== script[n].presenter) triggerInterruption(activeProfile, script[n].presenter, n); else renderSlide(n); });
         document.getElementById('btn-prev-slide').addEventListener('click', () => { if(currentSlide > 0) renderSlide(currentSlide - 1); });
@@ -514,9 +510,7 @@
         document.getElementById('btn-error-switch').addEventListener('click', () => switchScreen('profile-screen'));
         document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
 
-        // ==========================================
-        // AUTOMAÇÃO DO QUIZ E LIMPEZA DE DADOS
-        // ==========================================
+        // AUTOMAÇÃO E CONTADOR ATUALIZADO DO JOGO
         onValue(ref(db, 'participantes'), (snap) => {
             const count = snap.val() ? Object.keys(snap.val()).length : 0;
             document.getElementById('player-count').innerHTML = `<i class="fa-solid fa-users"></i> Jogadores: ${count}`;
