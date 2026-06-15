@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
+        /* AVATARES DOS PERFIS */
         .av-francisco { background-image: url('francisco.jpg'); background-color: #E50914; }
         .av-pedro     { background-image: url('pedro.jpg'); background-color: #10b981; }
         .av-jsantos   { background-image: url('jsantos.jpg'); background-color: #3b82f6; }
@@ -27,6 +28,7 @@
         .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; display: flex; flex-direction: column; }
         .screen.active { opacity: 1; pointer-events: auto; }
 
+        /* TELA DE PERFIS */
         #profile-screen { justify-content: center; align-items: center; background: #141414; z-index: 50; }
         #profile-screen h1 { font-size: 3.5rem; font-weight: 400; margin-bottom: 40px; color: #fff; text-align: center; }
         .profiles-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 1000px; }
@@ -36,25 +38,28 @@
         .profile-card span { color: var(--text-dim); font-size: 1.5rem; transition: 0.3s; }
         .profile-card:hover span { color: #fff; }
 
+        /* CARREGAMENTO */
         #loading-screen { justify-content: center; align-items: center; background: #000; z-index: 999; }
         .spinner { width: 80px; height: 80px; border: 5px solid rgba(229, 9, 20, 0.3); border-top: 5px solid var(--netflix-red); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         .loading-text { font-size: 1.5rem; font-weight: bold; color: var(--netflix-red); font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* TELA INICIAL (BANNER GIGANTE) */
         #home-screen { background: var(--netflix-bg); z-index: 40; overflow-y: auto; overflow-x: hidden;}
         .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
         
-        /* BANNER AUMENTADO PARA 85vh (GIGANTE) */
+        /* O TAMANHO DO BANNER GIGANTE GARANTIDO (95vh e min-height 700px) */
         .hero { 
-            height: 85vh; 
+            height: 95vh; 
+            min-height: 700px;
             padding: 0 4%; 
             display: flex; 
             align-items: center; 
             background: 
-                linear-gradient(to right, rgba(0,0,0,0.9) 20%, transparent 100%), 
-                linear-gradient(to top, #141414 0%, transparent 15%), 
-                url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') top center/cover no-repeat; 
+                linear-gradient(to right, rgba(0,0,0,0.9) 30%, transparent 100%), 
+                linear-gradient(to top, #141414 0%, transparent 20%), 
+                url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; 
         }
         .hero-content { max-width: 650px; margin-top: 50px;}
         .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; margin-bottom: 10px; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); line-height: 1; }
@@ -65,7 +70,7 @@
         .btn-info { background: rgba(109, 109, 110, 0.7); color: #fff; padding: 12px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s;}
         .btn-info:hover { background: rgba(109, 109, 110, 0.9); }
         
-        .catalog-container { padding: 0 4% 50px 4%; position: relative; z-index: 10; margin-top: -30px;}
+        .catalog-container { padding: 0 4% 50px 4%; position: relative; z-index: 10; margin-top: -50px;}
         .row-title { font-size: 1.3rem; font-weight: bold; color: #e5e5e5; margin-bottom: 12px; margin-top: 20px; }
         .posters-container, .landscape-row { display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; padding-bottom: 15px; width: 100%; }
         .posters-container::-webkit-scrollbar, .landscape-row::-webkit-scrollbar { display: none; }
@@ -93,8 +98,20 @@
         .p-metaverso { background-image: url('fuga_metaverso.jpg'); }
         .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
 
+        /* TELA DE DETALHES GIGANTE */
         #series-details-screen { background: var(--netflix-bg); z-index: 45; overflow-y: auto; overflow-x: hidden; }
-        .details-hero { height: 60vh; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; }
+        .details-hero { 
+            height: 85vh; 
+            min-height: 600px;
+            position: relative; 
+            padding: 0 4%; 
+            display: flex; 
+            align-items: center; 
+            background: 
+                linear-gradient(to right, #141414 40%, transparent 100%), 
+                linear-gradient(to top, #141414 0%, transparent 20%), 
+                url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; 
+        }
         .details-content { max-width: 600px; z-index: 2; margin-top: 50px; }
         .details-content h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; line-height: 1; margin-bottom: 15px; }
         .episodes-list { padding: 20px 4% 50px 4%; background: #141414; }
@@ -132,7 +149,6 @@
         .timer-circle { width: 100px; height: 100px; border-radius: 50%; border: 8px solid #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; font-family: 'Bebas Neue'; margin-bottom: 30px;}
         .proj-question { font-size: 2.5rem; font-weight: bold; line-height: 1.3; margin-bottom: 40px;}
         
-        /* NOVO ESTILO DO PLACAR KAHOOT */
         .winner-badge { background: rgba(59, 130, 246, 0.2); padding: 8px 20px; border-radius: 20px; border: 1px solid #3b82f6; font-size: 1.3rem; margin: 5px; display: inline-block; color: #fff;}
 
         #proj-evt-screen { display: none; flex-direction: column; align-items: center; justify-content: center; background: #ff0000; position: absolute; top:0; left:0; width:100%; height:100%; z-index: 200; }
@@ -167,9 +183,10 @@
         <h1>Quem está assistindo?</h1>
         <div class="profiles-container">
             <div class="profile-card" data-profile="Francisco"><div class="avatar av-francisco"></div><span>Francisco</span></div>
-            <div class="profile-card" data-profile="JP Silva"><div class="avatar av-jsilva"></div><span>JP Silva</span></div>
-            <div class="profile-card" data-profile="Pedro"><div class="avatar av-pedro"></div><span>Pedro</span></div>
+            <!-- ORDEM CORRIGIDA AQUI: JP Santos é o segundo agora -->
             <div class="profile-card" data-profile="JP Santos"><div class="avatar av-jsantos"></div><span>JP Santos</span></div>
+            <div class="profile-card" data-profile="Pedro"><div class="avatar av-pedro"></div><span>Pedro</span></div>
+            <div class="profile-card" data-profile="JP Silva"><div class="avatar av-jsilva"></div><span>JP Silva</span></div>
             <div class="profile-card" data-profile="Nicolas"><div class="avatar av-nicolas"></div><span>Nicolas</span></div>
         </div>
     </div>
@@ -196,7 +213,7 @@
             <h2 class="row-title">Recomendados para Alunos de TI</h2>
             <div class="posters-container">
                 <div class="card-portrait p-stranger"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
-                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar<br> a sua I.A.</h4></div></div>
+                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
                 <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake:<br>O Preço do Pix</h4></div></div>
                 <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
                 <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
@@ -286,7 +303,7 @@
                 <h2>04. AMEAÇAS DE DEEPFAKES</h2>
                 <div class="grid-2">
                     <ul style="font-size: 1.3rem; line-height: 1.8;">
-                        <li><span class="highlight">Vishing:</span> Clonagem de voz para aplicar golpes corporativos.</li>
+                        <li><span class="highlight">Vishing:</span> Clonagem de voz para aplicar golpes corporativos (Fraude do CEO).</li>
                         <li><span class="highlight">Biometria:</span> Criação de rostos sintéticos para burlar reconhecimento.</li>
                     </ul>
                     <div class="info-box" style="text-align: center; border-color: #3b82f6; background: rgba(59, 130, 246, 0.1);">
@@ -304,7 +321,7 @@
             
             <div class="slide" id="slide-5">
                 <h2>06. FIM DA APRESENTAÇÃO</h2>
-                <p style="font-size: 1.5rem; text-align: center; margin-top: 50px;">Agradecemos à Professora Cláutenis e a toda a turma do IFPI!</p>
+                <p style="font-size: 1.5rem; text-align: center; margin-top: 50px;">Agradecemos pela atenção!</p>
             </div>
         </div>
 
@@ -329,7 +346,6 @@
             <button class="btn-start-quiz" id="btn-master-start">▶ INICIAR PARTIDA</button>
         </div>
 
-        <!-- PLACAR CORRIGIDO AQUI -->
         <div id="quiz-active-view">
             <div class="timer-circle" id="proj-timer">20</div>
             <div class="proj-question" id="proj-q-text">Carregando...</div>
@@ -351,6 +367,7 @@
         <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração concluída com sucesso.</p>
     </div>
 
+    <!-- ERRO E CRÉDITOS -->
     <div id="error-screen" class="screen">
         <div class="glitch-layer"></div>
         <div class="error-box" id="error-content">
@@ -367,9 +384,9 @@
             <p style="color: #888; font-size: 1.1rem;">Segurança da Informação — Grupo 6</p>
             <ul class="credits-list">
                 <li>Apresentador • <strong>Francisco</strong></li>
-                <li>Apresentador • <strong>JP Silva</strong></li>
-                <li>Apresentador • <strong>Pedro</strong></li>
                 <li>Apresentador • <strong>JP Santos</strong></li>
+                <li>Apresentador • <strong>Pedro</strong></li>
+                <li>Apresentador • <strong>JP Silva</strong></li>
                 <li>Apresentador • <strong>Nicolas</strong></li>
             </ul>
         </div>
@@ -384,11 +401,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
+        // MAPA DOS APRESENTADORES CORRIGIDO!
         const script = [ 
             { id: 0, title: "T1:E1 - Vulnerabilidades", presenter: "Francisco" }, 
-            { id: 1, title: "T1:E2 - O S.O.C.", presenter: "JP Silva" }, 
+            { id: 1, title: "T1:E2 - O S.O.C.", presenter: "JP Santos" }, 
             { id: 2, title: "T1:E3 - Nuvem", presenter: "Pedro" }, 
-            { id: 3, title: "T1:E4 - Deepfakes", presenter: "JP Santos" }, 
+            { id: 3, title: "T1:E4 - Deepfakes & Quiz", presenter: "JP Silva" }, 
             { id: 4, title: "T1:E5 - ISO 27001", presenter: "Nicolas" }, 
             { id: 5, title: "T1:E6 - Conclusão", presenter: "Nicolas" } 
         ];
@@ -464,6 +482,7 @@
             const vid = document.getElementById('ad-video');
             vid.currentTime = 0;
             vid.volume = 1.0;
+            
             vid.onloadeddata = function() { document.getElementById('ad-loading-text').style.display = 'none'; };
             
             const playPromise = vid.play();
@@ -517,7 +536,7 @@
         document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
 
         // ==========================================
-        // LÓGICA DO PLACAR (MOSTRAR QUEM ACERTOU)
+        // LÓGICA DO PLACAR E JOGO
         // ==========================================
         onValue(ref(db, 'participantes'), (snap) => {
             const count = snap.val() ? Object.keys(snap.val()).length : 0;
@@ -543,13 +562,11 @@
             }, 1000);
         }
 
-        // Função que varre o banco de dados e desenha os nomes de quem acertou
         function fetchAndShowWinners(correctLetter) {
             get(ref(db, 'participantes')).then((snapshot) => {
                 const box = document.getElementById('proj-winners');
                 if (snapshot.exists()) {
                     const data = snapshot.val();
-                    // Filtra apenas quem tem a 'ans' igual à correta
                     const winners = Object.values(data).filter(p => p.ans === correctLetter).map(p => p.nome);
                     
                     if (winners.length > 0) {
@@ -577,14 +594,13 @@
                 document.getElementById('proj-result-area').style.display = 'block';
                 document.getElementById('proj-answer-text').innerText = "A resposta correta era a C";
                 
-                // MÁGICA ACONTECE AQUI: Mostra quem acertou a Q1
                 fetchAndShowWinners("C");
                 
                 setTimeout(() => {
                     set(ref(db, 'quiz_state'), 'q2');
                     document.getElementById('proj-q-text').innerText = "O que caracteriza essencialmente um ataque de Phishing?";
                     document.getElementById('proj-result-area').style.display = 'none';
-                    document.getElementById('proj-winners').innerHTML = ""; // limpa os ganhadores
+                    document.getElementById('proj-winners').innerHTML = ""; 
                     
                     runProjectorTimer(20, () => {
                         set(ref(db, 'quiz_state'), 'q2_result');
@@ -592,7 +608,6 @@
                         document.getElementById('proj-result-area').style.display = 'block';
                         document.getElementById('proj-answer-text').innerText = "A resposta correta era a B";
                         
-                        // MÁGICA ACONTECE AQUI: Mostra quem acertou a Q2
                         fetchAndShowWinners("B");
                         
                         setTimeout(() => {
@@ -603,7 +618,7 @@
                             evtScreen.style.display = 'flex';
                             evtScreen.classList.add('blink');
                             
-                            const p1 = "SISTEMA"; const p2 = " COMPROMETIDO";
+                            const p1 = "SISTEMA"; const p2 = " EM TESTE";
                             document.getElementById('p-dyn-icon').innerHTML = '<i class="fa-solid fa-skull-crossbones"></i>';
                             document.getElementById('p-dyn-title').innerText = p1 + p2;
                             
@@ -614,14 +629,15 @@
                                 document.getElementById('quiz-lobby').style.display = 'flex';
                                 document.getElementById('quiz-active-view').style.display = 'none';
                             }, 10000);
-                        }, 7000); // 7 segundos para a turma vibrar com os nomes na Q2
+                        }, 7000); 
                     });
-                }, 7000); // 7 segundos para a turma vibrar com os nomes na Q1
+                }, 7000); 
             });
         });
 
     </script>
 </body>
 </html>
+
 
 ```
