@@ -44,38 +44,48 @@
         .loading-text { font-size: 1.5rem; font-weight: bold; color: var(--netflix-red); font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* CATÁLOGO NETFLIX REORGANIZADO (SEM ESPAÇO PRETO GIGANTE) */
-        #home-screen { background: var(--netflix-dark); z-index: 40; overflow-y: auto; overflow-x: hidden; padding-top: 60px;}
-        .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
-        .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2rem; letter-spacing: 2px; cursor: pointer; }
+        /* TELA INICIAL (BANNER NETFLIX CORRIGIDO COM IMAGEM DA INTERNET) */
+        #home-screen { background: var(--netflix-bg); z-index: 40; overflow-y: auto; overflow-x: hidden;}
+        .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
+        .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
         
-        /* Reduzido de 75vh para 45vh para puxar os filmes para cima na tela do tablet */
-        .hero { height: 45vh; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #000 40%, transparent 100%), linear-gradient(to top, #000 0%, transparent 20%), url('background_hero.jpg') center/cover; }
-        .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; margin-bottom: 10px; text-shadow: 2px 2px 15px rgba(0,0,0,0.8); line-height: 1; }
-        .btn-play { background: #fff; color: #000; padding: 10px 25px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s;}
-        .btn-play:hover { background: #ddd; }
+        /* BANNER GIGANTE PUXANDO IMAGEM EXTERNA */
+        .hero { 
+            height: 65vh; 
+            padding: 0 4%; 
+            display: flex; 
+            align-items: center; 
+            background: 
+                linear-gradient(to right, rgba(0,0,0,0.9) 20%, transparent 100%), 
+                linear-gradient(to top, #141414 0%, transparent 15%), 
+                url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; 
+        }
+        .hero-content { max-width: 650px; margin-top: 50px;}
+        .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; margin-bottom: 10px; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); line-height: 1; }
         
-        .catalog-container { padding: 0 4% 50px 4%; margin-top: 10px; position: relative; z-index: 10; }
-        .row-title { font-size: 1.3rem; font-weight: bold; color: #e5e5e5; margin-bottom: 12px; margin-top: 20px; }
+        .hero-buttons { display: flex; gap: 15px; margin-top: 25px; }
+        .btn-play { background: #fff; color: #000; padding: 12px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s;}
+        .btn-play:hover { background: #ccc; }
+        .btn-info { background: rgba(109, 109, 110, 0.7); color: #fff; padding: 12px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s;}
+        .btn-info:hover { background: rgba(109, 109, 110, 0.9); }
         
-        .main-row { display: flex; gap: 15px; }
+        /* FILEIRAS DE FILMES */
+        .catalog-container { padding: 0 4% 50px 4%; position: relative; z-index: 10; margin-top: -30px;}
+        .row-title { font-size: 1.3rem; font-weight: bold; color: #e5e5e5; margin-bottom: 15px; margin-top: 25px; }
+        
         .posters-container, .landscape-row { display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; padding-bottom: 15px; width: 100%; }
         .posters-container::-webkit-scrollbar, .landscape-row::-webkit-scrollbar { display: none; }
         
-        .card-official { flex: 0 0 250px; height: 130px; border-radius: 6px; overflow: hidden; position: relative; background: url('background_hero.jpg') center/cover; cursor: pointer; border: 2px solid #333; transition: all 0.3s; }
-        .card-official-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 15px; }
-        .card-official h4 { font-family: 'Bebas Neue', cursive; font-size: 1.8rem; color: #fff; letter-spacing: 1px; }
+        .card-portrait { flex: 0 0 160px; height: 240px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
+        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
 
-        .card-portrait { flex: 0 0 150px; height: 220px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
+        .card-landscape { flex: 0 0 260px; height: 146px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
+        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
 
-        .card-landscape { flex: 0 0 240px; height: 135px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
+        .card-portrait:hover, .card-landscape:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); z-index: 10;}
 
-        .card-portrait:hover, .card-landscape:hover, .card-official:hover { transform: translateY(-5px) scale(1.02); border-color: var(--netflix-red); box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3); }
-
-        .card-portrait h4 { font-size: 0.9rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
-        .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
         .p-stranger { background-image: url('stranger_pings.jpg'); }
         .p-dragon { background-image: url('como_treinar_ia.jpg'); }
@@ -89,17 +99,26 @@
         .p-metaverso { background-image: url('fuga_metaverso.jpg'); }
         .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
 
-        /* TELA DE DETALHES */
+        /* TELA DE DETALHES (LISTA DE EPISÓDIOS) */
         #series-details-screen { background: var(--netflix-bg); z-index: 45; overflow-y: auto; overflow-x: hidden; }
-        .details-hero { height: 50vh; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('background_hero.jpg') center/cover; }
+        .details-hero { 
+            height: 45vh; 
+            position: relative; 
+            padding: 0 4%; 
+            display: flex; 
+            align-items: center; 
+            background: 
+                linear-gradient(to right, #141414 40%, transparent 100%), 
+                linear-gradient(to top, #141414 0%, transparent 20%), 
+                url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; 
+        }
         .details-content { max-width: 600px; z-index: 2; margin-top: 50px; }
         .details-content h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; line-height: 1; margin-bottom: 15px; }
         
         .episodes-list { padding: 20px 4% 50px 4%; background: #141414; }
         .ep-item { display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s;}
         .ep-item:hover { background: rgba(255,255,255,0.05); }
-        
-        .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('background_hero.jpg') center/cover; position: relative; display: flex; align-items: center; justify-content: center;}
+        .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=600') center/cover; position: relative; display: flex; align-items: center; justify-content: center;}
         .ep-number { font-family: 'Bebas Neue'; font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 5px #000; z-index: 2; }
         .ep-thumb::after { content: '\f144'; font-family: 'Font Awesome 6 Free'; position: absolute; font-size: 1.5rem; color: #fff; opacity: 0.4; z-index: 1;}
         .ep-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: #fff;}
@@ -150,7 +169,7 @@
         #error-screen { justify-content: center; align-items: center; background: #000; z-index: 60; text-align: center; }
         .error-box { max-width: 500px; z-index: 10; opacity: 0; transition: 0.5s; pointer-events: auto; }
         .error-box.show { opacity: 1; }
-        .glitch-layer { position: absolute; width: 100%; height: 100%; background: url('background_hero.jpg') center/cover; opacity: 0; z-index: 1; mix-blend-mode: overlay; pointer-events: none; }
+        .glitch-layer { position: absolute; width: 100%; height: 100%; background: #222; opacity: 0; z-index: 1; mix-blend-mode: overlay; pointer-events: none; }
         .glitching .glitch-layer { animation: glitch-anim 0.3s infinite; opacity: 0.5; }
         @keyframes glitch-anim { 0% { transform: translate(0) scale(1); } 20% { transform: translate(-5px, 2px) scale(1.05); filter: hue-rotate(90deg); } 60% { transform: translate(5px, -2px); filter: invert(1); } }
 
@@ -164,6 +183,7 @@
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
+    <!-- 1. PERFIS -->
     <div id="profile-screen" class="screen active">
         <h1>Quem está assistindo?</h1>
         <div class="profiles-container">
@@ -175,34 +195,34 @@
         </div>
     </div>
 
+    <!-- 2. HOME CATÁLOGO (ESTILO NETFLIX REAL) -->
     <div id="home-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" id="btn-nav-logo">IFPIFLIX</div>
             <div style="cursor:pointer;" onclick="goToProfiles()"><span id="nav-profile-name" style="margin-right:10px; font-weight:bold;"></span><i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i></div>
         </nav>
+        
+        <!-- O BANNER GIGANTE DA SÉRIE PRINCIPAL -->
         <div class="hero">
             <div class="hero-content">
-                <div style="color: #fff; font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">SÉRIE ORIGINAL GRUPO 6</div>
+                <div style="color: #fff; font-weight: bold; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 5px;">SÉRIE ORIGINAL GRUPO 6</div>
                 <h1>SEGURANÇA DA INFORMAÇÃO</h1>
-                <p style="font-size: 1.2rem; margin-bottom: 20px;">Vulnerabilidades, S.O.C., Nuvem e a nova fronteira de I.A. e Deepfakes.</p>
-                <button class="btn-play" id="btn-start-presentation"><i class="fa-solid fa-play"></i> Iniciar Apresentação</button>
+                <p style="font-size: 1.2rem; margin-bottom: 10px; color: #ccc;">Vulnerabilidades, S.O.C., Nuvem e a nova fronteira de I.A. e Deepfakes.</p>
+                
+                <div class="hero-buttons">
+                    <button class="btn-play" id="btn-start-presentation"><i class="fa-solid fa-play"></i> Assistir</button>
+                    <button class="btn-info" onclick="openSeriesDetails()"><i class="fa-solid fa-circle-info"></i> Episódios</button>
+                </div>
             </div>
         </div>
 
         <div class="catalog-container">
-            <h2 class="row-title">Apresentação Principal</h2>
-            <div class="main-row">
-                <div class="card-official" onclick="openSeriesDetails()">
-                    <div class="card-official-content"><h4>Segurança da Informação</h4></div>
-                </div>
-            </div>
-
             <h2 class="row-title">Recomendados para Alunos de TI</h2>
             <div class="posters-container">
                 <div class="card-portrait p-stranger"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
-                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a<br>sua I.A.</h4></div></div>
+                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a I.A.</h4></div></div>
                 <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake:<br>O Preço do Pix</h4></div></div>
-                <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
+                <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop</h4></div></div>
                 <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
                 <div class="card-portrait p-lalalan"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
             </div>
@@ -218,6 +238,7 @@
         </div>
     </div>
 
+    <!-- 3. DETALHES DA SÉRIE -->
     <div id="series-details-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" onclick="switchScreen('home-screen')">IFPIFLIX</div>
@@ -229,7 +250,7 @@
                 <div style="color: #fff; font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">SÉRIE ORIGINAL</div>
                 <h1>SEGURANÇA DA INFORMAÇÃO</h1>
                 <p>A equipe explora vulnerabilidades em PHP, SOC, Cloud e a nova fronteira de Inteligência Artificial Generativa.</p>
-                <button class="btn-play" onclick="startPresentationAt(0)"><i class="fa-solid fa-play"></i> Tocar Ep. 1</button>
+                <button class="btn-play" onclick="startPresentationAt(0)" style="margin-top: 15px;"><i class="fa-solid fa-play"></i> Tocar Ep. 1</button>
             </div>
         </div>
 
@@ -244,6 +265,7 @@
         </div>
     </div>
 
+    <!-- TELA DO ANÚNCIO / TRAILER -->
     <div id="ad-screen" class="screen">
         <span id="ad-loading-text"><i class="fa-solid fa-spinner fa-spin"></i> Carregando vídeo...</span>
         <video id="ad-video" controls playsinline>
@@ -255,6 +277,7 @@
         <button class="btn-skip-ad" id="btn-skip-ad">Pular Anúncio <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
+    <!-- 4. APRESENTAÇÃO -->
     <div id="player-screen" class="screen">
         <div class="player-header">
             <button id="btn-back-to-home" class="control-btn"><i class="fa-solid fa-arrow-left"></i></button>
@@ -322,6 +345,7 @@
         </div>
     </div>
 
+    <!-- 5. LOBBY DO QUIZ E AUTOMAÇÃO -->
     <div id="quiz-overlay">
         <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
             <i class="fa-solid fa-xmark" id="btn-close-qr" style="position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: #fff; cursor: pointer;"></i>
@@ -345,6 +369,7 @@
         <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração concluída com sucesso.</p>
     </div>
 
+    <!-- ERRO E CRÉDITOS -->
     <div id="error-screen" class="screen">
         <div class="glitch-layer"></div>
         <div class="error-box" id="error-content">
@@ -361,14 +386,15 @@
             <p style="color: #888; font-size: 1.1rem;">Segurança da Informação — Grupo 6</p>
             <ul class="credits-list">
                 <li>Apresentador • <strong>Francisco</strong></li>
-                <li>Apresentador • <strong>JP Silva</strong></li>
-                <li>Apresentador • <strong>Pedro</strong></li>
                 <li>Apresentador • <strong>JP Santos</strong></li>
+                <li>Apresentador • <strong>Pedro</strong></li>
+                <li>Apresentador • <strong>JP Silva</strong></li>
                 <li>Apresentador • <strong>Nicolas</strong></li>
             </ul>
         </div>
     </div>
 
+    <!-- LÓGICA E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
@@ -377,12 +403,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // MAPA DE ENGENHARIA ATUALIZADO EXATAMENTE CONFORME SEU VÍDEO
+        // JP Santos ASSUME O S.O.C E OS DEEPFAKES/QUIZ
         const script = [ 
             { id: 0, title: "T1:E1 - Vulnerabilidades", presenter: "Francisco" }, 
             { id: 1, title: "T1:E2 - O S.O.C.", presenter: "JP Santos" }, 
             { id: 2, title: "T1:E3 - Nuvem", presenter: "Pedro" }, 
-            { id: 3, title: "T1:E4 - Deepfakes", presenter: "JP Silva" }, 
+            { id: 3, title: "T1:E4 - Deepfakes & Quiz", presenter: "JP Santos" }, 
             { id: 4, title: "T1:E5 - ISO 27001", presenter: "Nicolas" }, 
             { id: 5, title: "T1:E6 - Conclusão", presenter: "Nicolas" } 
         ];
@@ -458,11 +484,13 @@
             const vid = document.getElementById('ad-video');
             vid.currentTime = 0;
             vid.volume = 1.0;
+            
             vid.onloadeddata = function() { document.getElementById('ad-loading-text').style.display = 'none'; };
             
             const playPromise = vid.play();
             if (playPromise !== undefined) {
                 playPromise.catch(e => {
+                    console.log("Autoplay bloqueado. Clique no play.");
                     document.getElementById('btn-force-play').style.display = 'block';
                 });
             }
@@ -472,6 +500,7 @@
         document.getElementById('btn-force-play').addEventListener('click', () => {
             document.getElementById('btn-force-play').style.display = 'none';
             document.getElementById('ad-video').play().catch(e => {
+                alert("Erro ao tocar o vídeo.");
                 finishAd();
             });
         });
@@ -510,7 +539,9 @@
         document.getElementById('btn-error-switch').addEventListener('click', () => switchScreen('profile-screen'));
         document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
 
-        // AUTOMAÇÃO E CONTADOR ATUALIZADO DO JOGO
+        // ==========================================
+        // AUTOMAÇÃO DO QUIZ E LIMPEZA DE DADOS
+        // ==========================================
         onValue(ref(db, 'participantes'), (snap) => {
             const count = snap.val() ? Object.keys(snap.val()).length : 0;
             document.getElementById('player-count').innerHTML = `<i class="fa-solid fa-users"></i> Jogadores: ${count}`;
