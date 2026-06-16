@@ -38,18 +38,16 @@
         .profile-card span { color: var(--text-dim); font-size: 1.5rem; transition: 0.3s; }
         .profile-card:hover span { color: #fff; }
 
-        /* CARREGAMENTO */
         #loading-screen { justify-content: center; align-items: center; background: #000; z-index: 999; }
         .spinner { width: 80px; height: 80px; border: 5px solid rgba(229, 9, 20, 0.3); border-top: 5px solid var(--netflix-red); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         .loading-text { font-size: 1.5rem; font-weight: bold; color: var(--netflix-red); font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* TELA INICIAL (BANNER GIGANTE) */
+        /* TELA INICIAL (BANNER GIGANTE DEFINITIVO) */
         #home-screen { background: var(--netflix-bg); z-index: 40; overflow-y: auto; overflow-x: hidden;}
         .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
         
-        /* O TAMANHO DO BANNER GIGANTE GARANTIDO (95vh e min-height 700px) */
         .hero { 
             height: 95vh; 
             min-height: 700px;
@@ -98,20 +96,8 @@
         .p-metaverso { background-image: url('fuga_metaverso.jpg'); }
         .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
 
-        /* TELA DE DETALHES GIGANTE */
         #series-details-screen { background: var(--netflix-bg); z-index: 45; overflow-y: auto; overflow-x: hidden; }
-        .details-hero { 
-            height: 85vh; 
-            min-height: 600px;
-            position: relative; 
-            padding: 0 4%; 
-            display: flex; 
-            align-items: center; 
-            background: 
-                linear-gradient(to right, #141414 40%, transparent 100%), 
-                linear-gradient(to top, #141414 0%, transparent 20%), 
-                url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; 
-        }
+        .details-hero { height: 85vh; min-height: 600px; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; }
         .details-content { max-width: 600px; z-index: 2; margin-top: 50px; }
         .details-content h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; line-height: 1; margin-bottom: 15px; }
         .episodes-list { padding: 20px 4% 50px 4%; background: #141414; }
@@ -139,6 +125,15 @@
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } 
         .info-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid #333; }
         .highlight { color: var(--netflix-red); font-weight: bold; }
+
+        /* O MINI MENU DE TROCA RÁPIDA (OPÇÃO 3) */
+        #mini-profile-menu { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        #mini-profile-menu h2 { font-size: 3rem; margin-bottom: 30px; font-weight: 300; font-family: 'Inter', sans-serif; }
+        .mini-profiles { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;}
+        .mini-card { text-align: center; cursor: pointer; transition: 0.2s; color: var(--text-dim); }
+        .mini-card:hover { transform: scale(1.05); color: #fff; }
+        .mini-card:hover .mini-avatar { outline: 3px solid #fff; }
+        .mini-avatar { width: 100px; height: 100px; border-radius: 4px; margin-bottom: 10px; background-size: cover; background-position: center; }
 
         #quiz-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #090909; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; text-align: center;}
         .qr-image { width: 300px; height: 300px; background: url('qrcode.png') center/cover; margin: 20px 0; border-radius: 12px; border: 4px solid #3b82f6; }
@@ -183,11 +178,22 @@
         <h1>Quem está assistindo?</h1>
         <div class="profiles-container">
             <div class="profile-card" data-profile="Francisco"><div class="avatar av-francisco"></div><span>Francisco</span></div>
-            <!-- ORDEM CORRIGIDA AQUI: JP Santos é o segundo agora -->
             <div class="profile-card" data-profile="JP Santos"><div class="avatar av-jsantos"></div><span>JP Santos</span></div>
             <div class="profile-card" data-profile="Pedro"><div class="avatar av-pedro"></div><span>Pedro</span></div>
             <div class="profile-card" data-profile="JP Silva"><div class="avatar av-jsilva"></div><span>JP Silva</span></div>
             <div class="profile-card" data-profile="Nicolas"><div class="avatar av-nicolas"></div><span>Nicolas</span></div>
+        </div>
+    </div>
+
+    <!-- MINI MENU DE TROCA RÁPIDA (OPÇÃO 3) -->
+    <div id="mini-profile-menu">
+        <h2>Quem vai apresentar agora?</h2>
+        <div class="mini-profiles">
+            <div class="mini-card" onclick="selectMiniProfile('Francisco')"><div class="mini-avatar av-francisco"></div><span style="font-size:1.2rem; font-weight:bold;">Francisco</span></div>
+            <div class="mini-card" onclick="selectMiniProfile('JP Santos')"><div class="mini-avatar av-jsantos"></div><span style="font-size:1.2rem; font-weight:bold;">JP Santos</span></div>
+            <div class="mini-card" onclick="selectMiniProfile('Pedro')"><div class="mini-avatar av-pedro"></div><span style="font-size:1.2rem; font-weight:bold;">Pedro</span></div>
+            <div class="mini-card" onclick="selectMiniProfile('JP Silva')"><div class="mini-avatar av-jsilva"></div><span style="font-size:1.2rem; font-weight:bold;">JP Silva</span></div>
+            <div class="mini-card" onclick="selectMiniProfile('Nicolas')"><div class="mini-avatar av-nicolas"></div><span style="font-size:1.2rem; font-weight:bold;">Nicolas</span></div>
         </div>
     </div>
 
@@ -213,9 +219,9 @@
             <h2 class="row-title">Recomendados para Alunos de TI</h2>
             <div class="posters-container">
                 <div class="card-portrait p-stranger"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
-                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
+                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a I.A.</h4></div></div>
                 <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake:<br>O Preço do Pix</h4></div></div>
-                <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
+                <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop</h4></div></div>
                 <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
                 <div class="card-portrait p-lalalan"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
             </div>
@@ -303,7 +309,7 @@
                 <h2>04. AMEAÇAS DE DEEPFAKES</h2>
                 <div class="grid-2">
                     <ul style="font-size: 1.3rem; line-height: 1.8;">
-                        <li><span class="highlight">Vishing:</span> Clonagem de voz para aplicar golpes corporativos (Fraude do CEO).</li>
+                        <li><span class="highlight">Vishing:</span> Clonagem de voz para aplicar golpes corporativos.</li>
                         <li><span class="highlight">Biometria:</span> Criação de rostos sintéticos para burlar reconhecimento.</li>
                     </ul>
                     <div class="info-box" style="text-align: center; border-color: #3b82f6; background: rgba(59, 130, 246, 0.1);">
@@ -321,7 +327,7 @@
             
             <div class="slide" id="slide-5">
                 <h2>06. FIM DA APRESENTAÇÃO</h2>
-                <p style="font-size: 1.5rem; text-align: center; margin-top: 50px;">Agradecemos pela atenção!</p>
+                <p style="font-size: 1.5rem; text-align: center; margin-top: 50px;">Agradecemos à Professora Cláutenis e a toda a turma do IFPI!</p>
             </div>
         </div>
 
@@ -335,10 +341,9 @@
         </div>
     </div>
 
-    <!-- 5. LOBBY DO QUIZ E AUTOMAÇÃO -->
+    <!-- 5. LOBBY DO QUIZ -->
     <div id="quiz-overlay">
         <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
-            <i class="fa-solid fa-xmark" id="btn-close-qr" style="position: absolute; top: 30px; right: 40px; font-size: 2.5rem; color: #fff; cursor: pointer;"></i>
             <h2 style="font-family: 'Bebas Neue'; font-size: 5rem; color: #3b82f6; margin: 0;">IFPIFLIX QUIZ</h2>
             <p style="font-size: 1.5rem; font-weight: bold; color: #ccc;">Escaneie o QR Code com a câmera do celular para jogar!</p>
             <div class="qr-image"></div>
@@ -355,7 +360,6 @@
                 <div style="font-size: 1.5rem; color: #fff; margin-bottom: 25px;" id="proj-answer-text">A resposta era: ...</div>
                 
                 <div style="font-size: 1.2rem; color: #aaa; margin-bottom: 15px;"><i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> HALL DA FAMA (QUEM ACERTOU)</div>
-                <!-- Aqui os nomes vão aparecer como balões -->
                 <div id="proj-winners" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 800px; margin: 0 auto;"></div>
             </div>
         </div>
@@ -367,13 +371,13 @@
         <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração concluída com sucesso.</p>
     </div>
 
-    <!-- ERRO E CRÉDITOS -->
+    <!-- TELA DE ERRO APENAS PARA A ARMADILHA DO HACKER -->
     <div id="error-screen" class="screen">
         <div class="glitch-layer"></div>
         <div class="error-box" id="error-content">
-            <h2 style="font-size: 2rem; margin-bottom: 15px; color: #fff;">Limite de Telas Excedido</h2>
-            <p id="error-message" style="font-size: 1.2rem; color: #aaa; margin-bottom: 30px;"></p>
-            <button id="btn-error-switch" style="background: #fff; color: #000; border: none; padding: 12px 25px; font-size: 1.1rem; font-weight: bold; border-radius: 4px;">Trocar de Perfil</button>
+            <h2 style="font-size: 2.5rem; margin-bottom: 15px; color: #E50914;">Acesso Bloqueado</h2>
+            <p id="error-message" style="font-size: 1.2rem; color: #fff; margin-bottom: 30px; line-height: 1.5;"></p>
+            <button id="btn-error-switch" style="background: #fff; color: #000; border: none; padding: 12px 25px; font-size: 1.1rem; font-weight: bold; border-radius: 4px;">Transferir Controle</button>
         </div>
     </div>
 
@@ -392,7 +396,6 @@
         </div>
     </div>
 
-    <!-- LÓGICA E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
@@ -401,18 +404,18 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // MAPA DOS APRESENTADORES CORRIGIDO!
+        // MAPA DOS APRESENTADORES (JP SANTOS FICA COM S.O.C)
         const script = [ 
             { id: 0, title: "T1:E1 - Vulnerabilidades", presenter: "Francisco" }, 
             { id: 1, title: "T1:E2 - O S.O.C.", presenter: "JP Santos" }, 
             { id: 2, title: "T1:E3 - Nuvem", presenter: "Pedro" }, 
-            { id: 3, title: "T1:E4 - Deepfakes & Quiz", presenter: "JP Silva" }, 
+            { id: 3, title: "T1:E4 - Deepfakes", presenter: "JP Silva" }, 
             { id: 4, title: "T1:E5 - ISO 27001", presenter: "Nicolas" }, 
             { id: 5, title: "T1:E6 - Conclusão", presenter: "Nicolas" } 
         ];
 
         let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
-        let adPlayed = false;
+        let adPlayed = false; let pendingQuizOpen = false;
 
         function unlockMedia() {
             const vid = document.getElementById('ad-video');
@@ -425,14 +428,30 @@
         window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
         window.goToProfiles = function() { switchScreen('profile-screen'); }
 
+        // MÁGICA DA OPÇÃO 2 ACONTECE AQUI
         function selectProfile(name) {
-            if (started && !document.getElementById('error-screen').classList.contains('active')) {
-                const expected = script[targetSlide].presenter;
-                if (name !== expected) { triggerInterruption(name, expected, targetSlide); return; }
+            // Se o quiz tá pedindo para abrir, OBRIGATORIAMENTE tem que ser o Francisco
+            if (pendingQuizOpen) {
+                if (name !== 'Francisco') {
+                    alert("SISTEMA BLOQUEADO. Apenas o Administrador Francisco tem permissão.");
+                    return;
+                }
+                activeProfile = name;
+                document.getElementById('nav-profile-name').innerText = name;
+                document.getElementById('current-presenter-name').innerText = name;
+                pendingQuizOpen = false;
+                
+                // Abre o painel do Quiz e o JP Santos assume a fala (no mundo real)
+                switchScreen('player-screen');
+                remove(ref(db, 'participantes')); 
+                document.getElementById('quiz-overlay').style.display = 'flex'; 
+                set(ref(db, 'quiz_state'), 'waiting');
+                return;
             }
+
             activeProfile = name; 
-            const nName = document.getElementById('nav-profile-name');
-            if(nName) nName.innerText = name;
+            document.getElementById('nav-profile-name').innerText = name;
+            document.getElementById('current-presenter-name').innerText = name;
             
             if (!started) { 
                 switchScreen('home-screen'); 
@@ -445,9 +464,17 @@
             }
         }
 
+        // MINI-MENU RÁPIDO PARA O RESTO DA AULA (OPÇÃO 3)
+        window.selectMiniProfile = function(name) {
+            activeProfile = name;
+            document.getElementById('nav-profile-name').innerText = name;
+            document.getElementById('current-presenter-name').innerText = name;
+            document.getElementById('mini-profile-menu').style.display = 'none';
+            renderSlide(targetSlide);
+        }
+
         function renderSlide(idx) {
             currentSlide = idx; document.getElementById('player-ep-title').innerText = script[idx].title; document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
-            document.getElementById('current-presenter-name').innerText = activeProfile;
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); document.getElementById(`slide-${idx}`).classList.add('active');
         }
 
@@ -464,15 +491,15 @@
 
         window.startPresentationAt = function(index) {
             targetSlide = index;
-            if(activeProfile !== script[index].presenter) {
-                triggerInterruption(activeProfile, script[index].presenter, index);
+            activeProfile = script[index].presenter; // Na lista de ep, troca direto
+            document.getElementById('nav-profile-name').innerText = activeProfile;
+            document.getElementById('current-presenter-name').innerText = activeProfile;
+            
+            started = true;
+            if(index === 0 && !adPlayed) {
+                playAd(index);
             } else {
-                started = true;
-                if(index === 0 && !adPlayed) {
-                    playAd(index);
-                } else {
-                    simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); });
-                }
+                simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); });
             }
         }
 
@@ -482,7 +509,6 @@
             const vid = document.getElementById('ad-video');
             vid.currentTime = 0;
             vid.volume = 1.0;
-            
             vid.onloadeddata = function() { document.getElementById('ad-loading-text').style.display = 'none'; };
             
             const playPromise = vid.play();
@@ -496,9 +522,7 @@
 
         document.getElementById('btn-force-play').addEventListener('click', () => {
             document.getElementById('btn-force-play').style.display = 'none';
-            document.getElementById('ad-video').play().catch(e => {
-                finishAd();
-            });
+            document.getElementById('ad-video').play().catch(e => { finishAd(); });
         });
 
         function finishAd() {
@@ -516,10 +540,12 @@
 
         document.getElementById('btn-skip-ad').addEventListener('click', finishAd);
 
-        function triggerInterruption(oldP, newP, nextIdx) {
-            targetSlide = nextIdx; started = true; 
-            document.getElementById('error-message').innerHTML = `O perfil de <strong>${oldP}</strong> encerrou. Passe para o perfil de <strong style="color:var(--netflix-red);">${newP}</strong>.`;
-            switchScreen('error-screen'); document.getElementById('error-screen').classList.add('glitching'); document.getElementById('error-content').classList.remove('show');
+        // FUNÇÃO DE ERRO RESTRITA APENAS PARA O BOTÃO DO JOGO
+        function triggerInterruption(customMsg) {
+            document.getElementById('error-message').innerHTML = customMsg;
+            switchScreen('error-screen'); 
+            document.getElementById('error-screen').classList.add('glitching'); 
+            document.getElementById('error-content').classList.remove('show');
             setTimeout(() => { document.getElementById('error-screen').classList.remove('glitching'); document.getElementById('error-content').classList.add('show'); }, 1000);
         }
 
@@ -529,11 +555,32 @@
         }));
         
         document.getElementById('btn-start-presentation').addEventListener('click', () => startPresentationAt(0));
-        document.getElementById('btn-next-slide').addEventListener('click', () => { let n = currentSlide + 1; if(n >= script.length) switchScreen('credits-screen'); else if(activeProfile !== script[n].presenter) triggerInterruption(activeProfile, script[n].presenter, n); else renderSlide(n); });
+        
+        // AO CLICAR EM PRÓXIMO SLIDE: ABRE O MENU MINI (OPÇÃO 3)
+        document.getElementById('btn-next-slide').addEventListener('click', () => { 
+            let n = currentSlide + 1; 
+            if(n >= script.length) {
+                switchScreen('credits-screen'); 
+            } else if(activeProfile !== script[n].presenter) {
+                document.getElementById('mini-profile-menu').style.display = 'flex';
+                targetSlide = n;
+            } else {
+                renderSlide(n); 
+            }
+        });
+        
         document.getElementById('btn-prev-slide').addEventListener('click', () => { if(currentSlide > 0) renderSlide(currentSlide - 1); });
         document.getElementById('btn-change-profile').addEventListener('click', () => switchScreen('profile-screen'));
         document.getElementById('btn-error-switch').addEventListener('click', () => switchScreen('profile-screen'));
         document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
+
+        // ==========================================
+        // O SUSTO DO BOTÃO ABRIR QUIZ (OPÇÃO 2)
+        // ==========================================
+        document.getElementById('btn-open-quiz').addEventListener('click', () => { 
+            pendingQuizOpen = true;
+            triggerInterruption("ALERTA DE SEGURANÇA DETECTADO.<br><br>Permissão negada para acessar o ambiente de simulação. Retorne o controle imediatamente para o Administrador: <strong style='color:var(--netflix-red);'>Francisco</strong> para autorização.");
+        });
 
         // ==========================================
         // LÓGICA DO PLACAR E JOGO
@@ -542,14 +589,6 @@
             const count = snap.val() ? Object.keys(snap.val()).length : 0;
             document.getElementById('player-count').innerHTML = `<i class="fa-solid fa-users"></i> Jogadores: ${count}`;
         });
-
-        document.getElementById('btn-open-quiz').addEventListener('click', () => { 
-            remove(ref(db, 'participantes')); 
-            document.getElementById('quiz-overlay').style.display = 'flex'; 
-            set(ref(db, 'quiz_state'), 'waiting'); 
-        });
-        
-        document.getElementById('btn-close-qr').addEventListener('click', () => { document.getElementById('quiz-overlay').style.display = 'none'; });
 
         let timerInt;
         function runProjectorTimer(seconds, callback) {
@@ -592,7 +631,7 @@
                 set(ref(db, 'quiz_state'), 'q1_result');
                 document.getElementById('proj-timer').innerText = "0";
                 document.getElementById('proj-result-area').style.display = 'block';
-                document.getElementById('proj-answer-text').innerText = "A resposta correta era a C";
+                document.getElementById('proj-answer-text').innerText = "A resposta correta era a C: O Usuário";
                 
                 fetchAndShowWinners("C");
                 
@@ -606,7 +645,7 @@
                         set(ref(db, 'quiz_state'), 'q2_result');
                         document.getElementById('proj-timer').innerText = "0";
                         document.getElementById('proj-result-area').style.display = 'block';
-                        document.getElementById('proj-answer-text').innerText = "A resposta correta era a B";
+                        document.getElementById('proj-answer-text').innerText = "A resposta correta era a B: Engenharia Social";
                         
                         fetchAndShowWinners("B");
                         
