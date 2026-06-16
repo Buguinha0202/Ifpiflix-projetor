@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* AVATARES E VARIAVEIS */
+        /* AVATARES E GERAL */
         .av-francisco { background-image: url('francisco.jpg'); background-color: #E50914; }
         .av-pedro     { background-image: url('pedro.jpg'); background-color: #10b981; }
         .av-jsantos   { background-image: url('jsantos.jpg'); background-color: #3b82f6; }
@@ -28,7 +28,7 @@
         .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; display: flex; flex-direction: column; }
         .screen.active { opacity: 1; pointer-events: auto; }
 
-        /* TELAS BASICAS (PERFIS E LOADING) */
+        /* TELA DE PERFIS */
         #profile-screen { justify-content: center; align-items: center; background: #141414; z-index: 50; }
         #profile-screen h1 { font-size: 3.5rem; font-weight: 400; margin-bottom: 40px; color: #fff; text-align: center; }
         .profiles-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 1000px; }
@@ -38,12 +38,13 @@
         .profile-card span { color: var(--text-dim); font-size: 1.5rem; transition: 0.3s; }
         .profile-card:hover span { color: #fff; }
 
+        /* CARREGAMENTO */
         #loading-screen { justify-content: center; align-items: center; background: #000; z-index: 999; }
         .spinner { width: 80px; height: 80px; border: 5px solid rgba(229, 9, 20, 0.3); border-top: 5px solid var(--netflix-red); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         .loading-text { font-size: 1.5rem; font-weight: bold; color: var(--netflix-red); font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* TELA INICIAL (BANNER E CATALOGO) */
+        /* MENU E CATÁLOGO */
         #home-screen { background: var(--netflix-bg); z-index: 40; overflow-y: auto; overflow-x: hidden;}
         .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
@@ -85,6 +86,7 @@
         .ep-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: #fff;}
         .ep-info p { font-size: 0.9rem; color: var(--text-dim); }
 
+        /* TRAILER */
         #ad-screen { background: #000; z-index: 55; justify-content: center; align-items: center; position: relative; }
         #ad-video { width: 100%; max-width: 1200px; height: 100vh; object-fit: contain; background: #000; z-index: 56; }
         #ad-loading-text { position: absolute; color: #fff; font-size: 1.5rem; font-weight: bold; z-index: 55; font-family: 'Share Tech Mono', monospace; }
@@ -92,6 +94,7 @@
         .btn-skip-ad:hover { background: #fff; color: #000; }
         #btn-force-play { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--netflix-red); color: white; border: none; padding: 20px 40px; font-size: 2rem; font-weight: bold; border-radius: 8px; cursor: pointer; z-index: 70; box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5); }
 
+        /* MINI MENU */
         #mini-profile-menu { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
         #mini-profile-menu h2 { font-size: 3rem; margin-bottom: 30px; font-weight: 300; font-family: 'Inter', sans-serif; }
         .mini-profiles { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;}
@@ -100,7 +103,7 @@
         .mini-card:hover .mini-avatar { outline: 3px solid #fff; }
         .mini-avatar { width: 100px; height: 100px; border-radius: 4px; margin-bottom: 10px; background-size: cover; background-position: center; }
 
-        /* SISTEMA DE SLIDES E ANIMACOES AVANÇADAS */
+        /* SLIDES E ANIMAÇÕES */
         #player-screen { background: #000; z-index: 50; }
         .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
         .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; }
@@ -117,7 +120,7 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Visuais do Painel Direito */
+        /* VISUAIS (DIREITA) */
         .visual-col { background: #111; border-radius: 8px; border: 1px solid #333; height: 450px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8);}
         .browser-top { background: #222; height: 30px; display: flex; align-items: center; padding: 0 10px; gap: 5px; border-bottom: 1px solid #333; z-index: 5; position: relative;}
         .dot { width: 10px; height: 10px; border-radius: 50%; background: #555; }
@@ -130,42 +133,38 @@
         .sim-screen { position: absolute; top: 30px; left: 0; width: 100%; height: calc(100% - 30px); background: #fff; color: #000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px;}
         .sim-screen.active-sim { display: flex; animation: fadeIn 0.4s; }
 
-        /* Animações EP 1 */
+        /* EP 1 */
         .login-box { border: 1px solid #ddd; padding: 20px; border-radius: 8px; width: 80%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .login-input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; font-family: monospace; }
         .typewriter { overflow: hidden; white-space: nowrap; border-right: 2px solid transparent; width: 0;}
         @keyframes typing { from { width: 0 } to { width: 100% } }
-        
         .db-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         .db-table th, .db-table td { border: 1px solid #ccc; padding: 5px; text-align: left; }
         .db-table th { background: #eee; }
-
         .forum-box { width: 90%; text-align: left; }
         .comment { background: #f0f0f0; padding: 10px; border-radius: 4px; margin-bottom: 10px; font-family: sans-serif; }
         .alert-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border: 2px solid #ccc; box-shadow: 0 10px 25px rgba(0,0,0,0.5); padding: 15px; border-radius: 6px; text-align: center; z-index: 10; display: none;}
-
         .folder-screen { background: #f0f0f0; padding: 20px; width: 100%; height: 100%; justify-content: flex-start; align-items: flex-start; }
         .folder-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; margin-top: 20px; }
         .folder-icon { font-size: 3rem; color: #fbbf24; }
         .file-icon { font-size: 3rem; color: #64748b; }
         .download-box { position: absolute; bottom: 20px; right: 20px; background: #10b981; color: #fff; padding: 15px; border-radius: 8px; display: none; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); animation: popIn 0.5s; }
 
-        /* Animações EP 2 */
+        /* EP 2 */
         .soc-dash { background: #090909; color: #fff; justify-content: flex-start; align-items: flex-start; padding: 0;}
         .log-line { font-family: monospace; font-size: 0.85rem; color: #4af626; margin-bottom: 5px; width: 100%; text-align: left;}
         .log-red { color: #ff3b30; font-weight: bold; background: rgba(255,0,0,0.2); animation: flash 1s infinite; }
-        
         .radar-box { position: absolute; top:0; left:0; width: 100%; height: 100%; background: #111; display: none; align-items: center; justify-content: center; gap: 30px;}
         .server-box { width: 80px; height: 100px; background: #222; border: 2px solid #444; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #aaa; position: relative;}
         .server-box i { font-size: 2rem; margin-bottom: 10px; }
         .radar-sweep { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent); animation: sweep 4s linear infinite; pointer-events: none; }
         .server-infected { border-color: #E50914; color: #E50914; animation: flash 1s infinite; }
 
-        /* Animações EP 3 (A NUVEM) */
+        /* EP 3 (NUVEM) */
         .cloud-arrow { display:inline-block; animation: moveRight 1.5s infinite; }
-        .hacked-box { background: #222; padding: 20px; border-radius: 8px; border: 1px solid #444; font-size: 1.5rem; font-weight: bold; text-align: center; width: 30%; }
+        .hacked-box { background: #222; padding: 20px; border-radius: 8px; border: 1px solid #444; font-size: 1.5rem; font-weight: bold; text-align: center; width: 30%; transition: 0.3s;}
         
-        /* EP 5: ISO e CISO */
+        /* EP 5 */
         .triad-box { display: flex; justify-content: center; gap: 30px; width: 100%; }
         .triad-item { text-align: center; color: #444; transition: 0.5s; transform: scale(0.8); }
         .triad-item i { font-size: 4rem; margin-bottom: 15px; }
@@ -179,7 +178,7 @@
         @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes moveRight { 0% { transform: translateX(-10px); opacity: 0;} 50% { opacity: 1;} 100% { transform: translateX(10px); opacity: 0;} }
 
-        /* BARRAS DE CONTROLE INFERIOR */
+        /* CONTROLES INFERIORES */
         .player-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px 4%; z-index: 40;}
         .progress-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.2); }
         .progress-bar-fill { height: 100%; background: var(--netflix-red); width: 0%; transition: 0.3s; }
@@ -187,9 +186,13 @@
         .control-btn { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; transition: 0.2s;}
         .control-btn:hover { color: var(--netflix-red); }
 
-        #quiz-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #090909; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 100; text-align: center;}
+        /* O QUIZ LOBBY: Z-INDEX MAXIMO PROTEGIDO */
+        #quiz-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #090909; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; pointer-events: auto;}
         .qr-image { width: 300px; height: 300px; background: url('qrcode.png') center/cover; margin: 20px 0; border-radius: 12px; border: 4px solid #3b82f6; }
-        .btn-start-quiz { background: #10b981; color: white; border: none; padding: 20px 40px; font-weight: bold; font-size: 1.5rem; border-radius: 8px; cursor: pointer; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); transition: 0.2s;}
+        
+        .btn-start-quiz { background: #10b981; color: white; border: none; padding: 20px 40px; font-weight: bold; font-size: 1.5rem; border-radius: 8px; cursor: pointer; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); transition: 0.2s; position: relative; z-index: 10000;}
+        .btn-start-quiz:hover { transform: scale(1.05); }
+        .btn-start-quiz:active { transform: scale(0.95); }
         
         #quiz-active-view { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 800px;}
         .timer-circle { width: 100px; height: 100px; border-radius: 50%; border: 8px solid #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; font-family: 'Bebas Neue'; margin-bottom: 30px;}
@@ -199,7 +202,7 @@
         #proj-evt-screen.blink { animation: blinkRed 0.2s infinite; }
         @keyframes blinkRed { 0% { background: #ff0000; } 50% { background: #000; } }
 
-        /* TELA DE ERRO (O HACK DO JOGO RESOLVIDO) */
+        /* TELA DE ERRO (O HACK DO JOGO) */
         #error-screen { justify-content: center; align-items: center; background: #000; z-index: 60; text-align: center; }
         .error-box { max-width: 500px; z-index: 10; opacity: 0; transition: 0.5s; pointer-events: auto; }
         .error-box.show { opacity: 1; }
@@ -326,16 +329,16 @@
                     <div class="text-col">
                         <h2>01. VULNERABILIDADES WEB (PHP)</h2>
                         <div class="step-info step-1 active-step">
-                            <h3 class="highlight">Passo 1: SQL Injection</h3>
-                            <p>Ocorre quando o sistema não filtra adequadamente as informações inseridas pelo usuário. O invasor insere comandos de banco de dados diretamente no campo de login, enganando o servidor para liberar o acesso e extrair informações sigilosas da empresa.</p>
+                            <h3 class="highlight">Passo 1: Injeção de SQL</h3>
+                            <p>Acontece quando o site confia demais no que a pessoa digita. O hacker coloca um código de banco de dados direto na caixa de senha. O site fica confuso, aceita o comando e joga todos os dados sigilosos na tela.</p>
                         </div>
                         <div class="step-info step-2">
                             <h3 class="highlight">Passo 2: XSS (Cross-Site Scripting)</h3>
-                            <p>O invasor injeta scripts maliciosos de forma invisível no site. Quando um usuário comum acessa a página, o script é executado silenciosamente e <span class="blue-glow">rouba o cookie de sessão</span>, permitindo que o atacante assuma o controle da conta sem precisar da senha.</p>
+                            <p>O invasor esconde um código malicioso no meio dos comentários de um fórum, por exemplo. Quando você abre a página pra ler, o código roda invisível e rouba o seu 'cookie'. O hacker entra na sua conta sem nem saber sua senha.</p>
                         </div>
                         <div class="step-info step-3">
                             <h3 class="highlight">Passo 3: LFI / RFI</h3>
-                            <p>Falhas de Inclusão de Arquivos. O invasor manipula a URL da aplicação web para contornar as restrições do sistema, conseguindo acessar diretórios internos e visualizar (ou baixar) arquivos vitais de configuração do servidor.</p>
+                            <p>Aqui o hacker brinca com o link do site lá em cima. Ele apaga o nome da página e digita o caminho das pastas internas do servidor. O site obedece e entrega de bandeja arquivos secretos da empresa.</p>
                         </div>
                     </div>
                     
@@ -348,7 +351,7 @@
                                 <h3 style="margin-bottom:15px; color:#333;">Acesso ao Sistema</h3>
                                 <div style="font-family: monospace; color:#E50914; margin-bottom:5px; height:20px; font-weight:bold;" class="typewriter" id="typewriter-user"></div>
                                 <input type="text" class="login-input" placeholder="Senha" disabled>
-                                <button style="width:100%; padding:10px; background:#3b82f6; color:#fff; border:none; border-radius:4px; font-weight:bold;">ENTRAR</button>
+                                <button style="width:100%; padding:10px; background:#3b82f6; color:#fff; border:none; border-radius:4px; font-weight:bold;">AUTENTICAR</button>
                             </div>
                             <div id="db-dump-sqli" style="display:none; width: 100%;">
                                 <h3 style="color:#E50914; margin-bottom:10px;"><i class="fa-solid fa-triangle-exclamation"></i> VAZAMENTO DE BD DETECTADO</h3>
@@ -367,7 +370,7 @@
                                 <h3 style="color:#333; margin-bottom:10px;">Fórum da Turma</h3>
                                 <div class="comment"><strong>João:</strong> Pessoal, que horas é a aula amanhã?</div>
                                 <div class="comment" style="background:#fff3f3; border-left:4px solid #E50914;">
-                                    <strong>Hacker:</strong> <span style="font-family:monospace; color:#E50914;">&lt;script&gt;baixar_cookie()&lt;/script&gt;</span>
+                                    <strong>Hacker:</strong> <span style="font-family:monospace; color:#E50914;">&lt;script&gt;capturar_cookie()&lt;/script&gt;</span>
                                 </div>
                             </div>
                             <div class="alert-box" id="xss-alert">
@@ -377,8 +380,8 @@
                             </div>
                             <div id="xss-logged" style="display:none; text-align:center;">
                                 <i class="fa-solid fa-user-shield" style="font-size:4rem; color:#10b981;"></i>
-                                <h2 style="color:#333; margin-top:10px;">Bem-vindo, Admin</h2>
-                                <p style="color:#666; font-weight:bold;">Sessão Sequestrada (Bypass de Senha)</p>
+                                <h2 style="color:#333; margin-top:10px;">Acesso Concedido</h2>
+                                <p style="color:#666; font-weight:bold;">Sessão Sequestrada (Autenticação Burlada)</p>
                             </div>
                         </div>
 
@@ -405,15 +408,15 @@
                         <h2>02. O S.O.C.</h2>
                         <div class="step-info step-1 active-step">
                             <h3 class="highlight">Tier 1: Triagem</h3>
-                            <p>Atua na linha de frente do monitoramento. Os analistas avaliam os painéis que recebem alertas continuamente, realizando a triagem inicial para distinguir falsos positivos de incidentes de segurança reais.</p>
+                            <p>É a linha de frente. Eles ficam o dia todo olhando pro painel. Recebem milhares de alertas misturados e o trabalho deles é separar o que é só um "bug normal" de um ataque real na rede da empresa.</p>
                         </div>
                         <div class="step-info step-2">
                             <h3 class="highlight">Tier 2: Resposta a Incidentes</h3>
-                            <p>Equipe responsável pela mitigação. Quando o Tier 1 confirma o ataque, o Tier 2 entra em ação para conter a ameaça imediatamente, bloqueando IPs maliciosos e aplicando regras rígidas de firewall.</p>
+                            <p>Deu ruim? É o Tier 2 que resolve. Eles botam a mão na massa na mesma hora, bloqueando os IPs dos hackers direto no firewall pra estancar o sangramento e salvar o sistema de cair.</p>
                         </div>
                         <div class="step-info step-3">
                             <h3 class="highlight">Tier 3: Threat Hunting</h3>
-                            <p>A caça proativa de ameaças. Esta equipe não espera o alarme do sistema tocar. Eles utilizam ferramentas de varredura profunda para localizar invasores sofisticados que já conseguiram se infiltrar na rede e operam em silêncio.</p>
+                            <p>É a caça ativa. O Tier 3 não fica esperando o alarme tocar. Eles usam radares de rede super avançados pra caçar vírus ou invasores silenciosos que já entraram no sistema e estão lá só espionando.</p>
                         </div>
                     </div>
                     
@@ -423,7 +426,7 @@
                         <div class="sim-screen soc-dash active-sim step-1 step-2 step-3" style="padding:15px; position:relative;">
                             <div style="width:100%; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
                                 <span style="font-weight:bold; color:#fff;"><i class="fa-solid fa-shield"></i> LOGS DO FIREWALL</span>
-                                <span class="highlight" id="soc-status">MONITORANDO</span>
+                                <span class="highlight" id="soc-status">MONITORAMENTO ATIVO</span>
                             </div>
                             <div style="width:100%; height:100%; overflow:hidden;" id="soc-logs">
                                 <div class="log-line">GET /api/v1/users - 200 OK - IP: 192.168.1.5</div>
@@ -440,35 +443,35 @@
                             
                             <div class="radar-box" id="soc-hunt">
                                 <div class="radar-sweep"></div>
-                                <div class="server-box"><i class="fa-solid fa-server"></i> Servidor 1</div>
-                                <div class="server-box server-infected" id="infected-server"><i class="fa-solid fa-server"></i> Servidor 2<br><span style="font-size:0.6rem; margin-top:5px; font-weight:bold;">MALWARE OCULTO</span></div>
-                                <div class="server-box"><i class="fa-solid fa-server"></i> Servidor 3</div>
+                                <div class="server-box"><i class="fa-solid fa-server"></i> Server 01</div>
+                                <div class="server-box server-infected" id="infected-server"><i class="fa-solid fa-server"></i> Server 02<br><span style="font-size:0.6rem; margin-top:5px; font-weight:bold;">MALWARE OCULTO</span></div>
+                                <div class="server-box"><i class="fa-solid fa-server"></i> Server 03</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- EPISÓDIO 3: NUVEM (2 PASSOS - PEDRO) -->
+            <!-- EPISÓDIO 3: NUVEM (PEDRO) -->
             <div class="slide" id="slide-2" data-max-steps="2">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>03. A NUVEM</h2>
                         <div class="step-info step-1 active-step">
-                            <h3 class="highlight">O Computador de Outra Empresa</h3>
-                            <p>A computação em nuvem é, essencialmente, hospedar seus sistemas no computador de outra empresa. Os seus dados não ficam em uma 'nuvem' invisível, mas sim em gigantescos data centers físicos controlados pela Amazon, Google ou Microsoft.</p>
+                            <h3 class="highlight">Hospedagem Terceirizada</h3>
+                            <p>Trabalhar na nuvem não tem nada de mágico. É simplesmente pegar os seus sistemas e colocá-olds no computador gigante de outra empresa, como os Data Centers da Amazon (AWS) ou do Google.</p>
                         </div>
                         <div class="step-info step-2">
-                            <h3 class="highlight">Casos Reais de Invasão</h3>
-                            <p>Nenhum sistema corporativo é invulnerável. Grandes corporações mundiais, como a EA Games, a Uber e a Toyota, já sofreram vazamentos massivos de dados armazenados em nuvem, demonstrando que os ataques continuam a evoluir e ignoram o tamanho da empresa.</p>
+                            <h3 class="highlight">Responsabilidade Compartilhada</h3>
+                            <p>A Amazon garante que o servidor não vai desligar e não vai pegar fogo. Mas se você configurar o banco de dados aberto, a culpa é sua. Por causa desses erros humanos, empresas gigantescas como a Uber, EA Games e Toyota já sofreram vazamentos absurdos.</p>
                         </div>
                     </div>
 
                     <div class="visual-col" style="background:#111; color:#fff;">
                         <!-- Nuvem: Passo 1 -->
                         <div class="sim-screen active-sim step-1" id="sim-cloud-1" style="background:transparent;">
-                            <h3 style="margin-bottom:30px;">Hospedagem em Nuvem</h3>
-                            <div style="display:flex; align-items:center; gap:20px; font-size:4rem; color:#3b82f6;">
+                            <h3 style="margin-bottom:30px;">Fluxo Cloud Computing</h3>
+                            <div style="display:flex; align-items:center; justify-content:center; width:100%; gap:20px; font-size:4rem; color:#3b82f6;">
                                 <div style="text-align:center;"><i class="fa-solid fa-laptop"></i><br><span style="font-size:1rem; color:#fff;">Sua Empresa</span></div>
                                 <div class="cloud-arrow" style="font-size:2rem; color:#aaa;"><i class="fa-solid fa-angles-right"></i></div>
                                 <div style="text-align:center;"><i class="fa-solid fa-server"></i><br><span style="font-size:1rem; color:#fff;">Data Center (AWS)</span></div>
@@ -477,31 +480,31 @@
                         
                         <!-- Nuvem: Passo 2 (Casos EA, Uber, Toyota) -->
                         <div class="sim-screen step-2" id="sim-cloud-2" style="background:transparent;">
-                            <h3 style="margin-bottom:30px; color:#E50914;"><i class="fa-solid fa-globe"></i> Casos Globais de Invasão</h3>
+                            <h3 style="margin-bottom:30px; color:#E50914;"><i class="fa-solid fa-globe"></i> Incidentes Corporativos</h3>
                             <div style="display:flex; flex-direction:column; gap:15px; width:100%; align-items:center;">
                                 <div class="hacked-box" style="width:60%;">EA Games</div>
                                 <div class="hacked-box" style="width:60%;">Uber</div>
                                 <div class="hacked-box" style="width:60%;">Toyota</div>
                             </div>
-                            <div id="breach-stamp" style="display:none; color:#E50914; font-weight:bold; border:5px solid #E50914; font-size:2.5rem; padding:15px; border-radius: 8px; position:absolute; transform:rotate(-15deg); background: rgba(0,0,0,0.8); box-shadow: 0 0 20px rgba(229,9,20,0.5);">MEGAVAZAMENTO</div>
+                            <div id="breach-stamp" style="display:none; color:#E50914; font-weight:bold; border:5px solid #E50914; font-size:2.5rem; padding:15px; border-radius: 8px; position:absolute; transform:rotate(-15deg); background: rgba(0,0,0,0.85); box-shadow: 0 0 20px rgba(229,9,20,0.5);">MEGAVAZAMENTO</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- EPISÓDIO 4: DEEPFAKES -->
+            <!-- EPISÓDIO 4: DEEPFAKES E IA -->
             <div class="slide" id="slide-3" data-max-steps="2">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>04. AMEAÇAS SINTÉTICAS</h2>
                         <div class="step-info step-1 active-step">
                             <h3 class="highlight">O Preço do Pix (Clonagem de Voz)</h3>
-                            <p>A Inteligência Artificial Generativa é utilizada para coletar amostras de áudio em redes sociais e criar áudios sintéticos perfeitos do chefe de uma empresa. Essa técnica (*Vishing*) é usada via WhatsApp para ordenar transferências urgentes, burlando processos corporativos.</p>
+                            <p>A Inteligência Artificial pega vídeos normais do seu chefe nas redes sociais e clona a voz dele idêntica. Eles te mandam um áudio pelo WhatsApp mandando fazer um Pix urgente pro fornecedor. O golpe é tão perfeito que burla até biometria de banco.</p>
                         </div>
                         <div class="step-info step-2">
-                            <h3 class="highlight">Ambiente de Testes!</h3>
-                            <p>Chegou a hora de aplicarmos os conceitos em um ambiente de simulação controlada da nossa rede.</p>
-                            <button id="btn-open-quiz" style="background: #3b82f6; color: #fff; border: none; padding: 15px 30px; font-size: 1.2rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 15px;"><i class="fa-solid fa-qrcode"></i> AUTORIZAR AMBIENTE</button>
+                            <h3 class="highlight">Ambiente de Simulação</h3>
+                            <p>E para provar que qualquer um pode cair numa falha de segurança ou engenharia social, preparamos um ambiente de teste na nossa própria rede. Peguem seus celulares!</p>
+                            <button id="btn-open-quiz" style="background: #3b82f6; color: #fff; border: none; padding: 15px 30px; font-size: 1.2rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 15px;"><i class="fa-solid fa-qrcode"></i> AUTORIZAR SIMULAÇÃO</button>
                         </div>
                     </div>
                     
@@ -531,11 +534,11 @@
                         <h2>05. GOVERNANÇA E ISO 27001</h2>
                         <div class="step-info step-1 active-step">
                             <h3 class="highlight">O Papel do CISO</h3>
-                            <p>O <em>Chief Information Security Officer</em> atua como o elo estratégico da empresa. Ele traduz vulnerabilidades sistêmicas complexas para a alta gestão, evidenciando o risco financeiro real de não investir em proteção de dados.</p>
+                            <p>O Chefe de Segurança (CISO) é o tradutor da empresa. Ele pega um problema de TI super técnico e chato, e explica pro dono da empresa usando a única língua que a diretoria entende: dinheiro. "Se não arrumarmos isso, vamos tomar 5 milhões de multa".</p>
                         </div>
                         <div class="step-info step-2">
                             <h3 class="highlight">A Tríade CIA (ISO 27001)</h3>
-                            <p>A norma fundamenta-se em três pilares básicos: <span class="blue-glow">Confidencialidade</span> (acesso apenas a pessoas autorizadas), <span class="blue-glow">Integridade</span> (salvaguarda contra modificações indevidas) e <span class="blue-glow">Disponibilidade</span> (sistemas sempre operantes).</p>
+                            <p>Pra segurança corporativa funcionar, o mundo segue a ISO 27001. A base dela são os pilares da Tríade CIA: <span class="blue-glow">Confidencialidade</span> (só quem deve, acessa), <span class="blue-glow">Integridade</span> (ninguém altera dados escondido) e <span class="blue-glow">Disponibilidade</span> (o sistema não pode cair nunca).</p>
                         </div>
                     </div>
                     
@@ -545,13 +548,13 @@
                                 <div class="tech-risk" style="color:#aaa;">
                                     <i class="fa-solid fa-bug" style="font-size:2.5rem; margin-bottom:10px;"></i>
                                     <h4>Risco Técnico</h4>
-                                    <p style="font-size:0.8rem; margin-top:10px;">Vulnerabilidade CVE-2023 encontrada no banco de dados.</p>
+                                    <p style="font-size:0.8rem; margin-top:10px;">Vulnerabilidade de execução de código descoberta no DB principal.</p>
                                 </div>
                                 <i class="fa-solid fa-arrow-right-long" style="font-size:3rem; color:#3b82f6; margin: 0 15px;"></i>
                                 <div class="bus-risk" id="ciso-translation">
                                     <i class="fa-solid fa-sack-dollar" style="font-size:2.5rem; margin-bottom:10px;"></i>
                                     <h4>Risco de Negócio</h4>
-                                    <p style="font-size:0.8rem; margin-top:10px;">Risco de vazar os CPFs e sofrer multa de R$ 5 Milhões pela LGPD.</p>
+                                    <p style="font-size:0.8rem; margin-top:10px;">Risco iminente de exposição de CPFs e sanções da LGPD (R$ 5 Mi).</p>
                                 </div>
                             </div>
                         </div>
@@ -568,8 +571,8 @@
             </div>
             
             <div class="slide" id="slide-5" data-max-steps="1">
-                <h2>06. FIM DA APRESENTAÇÃO</h2>
-                <p style="font-size: 1.5rem; text-align: center; margin-top: 50px;">Agradecemos à Professora Cláutenis e a toda a turma do IFPI!</p>
+                <h2>06. CONCLUSÃO</h2>
+                <p style="font-size: 1.5rem; text-align: center; margin-top: 50px;">Agradecemos à Professora Cláutenis e a toda a turma pela atenção.</p>
             </div>
         </div>
 
@@ -583,14 +586,16 @@
         </div>
     </div>
 
-    <!-- QUIZ LOBBY E RESULTADOS -->
+    <!-- LOBBY DO JOGO (COM Z-INDEX MASTER PARA CLIQUE GARANTIDO) -->
     <div id="quiz-overlay">
         <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
             <h2 style="font-family: 'Bebas Neue'; font-size: 5rem; color: #3b82f6; margin: 0;">IFPIFLIX QUIZ</h2>
             <p style="font-size: 1.5rem; font-weight: bold; color: #ccc;">Escaneie o QR Code com a câmera do celular para jogar!</p>
             <div class="qr-image"></div>
             <h3 style="color: #10b981; font-size: 2rem; margin-bottom: 30px;" id="player-count"><i class="fa-solid fa-users"></i> Jogadores: 0</h3>
-            <button class="btn-start-quiz" id="btn-master-start">▶ INICIAR PARTIDA</button>
+            
+            <!-- BOTÃO BLINDADO PARA INICIAR -->
+            <button class="btn-start-quiz" onclick="window.iniciarPartidaMaster()" id="btn-master-start">▶ INICIAR PARTIDA</button>
         </div>
 
         <div id="quiz-active-view">
@@ -605,14 +610,14 @@
         </div>
     </div>
 
-    <!-- EVENTO FINAL DO HACKER -->
+    <!-- TELA HACKED BLINDADA -->
     <div id="proj-evt-screen">
-        <div id="p-dyn-icon" style="font-size: 8rem; color: #fff; margin-bottom: 20px;"></div>
-        <h1 style="font-family: 'Share Tech Mono'; font-size: 4rem; color: #fff;" id="p-dyn-title"></h1>
-        <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração de dados de rede concluída com sucesso.</p>
+        <div id="p-dyn-icon" style="font-size: 8rem; color: #fff; margin-bottom: 20px;"><i class="fa-solid fa-shield-halved"></i></div>
+        <h1 style="font-family: 'Share Tech Mono'; font-size: 4rem; color: #fff;" id="p-dyn-title">SISTEMA EM TESTE</h1>
+        <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extração de dados de rede simulada com sucesso.</p>
     </div>
 
-    <!-- TELA DE BLOQUEIO DE SEGURANÇA (TERMINAL HACKER) -->
+    <!-- TELA DE BLOQUEIO E TERMINAL HACKER -->
     <div id="error-screen" class="screen">
         <div class="glitch-layer"></div>
         <div class="error-box" id="error-content">
@@ -621,11 +626,15 @@
             
             <button id="btn-error-switch" style="background: #fff; color: #000; border: none; padding: 12px 25px; font-size: 1.1rem; font-weight: bold; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-key"></i> Autenticar Administrador</button>
             
-            <!-- Terminal Seguro para Liberar o Quiz sem Travar a Tela -->
+            <!-- Terminal Seguro para Liberar o Quiz -->
             <div id="hacker-terminal" style="display:none; text-align:left; background:#000; border:1px solid #333; padding:15px; margin-top:20px; font-family:monospace; border-radius: 4px;">
                 <div style="color:#0f0; margin-bottom:10px;">> Conexão interceptada.</div>
-                <div style="color:#0f0;">> admin@ifpiflix:~$ <input type="password" id="hacker-pwd" autocomplete="off" autofocus placeholder="senha" style="background:transparent; border:none; border-bottom:1px solid #0f0; color:#0f0; outline:none; font-family:monospace; width:120px; font-size: 1rem;"></div>
-                <div style="color:#666; font-size: 0.8rem; margin-top: 10px;">(Digite qualquer senha e aperte ENTER para prosseguir)</div>
+                <div style="color:#0f0; display:flex; align-items:center; gap: 10px; flex-wrap: wrap;">
+                    > admin@ifpiflix:~$ 
+                    <input type="password" id="hacker-pwd" autocomplete="off" placeholder="senha" style="background:transparent; border:none; border-bottom:1px solid #0f0; color:#0f0; outline:none; font-family:monospace; width:100px; font-size: 1rem;">
+                    <!-- BOTÃO OK PARA TABLETS! -->
+                    <button id="btn-hacker-ok" style="background:#0f0; color:#000; border:none; font-weight:bold; cursor:pointer; padding:5px 15px; border-radius: 4px;">OK</button>
+                </div>
             </div>
         </div>
     </div>
@@ -661,13 +670,9 @@
 
         let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
         let adPlayed = false; let pendingQuizOpen = false;
-        let currentStep = 1;
-        let animationInterval; // Guarda o motor do Looping
+        let currentStep = 1; let animationInterval; 
 
-        function unlockMedia() {
-            const vid = document.getElementById('ad-video'); vid.muted = true; vid.play().then(()=>{ vid.pause(); vid.currentTime=0; vid.muted=false; }).catch(()=>{});
-            const aud = document.getElementById('tudum-audio'); aud.muted = true; aud.play().then(()=>{ aud.pause(); aud.currentTime=0; aud.muted=false; }).catch(()=>{});
-        }
+        function unlockMedia() { const vid = document.getElementById('ad-video'); vid.muted = true; vid.play().then(()=>{ vid.pause(); vid.currentTime=0; vid.muted=false; }).catch(()=>{}); const aud = document.getElementById('tudum-audio'); aud.muted = true; aud.play().then(()=>{ aud.pause(); aud.currentTime=0; aud.muted=false; }).catch(()=>{}); }
 
         function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const t = document.getElementById(id); if(t) t.classList.add('active'); }
         window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
@@ -689,11 +694,9 @@
             updateStepVisuals(activeS, 1);
         }
 
-        // ==========================================
-        // MOTOR DE ANIMAÇÕES VISUAIS LENTAS E EM LOOPING
-        // ==========================================
+        // ANIMAÇÕES LENTAS EM LOOPING
         function updateStepVisuals(slideElement, stepNum) {
-            clearInterval(animationInterval); // Para a animação do passo anterior
+            if(animationInterval) clearInterval(animationInterval);
 
             slideElement.querySelectorAll('.step-info, .sim-screen').forEach(el => el.classList.remove('active-step', 'active-sim'));
             slideElement.querySelectorAll(`.step-${stepNum}`).forEach(el => {
@@ -709,11 +712,10 @@
                     const runSqli = () => {
                         const ty = document.getElementById('typewriter-user');
                         ty.style.animation = 'none'; ty.innerText = ""; document.getElementById('db-dump-sqli').style.display = 'none'; document.getElementById('login-form-sqli').style.display = 'block';
-                        setTimeout(() => { ty.style.animation = 'typing 3s steps(20, end) forwards'; ty.innerText = "' OR 1=1 --"; }, 1000);
-                        setTimeout(() => { document.getElementById('login-form-sqli').style.display = 'none'; document.getElementById('db-dump-sqli').style.display = 'block'; }, 5500); 
+                        setTimeout(() => { ty.style.animation = 'typing 3s steps(20, end) forwards'; ty.innerText = "' OR 1=1 --"; }, 1500);
+                        setTimeout(() => { document.getElementById('login-form-sqli').style.display = 'none'; document.getElementById('db-dump-sqli').style.display = 'block'; }, 6000); 
                     };
-                    runSqli();
-                    animationInterval = setInterval(runSqli, 11000); // Repete a cada 11 segundos
+                    runSqli(); animationInterval = setInterval(runSqli, 12000); 
                 }
                 else if (stepNum === 2) { 
                     document.getElementById('ep1-url').innerText = "https://sistema-ifpi.com.br/forum";
@@ -724,8 +726,7 @@
                         setTimeout(() => { document.getElementById('xss-alert').style.display = 'block'; }, 2500);
                         setTimeout(() => { document.getElementById('xss-alert').style.display = 'none'; document.querySelector('.forum-box').style.display = 'none'; document.getElementById('xss-logged').style.display = 'block'; }, 7000); 
                     };
-                    runXss();
-                    animationInterval = setInterval(runXss, 13000); // Repete a cada 13 segundos
+                    runXss(); animationInterval = setInterval(runXss, 14000); 
                 }
                 else if (stepNum === 3) { 
                     document.getElementById('ep1-url').innerText = "https://sistema-ifpi.com.br/index.php?pasta=arquivos_secretos";
@@ -735,8 +736,7 @@
                         document.getElementById('lfi-download').style.display = 'none';
                         setTimeout(() => { document.getElementById('lfi-download').style.display = 'block'; }, 2500);
                     };
-                    runLfi();
-                    animationInterval = setInterval(runLfi, 7000); // Repete a cada 7 segundos
+                    runLfi(); animationInterval = setInterval(runLfi, 7000);
                 }
             }
 
@@ -752,22 +752,18 @@
                         document.getElementById('breach-stamp').style.display = 'none';
                         setTimeout(() => { document.getElementById('breach-stamp').style.display = 'block'; }, 2000);
                     }
-                    runBreach();
-                    animationInterval = setInterval(runBreach, 6000); // Pisca o vazamento a cada 6s
+                    runBreach(); animationInterval = setInterval(runBreach, 7000); 
                 }
             }
 
             if (currentSlide === 3) {
                 if (stepNum === 1) {
                     const runAudio = () => {
-                        const bar = document.getElementById('audio-progress');
-                        document.getElementById('ai-alert').style.display = 'none';
-                        bar.style.transition = 'none'; bar.style.width = '0px';
+                        const bar = document.getElementById('audio-progress'); document.getElementById('ai-alert').style.display = 'none'; bar.style.transition = 'none'; bar.style.width = '0px';
                         setTimeout(() => { bar.style.transition = 'width 6s linear'; bar.style.width = '120px'; }, 50);
-                        setTimeout(() => { document.getElementById('ai-alert').style.display = 'block'; }, 6000);
+                        setTimeout(() => { document.getElementById('ai-alert').style.display = 'block'; }, 6500);
                     }
-                    runAudio();
-                    animationInterval = setInterval(runAudio, 10000); // Repete a cada 10s
+                    runAudio(); animationInterval = setInterval(runAudio, 11000);
                 }
             }
 
@@ -777,8 +773,7 @@
                         document.getElementById('ciso-translation').style.display = 'none';
                         setTimeout(() => { document.getElementById('ciso-translation').style.display = 'block'; }, 2500);
                     };
-                    runCiso();
-                    animationInterval = setInterval(runCiso, 7000);
+                    runCiso(); animationInterval = setInterval(runCiso, 8000);
                 }
                 if(stepNum === 2) {
                     const runTriad = () => {
@@ -787,8 +782,7 @@
                         setTimeout(() => { document.getElementById('triad-2').classList.add('active-triad'); }, 3500);
                         setTimeout(() => { document.getElementById('triad-3').classList.add('active-triad'); }, 5500);
                     };
-                    runTriad();
-                    animationInterval = setInterval(runTriad, 9000);
+                    runTriad(); animationInterval = setInterval(runTriad, 9000);
                 }
             }
         }
@@ -821,16 +815,16 @@
         document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
 
         // ==========================================
-        // ALERTA DE SEGURANÇA E TERMINAL HACKER (BUG RESOLVIDO)
+        // SISTEMA DO HACKER (TERMINAL HACKER SEGURO)
         // ==========================================
         document.getElementById('btn-open-quiz').addEventListener('click', () => { 
+            if(pendingQuizOpen) return;
             pendingQuizOpen = true;
             document.getElementById('error-message').innerHTML = "ALERTA DE SEGURANÇA DETECTADO.<br><br>Permissão negada para acessar o ambiente de simulação. Autorização de Administrador necessária.";
             switchScreen('error-screen'); 
             document.getElementById('error-screen').classList.add('glitching'); 
             document.getElementById('error-content').classList.remove('show');
             
-            // Reseta o terminal caso já tenha sido aberto antes
             document.getElementById('hacker-terminal').style.display = 'none';
             document.getElementById('btn-error-switch').style.display = 'inline-block';
             document.getElementById('hacker-pwd').value = '';
@@ -838,63 +832,94 @@
             setTimeout(() => { document.getElementById('error-screen').classList.remove('glitching'); document.getElementById('error-content').classList.add('show'); }, 1000);
         });
 
-        // Botão abre o terminal no próprio navegador (sem travar)
         document.getElementById('btn-error-switch').addEventListener('click', () => {
             if (pendingQuizOpen) {
                 document.getElementById('btn-error-switch').style.display = 'none';
                 document.getElementById('hacker-terminal').style.display = 'block';
                 document.getElementById('hacker-pwd').focus();
-            } else {
-                switchScreen('profile-screen');
-            }
+            } else { switchScreen('profile-screen'); }
         });
 
-        // Evento de apertar ENTER no terminal para liberar o Quiz e passar pro JP Santos
-        document.getElementById('hacker-pwd').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                pendingQuizOpen = false;
-                
-                // Transfere pro JP Santos, que é quem vai comandar o Kahoot!
-                activeProfile = 'JP Santos';
-                document.getElementById('nav-profile-name').innerText = activeProfile;
-                document.getElementById('current-presenter-name').innerText = activeProfile;
-                
-                switchScreen('player-screen');
+        // Função de liberar jogo 100% blindada 
+        function liberarJogoHacker() {
+            document.getElementById('hacker-pwd').blur(); // FECHA O TECLADO VIRTUAL
+            pendingQuizOpen = false;
+            document.getElementById('hacker-terminal').style.display = 'none';
+            
+            activeProfile = 'JP Santos';
+            document.getElementById('nav-profile-name').innerText = activeProfile;
+            document.getElementById('current-presenter-name').innerText = activeProfile;
+            
+            switchScreen('player-screen');
+            
+            document.getElementById('quiz-lobby').style.display = 'flex';
+            document.getElementById('quiz-active-view').style.display = 'none';
+            document.getElementById('quiz-overlay').style.display = 'flex';
+            
+            try {
                 remove(ref(db, 'participantes'));
-                document.getElementById('quiz-overlay').style.display = 'flex';
                 set(ref(db, 'quiz_state'), 'waiting');
-            }
+            } catch(e) { console.error("Firebase", e); }
+        }
+
+        document.getElementById('hacker-pwd').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.keyCode === 13) { e.preventDefault(); liberarJogoHacker(); }
         });
 
-        // LÓGICA DO PLACAR E JOGO
+        document.getElementById('btn-hacker-ok').addEventListener('click', (e) => {
+            e.preventDefault(); liberarJogoHacker();
+        });
+
+        // ==========================================
+        // LÓGICA DO PLACAR E BOTÃO INICIAR BLINDADO
+        // ==========================================
         onValue(ref(db, 'participantes'), (snap) => { const count = snap.val() ? Object.keys(snap.val()).length : 0; document.getElementById('player-count').innerHTML = `<i class="fa-solid fa-users"></i> Jogadores: ${count}`; });
-        document.getElementById('btn-close-qr').addEventListener('click', () => { document.getElementById('quiz-overlay').style.display = 'none'; });
 
         let timerInt;
-        function runProjectorTimer(seconds, callback) { let s = seconds; const el = document.getElementById('proj-timer'); el.innerText = s; el.style.borderColor = '#3b82f6'; el.style.color = '#fff'; timerInt = setInterval(() => { s--; el.innerText = s; if(s <= 5) { el.style.borderColor = '#E50914'; el.style.color = '#E50914'; } if(s <= 0) { clearInterval(timerInt); callback(); } }, 1000); }
+        function runProjectorTimer(seconds, callback) { 
+            if(timerInt) clearInterval(timerInt);
+            let s = seconds; const el = document.getElementById('proj-timer'); el.innerText = s; el.style.borderColor = '#3b82f6'; el.style.color = '#fff'; 
+            timerInt = setInterval(() => { 
+                s--; el.innerText = s; 
+                if(s <= 5) { el.style.borderColor = '#E50914'; el.style.color = '#E50914'; } 
+                if(s <= 0) { clearInterval(timerInt); callback(); } 
+            }, 1000); 
+        }
 
         function fetchAndShowWinners(correctLetter) { get(ref(db, 'participantes')).then((snapshot) => { const box = document.getElementById('proj-winners'); if (snapshot.exists()) { const data = snapshot.val(); const winners = Object.values(data).filter(p => p.ans === correctLetter).map(p => p.nome); if (winners.length > 0) { box.innerHTML = winners.map(n => `<span class="winner-badge">${n}</span>`).join(''); } else { box.innerHTML = "<span style='color: #888; font-size: 1.2rem;'>Ninguém acertou essa! 😢</span>"; } } else { box.innerHTML = "<span style='color: #888; font-size: 1.2rem;'>Nenhum jogador registrado.</span>"; } }); }
 
-        document.getElementById('btn-master-start').addEventListener('click', () => {
-            document.getElementById('quiz-lobby').style.display = 'none'; document.getElementById('quiz-active-view').style.display = 'flex';
-            set(ref(db, 'quiz_state'), 'q1'); document.getElementById('proj-q-text').innerText = "Qual é o 'elo mais fraco' na Segurança da Informação?"; document.getElementById('proj-result-area').style.display = 'none';
-            runProjectorTimer(20, () => {
-                set(ref(db, 'quiz_state'), 'q1_result'); document.getElementById('proj-timer').innerText = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerText = "A resposta correta era a C: O Usuário";
-                fetchAndShowWinners("C");
-                setTimeout(() => {
-                    set(ref(db, 'quiz_state'), 'q2'); document.getElementById('proj-q-text').innerText = "O que caracteriza essencialmente um ataque de Phishing?"; document.getElementById('proj-result-area').style.display = 'none'; document.getElementById('proj-winners').innerHTML = ""; 
-                    runProjectorTimer(20, () => {
-                        set(ref(db, 'quiz_state'), 'q2_result'); document.getElementById('proj-timer').innerText = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerText = "A resposta correta era a B: Engenharia Social";
-                        fetchAndShowWinners("B");
-                        setTimeout(() => {
-                            set(ref(db, 'quiz_state'), 'final_evt'); document.getElementById('quiz-overlay').style.display = 'none'; const evtScreen = document.getElementById('proj-evt-screen'); evtScreen.style.display = 'flex'; evtScreen.classList.add('blink');
-                            const p1 = "SISTEMA"; const p2 = " COMPROMETIDO"; document.getElementById('p-dyn-icon').innerHTML = '<i class="fa-solid fa-skull-crossbones"></i>'; document.getElementById('p-dyn-title').innerText = p1 + p2;
-                            setTimeout(() => { evtScreen.style.display = 'none'; evtScreen.classList.remove('blink'); set(ref(db, 'quiz_state'), 'waiting'); document.getElementById('quiz-lobby').style.display = 'flex'; document.getElementById('quiz-active-view').style.display = 'none'; }, 10000);
-                        }, 7000); 
-                    });
-                }, 7000); 
-            });
-        });
+        // AQUI ESTÁ O BOTÃO TURBINADO! INJETADO DIRETO NO OBJETO WINDOW
+        window.iniciarPartidaMaster = function() {
+            try {
+                // MUDA A TELA IMEDIATAMENTE (GARANTIDO)
+                document.getElementById('quiz-lobby').style.display = 'none'; 
+                document.getElementById('quiz-active-view').style.display = 'flex';
+                document.getElementById('proj-q-text').innerText = "Qual é o 'elo mais fraco' na Segurança da Informação?"; 
+                document.getElementById('proj-result-area').style.display = 'none';
+                
+                // INICIA O JOGO DE FATO
+                set(ref(db, 'quiz_state'), 'q1'); 
+                
+                runProjectorTimer(20, () => {
+                    set(ref(db, 'quiz_state'), 'q1_result'); document.getElementById('proj-timer').innerText = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerText = "A resposta correta era a C: O Usuário";
+                    fetchAndShowWinners("C");
+                    setTimeout(() => {
+                        set(ref(db, 'quiz_state'), 'q2'); document.getElementById('proj-q-text').innerText = "O que caracteriza essencialmente um ataque de Phishing?"; document.getElementById('proj-result-area').style.display = 'none'; document.getElementById('proj-winners').innerHTML = ""; 
+                        runProjectorTimer(20, () => {
+                            set(ref(db, 'quiz_state'), 'q2_result'); document.getElementById('proj-timer').innerText = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerText = "A resposta correta era a B: Engenharia Social";
+                            fetchAndShowWinners("B");
+                            setTimeout(() => {
+                                set(ref(db, 'quiz_state'), 'final_evt'); document.getElementById('quiz-overlay').style.display = 'none'; const evtScreen = document.getElementById('proj-evt-screen'); evtScreen.style.display = 'flex'; evtScreen.classList.add('blink');
+                                setTimeout(() => { evtScreen.style.display = 'none'; evtScreen.classList.remove('blink'); set(ref(db, 'quiz_state'), 'waiting'); document.getElementById('quiz-lobby').style.display = 'flex'; document.getElementById('quiz-active-view').style.display = 'none'; }, 10000);
+                            }, 7000); 
+                        });
+                    }, 7000); 
+                });
+            } catch(err) {
+                alert("Erro ao iniciar a partida: " + err.message);
+            }
+        };
+
     </script>
 </body>
 </html>
