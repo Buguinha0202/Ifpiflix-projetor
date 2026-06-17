@@ -1,10 +1,10 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IFPIFLIX - SeguranÃ§a da InformaÃ§Ã£o</title>
+    <title>IFPIFLIX - Seguran&ccedil;a da Informa&ccedil;&atilde;o</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,21 +71,7 @@
         .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
         .card-landscape h4 { font-size: 1.1rem; font-weight: bold; color: #fff; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
-        /* CLASSES DOS POSTERS (INCLUINDO OS NOVOS) */
-        .p-stranger { background-image: url('stranger_pings.jpg'); } 
-        .p-dragon { background-image: url('como_treinar_ia.jpg'); } 
-        .p-pix { background-image: url('deepfake_pix.jpg'); } 
-        .p-kpop { background-image: url('guerreiras_kpop.jpg'); } 
-        .p-nicolas { background-image: url('nicolas_o_grande.jpg'); } 
-        .p-lalalan { background-image: url('la_la_lan.jpg'); } 
-        .p-opensource { background-image: url('open_source.jpg'); } /* NOVO: Oppenheimer */
-        .p-procurando { background-image: url('procurando_ip.jpg'); } /* NOVO: Procurando Nemo */
-
-        .p-honeypot { background-image: url('pote_de_mel.jpg'); } 
-        .p-mitm { background-image: url('homem_no_meio.jpg'); } 
-        .p-firewall { background-image: url('muralha_de_fogo.jpg'); } 
-        .p-metaverso { background-image: url('fuga_metaverso.jpg'); } 
-        .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
+        .p-stranger { background-image: url('stranger_pings.jpg'); } .p-dragon { background-image: url('como_treinar_ia.jpg'); } .p-pix { background-image: url('deepfake_pix.jpg'); } .p-kpop { background-image: url('guerreiras_kpop.jpg'); } .p-nicolas { background-image: url('nicolas_o_grande.jpg'); } .p-lalalan { background-image: url('la_la_lan.jpg'); } .p-opensource { background-image: url('open_source.jpg'); } .p-procurando { background-image: url('procurando_ip.jpg'); } .p-honeypot { background-image: url('pote_de_mel.jpg'); } .p-mitm { background-image: url('homem_no_meio.jpg'); } .p-firewall { background-image: url('muralha_de_fogo.jpg'); } .p-metaverso { background-image: url('fuga_metaverso.jpg'); } .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
 
         #series-details-screen { background: var(--netflix-bg); z-index: 45; overflow-y: auto; overflow-x: hidden; }
         .details-hero { height: 85vh; min-height: 600px; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat; }
@@ -115,7 +101,7 @@
         .mini-card:hover .mini-avatar { outline: 3px solid #fff; }
         .mini-avatar { width: 100px; height: 100px; border-radius: 4px; margin-bottom: 10px; background-size: cover; background-position: center; }
 
-        /* SLIDES E ANIMAÃ‡Ã•ES */
+        /* SLIDES E ANIMAÇÕES */
         #player-screen { background: #000; z-index: 50; }
         .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
         .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; }
@@ -231,14 +217,13 @@
 </head>
 <body>
 
-    <!-- Reprodutores de Ãudio (Incluindo o novo Ã¡udio do Deepfake) -->
     <audio id="tudum-audio" preload="auto"><source src="tudum.mp3" type="audio/mpeg"></audio>
     <audio id="deepfake-audio" preload="auto"><source src="deepfake.mp3" type="audio/mpeg"></audio>
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
     <div id="profile-screen" class="screen active">
-        <h1>Quem estÃ¡ assistindo?</h1>
+        <h1>Quem est&aacute; assistindo?</h1>
         <div class="profiles-container">
             <div class="profile-card" data-profile="Francisco"><div class="avatar av-francisco"></div><span>Francisco</span></div>
             <div class="profile-card" data-profile="JP Santos"><div class="avatar av-jsantos"></div><span>JP Santos</span></div>
@@ -267,23 +252,22 @@
         </nav>
         <div class="hero">
             <div class="hero-content">
-                <div style="color: #fff; font-weight: bold; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 5px;">SÃ‰RIE ORIGINAL GRUPO 6</div>
-                <h1>SEGURANÃ‡A DA INFORMAÃ‡ÃƒO</h1>
-                <p style="font-size: 1.2rem; margin-bottom: 10px; color: #ccc;">Vulnerabilidades, S.O.C., Nuvem e a nova fronteira de InteligÃªncia Artificial e Deepfakes.</p>
+                <div style="color: #fff; font-weight: bold; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 5px;">S&Eacute;RIE ORIGINAL GRUPO 6</div>
+                <h1>SEGURAN&Ccedil;A DA INFORMA&Ccedil;&Atilde;O</h1>
+                <p style="font-size: 1.2rem; margin-bottom: 10px; color: #ccc;">Vulnerabilidades, S.O.C., Nuvem e a nova fronteira de Intelig&ecirc;ncia Artificial e Deepfakes.</p>
                 <div class="hero-buttons">
                     <button class="btn-play" id="btn-start-presentation"><i class="fa-solid fa-play"></i> Assistir</button>
-                    <button class="btn-info" onclick="openSeriesDetails()"><i class="fa-solid fa-circle-info"></i> EpisÃ³dios</button>
+                    <button class="btn-info" onclick="openSeriesDetails()"><i class="fa-solid fa-circle-info"></i> Epis&oacute;dios</button>
                 </div>
             </div>
         </div>
         <div class="catalog-container">
             <h2 class="row-title">Recomendados para Alunos de TI</h2>
             <div class="posters-container">
-                <!-- ADICIONADOS OPEN SOURCE E PROCURANDO IP AQUI -->
                 <div class="card-portrait p-opensource"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
                 <div class="card-portrait p-stranger"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
-                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
-                <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake:<br>O PreÃ§o do Pix</h4></div></div>
+                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a I.A.</h4></div></div>
+                <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake:<br>O Pre&ccedil;o do Pix</h4></div></div>
                 <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop</h4></div></div>
                 <div class="card-portrait p-procurando"><div class="card-portrait-content"><h4>Procurando IP</h4></div></div>
                 <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
@@ -295,7 +279,7 @@
                 <div class="card-landscape p-mitm"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
                 <div class="card-landscape p-firewall"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
                 <div class="card-landscape p-metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
-                <div class="card-landscape p-iot"><div class="card-landscape-content"><h4>RebeliÃ£o das Torradeiras</h4></div></div>
+                <div class="card-landscape p-iot"><div class="card-landscape-content"><h4>Rebeli&atilde;o das Torradeiras</h4></div></div>
             </div>
         </div>
     </div>
@@ -307,57 +291,57 @@
         </nav>
         <div class="details-hero">
             <div class="details-content">
-                <div style="color: #fff; font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">SÃ‰RIE ORIGINAL</div>
-                <h1>SEGURANÃ‡A DA INFORMAÃ‡ÃƒO</h1>
-                <p>A equipe explora vulnerabilidades em PHP, SOC, Cloud e a nova fronteira de InteligÃªncia Artificial Generativa.</p>
+                <div style="color: #fff; font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">S&Eacute;RIE ORIGINAL</div>
+                <h1>SEGURAN&Ccedil;A DA INFORMA&Ccedil;&Atilde;O</h1>
+                <p>A equipe explora vulnerabilidades em PHP, SOC, Cloud e a nova fronteira de Intelig&ecirc;ncia Artificial Generativa.</p>
                 <button class="btn-play" onclick="startPresentationAt(0)" style="margin-top: 15px;"><i class="fa-solid fa-play"></i> Tocar Ep. 1</button>
             </div>
         </div>
         <div class="episodes-list">
-            <h3>EpisÃ³dios (TÃ³picos)</h3>
+            <h3>Epis&oacute;dios (T&oacute;picos)</h3>
             <div class="ep-item" onclick="startPresentationAt(0)"><div class="ep-thumb"><span class="ep-number">1</span></div><div class="ep-info"><h4>1. Vulnerabilidades PHP</h4><p>O PHP move a web, mas falhas permitem ataques.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(1)"><div class="ep-thumb"><span class="ep-number">2</span></div><div class="ep-info"><h4>2. O CoraÃ§Ã£o da Defesa</h4><p>O S.O.C. protege as empresas 24 horas por dia.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(1)"><div class="ep-thumb"><span class="ep-number">2</span></div><div class="ep-info"><h4>2. O Cora&ccedil;&atilde;o da Defesa</h4><p>O S.O.C. protege as empresas 24 horas por dia.</p></div></div>
             <div class="ep-item" onclick="startPresentationAt(2)"><div class="ep-thumb"><span class="ep-number">3</span></div><div class="ep-info"><h4>3. Guerra nas Nuvens</h4><p>Responsabilidade compartilhada em Cloud.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(3)"><div class="ep-thumb"><span class="ep-number">4</span></div><div class="ep-info"><h4>4. IlusÃ£o Artificial</h4><p>O perigo dos Deepfakes e Engenharia Social.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(3)"><div class="ep-thumb"><span class="ep-number">4</span></div><div class="ep-info"><h4>4. Ilus&atilde;o Artificial</h4><p>O perigo dos Deepfakes e Engenharia Social.</p></div></div>
             <div class="ep-item" onclick="startPresentationAt(4)"><div class="ep-thumb"><span class="ep-number">5</span></div><div class="ep-info"><h4>5. A Lei e a Ordem</h4><p>O papel do CISO, LGPD e ISO 27001.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(5)"><div class="ep-thumb"><span class="ep-number">6</span></div><div class="ep-info"><h4>6. Veredicto Final</h4><p>ConclusÃµes e revisÃ£o da literatura.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(5)"><div class="ep-thumb"><span class="ep-number">6</span></div><div class="ep-info"><h4>6. Veredicto Final</h4><p>Conclus&otilde;es e revis&atilde;o da literatura.</p></div></div>
         </div>
     </div>
 
     <div id="ad-screen" class="screen">
         <video id="ad-video" controls playsinline><source src="trailer.mp4" type="video/mp4"><source src="trailer.mov" type="video/quicktime"></video>
-        <button id="btn-force-play">â–¶ INICIAR VÃDEO</button>
-        <button class="btn-skip-ad" id="btn-skip-ad">Pular AnÃºncio <i class="fa-solid fa-forward-step"></i></button>
+        <button id="btn-force-play">▶ INICIAR V&Iacute;DEO</button>
+        <button class="btn-skip-ad" id="btn-skip-ad">Pular An&uacute;ncio <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
-    <!-- TELA PRINCIPAL DOS SLIDES E ANIMAÃ‡Ã•ES -->
+    <!-- TELA PRINCIPAL DOS SLIDES E ANIMAÇÕES -->
     <div id="player-screen" class="screen">
         <div class="player-header">
             <button id="btn-back-to-home" class="control-btn"><i class="fa-solid fa-arrow-left"></i></button>
             <div style="display:flex; flex-direction: column; margin-left: 10px;">
-                <span style="font-weight: bold;">SeguranÃ§a da InformaÃ§Ã£o</span>
+                <span style="font-weight: bold;">Seguran&ccedil;a da Informa&ccedil;&atilde;o</span>
                 <span id="player-ep-title" style="color: #aaa; font-size: 0.9rem;">T1:E1</span>
             </div>
         </div>
 
         <div class="slide-area">
             
-            <!-- EPISÃ“DIO 1: VULNERABILIDADES -->
+            <!-- EPISÓDIO 1: VULNERABILIDADES -->
             <div class="slide" id="slide-0" data-max-steps="3">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>01. VULNERABILIDADES WEB (PHP)</h2>
                         <div class="step-info step-1 active-step">
-                            <h3 class="highlight">Passo 1: InjeÃ§Ã£o de SQL</h3>
-                            <p>A falha de SQL Injection ocorre quando a aplicaÃ§Ã£o web nÃ£o sanitiza adequadamente as entradas do usuÃ¡rio. Isso permite a execuÃ§Ã£o de comandos arbitrÃ¡rios no banco de dados, resultando na extraÃ§Ã£o nÃ£o autorizada de informaÃ§Ãµes sensÃ­veis.</p>
+                            <h3 class="highlight">Passo 1: Inje&ccedil;&atilde;o de SQL</h3>
+                            <p>A falha de SQL Injection ocorre quando a aplica&ccedil;&atilde;o web n&atilde;o sanitiza adequadamente as entradas do usu&aacute;rio. Isso permite a execu&ccedil;&atilde;o de comandos arbitr&aacute;rios no banco de dados, resultando na extra&ccedil;&atilde;o n&atilde;o autorizada de informa&ccedil;&otilde;es sens&iacute;veis.</p>
                         </div>
                         <div class="step-info step-2">
                             <h3 class="highlight">Passo 2: XSS (Cross-Site Scripting)</h3>
-                            <p>Consiste na injeÃ§Ã£o de scripts maliciosos em pÃ¡ginas da web. Essa vulnerabilidade Ã© frequentemente explorada para o sequestro de sessÃµes <span class="blue-glow">(Session Hijacking)</span> atravÃ©s da interceptaÃ§Ã£o de cookies de autenticaÃ§Ã£o.</p>
+                            <p>Consiste na inje&ccedil;&atilde;o de scripts maliciosos em p&aacute;ginas da web. Essa vulnerabilidade &eacute; frequentemente explorada para o sequestro de sess&otilde;es <span class="blue-glow">(Session Hijacking)</span> atrav&eacute;s da intercepta&ccedil;&atilde;o de cookies de autentica&ccedil;&atilde;o.</p>
                         </div>
                         <div class="step-info step-3">
                             <h3 class="highlight">Passo 3: LFI / RFI</h3>
-                            <p>Vulnerabilidades de InclusÃ£o de Arquivos permitem que um atacante manipule os parÃ¢metros das requisiÃ§Ãµes na URL, viabilizando o acesso a diretÃ³rios restritos e a leitura de arquivos crÃ­ticos de configuraÃ§Ã£o do servidor.</p>
+                            <p>Vulnerabilidades de Inclus&atilde;o de Arquivos permitem que um atacante manipule os par&acirc;metros das requisi&ccedil;&otilde;es na URL, viabilizando o acesso a diret&oacute;rios restritos e a leitura de arquivos cr&iacute;ticos de configura&ccedil;&atilde;o do servidor.</p>
                         </div>
                     </div>
                     
@@ -374,7 +358,7 @@
                             <div id="db-dump-sqli" style="display:none; width: 100%;">
                                 <h3 style="color:#E50914; margin-bottom:10px;"><i class="fa-solid fa-triangle-exclamation"></i> VAZAMENTO DE BD DETECTADO</h3>
                                 <table class="db-table">
-                                    <tr><th>ID</th><th>UsuÃ¡rio</th><th>Senha_Hash</th></tr>
+                                    <tr><th>ID</th><th>Usu&aacute;rio</th><th>Senha_Hash</th></tr>
                                     <tr><td>1</td><td>admin</td><td>8c6976e5b5...</td></tr>
                                     <tr><td>2</td><td>clautenis</td><td>9d4e1e23...</td></tr>
                                     <tr><td>3</td><td>professor</td><td>5f4dcc3b5a...</td></tr>
@@ -384,8 +368,8 @@
 
                         <div class="sim-screen step-2" id="sim-xss">
                             <div class="forum-box">
-                                <h3 style="color:#333; margin-bottom:10px;">FÃ³rum da Turma</h3>
-                                <div class="comment"><strong>JoÃ£o:</strong> Pessoal, que horas Ã© a aula amanhÃ£?</div>
+                                <h3 style="color:#333; margin-bottom:10px;">F&oacute;rum da Turma</h3>
+                                <div class="comment"><strong>Jo&atilde;o:</strong> Pessoal, que horas &eacute; a aula amanh&atilde;?</div>
                                 <div class="comment" style="background:#fff3f3; border-left:4px solid #E50914;">
                                     <strong>Hacker:</strong> <span style="font-family:monospace; color:#E50914;">&lt;script&gt;capturar_cookie()&lt;/script&gt;</span>
                                 </div>
@@ -398,7 +382,7 @@
                             <div id="xss-logged" style="display:none; text-align:center;">
                                 <i class="fa-solid fa-user-shield" style="font-size:4rem; color:#10b981;"></i>
                                 <h2 style="color:#333; margin-top:10px;">Acesso Concedido</h2>
-                                <p style="color:#666; font-weight:bold;">SessÃ£o Sequestrada (AutenticaÃ§Ã£o Burlada)</p>
+                                <p style="color:#666; font-weight:bold;">Sess&atilde;o Sequestrada (Autentica&ccedil;&atilde;o Burlada)</p>
                             </div>
                         </div>
 
@@ -410,46 +394,46 @@
                                 <div><i class="fa-solid fa-file-lines file-icon" style="color:#E50914;"></i><br><span style="color:#333; font-size:0.8rem; font-weight:bold;">senhas_banco.txt</span></div>
                             </div>
                             <div class="download-box" id="lfi-download">
-                                <i class="fa-solid fa-circle-check"></i> ExfiltraÃ§Ã£o de Arquivo ConcluÃ­da!
+                                <i class="fa-solid fa-circle-check"></i> Extra&ccedil;&atilde;o de Arquivo Conclu&iacute;da!
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- EPISÃ“DIO 2: O S.O.C -->
+            <!-- EPISÓDIO 2: O S.O.C -->
             <div class="slide" id="slide-1" data-max-steps="6">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>02. O S.O.C.</h2>
                         <div class="step-info step-1 active-step">
                             <h3 class="highlight">Tier 1: Triagem</h3>
-                            <p>Atua na linha de frente do monitoramento de rede. Os analistas realizam a triagem inicial dos logs e alertas gerados pelas ferramentas de seguranÃ§a, distinguindo falsos positivos de incidentes reais.</p>
+                            <p>Atua na linha de frente do monitoramento de rede. Os analistas realizam a triagem inicial dos logs e alertas gerados pelas ferramentas de seguran&ccedil;a, distinguindo falsos positivos de incidentes reais.</p>
                         </div>
                         <div class="step-info step-2">
                             <h3 class="highlight">Tier 2: Resposta a Incidentes</h3>
-                            <p>ResponsÃ¡vel direto pela mitigaÃ§Ã£o. Ao confirmar uma ameaÃ§a, esta equipe executa aÃ§Ãµes tÃ¡ticas de contenÃ§Ã£o, como a implementaÃ§Ã£o de regras de bloqueio em firewalls e o isolamento de ativos afetados.</p>
+                            <p>Respons&aacute;vel direto pela mitiga&ccedil;&atilde;o. Ao confirmar uma amea&ccedil;a, esta equipe executa a&ccedil;&otilde;es t&aacute;ticas de conten&ccedil;&atilde;o, como a implementa&ccedil;&atilde;o de regras de bloqueio em firewalls e o isolamento de ativos afetados.</p>
                         </div>
                         <div class="step-info step-3">
                             <h3 class="highlight">Tier 3: Threat Hunting</h3>
-                            <p>Abordagem proativa de seguranÃ§a cibernÃ©tica. Os especialistas realizam varreduras contÃ­nuas na infraestrutura para identificar AmeaÃ§as Persistentes AvanÃ§adas (APTs) que conseguiram contornar as defesas perimetrais.</p>
+                            <p>Abordagem proativa de seguran&ccedil;a cibern&eacute;tica. Os especialistas realizam varreduras cont&iacute;nuas na infraestrutura para identificar Amea&ccedil;as Persistentes Avan&ccedil;adas (APTs) que conseguiram contornar as defesas perimetrais.</p>
                         </div>
                         <div class="step-info step-4">
-                            <h3 class="highlight">DinÃ¢mica de Equipes (Cores)</h3>
-                            <p>O S.O.C. atua em frentes estratÃ©gicas: o <span style="color:#E50914; font-weight:bold;">Red Team</span> conduz ataques simulados ofensivos, o <span style="color:#3b82f6; font-weight:bold;">Blue Team</span> gerencia as defesas da rede, e o <span style="color:#8b5cf6; font-weight:bold;">Purple Team</span> integra os aprendizados de ambos para aprimorar os protocolos de resposta.</p>
+                            <h3 class="highlight">Din&acirc;mica de Equipes (Cores)</h3>
+                            <p>O S.O.C. atua em frentes estrat&eacute;gicas: o <span style="color:#E50914; font-weight:bold;">Red Team</span> conduz ataques simulados ofensivos, o <span style="color:#3b82f6; font-weight:bold;">Blue Team</span> gerencia as defesas da rede, e o <span style="color:#8b5cf6; font-weight:bold;">Purple Team</span> integra os aprendizados de ambos para aprimorar os protocolos de resposta.</p>
                         </div>
                         <div class="step-info step-5">
                             <h3 class="highlight">Ferramentas: SIEM, TIPs e SOAR</h3>
-                            <p>A operaÃ§Ã£o Ã© viabilizada por tecnologias centrais: <strong>SIEM</strong> (centraliza e correlaciona logs), <strong>TIPs</strong> (fornece inteligÃªncia global sobre novas ameaÃ§as em tempo real) e <strong>SOAR</strong> (automatiza as respostas para conter ataques em fraÃ§Ãµes de segundos).</p>
+                            <p>A opera&ccedil;&atilde;o &eacute; viabilizada por tecnologias centrais: <strong>SIEM</strong> (centraliza e correlaciona logs), <strong>TIPs</strong> (fornece intelig&ecirc;ncia global sobre novas amea&ccedil;as em tempo real) e <strong>SOAR</strong> (automatiza as respostas para conter ataques em fra&ccedil;&otilde;es de segundos).</p>
                         </div>
                         <div class="step-info step-6">
                             <h3 class="highlight">Modelos Operacionais</h3>
-                            <p>As organizaÃ§Ãµes podem optar por um <strong>SOC Interno</strong> (infraestrutura <em>in-house</em> e equipe dedicada, garantindo controle local), ou um <strong>SOC Externo/MSSP</strong> (serviÃ§o terceirizado que oferece escalabilidade e monitoramento contÃ­nuo 24/7).</p>
+                            <p>As organiza&ccedil;&otilde;es podem optar por um <strong>SOC Interno</strong> (infraestrutura <em>in-house</em> e equipe dedicada, garantindo controle local), ou um <strong>SOC Externo/MSSP</strong> (servi&ccedil;o terceirizado que oferece escalabilidade e monitoramento cont&iacute;nuo 24/7).</p>
                         </div>
                     </div>
                     
                     <div class="visual-col">
-                        <div class="browser-top"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><div class="url-bar" style="text-align:center;">S.O.C. DASHBOARD E ESTRUTURA</div></div>
+                        <div class="browser-top"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><div class="url-bar" style="text-align:center;">DASHBOARD DO S.O.C.</div></div>
                         
                         <div class="sim-screen soc-dash active-sim step-1 step-2 step-3" style="padding:15px; position:relative;">
                             <div style="width:100%; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
@@ -460,14 +444,15 @@
                                 <div class="log-line">GET /api/v1/users - 200 OK - IP: 192.168.1.5</div>
                                 <div class="log-line">GET /images/logo.png - 200 OK - IP: 172.16.0.4</div>
                                 <div class="log-line">GET /css/style.css - 200 OK - IP: 192.168.1.10</div>
-                                <div class="log-line step-1 step-2 log-red" style="display:none; padding:5px; margin: 10px 0;" id="soc-alert">CRÃTICO: TENTATIVA DE INVASÃƒO DETECTADA - IP: 185.20.14.9 (RÃšSSIA)</div>
+                                <div class="log-line step-1 step-2 log-red" style="display:none; padding:5px; margin: 10px 0;" id="soc-alert">CR&Iacute;TICO: TENTATIVA DE INVAS&Atilde;O DETECTADA - IP: 185.20.14.9 (R&Uacute;SSIA)</div>
                                 <div class="log-line">GET /index.php - 200 OK - IP: 192.168.1.2</div>
                             </div>
                             <div id="soc-block" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.95); padding:25px; border:2px solid #10b981; border-radius:8px; text-align:center; box-shadow: 0 0 20px rgba(16,185,129,0.4);">
                                 <i class="fa-solid fa-lock" style="font-size:3rem; color:#10b981; margin-bottom:10px;"></i>
-                                <h3>AmeaÃ§a Contida</h3>
+                                <h3>Amea&ccedil;a Contida</h3>
                                 <p style="color:#aaa; font-size:0.9rem; margin-top:5px;">Bloqueio de IP executado pelo Tier 2</p>
                             </div>
+                            
                             <div class="radar-box" id="soc-hunt">
                                 <div class="radar-sweep"></div>
                                 <div class="server-box"><i class="fa-solid fa-server"></i> Server 01</div>
@@ -477,24 +462,24 @@
                         </div>
 
                         <div class="sim-screen step-4" style="background:#111; color:#fff;">
-                            <h3 style="margin-bottom:30px;">Engajamento TÃ¡tico</h3>
+                            <h3 style="margin-bottom:30px;">Engajamento T&aacute;tico</h3>
                             <div style="display:flex; justify-content:center; align-items:center; gap:15px; width:100%;">
                                 <div style="text-align:center; color:#E50914;"><i class="fa-solid fa-fire" style="font-size:3.5rem;"></i><br><b style="font-size:1.1rem; display:block; margin-top:10px;">RED TEAM</b><span style="font-size:0.8rem; color:#aaa;">Ofensiva</span></div>
                                 <i class="fa-solid fa-plus" style="font-size:2rem; color:#555;"></i>
                                 <div style="text-align:center; color:#3b82f6;"><i class="fa-solid fa-shield-halved" style="font-size:3.5rem;"></i><br><b style="font-size:1.1rem; display:block; margin-top:10px;">BLUE TEAM</b><span style="font-size:0.8rem; color:#aaa;">Defesa</span></div>
                                 <i class="fa-solid fa-arrow-right-long" style="font-size:2rem; color:#555;"></i>
-                                <div style="text-align:center; color:#8b5cf6;" id="purple-pulse"><i class="fa-solid fa-handshake" style="font-size:3.5rem;"></i><br><b style="font-size:1.1rem; display:block; margin-top:10px;">PURPLE TEAM</b><span style="font-size:0.8rem; color:#aaa;">EvoluÃ§Ã£o</span></div>
+                                <div style="text-align:center; color:#8b5cf6;" id="purple-pulse"><i class="fa-solid fa-handshake" style="font-size:3.5rem;"></i><br><b style="font-size:1.1rem; display:block; margin-top:10px;">PURPLE TEAM</b><span style="font-size:0.8rem; color:#aaa;">Evolu&ccedil;&atilde;o</span></div>
                             </div>
                         </div>
 
                         <div class="sim-screen step-5" style="background:#111; color:#fff;">
-                            <h3 style="margin-bottom:30px;">Stack TecnolÃ³gica Integrada</h3>
+                            <h3 style="margin-bottom:30px;">Stack Tecnol&oacute;gica Integrada</h3>
                             <div style="display:flex; justify-content:space-around; width:100%; align-items:center;">
                                 <div class="tool-box" style="border:2px solid #3b82f6;"><i class="fa-solid fa-database" style="color:#3b82f6;"></i><br><b>SIEM</b><br><span style="font-size:0.7rem; color:#aaa;">Coleta Logs</span></div>
                                 <i class="fa-solid fa-arrow-right" style="color:#aaa;"></i>
-                                <div class="tool-box" style="border:2px solid #E50914;"><i class="fa-solid fa-globe" style="color:#E50914;"></i><br><b>TIPs</b><br><span style="font-size:0.7rem; color:#aaa;">AmeaÃ§as Globais</span></div>
+                                <div class="tool-box" style="border:2px solid #E50914;"><i class="fa-solid fa-globe" style="color:#E50914;"></i><br><b>TIPs</b><br><span style="font-size:0.7rem; color:#aaa;">Amea&ccedil;as Globais</span></div>
                                 <i class="fa-solid fa-arrow-right" style="color:#aaa;"></i>
-                                <div class="tool-box" style="border:2px solid #10b981;"><i class="fa-solid fa-robot" style="color:#10b981;"></i><br><b>SOAR</b><br><span style="font-size:0.7rem; color:#aaa;">AÃ§Ã£o AutomÃ¡tica</span></div>
+                                <div class="tool-box" style="border:2px solid #10b981;"><i class="fa-solid fa-robot" style="color:#10b981;"></i><br><b>SOAR</b><br><span style="font-size:0.7rem; color:#aaa;">A&ccedil;&atilde;o Autom&aacute;tica</span></div>
                             </div>
                         </div>
 
@@ -507,7 +492,7 @@
                                 </div>
                                 <div style="background:#222; padding:20px; border-radius:8px; text-align:center; width:45%; border-top:4px solid #10b981;">
                                     <i class="fa-solid fa-cloud" style="font-size:3.5rem; margin-bottom:15px; color:#10b981;"></i>
-                                    <br><b style="font-size:1.1rem;">SOC Externo</b><br><span style="font-size:0.8rem; color:#aaa;">TerceirizaÃ§Ã£o (MSSP) e escalabilidade 24/7.</span>
+                                    <br><b style="font-size:1.1rem;">SOC Externo</b><br><span style="font-size:0.8rem; color:#aaa;">Terceiriza&ccedil;&atilde;o (MSSP) e escalabilidade 24/7.</span>
                                 </div>
                             </div>
                         </div>
@@ -516,18 +501,18 @@
                 </div>
             </div>
 
-            <!-- EPISÃ“DIO 3: NUVEM -->
+            <!-- EPISÓDIO 3: NUVEM -->
             <div class="slide" id="slide-2" data-max-steps="2">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>03. A NUVEM</h2>
                         <div class="step-info step-1 active-step">
                             <h3 class="highlight">Modelos: IaaS, PaaS e SaaS</h3>
-                            <p>A nuvem divide-se em trÃªs estruturas primÃ¡rias de serviÃ§o: <strong>IaaS</strong> (Infraestrutura terceirizada, mas o cliente gerencia o Sistema Operacional), <strong>PaaS</strong> (Plataforma focada em desenvolvedores com banco de dados pronto) e <strong>SaaS</strong> (Software 100% pronto e gerenciado pelo provedor, como o prÃ³prio modelo da Netflix).</p>
+                            <p>A nuvem divide-se em tr&ecirc;s estruturas prim&aacute;rias de servi&ccedil;o: <strong>IaaS</strong> (Infraestrutura terceirizada, mas o cliente gerencia o Sistema Operacional), <strong>PaaS</strong> (Plataforma focada em desenvolvedores com banco de dados pronto) e <strong>SaaS</strong> (Software 100% pronto e gerenciado pelo provedor, como o pr&oacute;prio modelo da Netflix).</p>
                         </div>
                         <div class="step-info step-2">
                             <h3 class="highlight">Responsabilidade Compartilhada</h3>
-                            <p>O provedor garante a disponibilidade fÃ­sica do servidor, mas a proteÃ§Ã£o lÃ³gica dos dados Ã© responsabilidade do cliente. Erros de configuraÃ§Ã£o causam incidentes globais, como os recentes vazamentos enfrentados por corporaÃ§Ãµes como a EA Games, Uber e Toyota.</p>
+                            <p>O provedor garante a disponibilidade f&iacute;sica do servidor, mas a prote&ccedil;&atilde;o l&oacute;gica dos dados &eacute; responsabilidade do cliente. Erros de configura&ccedil;&atilde;o causam incidentes globais, como os recentes vazamentos enfrentados por corpora&ccedil;&otilde;es como a EA Games, Uber e Toyota.</p>
                         </div>
                     </div>
 
@@ -537,11 +522,11 @@
                             <div style="display:flex; justify-content:space-around; width:100%; gap:15px; text-align:center;">
                                 <div style="background:#222; padding:20px 10px; border-radius:8px; width:30%; border-bottom:4px solid #3b82f6;">
                                     <i class="fa-solid fa-server" style="font-size:2.5rem; color:#3b82f6; margin-bottom:15px;"></i>
-                                    <br><b style="font-size:1.1rem;">IaaS</b><br><span style="font-size:0.75rem; color:#aaa; display:block; margin-top:5px;">Infraestrutura bruta. MÃ¡ximo controle do cliente.</span>
+                                    <br><b style="font-size:1.1rem;">IaaS</b><br><span style="font-size:0.75rem; color:#aaa; display:block; margin-top:5px;">Infraestrutura bruta. M&aacute;ximo controle do cliente.</span>
                                 </div>
                                 <div style="background:#222; padding:20px 10px; border-radius:8px; width:30%; border-bottom:4px solid #f59e0b;">
                                     <i class="fa-solid fa-code" style="font-size:2.5rem; color:#f59e0b; margin-bottom:15px;"></i>
-                                    <br><b style="font-size:1.1rem;">PaaS</b><br><span style="font-size:0.75rem; color:#aaa; display:block; margin-top:5px;">Foco no cÃ³digo. Banco e S.O. prontos.</span>
+                                    <br><b style="font-size:1.1rem;">PaaS</b><br><span style="font-size:0.75rem; color:#aaa; display:block; margin-top:5px;">Foco no c&oacute;digo. Banco e S.O. prontos.</span>
                                 </div>
                                 <div style="background:#222; padding:20px 10px; border-radius:8px; width:30%; border-bottom:4px solid #10b981;">
                                     <i class="fa-solid fa-laptop-code" style="font-size:2.5rem; color:#10b981; margin-bottom:15px;"></i>
@@ -563,33 +548,32 @@
                 </div>
             </div>
 
-            <!-- EPISÃ“DIO 4: DEEPFAKES -->
+            <!-- EPISÓDIO 4: DEEPFAKES -->
             <div class="slide" id="slide-3" data-max-steps="2">
                 <div class="slide-grid">
                     <div class="text-col">
-                        <h2>04. AMEAÃ‡AS SINTÃ‰TICAS</h2>
+                        <h2>04. AMEA&Ccedil;AS SINT&Eacute;TICAS</h2>
                         <div class="step-info step-1 active-step">
-                            <h3 class="highlight">O Perigo do Vishing</h3>
-                            <p>A InteligÃªncia Artificial Generativa viabiliza a sÃ­ntese precisa de padrÃµes vocais. Cibercriminosos exploram essa tÃ©cnica de <em>Vishing</em> enviando Ã¡udios sintÃ©ticos via WhatsApp para simular a voz de diretores ou professores, enganando familiares ou funcionÃ¡rios para extrair dados e vantagens.</p>
+                            <h3 class="highlight">O Pre&ccedil;o do Pix (Clonagem de Voz)</h3>
+                            <p>A Intelig&ecirc;ncia Artificial Generativa viabiliza a s&iacute;ntese precisa de padr&otilde;es vocais. Cibercriminosos exploram essa t&eacute;cnica de <em>Vishing</em> enviando &aacute;udios sint&eacute;ticos via WhatsApp para simular a voz de diretores ou professores, enganando familiares ou funcion&aacute;rios para extrair dados e vantagens.</p>
                         </div>
                         <div class="step-info step-2">
-                            <h3 class="highlight">Ambiente de SimulaÃ§Ã£o</h3>
-                            <p>Procederemos agora com a aplicaÃ§Ã£o prÃ¡tica destes conceitos, utilizando um ambiente de simulaÃ§Ã£o controlada da nossa infraestrutura.</p>
-                            <button id="btn-open-quiz" style="background: #3b82f6; color: #fff; border: none; padding: 15px 30px; font-size: 1.2rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 15px;"><i class="fa-solid fa-qrcode"></i> AUTORIZAR SIMULAÃ‡ÃƒO</button>
+                            <h3 class="highlight">Ambiente de Simula&ccedil;&atilde;o</h3>
+                            <p>Procederemos agora com a aplica&ccedil;&atilde;o pr&aacute;tica destes conceitos, utilizando um ambiente de simula&ccedil;&atilde;o controlada da nossa infraestrutura.</p>
+                            <button id="btn-open-quiz" style="background: #3b82f6; color: #fff; border: none; padding: 15px 30px; font-size: 1.2rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 15px;"><i class="fa-solid fa-qrcode"></i> AUTORIZAR SIMULA&Ccedil;&Atilde;O</button>
                         </div>
                     </div>
                     
                     <div class="visual-col" style="background:#e5ddd5; color:#000;">
-                        <div class="browser-top" style="background:#075e54;"><span style="color:#fff; font-weight:bold; padding-left:10px;"><i class="fa-solid fa-arrow-left"></i> Escola / Professor</span></div>
+                        <div class="browser-top" style="background:#075e54;"><span style="color:#fff; font-weight:bold; padding-left:10px;"><i class="fa-solid fa-arrow-left"></i> Diretor / Professor</span></div>
                         <div class="sim-screen active-sim step-1" style="background:transparent; padding:10px; justify-content:flex-start;">
                             <div style="background:#dcf8c6; padding:15px; border-radius:8px; align-self:flex-start; max-width:90%; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
                                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
                                     <i class="fa-solid fa-play" style="color:#aaa; font-size:1.5rem;"></i> <div style="height:4px; background:#aaa; width:120px; border-radius:2px;" id="audio-progress"></div> <span style="font-size:0.8rem; color:#aaa;">0:07</span>
                                 </div>
-                                <!-- NOVO TEXTO DEEPFAKE -->
-                                <p style="font-size:1rem; font-weight:500;">"Seu filho Ã© o melhor aluno de TI do PiauÃ­, estamos muito gratos por ter um aluno desse."</p>
+                                <p style="font-size:1rem; font-weight:500;">"Seu filho &eacute; o melhor aluno de TI do Piau&iacute;, estamos muito gratos por ter um aluno desse."</p>
                             </div>
-                            <div id="ai-alert" style="display:none; margin-top:auto; font-size:0.9rem; color:#E50914; font-weight:bold; background:rgba(229,9,20,0.1); padding:15px; border-radius:8px; text-align:center; border: 1px solid #E50914;"><i class="fa-solid fa-robot"></i> Alerta: PadrÃ£o SintÃ©tico Detectado pela IA de Defesa</div>
+                            <div id="ai-alert" style="display:none; margin-top:auto; font-size:0.9rem; color:#E50914; font-weight:bold; background:rgba(229,9,20,0.1); padding:15px; border-radius:8px; text-align:center; border: 1px solid #E50914;"><i class="fa-solid fa-robot"></i> Alerta: Padr&atilde;o Sint&eacute;tico Detectado pela IA de Defesa</div>
                         </div>
                         <div class="sim-screen step-2" style="background:#111; color:#fff;">
                             <i class="fa-solid fa-gamepad" style="font-size:5rem; color:#3b82f6;"></i>
@@ -599,18 +583,18 @@
                 </div>
             </div>
 
-            <!-- EPISÃ“DIO 5: ISO/CISO -->
+            <!-- EPISÓDIO 5: ISO/CISO -->
             <div class="slide" id="slide-4" data-max-steps="2">
                 <div class="slide-grid">
                     <div class="text-col">
-                        <h2>05. GOVERNANÃ‡A E ISO 27001</h2>
+                        <h2>05. GOVERNAN&Ccedil;A E ISO 27001</h2>
                         <div class="step-info step-1 active-step">
-                            <h3 class="highlight">A FunÃ§Ã£o do CISO</h3>
-                            <p>O <em>Chief Information Security Officer</em> atua como o elo estratÃ©gico. Ele traduz vulnerabilidades sistÃªmicas altamente tÃ©cnicas para a alta gestÃ£o corporativa, evidenciando o risco financeiro e reputacional de nÃ£o investir em proteÃ§Ã£o de dados.</p>
+                            <h3 class="highlight">A Fun&ccedil;&atilde;o do CISO</h3>
+                            <p>O <em>Chief Information Security Officer</em> atua como o elo estrat&eacute;gico. Ele traduz vulnerabilidades sist&ecirc;micas altamente t&eacute;cnicas para a alta gest&atilde;o corporativa, evidenciando o risco financeiro e reputacional de n&atilde;o investir em prote&ccedil;&atilde;o de dados.</p>
                         </div>
                         <div class="step-info step-2">
-                            <h3 class="highlight">A TrÃ­ade CIA (ISO 27001)</h3>
-                            <p>A norma internacional fundamenta-se em trÃªs pilares: <span class="blue-glow">Confidencialidade</span> (acesso estritamente autorizado), <span class="blue-glow">Integridade</span> (salvaguarda contra modificaÃ§Ãµes indevidas) e <span class="blue-glow">Disponibilidade</span> (sistemas e serviÃ§os operantes).</p>
+                            <h3 class="highlight">A Tr&iacute;ade CIA (ISO 27001)</h3>
+                            <p>A norma internacional fundamenta-se em tr&ecirc;s pilares: <span class="blue-glow">Confidencialidade</span> (acesso estritamente autorizado), <span class="blue-glow">Integridade</span> (salvaguarda contra modifica&ccedil;&otilde;es indevidas) e <span class="blue-glow">Disponibilidade</span> (sistemas e servi&ccedil;os operantes).</p>
                         </div>
                     </div>
                     
@@ -619,14 +603,14 @@
                             <div class="ciso-box">
                                 <div class="tech-risk" style="color:#aaa;">
                                     <i class="fa-solid fa-bug" style="font-size:2.5rem; margin-bottom:10px;"></i>
-                                    <h4>Risco TÃ©cnico</h4>
-                                    <p style="font-size:0.8rem; margin-top:10px;">Vulnerabilidade de execuÃ§Ã£o de cÃ³digo descoberta no DB principal.</p>
+                                    <h4>Risco T&eacute;cnico</h4>
+                                    <p style="font-size:0.8rem; margin-top:10px;">Vulnerabilidade de execu&ccedil;&atilde;o de c&oacute;digo descoberta no DB principal.</p>
                                 </div>
                                 <i class="fa-solid fa-arrow-right-long" style="font-size:3rem; color:#3b82f6; margin: 0 15px;"></i>
                                 <div class="bus-risk" id="ciso-translation">
                                     <i class="fa-solid fa-sack-dollar" style="font-size:2.5rem; margin-bottom:10px;"></i>
-                                    <h4>Risco de NegÃ³cio</h4>
-                                    <p style="font-size:0.8rem; margin-top:10px;">Risco iminente de exposiÃ§Ã£o de CPFs e sanÃ§Ãµes da LGPD (R$ 5 Mi).</p>
+                                    <h4>Risco de Neg&oacute;cio</h4>
+                                    <p style="font-size:0.8rem; margin-top:10px;">Risco iminente de exposi&ccedil;&atilde;o de CPFs e san&ccedil;&otilde;es da LGPD (R$ 5 Mi).</p>
                                 </div>
                             </div>
                         </div>
@@ -643,8 +627,8 @@
             </div>
             
             <div class="slide" id="slide-5" data-max-steps="1">
-                <h2>06. CONCLUSÃƒO</h2>
-                <p style="font-size: 1.5rem; text-align: center; margin-top: 50px;">Agradecemos Ã  Professora ClÃ¡utenis e a toda a turma pela atenÃ§Ã£o.</p>
+                <h2>06. CONCLUS&Atilde;O</h2>
+                <p style="font-size: 1.5rem; text-align: center; margin-top: 50px;">Agradecemos &agrave; Professora Cl&aacute;utenis e a toda a turma pela aten&ccedil;&atilde;o.</p>
             </div>
         </div>
 
@@ -652,7 +636,7 @@
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
             <div class="nav-buttons">
                 <button class="control-btn" id="btn-prev-slide"><i class="fa-solid fa-backward-step"></i></button>
-                <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer;" id="btn-change-profile">ðŸ—£ <span id="current-presenter-name">Francisco</span></span>
+                <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer;" id="btn-change-profile">🗣 <span id="current-presenter-name">Francisco</span></span>
                 <button class="control-btn" id="btn-next-slide"><i class="fa-solid fa-forward-step"></i></button>
             </div>
         </div>
@@ -662,10 +646,10 @@
     <div id="quiz-overlay">
         <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
             <h2 style="font-family: 'Bebas Neue'; font-size: 5rem; color: #3b82f6; margin: 0;">IFPIFLIX QUIZ</h2>
-            <p style="font-size: 1.5rem; font-weight: bold; color: #ccc;">Escaneie o QR Code com a cÃ¢mera do celular para jogar!</p>
+            <p style="font-size: 1.5rem; font-weight: bold; color: #ccc;">Escaneie o QR Code com a c&acirc;mera do celular para jogar!</p>
             <div class="qr-image"></div>
             <h3 style="color: #10b981; font-size: 2rem; margin-bottom: 30px;" id="player-count"><i class="fa-solid fa-users"></i> Jogadores: 0</h3>
-            <button class="btn-start-quiz" onclick="window.iniciarPartidaMaster()" id="btn-master-start">â–¶ INICIAR PARTIDA</button>
+            <button class="btn-start-quiz" onclick="window.iniciarPartidaMaster()" id="btn-master-start">▶ INICIAR PARTIDA</button>
         </div>
 
         <div id="quiz-active-view">
@@ -682,9 +666,9 @@
 
     <!-- TELA HACKED BLINDADA -->
     <div id="proj-evt-screen">
-        <div id="p-dyn-icon" style="font-size: 8rem; color: #fff; margin-bottom: 20px;"><i class="fa-solid fa-shield"></i></div>
+        <div id="p-dyn-icon" style="font-size: 8rem; color: #fff; margin-bottom: 20px;"><i class="fa-solid fa-shield-halved"></i></div>
         <h1 style="font-family: 'Share Tech Mono'; font-size: 4rem; color: #fff;" id="p-dyn-title">SISTEMA EM TESTE</h1>
-        <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">ExtraÃ§Ã£o de dados de rede simulada com sucesso.</p>
+        <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extra&ccedil;&atilde;o de dados de rede simulada com sucesso.</p>
     </div>
 
     <!-- TELA DE BLOQUEIO E TERMINAL HACKER -->
@@ -696,10 +680,10 @@
             <button id="btn-error-switch" style="background: #fff; color: #000; border: none; padding: 12px 25px; font-size: 1.1rem; font-weight: bold; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-key"></i> Autenticar Administrador</button>
             
             <div id="hacker-terminal" style="display:none; text-align:left; background:#000; border:1px solid #333; padding:15px; margin-top:20px; font-family:monospace; border-radius: 4px;">
-                <div style="color:#0f0; margin-bottom:10px;">> ConexÃ£o interceptada.</div>
+                <div style="color:#0f0; margin-bottom:10px;">> Conex&atilde;o interceptada.</div>
                 <div style="color:#0f0; display:flex; align-items:center; gap: 10px; flex-wrap: wrap;">
                     > admin@ifpiflix:~$ 
-                    <input type="password" id="hacker-pwd" autocomplete="off" placeholder="senha" style="background:transparent; border:none; border-bottom:1px solid #0f0; color:#0f0; outline:none; font-family:monospace; width:100px; font-size: 1rem;">
+                    <input type="password" id="hacker-pwd" autocomplete="off" placeholder="Senha" style="background:transparent; border:none; border-bottom:1px solid #0f0; color:#0f0; outline:none; font-family:monospace; width:100px; font-size: 1rem;">
                     <button id="btn-hacker-ok" style="background:#0f0; color:#000; border:none; font-weight:bold; cursor:pointer; padding:5px 15px; border-radius: 4px;">OK</button>
                 </div>
             </div>
@@ -709,14 +693,15 @@
     <div id="credits-screen" class="screen">
         <div style="max-width: 600px; text-align: center;">
             <div style="font-family: 'Bebas Neue'; font-size: 5rem; color: var(--netflix-red); letter-spacing: 3px;">IFPIFLIX</div>
-            <h2 style="font-size: 2rem; margin-bottom: 10px;">Fim da ApresentaÃ§Ã£o</h2>
-            <p style="color: #888; font-size: 1.1rem;">SeguranÃ§a da InformaÃ§Ã£o â€” Grupo 6</p>
+            <h2 style="font-size: 2rem; margin-bottom: 10px;">Fim da Apresenta&ccedil;&atilde;o</h2>
+            <p style="color: #888; font-size: 1.1rem;">Seguran&ccedil;a da Informa&ccedil;&atilde;o &mdash; Grupo 6</p>
             <ul class="credits-list">
-                <li>Apresentador â€¢ <strong>Francisco</strong></li><li>Apresentador â€¢ <strong>JP Santos</strong></li><li>Apresentador â€¢ <strong>Pedro</strong></li><li>Apresentador â€¢ <strong>JP Silva</strong></li><li>Apresentador â€¢ <strong>Nicolas</strong></li>
+                <li>Apresentador • <strong>Francisco</strong></li><li>Apresentador • <strong>JP Santos</strong></li><li>Apresentador • <strong>Pedro</strong></li><li>Apresentador • <strong>JP Silva</strong></li><li>Apresentador • <strong>Nicolas</strong></li>
             </ul>
         </div>
     </div>
 
+    <!-- LÓGICA GERAL E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
@@ -729,36 +714,32 @@
             { id: 0, title: "T1:E1 - Vulnerabilidades", presenter: "Francisco" }, 
             { id: 1, title: "T1:E2 - O S.O.C.", presenter: "JP Santos" }, 
             { id: 2, title: "T1:E3 - A Nuvem", presenter: "Pedro" }, 
-            { id: 3, title: "T1:E4 - AmeaÃ§as SintÃ©ticas", presenter: "JP Silva" }, 
+            { id: 3, title: "T1:E4 - Amea&ccedil;as Sint&eacute;ticas", presenter: "JP Silva" }, 
             { id: 4, title: "T1:E5 - ISO 27001", presenter: "Nicolas" }, 
-            { id: 5, title: "T1:E6 - ConclusÃ£o", presenter: "Nicolas" } 
+            { id: 5, title: "T1:E6 - Conclus&atilde;o", presenter: "Nicolas" } 
         ];
 
         let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
         let adPlayed = false; let pendingQuizOpen = false;
         let currentStep = 1; let animationInterval; 
-        let deepfakeAudioPlayed = false; // Controle para tocar o Ã¡udio sÃ³ uma vez
+        let deepfakeAudioPlayed = false; 
 
-        function unlockMedia() { 
-            const vid = document.getElementById('ad-video'); vid.muted = true; vid.play().then(()=>{ vid.pause(); vid.currentTime=0; vid.muted=false; }).catch(()=>{}); 
-            const aud = document.getElementById('tudum-audio'); aud.muted = true; aud.play().then(()=>{ aud.pause(); aud.currentTime=0; aud.muted=false; }).catch(()=>{}); 
-            const dfAud = document.getElementById('deepfake-audio'); dfAud.muted = true; dfAud.play().then(()=>{ dfAud.pause(); dfAud.currentTime=0; dfAud.muted=false; }).catch(()=>{});
-        }
+        function unlockMedia() { const vid = document.getElementById('ad-video'); vid.muted = true; vid.play().then(()=>{ vid.pause(); vid.currentTime=0; vid.muted=false; }).catch(()=>{}); const aud = document.getElementById('tudum-audio'); aud.muted = true; aud.play().then(()=>{ aud.pause(); aud.currentTime=0; aud.muted=false; }).catch(()=>{}); const dfAud = document.getElementById('deepfake-audio'); dfAud.muted = true; dfAud.play().then(()=>{ dfAud.pause(); dfAud.currentTime=0; dfAud.muted=false; }).catch(()=>{}); }
 
         function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const t = document.getElementById(id); if(t) t.classList.add('active'); }
         window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
         window.goToProfiles = function() { switchScreen('profile-screen'); }
 
         function selectProfile(name) {
-            activeProfile = name; document.getElementById('nav-profile-name').innerText = name; document.getElementById('current-presenter-name').innerText = name;
+            activeProfile = name; document.getElementById('nav-profile-name').innerHTML = name; document.getElementById('current-presenter-name').innerHTML = name;
             if (!started) { switchScreen('home-screen'); } else { if(targetSlide === 0 && !adPlayed) { playAd(0); } else { simulateLoading(() => { renderSlide(targetSlide); switchScreen('player-screen'); }); } }
         }
 
-        window.selectMiniProfile = function(name) { activeProfile = name; document.getElementById('nav-profile-name').innerText = name; document.getElementById('current-presenter-name').innerText = name; document.getElementById('mini-profile-menu').style.display = 'none'; renderSlide(targetSlide); }
+        window.selectMiniProfile = function(name) { activeProfile = name; document.getElementById('nav-profile-name').innerHTML = name; document.getElementById('current-presenter-name').innerHTML = name; document.getElementById('mini-profile-menu').style.display = 'none'; renderSlide(targetSlide); }
 
         function renderSlide(idx) {
-            currentSlide = idx; currentStep = 1; deepfakeAudioPlayed = false; // Reseta controle de Ã¡udio ao mudar de slide
-            document.getElementById('player-ep-title').innerText = script[idx].title; document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
+            currentSlide = idx; currentStep = 1; deepfakeAudioPlayed = false; 
+            document.getElementById('player-ep-title').innerHTML = script[idx].title; document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); 
             const activeS = document.getElementById(`slide-${idx}`);
             activeS.classList.add('active');
@@ -776,18 +757,18 @@
 
             if (currentSlide === 0) {
                 if (stepNum === 1) { 
-                    document.getElementById('ep1-url').innerText = "https://sistema-ifpi.com.br/login";
+                    document.getElementById('ep1-url').innerHTML = "https://sistema-ifpi.com.br/login";
                     document.getElementById('ep1-url').classList.remove('url-highlight');
                     const runSqli = () => {
                         const ty = document.getElementById('typewriter-user');
-                        ty.style.animation = 'none'; ty.innerText = ""; document.getElementById('db-dump-sqli').style.display = 'none'; document.getElementById('login-form-sqli').style.display = 'block';
-                        setTimeout(() => { ty.style.animation = 'typing 3s steps(20, end) forwards'; ty.innerText = "' OR 1=1 --"; }, 1500);
+                        ty.style.animation = 'none'; ty.innerHTML = ""; document.getElementById('db-dump-sqli').style.display = 'none'; document.getElementById('login-form-sqli').style.display = 'block';
+                        setTimeout(() => { ty.style.animation = 'typing 3s steps(20, end) forwards'; ty.innerHTML = "' OR 1=1 --"; }, 1500);
                         setTimeout(() => { document.getElementById('login-form-sqli').style.display = 'none'; document.getElementById('db-dump-sqli').style.display = 'block'; }, 6000); 
                     };
                     runSqli(); animationInterval = setInterval(runSqli, 12000); 
                 }
                 else if (stepNum === 2) { 
-                    document.getElementById('ep1-url').innerText = "https://sistema-ifpi.com.br/forum";
+                    document.getElementById('ep1-url').innerHTML = "https://sistema-ifpi.com.br/forum";
                     document.getElementById('ep1-url').classList.remove('url-highlight');
                     const runXss = () => {
                         document.getElementById('xss-alert').style.display = 'none'; document.getElementById('xss-logged').style.display = 'none'; document.querySelector('.forum-box').style.display = 'block';
@@ -797,7 +778,7 @@
                     runXss(); animationInterval = setInterval(runXss, 14000); 
                 }
                 else if (stepNum === 3) { 
-                    document.getElementById('ep1-url').innerText = "https://sistema-ifpi.com.br/index.php?pasta=arquivos_secretos";
+                    document.getElementById('ep1-url').innerHTML = "https://sistema-ifpi.com.br/index.php?pasta=arquivos_secretos";
                     document.getElementById('ep1-url').classList.add('url-highlight');
                     const runLfi = () => {
                         document.getElementById('lfi-download').style.display = 'none';
@@ -826,11 +807,10 @@
 
             if (currentSlide === 3) {
                 if (stepNum === 1) {
-                    // ÃUDIO DEEPFAKE: Toca apenas uma vez!
                     if (!deepfakeAudioPlayed) {
                         const dfAudio = document.getElementById('deepfake-audio');
                         dfAudio.volume = 1.0;
-                        dfAudio.play().catch(e => console.log("Ãudio deepfake bloqueado:", e));
+                        dfAudio.play().catch(e => console.log("Áudio deepfake bloqueado:", e));
                         deepfakeAudioPlayed = true;
                     }
 
@@ -877,11 +857,11 @@
             }
         });
 
-        function simulateLoading(callback) { switchScreen('loading-screen'); let p = 0; const txt = document.getElementById('loading-perc'); const int = setInterval(() => { p += Math.floor(Math.random() * 30) + 15; if(p >= 100) { p = 100; clearInterval(int); setTimeout(callback, 300); } txt.innerText = p + '%'; }, 150); }
-        window.startPresentationAt = function(index) { targetSlide = index; activeProfile = script[index].presenter; document.getElementById('nav-profile-name').innerText = activeProfile; document.getElementById('current-presenter-name').innerText = activeProfile; started = true; if(index === 0 && !adPlayed) { playAd(index); } else { simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); }); } }
+        function simulateLoading(callback) { switchScreen('loading-screen'); let p = 0; const txt = document.getElementById('loading-perc'); const int = setInterval(() => { p += Math.floor(Math.random() * 30) + 15; if(p >= 100) { p = 100; clearInterval(int); setTimeout(callback, 300); } txt.innerHTML = p + '%'; }, 150); }
+        window.startPresentationAt = function(index) { targetSlide = index; activeProfile = script[index].presenter; document.getElementById('nav-profile-name').innerHTML = activeProfile; document.getElementById('current-presenter-name').innerHTML = activeProfile; started = true; if(index === 0 && !adPlayed) { playAd(index); } else { simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); }); } }
         function playAd(index) { targetSlide = index; switchScreen('ad-screen'); const vid = document.getElementById('ad-video'); vid.currentTime = 0; vid.volume = 1.0; const playPromise = vid.play(); if (playPromise !== undefined) { playPromise.catch(e => { document.getElementById('btn-force-play').style.display = 'block'; }); } vid.onended = finishAd; }
         document.getElementById('btn-force-play').addEventListener('click', () => { document.getElementById('btn-force-play').style.display = 'none'; document.getElementById('ad-video').play().catch(e => { finishAd(); }); });
-        function finishAd() { adPlayed = true; document.getElementById('ad-video').pause(); const tudum = document.getElementById('tudum-audio'); tudum.volume = 1.0; tudum.play().catch(e => console.log('Ãudio Ta-dum bloqueado')); simulateLoading(() => { renderSlide(targetSlide); switchScreen('player-screen'); }); }
+        function finishAd() { adPlayed = true; document.getElementById('ad-video').pause(); const tudum = document.getElementById('tudum-audio'); tudum.volume = 1.0; tudum.play().catch(e => console.log('Áudio Ta-dum bloqueado')); simulateLoading(() => { renderSlide(targetSlide); switchScreen('player-screen'); }); }
         document.getElementById('btn-skip-ad').addEventListener('click', finishAd);
 
         document.querySelectorAll('.profile-card').forEach(c => { c.addEventListener('click', () => { unlockMedia(); selectProfile(c.getAttribute('data-profile')); }); });
@@ -893,7 +873,7 @@
         document.getElementById('btn-open-quiz').addEventListener('click', () => { 
             if(pendingQuizOpen) return;
             pendingQuizOpen = true;
-            document.getElementById('error-message').innerHTML = "ALERTA DE SEGURANÃ‡A DETECTADO.<br><br>PermissÃ£o negada para acessar o ambiente de simulaÃ§Ã£o. AutorizaÃ§Ã£o de Administrador necessÃ¡ria.";
+            document.getElementById('error-message').innerHTML = "ALERTA DE SEGURAN&Ccedil;A DETECTADO.<br><br>Permiss&atilde;o negada para acessar o ambiente de simula&ccedil;&atilde;o. Autoriza&ccedil;&atilde;o de Administrador necess&aacute;ria.";
             switchScreen('error-screen'); 
             document.getElementById('error-screen').classList.add('glitching'); 
             document.getElementById('error-content').classList.remove('show');
@@ -913,8 +893,8 @@
             pendingQuizOpen = false;
             document.getElementById('hacker-terminal').style.display = 'none';
             activeProfile = 'JP Santos';
-            document.getElementById('nav-profile-name').innerText = activeProfile;
-            document.getElementById('current-presenter-name').innerText = activeProfile;
+            document.getElementById('nav-profile-name').innerHTML = activeProfile;
+            document.getElementById('current-presenter-name').innerHTML = activeProfile;
             switchScreen('player-screen');
             document.getElementById('quiz-lobby').style.display = 'flex';
             document.getElementById('quiz-active-view').style.display = 'none';
@@ -930,30 +910,30 @@
         let timerInt;
         function runProjectorTimer(seconds, callback) { 
             if(timerInt) clearInterval(timerInt);
-            let s = seconds; const el = document.getElementById('proj-timer'); el.innerText = s; el.style.borderColor = '#3b82f6'; el.style.color = '#fff'; 
+            let s = seconds; const el = document.getElementById('proj-timer'); el.innerHTML = s; el.style.borderColor = '#3b82f6'; el.style.color = '#fff'; 
             timerInt = setInterval(() => { 
-                s--; el.innerText = s; 
+                s--; el.innerHTML = s; 
                 if(s <= 5) { el.style.borderColor = '#E50914'; el.style.color = '#E50914'; } 
                 if(s <= 0) { clearInterval(timerInt); callback(); } 
             }, 1000); 
         }
 
-        function fetchAndShowWinners(correctLetter) { get(ref(db, 'participantes')).then((snapshot) => { const box = document.getElementById('proj-winners'); if (snapshot.exists()) { const data = snapshot.val(); const winners = Object.values(data).filter(p => p.ans === correctLetter).map(p => p.nome); if (winners.length > 0) { box.innerHTML = winners.map(n => `<span class="winner-badge">${n}</span>`).join(''); } else { box.innerHTML = "<span style='color: #888; font-size: 1.2rem;'>NinguÃ©m acertou essa! ðŸ˜¢</span>"; } } else { box.innerHTML = "<span style='color: #888; font-size: 1.2rem;'>Nenhum jogador registrado.</span>"; } }); }
+        function fetchAndShowWinners(correctLetter) { get(ref(db, 'participantes')).then((snapshot) => { const box = document.getElementById('proj-winners'); if (snapshot.exists()) { const data = snapshot.val(); const winners = Object.values(data).filter(p => p.ans === correctLetter).map(p => p.nome); if (winners.length > 0) { box.innerHTML = winners.map(n => `<span class="winner-badge">${n}</span>`).join(''); } else { box.innerHTML = "<span style='color: #888; font-size: 1.2rem;'>Ningu&eacute;m acertou essa! 😢</span>"; } } else { box.innerHTML = "<span style='color: #888; font-size: 1.2rem;'>Nenhum jogador registrado.</span>"; } }); }
 
         window.iniciarPartidaMaster = function() {
             try {
                 document.getElementById('quiz-lobby').style.display = 'none'; 
                 document.getElementById('quiz-active-view').style.display = 'flex';
-                document.getElementById('proj-q-text').innerText = "Qual Ã© o 'elo mais fraco' na SeguranÃ§a da InformaÃ§Ã£o?"; 
+                document.getElementById('proj-q-text').innerHTML = "Qual &eacute; o 'elo mais fraco' na Seguran&ccedil;a da Informa&ccedil;&atilde;o?"; 
                 document.getElementById('proj-result-area').style.display = 'none';
                 set(ref(db, 'quiz_state'), 'q1'); 
                 runProjectorTimer(20, () => {
-                    set(ref(db, 'quiz_state'), 'q1_result'); document.getElementById('proj-timer').innerText = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerText = "A resposta correta era a C: O UsuÃ¡rio";
+                    set(ref(db, 'quiz_state'), 'q1_result'); document.getElementById('proj-timer').innerHTML = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerHTML = "A resposta correta era a C: O Usu&aacute;rio";
                     fetchAndShowWinners("C");
                     setTimeout(() => {
-                        set(ref(db, 'quiz_state'), 'q2'); document.getElementById('proj-q-text').innerText = "O que caracteriza essencialmente um ataque de Phishing?"; document.getElementById('proj-result-area').style.display = 'none'; document.getElementById('proj-winners').innerHTML = ""; 
+                        set(ref(db, 'quiz_state'), 'q2'); document.getElementById('proj-q-text').innerHTML = "O que caracteriza essencialmente um ataque de Phishing?"; document.getElementById('proj-result-area').style.display = 'none'; document.getElementById('proj-winners').innerHTML = ""; 
                         runProjectorTimer(20, () => {
-                            set(ref(db, 'quiz_state'), 'q2_result'); document.getElementById('proj-timer').innerText = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerText = "A resposta correta era a B: Engenharia Social";
+                            set(ref(db, 'quiz_state'), 'q2_result'); document.getElementById('proj-timer').innerHTML = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerHTML = "A resposta correta era a B: Engenharia Social";
                             fetchAndShowWinners("B");
                             setTimeout(() => {
                                 set(ref(db, 'quiz_state'), 'final_evt'); document.getElementById('quiz-overlay').style.display = 'none'; const evtScreen = document.getElementById('proj-evt-screen'); evtScreen.style.display = 'flex'; evtScreen.classList.add('blink');
@@ -962,11 +942,8 @@
                         });
                     }, 7000); 
                 });
-            } catch(err) { alert("Erro ao iniciar a partida: " + err.message); }
+            } catch(err) { alert("Erro ao iniciar a partida..."); }
         };
     </script>
 </body>
 </html>
-
-
-```
