@@ -21,12 +21,12 @@
 
         .avatar { width: 150px; height: 150px; border-radius: 4px; border: 2px solid transparent; background-size: cover; background-position: center; transition: 0.3s; }
 
-        :root { --netflix-red: #E50914; --netflix-dark: #000000; --netflix-bg: #141414; --text-dim: #808080; --neon-blue: #00f0ff; --rpg-gold: #d4af37;}
+        :root { --netflix-red: #E50914; --netflix-dark: #000000; --netflix-bg: #141414; --text-dim: #808080; --rpg-gold: #d4af37;}
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: var(--netflix-dark); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; width: 100vw; height: 100vh; user-select: none; }
 
         .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; display: flex; flex-direction: column; }
-        .screen.active { opacity: 1; pointer-events: auto; }
+        .screen.active { opacity: 1; pointer-events: auto; z-index: 10;}
 
         /* TELAS BASICAS */
         #profile-screen { justify-content: center; align-items: center; background: #141414; z-index: 50; }
@@ -42,7 +42,7 @@
         .spinner { width: 80px; height: 80px; border: 5px solid rgba(229, 9, 20, 0.3); border-top: 5px solid var(--netflix-red); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         .loading-text { font-size: 1.5rem; font-weight: bold; color: var(--netflix-red); font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
         
-        /* TELA INICIAL (BANNER E CATALOGO) */
+        /* TELA INICIAL */
         #home-screen { background: var(--netflix-bg); z-index: 40; overflow-y: auto; overflow-x: hidden;}
         .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
@@ -63,13 +63,11 @@
         .card-portrait, .card-landscape { border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
         .card-portrait { flex: 0 0 160px; height: 240px; }
         .card-landscape { flex: 0 0 260px; height: 146px; }
-        .card-portrait-content, .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; }
-        .card-portrait-content { padding: 10px; text-align: center; }
+        .card-portrait-content, .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
         .card-landscape-content { padding: 10px 15px; text-align: left; }
         .card-portrait:hover, .card-landscape:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); z-index: 10;}
         .card-portrait h4, .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
-        /* CLASSES ORIGINAIS (TI) */
         .p-stranger { background-image: url('stranger_pings.jpg'); } .p-dragon { background-image: url('como_treinar_ia.jpg'); } .p-pix { background-image: url('deepfake_pix.jpg'); } .p-kpop { background-image: url('guerreiras_kpop.jpg'); } .p-nicolas { background-image: url('nicolas_o_grande.jpg'); } .p-lalalan { background-image: url('la_la_lan.jpg'); } .p-opensource { background-image: url('open_source.jpg'); } .p-procurando { background-image: url('procurando_ip.jpg'); } .p-honeypot { background-image: url('pote_de_mel.jpg'); } .p-mitm { background-image: url('homem_no_meio.jpg'); } .p-firewall { background-image: url('muralha_de_fogo.jpg'); } .p-metaverso { background-image: url('fuga_metaverso.jpg'); } .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
 
         #series-details-screen { background: var(--netflix-bg); z-index: 45; overflow-y: auto; overflow-x: hidden; }
@@ -79,70 +77,121 @@
         .episodes-list { padding: 20px 4% 50px 4%; background: #141414; }
         .ep-item { display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s;}
         .ep-item:hover { background: rgba(255,255,255,0.05); }
-        .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background: #222; border: 1px solid #444; position: relative; display: flex; align-items: center; justify-content: center;}
+        .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background: #222; border: 1px solid #444; display: flex; align-items: center; justify-content: center;}
         .ep-number { font-family: 'Bebas Neue'; font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 5px #000; z-index: 2; }
         .ep-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: #fff;}
         .ep-info p { font-size: 0.9rem; color: var(--text-dim); }
-
-        #ad-screen { background: #000; z-index: 55; justify-content: center; align-items: center; position: relative; }
-        #ad-video { width: 100%; max-width: 1200px; height: 100vh; object-fit: contain; background: #000; z-index: 56; }
-        .btn-skip-ad { position: absolute; bottom: 50px; right: 50px; background: rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.5); color: #fff; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.3s; z-index: 60;}
-        .btn-skip-ad:hover { background: #fff; color: #000; }
-        #btn-force-play { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--netflix-red); color: white; border: none; padding: 20px 40px; font-size: 2rem; font-weight: bold; border-radius: 8px; cursor: pointer; z-index: 70; }
 
         #mini-profile-menu { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
         #mini-profile-menu h2 { font-size: 3rem; margin-bottom: 30px; font-weight: 300; }
         .mini-profiles { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;}
         .mini-card { text-align: center; cursor: pointer; transition: 0.2s; color: var(--text-dim); }
         .mini-card:hover { transform: scale(1.05); color: #fff; }
-        .mini-card:hover .mini-avatar { outline: 3px solid #fff; }
         .mini-avatar { width: 100px; height: 100px; border-radius: 4px; margin-bottom: 10px; background-size: cover; background-position: center; }
 
-        /* SLIDES E ANIMAÇÕES */
-        #player-screen { background: #000; z-index: 50; }
+        /* TOAST DE TURNO */
+        #turn-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.95); border: 2px solid var(--netflix-red); padding: 15px 30px; border-radius: 50px; color: #fff; z-index: 10000; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(229,9,20,0.4); display: flex; align-items: center; gap: 15px; pointer-events: none;}
+        #turn-toast.show { top: 30px; }
+
+        /* TELA DE APRESENTAÇÃO */
+        #player-screen { background: #000; z-index: 50; position: relative; overflow: hidden;}
+        
+        /* ATMOSFERAS (FUNDO) */
+        .atm-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; opacity: 0; transition: opacity 1s; }
+        .atm-fog { background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.8) 100%); animation: pulseFog 8s infinite alternate; }
+        .atm-stars { background: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)), radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px; animation: starDrift 30s linear infinite; }
+        .atm-dust { background: radial-gradient(3px 3px at 50px 50px, rgba(212, 175, 55, 0.3), rgba(0,0,0,0)), radial-gradient(2px 2px at 100px 150px, rgba(212, 175, 55, 0.4), rgba(0,0,0,0)); background-size: 150px 150px; animation: dustDrift 15s linear infinite; }
+        .atm-matrix { background: repeating-linear-gradient(180deg, rgba(0,255,0,0.02) 0px, transparent 2px, transparent 10px); background-size: 100% 20px; animation: matrixRain 5s linear infinite; }
+        @keyframes pulseFog { 0% { opacity: 0.5; } 100% { opacity: 0.9; } }
+        @keyframes starDrift { from { transform: translateY(0) translateX(0); } to { transform: translateY(-200px) translateX(-50px); } }
+        @keyframes dustDrift { from { transform: translateY(0); } to { transform: translateY(-150px); } }
+        @keyframes matrixRain { from { background-position: 0 0; } to { background-position: 0 100%; } }
+
         .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
-        .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; height: 100%; }
+        .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; height: 100%; z-index: 20;}
         .slide { position: absolute; width: 100%; max-width: 1200px; padding: 0 4%; opacity: 0; pointer-events: none; transition: 0.5s; transform: scale(0.95); }
         .slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
         
         .slide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-        .text-col h2 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; color: #fff; margin-bottom: 25px; border-left: 4px solid var(--netflix-red); padding-left: 15px; line-height: 1;}
-        .text-col p { font-size: 1.25rem; line-height: 1.6; color: #ccc; margin-bottom: 20px; }
-        
+        .text-col h2 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; color: #fff; margin-bottom: 5px; border-left: 4px solid var(--netflix-red); padding-left: 15px; line-height: 1;}
+        .text-col p { font-size: 1.25rem; line-height: 1.6; color: #ccc; margin-top: 20px; }
         .highlight { color: var(--netflix-red); font-weight: bold; }
-        .gold-glow { color: var(--rpg-gold); font-weight: bold; }
+        
+        /* LETREIRO (20 segundos) */
+        .ticker-box { background: rgba(229, 9, 20, 0.1); border-left: 3px solid #E50914; padding: 8px 12px; margin-top: 10px; margin-bottom: 15px; font-style: italic; color: #aaa; font-size: 1.1rem; transition: opacity 0.4s; min-height: 45px; display: flex; align-items: center;}
+        
+        /* POPUP DE CONQUISTAS */
+        #ach-popup { position: fixed; bottom: -100px; right: 20px; background: rgba(20,20,20,0.95); border-left: 5px solid var(--rpg-gold); border-radius: 4px; padding: 15px 25px; color: #fff; font-family: 'Inter', sans-serif; font-weight: bold; box-shadow: 0 0 20px rgba(0,0,0,0.8); transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10000; display: flex; align-items: center; gap: 15px; pointer-events: none;}
+        #ach-popup.show { bottom: 30px; }
+        .ach-icon { font-size: 2rem; color: var(--rpg-gold); }
 
-        /* VISUAIS (DIREITA) */
         .visual-col { background: #111; border-radius: 8px; border: 1px solid #333; height: 450px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: flex; flex-direction: column;}
         .rpg-top { background: #222; height: 40px; display: flex; align-items: center; padding: 0 15px; gap: 10px; border-bottom: 2px solid var(--rpg-gold); z-index: 5; position: relative; font-family: 'Bebas Neue', cursive; font-size: 1.2rem; letter-spacing: 1px;}
         .rpg-top i { color: var(--rpg-gold); }
-        .sim-screen { flex-grow: 1; position: relative; width: 100%; background: #1a1a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;}
+        .sim-screen { flex-grow: 1; position: relative; width: 100%; background: #1a1a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
 
-        /* ANIMAÇÕES EM LOOP CSS PARA OS SLIDES */
-        @keyframes panMap { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .rpg-map-bg { position: absolute; top: 0; left: 0; width: 200%; height: 100%; background: url('watermarked_img_10919591568350661226.jpg') repeat-x; background-size: cover; animation: panMap 30s linear infinite; opacity: 0.6; z-index: 1;}
-        
-        @keyframes shakeLock { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); color: #E50914;} 75% { transform: rotate(10deg); color: #ff5555;} }
-        .anim-lock { font-size: 4rem; color: #E50914; position: absolute; animation: shakeLock 2s infinite; text-shadow: 0 0 15px rgba(229,9,20,0.5); }
+        /* --- ANIMAÇÕES MELHORADAS --- */
 
-        @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .orbit-container { width: 250px; height: 250px; position: relative; border-radius: 50%; border: 1px dashed rgba(255,255,255,0.2); animation: orbitSpin 10s linear infinite; display: flex; align-items: center; justify-content: center;}
-        .planet-orbit { position: absolute; top: -15px; font-size: 1.8rem; color: #3b82f6; }
+        /* 1. Mapa Deslizando (Fixado) */
+        .map-pan { position: absolute; top:0; left:0; width: 100%; height: 100%; background: url('watermarked_img_10919591568350661226.jpg') repeat-x; background-size: cover; background-position: left center; animation: panMapBg 20s linear infinite; opacity: 0.5; z-index: 1;}
+        @keyframes panMapBg { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 
-        @keyframes bubbleUp { 0% { transform: translateY(50px) scale(0.5); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-150px) scale(1.5); opacity: 0; } }
-        .bubble { position: absolute; background: rgba(16, 185, 129, 0.6); border-radius: 50%; bottom: 80px; width: 15px; height: 15px; animation: bubbleUp 3s infinite ease-in; }
-        .b1 { left: 40%; animation-delay: 0s; } .b2 { left: 50%; animation-delay: 1s; } .b3 { left: 60%; animation-delay: 2s; }
+        /* 2. Geocentrismo Travado */
+        .geo-system { position: relative; width: 220px; height: 220px; border: 3px dashed #555; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2;}
+        .geo-earth { font-size: 5rem; color: #3b82f6; z-index: 2; }
+        .geo-lock { position: absolute; font-size: 3.5rem; color: #E50914; z-index: 3; animation: pulseLock 1.5s infinite alternate; }
+        @keyframes pulseLock { 0% { transform: scale(1); text-shadow: 0 0 10px #E50914; } 100% { transform: scale(1.15); text-shadow: 0 0 30px #ff5555; } }
 
-        @keyframes gearSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes glitchFade { 0%, 100% { opacity: 1; filter: hue-rotate(0deg); } 50% { opacity: 0.3; filter: hue-rotate(90deg); } }
-        .gear { font-size: 6rem; color: var(--rpg-gold); animation: gearSpin 8s linear infinite; position: relative; z-index: 10; text-shadow: 0 0 20px var(--rpg-gold); }
-        .glitch-bg { position: absolute; width: 100%; height: 100%; background: repeating-linear-gradient(45deg, #111, #111 10px, #222 10px, #222 20px); animation: glitchFade 4s infinite; z-index: 1; }
+        /* 3. Lanterna da Razão (Melhorada) */
+        .lantern-container { width: 100%; height: 100%; position: absolute; top:0; left:0; background: #050505; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 30px; font-size: 3rem; color: rgba(255,255,255,0.1); overflow: hidden; z-index: 1; }
+        .lantern-light { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.95) 15%, #050505 30%); animation: swingLantern 6s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; pointer-events: none;}
+        @keyframes swingLantern { 0% { transform: translate(10%, 15%); } 50% { transform: translate(-10%, 25%); } 100% { transform: translate(25%, -10%); } }
 
-        @keyframes appleDrop { 0% { transform: translateY(-150px); opacity: 0; } 40% { transform: translateY(0); opacity: 1; } 60% { transform: translateY(-30px); } 80% { transform: translateY(0); } 100% { transform: translateY(0); opacity: 0; } }
-        @keyframes shockwave { 0% { transform: scale(0.5); opacity: 0; } 40% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.5); opacity: 1; border-color: #E50914;} 100% { transform: scale(3); opacity: 0; border-color: transparent;} }
-        .apple-container { position: relative; height: 200px; display: flex; align-items: flex-end; justify-content: center; }
-        .falling-apple { font-size: 4rem; color: #E50914; animation: appleDrop 4s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; z-index: 10; }
-        .wave { position: absolute; bottom: 10px; width: 100px; height: 30px; border-radius: 50%; border: 3px solid #E50914; animation: shockwave 4s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        /* 4. Heliocentrismo Girando */
+        .helio-system { position: relative; width: 250px; height: 250px; border: 2px dashed rgba(245, 158, 11, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: spinSystem 10s linear infinite; z-index: 2;}
+        .helio-sun { font-size: 5rem; color: #f59e0b; position: absolute; animation: counterSpin 10s linear infinite; text-shadow: 0 0 30px rgba(245,158,11,0.6);}
+        .helio-earth { font-size: 2rem; color: #3b82f6; position: absolute; top: -15px; }
+        @keyframes spinSystem { 100% { transform: rotate(360deg); } }
+        @keyframes counterSpin { 100% { transform: rotate(-360deg); } }
+
+        /* 5. A Lente do Telescópio */
+        .sky-bg { position: absolute; top:0; left:0; width: 100%; height: 100%; background: radial-gradient(circle, #222 10%, #000 90%); z-index: 1;}
+        .telescope-lens { width: 160px; height: 160px; border: 6px solid #3b82f6; border-radius: 50%; position: absolute; backdrop-filter: brightness(2) contrast(1.5); animation: searchSky 5s ease-in-out infinite alternate; box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.4); display:flex; align-items:center; justify-content:center; z-index: 2;}
+        @keyframes searchSky { 0% { transform: translate(-100px, -50px); } 100% { transform: translate(100px, 50px); } }
+
+        /* 6. Quebrando Ilusões (Máscara Cortada) */
+        .idol-container { position: relative; font-size: 6rem; color: #555; z-index: 2; display:flex; justify-content:center; align-items:center;}
+        .idol-mask { animation: shakeIdol 3s infinite; }
+        .idol-slash { position: absolute; font-size: 8rem; color: #E50914; transform: scale(0); opacity: 0; animation: slashStrike 3s infinite; text-shadow: 0 0 20px #E50914; }
+        @keyframes shakeIdol { 0%, 85% { transform: translate(0,0) rotate(0deg); filter: grayscale(1); } 87% { transform: translate(-5px, 5px) rotate(-5deg); filter: grayscale(0) drop-shadow(0 0 10px red); } 89% { transform: translate(5px, -5px) rotate(5deg); } 91% { transform: translate(-5px, -5px) rotate(-5deg); } 100% { transform: translate(0,0) rotate(0deg); } }
+        @keyframes slashStrike { 0%, 85% { transform: scale(2) rotate(45deg); opacity: 0; } 87% { transform: scale(1) rotate(45deg); opacity: 1; } 100% { transform: scale(1.1) rotate(45deg); opacity: 0; } }
+
+        /* 7. O Laboratório Empírico (Ondas contidas no frasco) */
+        .potion-lab { position: relative; display: flex; align-items: center; justify-content: center; height: 100%; z-index: 2;}
+        .potion-flask { width: 120px; height: 150px; border: 5px solid #fff; border-top: none; border-radius: 0 0 60px 60px; position: relative; overflow: hidden; box-shadow: inset 0 -30px 40px rgba(16, 185, 129, 0.8), 0 0 20px rgba(16,185,129,0.3); }
+        .potion-liquid { position: absolute; bottom: -50px; left: -50px; width: 200px; height: 200px; background: rgba(16, 185, 129, 0.8); border-radius: 40%; animation: liquidWave 3s infinite linear; }
+        .potion-liquid:nth-child(2) { bottom: -60px; background: rgba(5, 150, 105, 0.9); animation: liquidWave 4s infinite linear reverse; border-radius: 45%; }
+        .bubbles { position: absolute; background: #fff; border-radius: 50%; opacity: 0; }
+        .b1 { width: 12px; height: 12px; animation: floatUpBubbles 2s infinite linear; left: 30px; bottom: 10px;}
+        .b2 { width: 18px; height: 18px; animation: floatUpBubbles 2.5s infinite linear 0.5s; left: 60px; bottom: 5px;}
+        .b3 { width: 8px; height: 8px; animation: floatUpBubbles 1.8s infinite linear 1s; left: 80px; bottom: 15px;}
+        @keyframes liquidWave { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes floatUpBubbles { 0% { transform: translateY(0) scale(0.5); opacity: 0.8; } 100% { transform: translateY(-120px) scale(1.5); opacity: 0; } }
+
+        /* 8. O Glitch de Descartes */
+        .doubt-glitch { font-size: 5rem; font-family: 'Share Tech Mono', monospace; font-weight: bold; color: #fff; animation: glitchText 0.3s infinite; position: relative; z-index: 2; letter-spacing: 5px;}
+        @keyframes glitchText { 0% { transform: translate(0); text-shadow: -3px 0 #E50914, 3px 0 #3b82f6; } 20% { transform: translate(-3px, 3px); } 40% { transform: translate(-3px, -3px); text-shadow: 3px 0 #E50914, -3px 0 #3b82f6; } 60% { transform: translate(3px, 3px); } 80% { transform: translate(3px, -3px); text-shadow: none; } 100% { transform: translate(0); } }
+
+        /* 9. A Mente Racional */
+        .brain-gear { font-size: 7rem; color: #3b82f6; animation: glowBrain 3s infinite alternate; position: relative; z-index: 2;}
+        @keyframes glowBrain { 0% { filter: drop-shadow(0 0 10px #3b82f6); transform: scale(1); } 100% { filter: drop-shadow(0 0 40px #00f0ff); transform: scale(1.1); } }
+
+        /* 10. A Síntese Newtoniana (Maçã e Choque) */
+        .newton-scene { position: relative; width: 100%; height: 100%; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; z-index: 2;}
+        .newton-apple { font-size: 4rem; color: #E50914; position: absolute; z-index: 10; animation: appleGravity 4s infinite cubic-bezier(0.55, 0.085, 0.68, 0.53); top: -100px; }
+        .math-grid { position: absolute; bottom: 30px; width: 200px; height: 60px; border-bottom: 3px solid #3b82f6; border-radius: 50%; opacity: 0; animation: synthShockwave 4s infinite ease-out; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono'; color:#3b82f6; font-size:1.5rem; white-space: nowrap;}
+        @keyframes appleGravity { 0% { top: -100px; opacity: 1; } 45% { top: 60%; transform: scale(1); opacity: 1; } 50% { top: 60%; transform: scaleY(0.6) scaleX(1.2); opacity: 1; } 55% { top: 60%; transform: scale(1); opacity: 1; } 100% { top: 60%; opacity: 0; } }
+        @keyframes synthShockwave { 0%, 45% { transform: scale(0.2); opacity: 0; } 50% { transform: scale(0.5); opacity: 1; border-color: #E50914; color:#E50914;} 100% { transform: scale(3); opacity: 0; border-color: #3b82f6; color:#3b82f6;} }
 
         /* CONTROLES INFERIORES */
         .player-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px 4%; z-index: 40;}
@@ -152,32 +201,35 @@
         .control-btn { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; transition: 0.2s;}
         .control-btn:hover { color: var(--netflix-red); }
 
-        /* QUIZ E TELA HACKER */
-        #quiz-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #090909; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; pointer-events: auto;}
-        .qr-image { width: 300px; height: 300px; background: url('qrcode.png') center/cover; margin: 20px 0; border-radius: 12px; border: 4px solid #3b82f6; }
-        .btn-start-quiz { background: #10b981; color: white; border: none; padding: 20px 40px; font-weight: bold; font-size: 1.5rem; border-radius: 8px; cursor: pointer; transition: 0.2s; position: relative; z-index: 10000;}
-        #quiz-active-view { display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 800px;}
-        .timer-circle { width: 100px; height: 100px; border-radius: 50%; border: 8px solid #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: bold; font-family: 'Bebas Neue'; margin-bottom: 30px;}
-        .winner-badge { background: rgba(59, 130, 246, 0.2); padding: 8px 20px; border-radius: 20px; border: 1px solid #3b82f6; font-size: 1.3rem; margin: 5px; display: inline-block; color: #fff;}
-        #proj-evt-screen { display: none; flex-direction: column; align-items: center; justify-content: center; background: #ff0000; position: absolute; top:0; left:0; width:100%; height:100%; z-index: 200; }
-        #proj-evt-screen.blink { animation: blinkRed 0.2s infinite; }
-        @keyframes blinkRed { 0% { background: #ff0000; } 50% { background: #000; } }
+        /* OVERLAYS ESPECIAIS */
+        #inquisition-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(20, 0, 0, 0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; }
+        .inq-box { border: 4px double #E50914; background: #111; padding: 40px; border-radius: 8px; max-width: 600px; position: relative; }
+        .btn-retract { background: transparent; color: #E50914; border: 2px solid #E50914; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 30px; transition: 0.3s; font-family: 'Share Tech Mono', monospace;}
+        .btn-retract:hover { background: #E50914; color: #fff; }
+        #eppur-msg { display: none; color: #aaa; font-style: italic; margin-top: 15px; font-size: 1.1rem; }
 
-        #error-screen { justify-content: center; align-items: center; background: #000; z-index: 60; text-align: center; }
-        .error-box { max-width: 500px; z-index: 10; opacity: 0; transition: 0.5s; pointer-events: auto; }
-        .error-box.show { opacity: 1; }
-        .glitch-layer { position: absolute; width: 100%; height: 100%; background: #222; opacity: 0; z-index: 1; mix-blend-mode: overlay; pointer-events: none; }
-        .glitching .glitch-layer { animation: glitch-anim 0.3s infinite; opacity: 0.5; }
-        @keyframes glitch-anim { 0% { transform: translate(0) scale(1); } 20% { transform: translate(-5px, 2px) scale(1.05); filter: hue-rotate(90deg); } 60% { transform: translate(5px, -2px); filter: invert(1); } }
+        #idle-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
+        .btn-idle { background: #fff; color: #000; border: none; padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 30px; transition: 0.2s;}
+        .btn-idle:hover { background: #ccc; }
+
+        .lis-container { display: flex; width: 100%; height: 350px; gap: 15px; margin-top: 20px; }
+        .lis-choice { flex: 1; border: 2px solid #444; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; padding: 20px; text-align: center; }
+        .lis-choice.empirismo { background: linear-gradient(135deg, #0f2027 0%, #203a43 100%); }
+        .lis-choice.racionalismo { background: linear-gradient(135deg, #141e30 0%, #243b55 100%); }
+        .lis-choice:hover { border-color: #3b82f6; filter: brightness(1.2); transform: scale(1.02); }
+        .lis-choice i { font-size: 3rem; margin-bottom: 15px; color: #fff; }
+        #lis-notification { position: absolute; top: 30px; left: 40px; font-size: 1.5rem; color: #fff; z-index: 10000; opacity: 0; transition: opacity 0.5s; text-shadow: 2px 2px 5px #000; pointer-events: none;}
+        .butterfly-pulse { animation: pulseB 2s infinite; display: inline-block; margin-right: 10px; color: #00f0ff;}
+        @keyframes pulseB { 0%, 100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 10px #00f0ff); } 50% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 20px #00f0ff); } }
+        #lis-dark-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 9998; display: none; }
+
         #credits-screen { justify-content: center; align-items: center; background: #000; z-index: 100; text-align: center; padding: 30px; }
         .credits-list { list-style: none; padding: 0; margin: 30px 0; font-size: 1.5rem; line-height: 2; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <audio id="tudum-audio" preload="auto"><source src="tudum.mp3" type="audio/mpeg"></audio>
-    <audio id="deepfake-audio" preload="auto"><source src="deepfake.mp3" type="audio/mpeg"></audio>
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
@@ -192,15 +244,12 @@
         </div>
     </div>
 
-    <!-- MINI MENU -->
-    <div id="mini-profile-menu">
-        <h2>Pr&oacute;ximo turno: Quem assume?</h2>
-        <div class="mini-profiles">
-            <div class="mini-card" onclick="selectMiniProfile('Francisco')"><div class="mini-avatar av-francisco"></div><span style="font-size:1.2rem; font-weight:bold;">Francisco</span></div>
-            <div class="mini-card" onclick="selectMiniProfile('JP Santos')"><div class="mini-avatar av-jsantos"></div><span style="font-size:1.2rem; font-weight:bold;">JP Santos</span></div>
-            <div class="mini-card" onclick="selectMiniProfile('Pedro')"><div class="mini-avatar av-pedro"></div><span style="font-size:1.2rem; font-weight:bold;">Pedro</span></div>
-            <div class="mini-card" onclick="selectMiniProfile('JP Silva')"><div class="mini-avatar av-jsilva"></div><span style="font-size:1.2rem; font-weight:bold;">JP Silva</span></div>
-            <div class="mini-card" onclick="selectMiniProfile('Nicolas')"><div class="mini-avatar av-nicolas"></div><span style="font-size:1.2rem; font-weight:bold;">Nicolas</span></div>
+    <!-- TOAST DE TURNO (Substitui o menu chato) -->
+    <div id="turn-toast">
+        <i class="fa-solid fa-microphone-lines" style="font-size: 2rem; color: var(--netflix-red);"></i>
+        <div>
+            <span style="font-size: 0.8rem; color: #ccc;">Passando a palavra...</span><br>
+            <span id="toast-presenter-name" style="font-size: 1.2rem; font-weight: bold; color: #fff;">Nome</span>
         </div>
     </div>
 
@@ -216,21 +265,19 @@
                 <p style="font-size: 1.2rem; margin-bottom: 10px; color: #ccc;">A Revolu&ccedil;&atilde;o Cient&iacute;fica Moderna e a forja de uma Nova Concep&ccedil;&atilde;o de M&eacute;todo.</p>
                 <div class="hero-buttons">
                     <button class="btn-play" id="btn-start-presentation"><i class="fa-solid fa-play"></i> Iniciar Jornada</button>
-                    <button class="btn-info" onclick="openSeriesDetails()"><i class="fa-solid fa-book-journal-whills"></i> O Grim&oacute;rio (Cap&iacute;tulos)</button>
+                    <button class="btn-info" onclick="openSeriesDetails()"><i class="fa-solid fa-book-journal-whills"></i> O Grim&oacute;rio</button>
                 </div>
             </div>
         </div>
         <div class="catalog-container">
-            <!-- NOVA FILEIRA: TEMAS DOS OUTROS GRUPOS DE FILOSOFIA -->
             <h2 class="row-title">Semin&aacute;rios de Filosofia (Outros Grupos)</h2>
             <div class="posters-container" style="margin-bottom: 25px;">
-                <div class="card-portrait" style="background:#222;"><div class="card-portrait-content"><h4>O C&oacute;dice de Arist&oacute;teles<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 01: Ciência Antiga</span></h4></div></div>
-                <div class="card-portrait" style="background:#333;"><div class="card-portrait-content"><h4>O Multiverso dos Paradigmas<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 03: Ciência Contemporânea</span></h4></div></div>
-                <div class="card-portrait" style="background:#444;"><div class="card-portrait-content"><h4>A Ordem de Popper<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 04: Popper, Kuhn e Bachelard</span></h4></div></div>
-                <div class="card-portrait" style="background:#555;"><div class="card-portrait-content"><h4>Admir&aacute;vel Ci&ecirc;ncia Nova<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 05: Ciência e Sociedade</span></h4></div></div>
+                <div class="card-portrait" style="background:#222;"><div class="card-portrait-content"><h4>Game of Cosmos: A Era Medieval<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 01: Ciência Antiga</span></h4></div></div>
+                <div class="card-portrait" style="background:#333;"><div class="card-portrait-content"><h4>Stranger Paradigms<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 03: Ciência Contemporânea</span></h4></div></div>
+                <div class="card-portrait" style="background:#444;"><div class="card-portrait-content"><h4>Harry Popper e a Ordem da Ci&ecirc;ncia<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 04: Popper, Kuhn e Bachelard</span></h4></div></div>
+                <div class="card-portrait" style="background:#555;"><div class="card-portrait-content"><h4>Black Method: O Dilema<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 05: Ciência e Sociedade</span></h4></div></div>
             </div>
 
-            <!-- AS DUAS FILEIRAS ORIGINAIS DE TI MANTIDAS -->
             <h2 class="row-title">Recomendados para Alunos de TI</h2>
             <div class="posters-container">
                 <div class="card-portrait p-opensource"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
@@ -242,18 +289,10 @@
                 <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
                 <div class="card-portrait p-lalalan"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
             </div>
-            <h2 class="row-title">Baseados em Temas da Turma</h2>
-            <div class="landscape-row">
-                <div class="card-landscape p-honeypot"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
-                <div class="card-landscape p-mitm"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
-                <div class="card-landscape p-firewall"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
-                <div class="card-landscape p-metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
-                <div class="card-landscape p-iot"><div class="card-landscape-content"><h4>Rebeli&atilde;o das Torradeiras</h4></div></div>
-            </div>
         </div>
     </div>
 
-    <!-- TELA DE EPISÓDIOS (ATUALIZADA) -->
+    <!-- TELA DE EPISÓDIOS -->
     <div id="series-details-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" onclick="switchScreen('home-screen')">IFPIFLIX</div>
@@ -263,31 +302,31 @@
             <div class="details-content">
                 <div style="color: var(--rpg-gold); font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">O GRIM&Oacute;RIO DA MODERNIDADE</div>
                 <h1>M&Eacute;TODO E REVOLU&Ccedil;&Atilde;O</h1>
-                <p>Acompanhe a saga dos pensadores que romperam com a tradi&ccedil;&atilde;o medieval e forjaram a Ci&ecirc;ncia como a conhecemos.</p>
                 <button class="btn-play" onclick="startPresentationAt(0)" style="margin-top: 15px;"><i class="fa-solid fa-play"></i> Iniciar Apresenta&ccedil;&atilde;o</button>
             </div>
         </div>
         <div class="episodes-list">
             <h3>Cap&iacute;tulos da Jornada</h3>
-            <div class="ep-item" onclick="startPresentationAt(0)"><div class="ep-thumb"><span class="ep-number">1</span></div><div class="ep-info"><h4>1. O Renascimento</h4><p>Contexto Histórico.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(2)"><div class="ep-thumb"><span class="ep-number">2</span></div><div class="ep-info"><h4>2. Tradição Medieval</h4><p>O Geocentrismo e o dogmatismo.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(4)"><div class="ep-thumb"><span class="ep-number">3</span></div><div class="ep-info"><h4>3. A Ruptura</h4><p>Da contemplação passiva à experimentação ativa.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(5)"><div class="ep-thumb"><span class="ep-number">4</span></div><div class="ep-info"><h4>4. Revolução Cosmológica</h4><p>A matematização do universo.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(7)"><div class="ep-thumb"><span class="ep-number">5</span></div><div class="ep-info"><h4>5. O Empirismo de Bacon</h4><p>A queda dos Ídolos.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(9)"><div class="ep-thumb"><span class="ep-number">6</span></div><div class="ep-info"><h4>6. O Racionalismo</h4><p>A Dúvida Metódica.</p></div></div>
-            <div class="ep-item" onclick="startPresentationAt(11)"><div class="ep-thumb"><span class="ep-number">7</span></div><div class="ep-info"><h4>7. Síntese Newtoniana</h4><p>O Método Científico Moderno.</p></div></div>
+            <div class="ep-item" onclick="startPresentationAt(0)"><div class="ep-thumb"><span class="ep-number">1</span></div><div class="ep-info"><h4>1. O Renascimento</h4></div></div>
+            <div class="ep-item" onclick="startPresentationAt(2)"><div class="ep-thumb"><span class="ep-number">2</span></div><div class="ep-info"><h4>2. Tradição Medieval</h4></div></div>
+            <div class="ep-item" onclick="startPresentationAt(4)"><div class="ep-thumb"><span class="ep-number">3</span></div><div class="ep-info"><h4>3. A Ruptura</h4></div></div>
+            <div class="ep-item" onclick="startPresentationAt(5)"><div class="ep-thumb"><span class="ep-number">4</span></div><div class="ep-info"><h4>4. Revolução Cosmológica</h4></div></div>
+            <div class="ep-item" onclick="startPresentationAt(7)"><div class="ep-thumb"><span class="ep-number">5</span></div><div class="ep-info"><h4>5. A Escolha</h4></div></div>
+            <div class="ep-item" onclick="startPresentationAt(8)"><div class="ep-thumb"><span class="ep-number">6</span></div><div class="ep-info"><h4>6. O Empirismo de Bacon</h4></div></div>
+            <div class="ep-item" onclick="startPresentationAt(10)"><div class="ep-thumb"><span class="ep-number">7</span></div><div class="ep-info"><h4>7. O Racionalismo</h4></div></div>
+            <div class="ep-item" onclick="startPresentationAt(12)"><div class="ep-thumb"><span class="ep-number">8</span></div><div class="ep-info"><h4>8. Síntese Newtoniana</h4></div></div>
         </div>
     </div>
 
-    <!-- TRAILER MANTIDO -->
-    <div id="ad-screen" class="screen">
-        <video id="ad-video" controls playsinline><source src="trailer.mp4" type="video/mp4"><source src="trailer.mov" type="video/quicktime"></video>
-        <button id="btn-force-play">▶ INICIAR V&Iacute;DEO</button>
-        <button class="btn-skip-ad" id="btn-skip-ad">Pular An&uacute;ncio <i class="fa-solid fa-forward-step"></i></button>
+    <!-- POPUP DE CONQUISTA GLOBAL -->
+    <div id="ach-popup">
+        <i class="fa-solid fa-trophy ach-icon"></i>
+        <span id="ach-text">Conquista Desbloqueada</span>
     </div>
 
-    <!-- 12 SLIDES DA APRESENTAÇÃO (EXPANDIDOS) -->
+    <!-- FUNDO ATMOSFÉRICO GLOBAL -->
     <div id="player-screen" class="screen">
+        <div id="atm-layer" class="atm-layer"></div>
         <div class="player-header">
             <button id="btn-back-to-home" class="control-btn"><i class="fa-solid fa-arrow-left"></i></button>
             <div style="display:flex; flex-direction: column; margin-left: 10px;">
@@ -298,232 +337,167 @@
 
         <div class="slide-area">
             
-            <!-- Tópico 1 - Slide 1 -->
-            <div class="slide" id="slide-0" data-max-steps="1">
+            <div class="slide" id="slide-0">
                 <div class="slide-grid">
                     <div class="text-col">
-                        <h2>01. O RENASCIMENTO (A CRISE)</h2>
-                        <h3 class="highlight">O Fim da Escol&aacute;stica</h3>
-                        <p>Nos s&eacute;culos XVI e XVII, a Modernidade surge como um novo cen&aacute;rio para a humanidade. O mundo medieval entra em colapso e as antigas verdades começam a ser questionadas.</p>
+                        <h2>01. O RENASCIMENTO</h2>
+                        <div class="ticker-box" id="ticker-0">Aguardando fofocas históricas...</div>
+                        <h3 class="highlight">O Fim da Escol&aacute;stica</h3><p>A Modernidade surge como um novo cen&aacute;rio. O mundo medieval entra em colapso e as antigas verdades começam a ser questionadas.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-map"></i> Mapa-M&uacute;ndi Atualizado</div>
-                        <div class="sim-screen">
-                            <div class="rpg-map-bg"></div>
-                            <h3 style="color: #fff; z-index: 10; text-shadow: 0 0 10px #000;">Reconhecimento de Terreno...</h3>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Mapa-M&uacute;ndi</div><div class="sim-screen"><div class="map-pan"></div></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 1 - Slide 2 -->
-            <div class="slide" id="slide-1" data-max-steps="1">
+            <div class="slide" id="slide-1">
                 <div class="slide-grid">
                     <div class="text-col">
-                        <h2>01. O RENASCIMENTO (A MUDAN&Ccedil;A)</h2>
-                        <h3 class="highlight">Nova Perspectiva</h3>
-                        <p>A transforma&ccedil;&atilde;o cultural e as grandes navegações abriram espa&ccedil;o para o surgimento de novas formas de pensar a ci&ecirc;ncia e o mundo, exigindo métodos que explicassem a nova realidade.</p>
+                        <h2>01. O RENASCIMENTO</h2>
+                        <div class="ticker-box" id="ticker-1">...</div>
+                        <h3 class="highlight">Nova Perspectiva</h3><p>A transforma&ccedil;&atilde;o cultural abriu espa&ccedil;o para o surgimento de novas formas de pensar a ci&ecirc;ncia e o mundo.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-map"></i> Mapa-M&uacute;ndi Atualizado</div>
-                        <div class="sim-screen">
-                            <div class="rpg-map-bg"></div>
-                            <div style="background: rgba(0,0,0,0.8); border: 2px solid var(--rpg-gold); padding: 20px; border-radius: 8px; z-index: 10;">
-                                <i class="fa-solid fa-unlock-keyhole" style="font-size: 3rem; color: var(--rpg-gold); margin-bottom: 15px;"></i>
-                                <h3 style="color: #fff;">Nova &Aacute;rea Desbloqueada</h3>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Exploração</div><div class="sim-screen"><div class="map-pan"></div><div style="background:rgba(0,0,0,0.8); padding:20px; border-radius:8px; z-index:10;"><i class="fa-solid fa-unlock-keyhole" style="font-size:3rem; color:var(--rpg-gold);"></i><h3 style="color:#fff; margin-top:10px;">Nova &Aacute;rea Desbloqueada</h3></div></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 2 - Slide 3 -->
-            <div class="slide" id="slide-2" data-max-steps="1">
+            <div class="slide" id="slide-2">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>02. TRADI&Ccedil;&Atilde;O MEDIEVAL</h2>
-                        <h3 class="highlight">O Dom&iacute;nio do Geocentrismo</h3>
-                        <p>Antes da Revolu&ccedil;&atilde;o Cient&iacute;fica, o modelo de Arist&oacute;teles e Ptolomeu reinava absoluto. A Terra era considerada o centro do universo, imóvel e inquestionável, amarrada por dogmas rígidos.</p>
+                        <div class="ticker-box" id="ticker-2">...</div>
+                        <h3 class="highlight">O Dom&iacute;nio do Geocentrismo</h3><p>O modelo de Ptolomeu reinava absoluto. A Terra era o centro imóvel e inquestionável, amarrada por dogmas.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-landmark-dome"></i> Paradigma Antigo</div>
-                        <div class="sim-screen">
-                            <i class="fa-solid fa-earth-americas" style="font-size: 6rem; color: #3b82f6;"></i>
-                            <i class="fa-solid fa-lock anim-lock"></i>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-landmark-dome"></i> Paradigma Antigo</div><div class="sim-screen"><div class="geo-system"><i class="fa-solid fa-earth-americas geo-earth"></i><i class="fa-solid fa-lock geo-lock"></i></div></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 2 - Slide 4 -->
-            <div class="slide" id="slide-3" data-max-steps="1">
+            <div class="slide" id="slide-3">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>02. TRADI&Ccedil;&Atilde;O MEDIEVAL</h2>
-                        <h3 class="highlight">O Princípio da Autoridade</h3>
-                        <p>A verdade na Idade Média não dependia da testagem ou observação prática. O que garantia a verdade era o <span class="gold-glow">Princ&iacute;pio de Autoridade</span>, mantido pela Igreja e pelos filósofos do passado.</p>
+                        <div class="ticker-box" id="ticker-3">...</div>
+                        <h3 class="highlight">Princípio da Autoridade</h3><p>A verdade não dependia de testes, mas sim do "Princ&iacute;pio de Autoridade", mantido pela Igreja.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-book-skull"></i> Regras Bloqueadas</div>
-                        <div class="sim-screen">
-                            <i class="fa-solid fa-book" style="font-size: 5rem; color: #aaa;"></i>
-                            <h3 style="margin-top: 30px; color: #E50914;">Status: Dogmatismo Travado</h3>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-book-skull"></i> Regras Bloqueadas</div><div class="sim-screen"><i class="fa-solid fa-book" style="font-size:5rem; color:#aaa;"></i><h3 style="margin-top:30px; color:#E50914;">Status: Dogmatismo</h3></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 3 - Slide 5 -->
-            <div class="slide" id="slide-4" data-max-steps="1">
+            <div class="slide" id="slide-4">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>03. A GRANDE RUPTURA</h2>
-                        <h3 class="highlight">Da Contempla&ccedil;&atilde;o &agrave; A&ccedil;&atilde;o</h3>
-                        <p>A transi&ccedil;&atilde;o exigiu uma postura agressiva perante a natureza. O ser humano parou de apenas "admirar" o mundo de forma passiva e passou a investigar ativamente como as coisas funcionam.</p>
+                        <div class="ticker-box" id="ticker-4">...</div>
+                        <h3 class="highlight">Da Contempla&ccedil;&atilde;o &agrave; A&ccedil;&atilde;o</h3><p>O ser humano parou de apenas "admirar" o mundo de forma passiva e passou a investigar ativamente como as coisas funcionam.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-bolt"></i> Quebrando o Tabuleiro</div>
-                        <div class="sim-screen">
-                            <i class="fa-solid fa-dice-d20" style="font-size: 6rem; color: #E50914; text-shadow: 0 0 20px #E50914;"></i>
-                            <h3 style="margin-top: 20px; color: var(--rpg-gold);">Investiga&ccedil;&atilde;o Ativa Iniciada!</h3>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-lightbulb"></i> Lanterna da Razão</div><div class="sim-screen"><div class="lantern-container"><i class="fa-solid fa-eye"></i><i class="fa-solid fa-atom"></i><i class="fa-solid fa-vial"></i></div><div class="lantern-light"></div></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 4 - Slide 6 -->
-            <div class="slide" id="slide-5" data-max-steps="1">
+            <div class="slide" id="slide-5">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>04. REVOLU&Ccedil;&Atilde;O COSMOL&Oacute;GICA</h2>
-                        <h3 class="highlight">O Heliocentrismo</h3>
-                        <p>Nicolau Copérnico muda o centro do tabuleiro! O Sol assume o centro do sistema e a Terra passa a ser apenas mais um corpo girando no vasto espaço, destruindo o ego do homem medieval.</p>
+                        <div class="ticker-box" id="ticker-5">...</div>
+                        <h3 class="highlight">O Heliocentrismo</h3><p>Copérnico muda o centro do tabuleiro! O Sol assume o centro do sistema e a Terra gira em volta dele.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-sun"></i> O Novo Centro</div>
-                        <div class="sim-screen">
-                            <div class="orbit-container">
-                                <i class="fa-solid fa-sun" style="font-size: 4rem; color: #f59e0b; position:absolute;"></i>
-                                <i class="fa-solid fa-earth-americas planet-orbit"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-sun"></i> O Novo Centro</div><div class="sim-screen"><div class="helio-system"><i class="fa-solid fa-sun helio-sun"></i><i class="fa-solid fa-earth-americas helio-earth"></i></div></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 4 - Slide 7 -->
-            <div class="slide" id="slide-6" data-max-steps="1">
+            <div class="slide" id="slide-6">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>04. REVOLU&Ccedil;&Atilde;O COSMOL&Oacute;GICA</h2>
-                        <h3 class="highlight">Galileu Galilei</h3>
-                        <p>Utilizando o telesc&oacute;pio para comprovar a teoria, Galileu introduziu a matematiza&ccedil;&atilde;o do espa&ccedil;o, afirmando categoricamente: <em>"A natureza est&aacute; escrita em caracteres matem&aacute;ticos"</em>.</p>
+                        <div class="ticker-box" id="ticker-6">...</div>
+                        <h3 class="highlight">Galileu Galilei</h3><p>Utilizando o telesc&oacute;pio para comprovar a teoria, ele afirmou: <em>"A natureza est&aacute; escrita em caracteres matem&aacute;ticos"</em>.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-telescope"></i> Visão Aprimorada</div>
-                        <div class="sim-screen">
-                            <i class="fa-solid fa-telescope" style="font-size: 5rem; color: #3b82f6; margin-bottom: 20px;"></i>
-                            <h3 style="color: #fff;">Item Equipado: Telesc&oacute;pio</h3>
-                            <p style="color:#aaa;">Bônus: Matemática +10</p>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-telescope"></i> Visão Aprimorada</div><div class="sim-screen"><div class="sky-bg"></div><div class="telescope-lens"><i class="fa-solid fa-star" style="font-size:2rem; color:#fff;"></i></div></div></div>
+                </div>
+            </div>
+
+            <!-- A ESCOLHA -->
+            <div class="slide" id="slide-7">
+                <div class="slide-grid" style="grid-template-columns: 1fr;">
+                    <div class="text-col" style="text-align:center;">
+                        <h2 style="border:none; padding:0; font-size:4.5rem; text-shadow: 0 0 15px var(--netflix-red);">A ENCRUZILHADA DO M&Eacute;TODO</h2>
+                        <p>Como voc&ecirc;s buscam a verdade absoluta?</p>
+                    </div>
+                    <div class="lis-container">
+                        <div class="lis-choice empirismo" onclick="triggerLisChoice(8)">
+                            <i class="fa-solid fa-eye"></i>
+                            <h3>Acreditar nos Sentidos</h3>
+                            <p>Testar e experimentar (Bacon).</p>
+                        </div>
+                        <div class="lis-choice racionalismo" onclick="triggerLisChoice(10)">
+                            <i class="fa-solid fa-brain"></i>
+                            <h3>Duvidar de Tudo</h3>
+                            <p>Usar apenas a lógica pura (Descartes).</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tópico 5 - Slide 8 -->
-            <div class="slide" id="slide-7" data-max-steps="1">
+            <div class="slide" id="slide-8">
                 <div class="slide-grid">
                     <div class="text-col">
-                        <h2>05. O EMPIRISMO DE BACON</h2>
-                        <h3 class="highlight">A Queda dos Ídolos</h3>
-                        <p>Francis Bacon criticou duramente os "Ídolos": falsas noções e preconceitos que cegam a mente humana, impedindo o verdadeiro avanço da ciência. O primeiro passo é limpar a mente.</p>
+                        <h2>05. O EMPIRISMO</h2>
+                        <div class="ticker-box" id="ticker-8">...</div>
+                        <h3 class="highlight">A Queda dos Ídolos</h3><p>Francis Bacon criticou os "Ídolos": falsos preconceitos que cegam a mente. É preciso limpar a mente antes de investigar.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-hammer"></i> Quebrando Ilusões</div>
-                        <div class="sim-screen">
-                            <i class="fa-solid fa-mask" style="font-size: 5rem; color: #555; text-decoration: line-through;"></i>
-                            <h3 style="margin-top: 20px; color: #aaa;">Preconceitos Anulados</h3>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-hammer"></i> Quebrando Ilusões</div><div class="sim-screen"><div class="idol-container"><i class="fa-solid fa-mask idol-mask"></i><i class="fa-solid fa-slash idol-slash"></i></div></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 5 - Slide 9 -->
-            <div class="slide" id="slide-8" data-max-steps="1">
+            <div class="slide" id="slide-9">
                 <div class="slide-grid">
                     <div class="text-col">
-                        <h2>05. O EMPIRISMO DE BACON</h2>
-                        <h3 class="highlight">O Método Indutivo</h3>
-                        <p>A fundamentação empirista: a ci&ecirc;ncia deve partir da observa&ccedil;&atilde;o sistem&aacute;tica e de experimentos repetidos exaustivamente. Não basta achar, é preciso testar na prática!</p>
-                        <h4 class="gold-glow" style="margin-top: 15px;">"Saber &eacute; poder."</h4>
+                        <h2>05. O EMPIRISMO</h2>
+                        <div class="ticker-box" id="ticker-9">...</div>
+                        <h3 class="highlight">O Método Indutivo</h3><p>A ci&ecirc;ncia deve partir da observa&ccedil;&atilde;o e de experimentos repetidos. Não basta achar, é preciso testar na prática!</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-flask"></i> Laborat&oacute;rio de Bacon</div>
-                        <div class="sim-screen">
-                            <div style="position:relative;">
-                                <i class="fa-solid fa-flask-vial" style="font-size: 6rem; color: #10b981;"></i>
-                                <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
-                            </div>
-                            <h3 style="margin-top:20px; color:#10b981;">Sintetizando Conhecimento...</h3>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-flask"></i> Laboratório Empírico</div><div class="sim-screen"><div class="potion-lab"><div class="potion-flask"><div class="potion-liquid"></div><div class="potion-liquid"></div><div class="bubbles b1"></div><div class="bubbles b2"></div><div class="bubbles b3"></div></div></div></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 6 - Slide 10 -->
-            <div class="slide" id="slide-9" data-max-steps="1">
+            <div class="slide" id="slide-10">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>06. O RACIONALISMO</h2>
-                        <h3 class="highlight">A Dúvida Metódica</h3>
-                        <p>René Descartes cria a fundamentação racionalista. O m&eacute;todo cartesiano utiliza a <strong>D&uacute;vida Met&oacute;dica</strong> para duvidar de tudo que não for absolutamente claro e evidente.</p>
+                        <div class="ticker-box" id="ticker-10">...</div>
+                        <h3 class="highlight">A Dúvida Metódica</h3><p>Descartes utiliza a <strong>D&uacute;vida Met&oacute;dica</strong> para duvidar de tudo que não for absolutamente claro e evidente.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-bug"></i> Desconstrução</div>
-                        <div class="sim-screen" style="position:relative; overflow:hidden;">
-                            <div class="glitch-bg"></div>
-                            <h2 style="position:relative; z-index:10; font-size:3rem; text-shadow:0 0 10px #000;">?? DUVIDE ??</h2>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-bug"></i> Desconstrução</div><div class="sim-screen"><div class="doubt-glitch">DUVIDE</div></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 6 - Slide 11 -->
-            <div class="slide" id="slide-10" data-max-steps="1">
+            <div class="slide" id="slide-11">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>06. O RACIONALISMO</h2>
-                        <h3 class="highlight">Penso, logo existo</h3>
-                        <p>Ao duvidar de tudo, sobra apenas a própria mente duvidando. A raz&atilde;o l&oacute;gica e a matemática se tornam a base inquebr&aacute;vel para o pensamento cient&iacute;fico.</p>
+                        <div class="ticker-box" id="ticker-11">...</div>
+                        <h3 class="highlight">Penso, logo existo</h3><p>A raz&atilde;o l&oacute;gica e a matemática se tornam a base inquebr&aacute;vel para o pensamento cient&iacute;fico moderno.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-brain"></i> A Forja da Mente</div>
-                        <div class="sim-screen">
-                            <i class="fa-solid fa-gear gear"></i>
-                            <h3 style="margin-top:20px; color:var(--rpg-gold);">Buff: Rigor Lógico (Imunidade a falácias)</h3>
-                        </div>
-                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-brain"></i> A Forja da Mente</div><div class="sim-screen"><i class="fa-solid fa-brain brain-gear"></i></div></div>
                 </div>
             </div>
 
-            <!-- Tópico 7 - Slide 12 -->
-            <div class="slide" id="slide-11" data-max-steps="1">
+            <div class="slide" id="slide-12">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>07. A S&Iacute;NTESE NEWTONIANA</h2>
-                        <h3 class="highlight">O Método Científico</h3>
-                        <p>Isaac Newton consolida a revolução criando um universo físico e mecanicista. Racionalismo e Empirismo se unem para formar o <strong>Método Científico Hipotético-Dedutivo</strong>.</p>
-                        <button id="btn-open-quiz" style="background: #3b82f6; color: #fff; border: none; padding: 15px 30px; font-size: 1.2rem; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 15px;"><i class="fa-solid fa-qrcode"></i> ABRIR QUIZ DA TURMA</button>
+                        <div class="ticker-box" id="ticker-12">...</div>
+                        <h3 class="highlight">O Método Científico</h3><p>Newton consolida a revolução. Racionalismo e Empirismo se unem para formar o <strong>Método Hipotético-Dedutivo</strong>.</p>
                     </div>
-                    <div class="visual-col">
-                        <div class="rpg-top"><i class="fa-solid fa-trophy"></i> Fim da Campanha</div>
-                        <div class="sim-screen">
-                            <div class="apple-container">
-                                <i class="fa-solid fa-apple-whole falling-apple"></i>
-                                <div class="wave"></div>
-                            </div>
-                            <h3 style="margin-top:30px; color:#E50914;">Gravidade Detectada!</h3>
-                        </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-trophy"></i> Fim da Campanha</div><div class="sim-screen"><div class="newton-scene"><i class="fa-solid fa-apple-whole newton-apple"></i><div class="math-grid">F = G(m1m2)/r²</div></div></div></div>
+                </div>
+            </div>
+
+            <!-- NOVO FINAL COM PROPAGANDA -->
+            <div class="slide" id="slide-13">
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center;">
+                    <h1 style="font-family:'Bebas Neue'; font-size:6rem; color:var(--netflix-red); text-shadow: 0 0 30px rgba(229,9,20,0.8); margin-bottom:10px;">ASSINE O IFPIFLIX</h1>
+                    <p style="font-size:2rem; color:#fff;">Acesso ilimitado à sabedoria universal.</p>
+                    <div style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 50px; border-radius: 8px; font-size: 2.5rem; font-weight: bold; margin-top: 30px; box-shadow: 0 10px 30px rgba(229,9,20,0.5);">
+                        POR APENAS R$ 67,90 <span style="font-size: 1.2rem; font-weight: normal;">/ mês</span>
                     </div>
                 </div>
             </div>
@@ -540,51 +514,26 @@
         </div>
     </div>
 
-    <!-- QUIZ LOBBY -->
-    <div id="quiz-overlay">
-        <div id="quiz-lobby" style="display: flex; flex-direction: column; align-items: center;">
-            <h2 style="font-family: 'Bebas Neue'; font-size: 5rem; color: #3b82f6; margin: 0;">IFPIFLIX QUIZ</h2>
-            <p style="font-size: 1.5rem; font-weight: bold; color: #ccc;">Escaneie o QR Code com a c&acirc;mera do celular para jogar!</p>
-            <div class="qr-image"></div>
-            <h3 style="color: #10b981; font-size: 2rem; margin-bottom: 30px;" id="player-count"><i class="fa-solid fa-users"></i> Jogadores: 0</h3>
-            <button class="btn-start-quiz" onclick="window.iniciarPartidaMaster()" id="btn-master-start">▶ INICIAR PARTIDA</button>
-        </div>
-
-        <div id="quiz-active-view">
-            <div class="timer-circle" id="proj-timer">20</div>
-            <div class="proj-question" id="proj-q-text">Carregando...</div>
-            <div id="proj-result-area" style="display:none; text-align: center; width: 100%;">
-                <div style="font-size: 2.5rem; font-weight: bold; color: #10b981; margin-bottom: 10px;">TEMPO ESGOTADO!</div>
-                <div style="font-size: 1.5rem; color: #fff; margin-bottom: 25px;" id="proj-answer-text">A resposta era: ...</div>
-                <div style="font-size: 1.2rem; color: #aaa; margin-bottom: 15px;"><i class="fa-solid fa-trophy" style="color: #fbbf24;"></i> HALL DA FAMA (QUEM ACERTOU)</div>
-                <div id="proj-winners" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 800px; margin: 0 auto;"></div>
-            </div>
+    <!-- OVERLAYS ESPECIAIS (Inquisição e Idle) -->
+    <div id="inquisition-overlay">
+        <div class="inq-box">
+            <i class="fa-solid fa-cross" style="font-size: 4rem; color: #E50914; margin-bottom: 20px;"></i>
+            <h2 style="font-family: 'Bebas Neue'; font-size: 3rem; color: #fff; letter-spacing: 2px;">CENSURA DA SANTA INQUISI&Ccedil;&Atilde;O</h2>
+            <p style="font-size: 1.2rem; color: #ccc; margin-top: 15px; line-height: 1.6;">O modelo Heliocêntrico de Galileu Galilei foi classificado como heresia. A transmissão foi bloqueada pelo Tribunal do Santo Ofício.</p>
+            <button class="btn-retract" id="btn-abjure"><i class="fa-solid fa-feather-pointed"></i> Assinar Retrata&ccedil;&atilde;o</button>
+            <div id="eppur-msg">"Eppur si muove..."</div>
         </div>
     </div>
 
-    <div id="proj-evt-screen">
-        <div id="p-dyn-icon" style="font-size: 8rem; color: #fff; margin-bottom: 20px;"><i class="fa-solid fa-shield-halved"></i></div>
-        <h1 style="font-family: 'Share Tech Mono'; font-size: 4rem; color: #fff;" id="p-dyn-title">SISTEMA EM TESTE</h1>
-        <p style="font-family: 'Share Tech Mono'; font-size: 2rem; color: #fff;">Extra&ccedil;&atilde;o de dados de rede simulada com sucesso.</p>
+    <div id="idle-overlay">
+        <h2 style="font-size: 2.5rem; color: #fff; font-weight: normal;">Tem algu&eacute;m assistindo?</h2>
+        <p style="font-size: 1.2rem; color: #aaa; margin-top: 10px;">A apresenta&ccedil;&atilde;o j&aacute; dura bastante tempo...</p>
+        <button class="btn-idle" id="btn-continue-watching">Continuar Assistindo</button>
     </div>
 
-    <!-- TELA HACKER -->
-    <div id="error-screen" class="screen">
-        <div class="glitch-layer"></div>
-        <div class="error-box" id="error-content">
-            <h2 style="font-size: 2.5rem; margin-bottom: 15px; color: #E50914;">Acesso Bloqueado</h2>
-            <p id="error-message" style="font-size: 1.2rem; color: #fff; margin-bottom: 30px; line-height: 1.5;"></p>
-            <button id="btn-error-switch" style="background: #fff; color: #000; border: none; padding: 12px 25px; font-size: 1.1rem; font-weight: bold; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-key"></i> Autenticar Administrador</button>
-            
-            <div id="hacker-terminal" style="display:none; text-align:left; background:#000; border:1px solid #333; padding:15px; margin-top:20px; font-family:monospace; border-radius: 4px;">
-                <div style="color:#0f0; margin-bottom:10px;">> Conex&atilde;o interceptada.</div>
-                <div style="color:#0f0; display:flex; align-items:center; gap: 10px; flex-wrap: wrap;">
-                    > admin@ifpiflix:~$ 
-                    <input type="password" id="hacker-pwd" autocomplete="off" placeholder="Senha" style="background:transparent; border:none; border-bottom:1px solid #0f0; color:#0f0; outline:none; font-family:monospace; width:100px; font-size: 1rem;">
-                    <button id="btn-hacker-ok" style="background:#0f0; color:#000; border:none; font-weight:bold; cursor:pointer; padding:5px 15px; border-radius: 4px;">OK</button>
-                </div>
-            </div>
-        </div>
+    <div id="lis-dark-overlay"></div>
+    <div id="lis-notification">
+        <i class="fa-solid fa-butterfly butterfly-pulse"></i> Esta escolha ter&aacute; consequ&ecirc;ncias...
     </div>
 
     <div id="credits-screen" class="screen">
@@ -598,34 +547,51 @@
         </div>
     </div>
 
-    <!-- LÓGICA GERAL E FIREBASE -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getDatabase, ref, set, onValue, remove, get } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
-
-        const firebaseConfig = { apiKey: "AIzaSyAYd1ZFIRPLGIsNQnGZ5plSsQYeac171vg", authDomain: "ifpiflix-grupo6.firebaseapp.com", databaseURL: "https://ifpiflix-grupo6-default-rtdb.firebaseio.com", projectId: "ifpiflix-grupo6", storageBucket: "ifpiflix-grupo6.firebasestorage.app", messagingSenderId: "1014663396170", appId: "1:1014663396170:web:9baa564bb45528d97e5fb3" };
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
+    <script>
         const script = [ 
-            { id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Francisco" }, 
-            { id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Francisco" }, 
-            { id: 2, title: "Cap 2: Tradição Medieval (Geocentrismo)", presenter: "JP Santos" }, 
-            { id: 3, title: "Cap 2: Tradição Medieval (Autoridade)", presenter: "JP Santos" }, 
-            { id: 4, title: "Cap 3: A Ruptura", presenter: "Pedro" }, 
-            { id: 5, title: "Cap 4: Revolução Cosmológica (Copérnico)", presenter: "JP Silva" }, 
-            { id: 6, title: "Cap 4: Revolução Cosmológica (Galileu)", presenter: "JP Silva" }, 
-            { id: 7, title: "Cap 5: Empirismo (Os Ídolos)", presenter: "Nicolas" }, 
-            { id: 8, title: "Cap 5: Empirismo (Método Indutivo)", presenter: "Nicolas" }, 
-            { id: 9, title: "Cap 6: Racionalismo (Dúvida Metódica)", presenter: "Francisco" }, 
-            { id: 10, title: "Cap 6: Racionalismo (Penso, logo existo)", presenter: "Francisco" }, 
-            { id: 11, title: "Cap 7: Síntese Newtoniana", presenter: "JP Santos" } 
+            { id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Francisco",
+              atm: "atm-dust", ach: "[🌍 Conquista: O Mundo Expandiu]",
+              tickers: ["A Europa acordando de uma soneca de 1000 anos...", "O feudalismo caiu, a ciência subiu.", "Navegações bombando, dogmas caindo."] }, 
+            { id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Francisco",
+              atm: "atm-dust", ach: "[💡 Conquista: Acordou do sono dogmático]",
+              tickers: ["Galera começou a ler os gregos sem a censura da Igreja.", "O centro do universo não somos nós? Chocante."] }, 
+            { id: 2, title: "Cap 2: Tradição Medieval (Geocentrismo)", presenter: "JP Santos",
+              atm: "atm-fog", ach: "[🔒 Bloqueado: Proibido pensar fora da caixa]",
+              tickers: ["Aristóteles disse que a Terra tava parada. Fonte: Confia.", "Ptolomeu meteu 50 círculos mágicos pro cálculo dar certo."] }, 
+            { id: 3, title: "Cap 2: Tradição Medieval (Autoridade)", presenter: "JP Santos",
+              atm: "atm-fog", ach: "[📜 Conquista: Acreditou em Ptolomeu cegamente]",
+              tickers: ["Igreja: 'Se tá num livro velho e em latim, é verdade'.", "Questionar a regra resultava em fogueira instantânea."] }, 
+            { id: 4, title: "Cap 3: A Ruptura", presenter: "Pedro",
+              atm: "atm-dust", ach: "[🔍 Conquista: A Luz da Razão Encontrada]",
+              tickers: ["O homem moderno: 'E se a gente testasse essa parada?'", "A contemplação passiva saiu do chat.", "Investigação ativa entrou no chat."] }, 
+            { id: 5, title: "Cap 4: Revolução Cosmológica (Copérnico)", presenter: "JP Silva",
+              atm: "atm-stars", ach: "[🌞 Conquista: O Sol assumiu o controle]",
+              tickers: ["Copérnico: 'Galera, o Sol tá no meio, não a gente'.", "Tirar a Terra do centro ofendeu muito o ego humano."] }, 
+            { id: 6, title: "Cap 4: Revolução Cosmológica (Galileu)", presenter: "JP Silva",
+              atm: "atm-stars", ach: "[🏆 Conquista: Irritou a Igreja Católica]",
+              tickers: ["Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.", "Eppur si muove: o primeiro 'falei, tô leve' da história."] }, 
+            { id: 7, title: "Especial: A Escolha", presenter: "Todos", atm: "none", ach: "", tickers: [] }, 
+            { id: 8, title: "Cap 5: Empirismo (Os Ídolos)", presenter: "Nicolas",
+              atm: "atm-dust", ach: "[⚔️ Conquista: Derrotou os Ídolos da Caverna]",
+              tickers: ["Ídolo da Caverna = viver na própria bolha.", "Bacon: Antes de fazer ciência, limpe sua mente dos fakes."] }, 
+            { id: 9, title: "Cap 5: Empirismo (Método Indutivo)", presenter: "Nicolas",
+              atm: "atm-dust", ach: "[🧪 Nível Up: XP de Experiência Prática Ganho]",
+              tickers: ["Bacon morreu de pneumonia tentando congelar uma galinha.", "Se não testou na prática, meu anjo, é só fanfic."] }, 
+            { id: 10, title: "Cap 6: Racionalismo (Dúvida Metódica)", presenter: "Francisco",
+              atm: "atm-matrix", ach: "[⚠️ Aviso: Nível de Crise Existencial Crítico]",
+              tickers: ["Descartes ficou dias trancado num quarto. Saúde mental: zero.", "E se tudo for uma simulação?"] }, 
+            { id: 11, title: "Cap 6: Racionalismo (Penso, logo existo)", presenter: "Francisco",
+              atm: "atm-matrix", ach: "[🧠 Conquista: Provou que não é um NPC]",
+              tickers: ["Duvidou tanto de tudo que quase sumiu da existência.", "A única certeza: eu existo porque tô com dor de cabeça de pensar."] }, 
+            { id: 12, title: "Cap 7: Síntese Newtoniana", presenter: "JP Santos",
+              atm: "none", ach: "[🍎 Item Lendário Equipado: A Maçã da Gravidade]",
+              tickers: ["Uma maçã caiu, e o cara inventou o cálculo.", "Newton uniu o Racionalismo e o Empirismo na amizade.", "Física virou o meta do jogo."] },
+            { id: 13, title: "Fim: Assine Já", presenter: "Todos", atm: "none", ach: "", tickers: [] }
         ];
 
         let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
-        let adPlayed = false; let pendingQuizOpen = false;
-
-        function unlockMedia() { const vid = document.getElementById('ad-video'); vid.muted = true; vid.play().then(()=>{ vid.pause(); vid.currentTime=0; vid.muted=false; }).catch(()=>{}); const aud = document.getElementById('tudum-audio'); aud.muted = true; aud.play().then(()=>{ aud.pause(); aud.currentTime=0; aud.muted=false; }).catch(()=>{}); const dfAud = document.getElementById('deepfake-audio'); dfAud.muted = true; dfAud.play().then(()=>{ dfAud.pause(); dfAud.currentTime=0; dfAud.muted=false; }).catch(()=>{}); }
+        let inquisitionPlayed = false; let idlePlayed = false;
+        let tickerInterval; let achTimeout;
 
         function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const t = document.getElementById(id); if(t) t.classList.add('active'); }
         window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
@@ -633,113 +599,121 @@
 
         function selectProfile(name) {
             activeProfile = name; document.getElementById('nav-profile-name').innerHTML = name; document.getElementById('current-presenter-name').innerHTML = name;
-            if (!started) { switchScreen('home-screen'); } else { if(targetSlide === 0 && !adPlayed) { playAd(0); } else { simulateLoading(() => { renderSlide(targetSlide); switchScreen('player-screen'); }); } }
+            if (!started) { switchScreen('home-screen'); } else { simulateLoading(() => { renderSlide(targetSlide); switchScreen('player-screen'); }); }
         }
-
-        window.selectMiniProfile = function(name) { activeProfile = name; document.getElementById('nav-profile-name').innerHTML = name; document.getElementById('current-presenter-name').innerHTML = name; document.getElementById('mini-profile-menu').style.display = 'none'; renderSlide(targetSlide); }
+        
+        function showPresenterToast(name) {
+            const toast = document.getElementById('turn-toast');
+            document.getElementById('toast-presenter-name').innerHTML = name;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
 
         function renderSlide(idx) {
             currentSlide = idx; 
-            document.getElementById('player-ep-title').innerHTML = script[idx].title; document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
+            const data = script[idx];
+            document.getElementById('player-ep-title').innerHTML = data.title; 
+            document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
+            
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); 
-            const activeS = document.getElementById(`slide-${idx}`);
-            activeS.classList.add('active');
+            document.getElementById(`slide-${idx}`).classList.add('active');
+
+            const atmLayer = document.getElementById('atm-layer');
+            atmLayer.className = 'atm-layer'; 
+            if(data.atm && data.atm !== 'none') {
+                atmLayer.classList.add(data.atm);
+                atmLayer.style.opacity = 1;
+            } else {
+                atmLayer.style.opacity = 0;
+            }
+
+            clearInterval(tickerInterval);
+            const tickerEl = document.getElementById(`ticker-${idx}`);
+            if(tickerEl && data.tickers && data.tickers.length > 0) {
+                let tIdx = 0;
+                tickerEl.innerHTML = data.tickers[tIdx];
+                tickerEl.style.opacity = 1;
+                tickerInterval = setInterval(() => {
+                    tIdx = (tIdx + 1) % data.tickers.length;
+                    tickerEl.style.opacity = 0;
+                    setTimeout(() => { tickerEl.innerHTML = data.tickers[tIdx]; tickerEl.style.opacity = 1; }, 400);
+                }, 20000); // Trocando a cada 20 segundos
+            }
+
+            clearTimeout(achTimeout);
+            const achBox = document.getElementById('ach-popup');
+            achBox.classList.remove('show');
+            if(data.ach && data.ach !== "") {
+                achTimeout = setTimeout(() => {
+                    document.getElementById('ach-text').innerHTML = data.ach;
+                    achBox.classList.add('show');
+                    setTimeout(() => { achBox.classList.remove('show'); }, 5000);
+                }, 500); // Conquista aparece em 0.5s após o slide abrir
+            }
+
+            if (idx === 6 && !inquisitionPlayed) { setTimeout(() => { document.getElementById('inquisition-overlay').style.display = 'flex'; }, 500); }
+            if (idx === 12 && !idlePlayed) { setTimeout(() => { document.getElementById('idle-overlay').style.display = 'flex'; }, 2000); }
+        }
+
+        document.getElementById('btn-abjure').addEventListener('click', () => {
+            document.getElementById('eppur-msg').style.display = 'block';
+            setTimeout(() => { document.getElementById('inquisition-overlay').style.display = 'none'; inquisitionPlayed = true; }, 2000);
+        });
+
+        document.getElementById('btn-continue-watching').addEventListener('click', () => { document.getElementById('idle-overlay').style.display = 'none'; idlePlayed = true; });
+
+        window.triggerLisChoice = function(targetIdx) {
+            document.getElementById('lis-dark-overlay').style.display = 'block';
+            const notif = document.getElementById('lis-notification');
+            notif.style.opacity = '1';
+            setTimeout(() => {
+                notif.style.opacity = '0'; document.getElementById('lis-dark-overlay').style.display = 'none';
+                if (activeProfile !== script[targetIdx].presenter && script[targetIdx].presenter !== "Todos") { 
+                    activeProfile = script[targetIdx].presenter;
+                    document.getElementById('nav-profile-name').innerHTML = activeProfile;
+                    document.getElementById('current-presenter-name').innerHTML = activeProfile;
+                    showPresenterToast(activeProfile);
+                } 
+                renderSlide(targetIdx);
+            }, 3000);
         }
 
         document.getElementById('btn-next-slide').addEventListener('click', () => { 
             let n = currentSlide + 1; 
             if(n >= script.length) { switchScreen('credits-screen'); } 
-            else if(activeProfile !== script[n].presenter) { document.getElementById('mini-profile-menu').style.display = 'flex'; targetSlide = n; } 
-            else { renderSlide(n); }
+            else { 
+                if(activeProfile !== script[n].presenter && script[n].presenter !== "Todos" && n !== 7) { 
+                    activeProfile = script[n].presenter;
+                    document.getElementById('nav-profile-name').innerHTML = activeProfile;
+                    document.getElementById('current-presenter-name').innerHTML = activeProfile;
+                    showPresenterToast(activeProfile);
+                }
+                renderSlide(n); 
+            }
+        });
+
+        document.getElementById('btn-prev-slide').addEventListener('click', () => { if(currentSlide > 0) renderSlide(currentSlide - 1); });
+
+        // CONTROLE PELAS SETINHAS DO TECLADO
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('player-screen').classList.contains('active')) {
+                // Bloqueia setinha no slide de escolha (Para forçar clicar na tela)
+                if (currentSlide === 7 && e.key === 'ArrowRight') {
+                    // Opcional: Se quiser que a seta funcione e pule a escolha, libere a linha abaixo. Deixei bloqueada pra manter a mágica.
+                    return; 
+                }
+                if (e.key === 'ArrowRight') { document.getElementById('btn-next-slide').click(); }
+                if (e.key === 'ArrowLeft') { document.getElementById('btn-prev-slide').click(); }
+            }
         });
 
         function simulateLoading(callback) { switchScreen('loading-screen'); let p = 0; const txt = document.getElementById('loading-perc'); const int = setInterval(() => { p += Math.floor(Math.random() * 30) + 15; if(p >= 100) { p = 100; clearInterval(int); setTimeout(callback, 300); } txt.innerHTML = p + '%'; }, 150); }
-        window.startPresentationAt = function(index) { targetSlide = index; activeProfile = script[index].presenter; document.getElementById('nav-profile-name').innerHTML = activeProfile; document.getElementById('current-presenter-name').innerHTML = activeProfile; started = true; if(index === 0 && !adPlayed) { playAd(index); } else { simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); }); } }
-        function playAd(index) { targetSlide = index; switchScreen('ad-screen'); const vid = document.getElementById('ad-video'); vid.currentTime = 0; vid.volume = 1.0; const playPromise = vid.play(); if (playPromise !== undefined) { playPromise.catch(e => { document.getElementById('btn-force-play').style.display = 'block'; }); } vid.onended = finishAd; }
-        document.getElementById('btn-force-play').addEventListener('click', () => { document.getElementById('btn-force-play').style.display = 'none'; document.getElementById('ad-video').play().catch(e => { finishAd(); }); });
-        function finishAd() { adPlayed = true; document.getElementById('ad-video').pause(); const tudum = document.getElementById('tudum-audio'); tudum.volume = 1.0; tudum.play().catch(e => console.log('Áudio Ta-dum bloqueado')); simulateLoading(() => { renderSlide(targetSlide); switchScreen('player-screen'); }); }
-        document.getElementById('btn-skip-ad').addEventListener('click', finishAd);
-
-        document.querySelectorAll('.profile-card').forEach(c => { c.addEventListener('click', () => { unlockMedia(); selectProfile(c.getAttribute('data-profile')); }); });
+        window.startPresentationAt = function(index) { targetSlide = index; activeProfile = script[index].presenter; document.getElementById('nav-profile-name').innerHTML = activeProfile; document.getElementById('current-presenter-name').innerHTML = activeProfile; started = true; simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); }); }
+        
+        document.querySelectorAll('.profile-card').forEach(c => { c.addEventListener('click', () => { selectProfile(c.getAttribute('data-profile')); }); });
         document.getElementById('btn-start-presentation').addEventListener('click', () => startPresentationAt(0));
-        document.getElementById('btn-prev-slide').addEventListener('click', () => { if(currentSlide > 0) renderSlide(currentSlide - 1); });
         document.getElementById('btn-change-profile').addEventListener('click', () => switchScreen('profile-screen'));
         document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
-
-        document.getElementById('btn-open-quiz').addEventListener('click', () => { 
-            if(pendingQuizOpen) return;
-            pendingQuizOpen = true;
-            document.getElementById('error-message').innerHTML = "ALERTA DE SEGURAN&Ccedil;A DETECTADO.<br><br>Permiss&atilde;o negada para acessar o ambiente de simula&ccedil;&atilde;o. Autoriza&ccedil;&atilde;o de Administrador necess&aacute;ria.";
-            switchScreen('error-screen'); 
-            document.getElementById('error-screen').classList.add('glitching'); 
-            document.getElementById('error-content').classList.remove('show');
-            document.getElementById('hacker-terminal').style.display = 'none';
-            document.getElementById('btn-error-switch').style.display = 'inline-block';
-            document.getElementById('hacker-pwd').value = '';
-            setTimeout(() => { document.getElementById('error-screen').classList.remove('glitching'); document.getElementById('error-content').classList.add('show'); }, 1000);
-        });
-
-        document.getElementById('btn-error-switch').addEventListener('click', () => {
-            if (pendingQuizOpen) { document.getElementById('btn-error-switch').style.display = 'none'; document.getElementById('hacker-terminal').style.display = 'block'; document.getElementById('hacker-pwd').focus(); } 
-            else { switchScreen('profile-screen'); }
-        });
-
-        function liberarJogoHacker() {
-            document.getElementById('hacker-pwd').blur(); 
-            pendingQuizOpen = false;
-            document.getElementById('hacker-terminal').style.display = 'none';
-            activeProfile = 'JP Santos';
-            document.getElementById('nav-profile-name').innerHTML = activeProfile;
-            document.getElementById('current-presenter-name').innerHTML = activeProfile;
-            switchScreen('player-screen');
-            document.getElementById('quiz-lobby').style.display = 'flex';
-            document.getElementById('quiz-active-view').style.display = 'none';
-            document.getElementById('quiz-overlay').style.display = 'flex';
-            try { remove(ref(db, 'participantes')); set(ref(db, 'quiz_state'), 'waiting'); } catch(e) { console.error("Firebase", e); }
-        }
-
-        document.getElementById('hacker-pwd').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.keyCode === 13) { e.preventDefault(); liberarJogoHacker(); } });
-        document.getElementById('btn-hacker-ok').addEventListener('click', (e) => { e.preventDefault(); liberarJogoHacker(); });
-
-        onValue(ref(db, 'participantes'), (snap) => { const count = snap.val() ? Object.keys(snap.val()).length : 0; document.getElementById('player-count').innerHTML = `<i class="fa-solid fa-users"></i> Jogadores: ${count}`; });
-
-        let timerInt;
-        function runProjectorTimer(seconds, callback) { 
-            if(timerInt) clearInterval(timerInt);
-            let s = seconds; const el = document.getElementById('proj-timer'); el.innerHTML = s; el.style.borderColor = '#3b82f6'; el.style.color = '#fff'; 
-            timerInt = setInterval(() => { 
-                s--; el.innerHTML = s; 
-                if(s <= 5) { el.style.borderColor = '#E50914'; el.style.color = '#E50914'; } 
-                if(s <= 0) { clearInterval(timerInt); callback(); } 
-            }, 1000); 
-        }
-
-        function fetchAndShowWinners(correctLetter) { get(ref(db, 'participantes')).then((snapshot) => { const box = document.getElementById('proj-winners'); if (snapshot.exists()) { const data = snapshot.val(); const winners = Object.values(data).filter(p => p.ans === correctLetter).map(p => p.nome); if (winners.length > 0) { box.innerHTML = winners.map(n => `<span class="winner-badge">${n}</span>`).join(''); } else { box.innerHTML = "<span style='color: #888; font-size: 1.2rem;'>Ningu&eacute;m acertou essa! 😢</span>"; } } else { box.innerHTML = "<span style='color: #888; font-size: 1.2rem;'>Nenhum jogador registrado.</span>"; } }); }
-
-        window.iniciarPartidaMaster = function() {
-            try {
-                document.getElementById('quiz-lobby').style.display = 'none'; 
-                document.getElementById('quiz-active-view').style.display = 'flex';
-                document.getElementById('proj-q-text').innerHTML = "Qual &eacute; o principal objetivo da D&uacute;vida Met&oacute;dica de Descartes?"; 
-                document.getElementById('proj-result-area').style.display = 'none';
-                set(ref(db, 'quiz_state'), 'q1'); 
-                runProjectorTimer(20, () => {
-                    set(ref(db, 'quiz_state'), 'q1_result'); document.getElementById('proj-timer').innerHTML = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerHTML = "A resposta correta era a C: Encontrar uma verdade inquestion&aacute;vel.";
-                    fetchAndShowWinners("C");
-                    setTimeout(() => {
-                        set(ref(db, 'quiz_state'), 'q2'); document.getElementById('proj-q-text').innerHTML = "O que Francis Bacon criticava através de sua teoria dos Ídolos?"; document.getElementById('proj-result-area').style.display = 'none'; document.getElementById('proj-winners').innerHTML = ""; 
-                        runProjectorTimer(20, () => {
-                            set(ref(db, 'quiz_state'), 'q2_result'); document.getElementById('proj-timer').innerHTML = "0"; document.getElementById('proj-result-area').style.display = 'block'; document.getElementById('proj-answer-text').innerHTML = "A resposta correta era a A: Os preconceitos e falsas noções da mente.";
-                            fetchAndShowWinners("A");
-                            setTimeout(() => {
-                                set(ref(db, 'quiz_state'), 'final_evt'); document.getElementById('quiz-overlay').style.display = 'none'; const evtScreen = document.getElementById('proj-evt-screen'); evtScreen.style.display = 'flex'; evtScreen.classList.add('blink');
-                                setTimeout(() => { evtScreen.style.display = 'none'; evtScreen.classList.remove('blink'); set(ref(db, 'quiz_state'), 'waiting'); document.getElementById('quiz-lobby').style.display = 'flex'; document.getElementById('quiz-active-view').style.display = 'none'; }, 10000);
-                            }, 7000); 
-                        });
-                    }, 7000); 
-                });
-            } catch(err) { alert("Erro ao iniciar a partida..."); }
-        };
     </script>
 </body>
 </html>
