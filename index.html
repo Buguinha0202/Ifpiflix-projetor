@@ -12,42 +12,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* AVATARES E VARIAVEIS */
-        .av-francisco { background-image: url('francisco.jpg'); background-color: #E50914; }
-        .av-pedro     { background-image: url('pedro.jpg'); background-color: #10b981; }
-        .av-jsantos   { background-image: url('jsantos.jpg'); background-color: #3b82f6; }
-        .av-jsilva    { background-image: url('jsilva.jpg'); background-color: #f59e0b; }
-        .av-nicolas   { background-image: url('nicolas.jpg'); background-color: #8b5cf6; }
-
-        .avatar { width: 150px; height: 150px; border-radius: 4px; border: 2px solid transparent; background-size: cover; background-position: center; transition: 0.3s; }
-
+        /* VARIÁVEIS E BASE GERAL */
         :root { --netflix-red: #E50914; --netflix-dark: #000000; --netflix-bg: #141414; --text-dim: #808080; --rpg-gold: #d4af37;}
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--netflix-dark); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; width: 100vw; height: 100vh; user-select: none; }
+        
+        body { background-color: var(--netflix-dark); color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; width: 100vw; height: 100vh; user-select: none; }
 
-        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; display: flex; flex-direction: column; }
-        .screen.active { opacity: 1; pointer-events: auto; z-index: 10;}
+        /* SCREENS COM CONTROLO ESTRITO DE CAMADAS E CLIQUE */
+        .screen { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            opacity: 0; 
+            pointer-events: none; 
+            visibility: hidden; 
+            transition: opacity 0.5s ease, visibility 0.5s; 
+            display: flex; 
+            flex-direction: column; 
+            z-index: 10; 
+            overflow: hidden;
+        }
 
-        /* TELAS BASICAS */
-        #profile-screen { justify-content: center; align-items: center; background: #141414; z-index: 50; }
-        #profile-screen h1 { font-size: 3.5rem; font-weight: 400; margin-bottom: 40px; color: #fff; text-align: center; }
-        .profiles-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 1000px; }
-        .profile-card { display: flex; flex-direction: column; align-items: center; gap: 15px; cursor: pointer; transition: 0.3s; padding: 15px; border-radius: 8px; position: relative; z-index: 10; }
-        .profile-card * { pointer-events: none; } 
-        .profile-card:hover .avatar { outline: 4px solid #fff; transform: scale(1.05); }
-        .profile-card span { color: var(--text-dim); font-size: 1.5rem; transition: 0.3s; }
-        .profile-card:hover span { color: #fff; }
+        .screen.active { 
+            opacity: 1; 
+            pointer-events: auto; 
+            visibility: visible; 
+            z-index: 100; 
+        }
 
+        /* Garante que nenhum elemento interior de telas inativas bloqueie cliques */
+        .screen:not(.active) * {
+            pointer-events: none !important;
+        }
+
+        #home-screen, #series-details-screen { overflow-y: auto; overflow-x: hidden; }
+
+        /* EFEITO CAMERA SHAKE */
+        @keyframes screenShake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-2px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
+        .shake-active { animation: screenShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+
+        /* LOADING E PERFIS */
         #loading-screen { justify-content: center; align-items: center; background: #000; z-index: 999; }
         .spinner { width: 80px; height: 80px; border: 5px solid rgba(229, 9, 20, 0.3); border-top: 5px solid var(--netflix-red); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         .loading-text { font-size: 1.5rem; font-weight: bold; color: var(--netflix-red); font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        #profile-screen { justify-content: center; align-items: center; background: #141414; }
+        #profile-screen h1 { font-size: 3rem; font-weight: 400; margin-bottom: 40px; color: #fff; text-align: center; }
+        .profiles-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 1000px; }
+        .profile-card { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; padding: 10px; border-radius: 8px; position: relative; pointer-events: auto;}
         
-        /* TELA INICIAL */
-        #home-screen { background: var(--netflix-bg); z-index: 40; overflow-y: auto; overflow-x: hidden;}
+        .avatar { width: 120px; height: 120px; border-radius: 4px; display:flex; align-items:center; justify-content:center; font-size: 3.5rem; color: #fff; border: 2px solid transparent; transition: 0.3s; }
+        .c1 { background-color: #E50914; } .c2 { background-color: #10b981; } .c3 { background-color: #3b82f6; } .c4 { background-color: #f59e0b; } .c5 { background-color: #8b5cf6; }
+        
+        .profile-card:hover .avatar { outline: 4px solid #fff; transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
+        .profile-card span { color: var(--text-dim); font-size: 1.2rem; transition: 0.3s; font-weight: 600;}
+        .profile-card:hover span { color: #fff; }
+
+        /* TELA INICIAL (IFPIFLIX LOBBY) */
         .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
-        
-        .hero { height: 95vh; min-height: 700px; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, rgba(0,0,0,0.9) 30%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('watermarked_img_10919591568350661226.jpg') center/cover no-repeat; }
+        .hero { height: 95vh; min-height: 700px; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, rgba(0,0,0,0.9) 30%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('watermarked_img_10919591568350661226.jpg'), #1c1c1c center/cover no-repeat; }
         .hero-content { max-width: 650px; margin-top: 50px;}
         .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; margin-bottom: 10px; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); line-height: 1; }
         .hero-buttons { display: flex; gap: 15px; margin-top: 25px; }
@@ -57,143 +84,130 @@
         
         .catalog-container { padding: 0 4% 50px 4%; position: relative; z-index: 10; margin-top: -50px;}
         .row-title { font-size: 1.3rem; font-weight: bold; color: #e5e5e5; margin-bottom: 12px; margin-top: 20px; }
+        
         .posters-container, .landscape-row { display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; padding-bottom: 15px; width: 100%; }
         .posters-container::-webkit-scrollbar, .landscape-row::-webkit-scrollbar { display: none; }
         
-        .card-portrait, .card-landscape { border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; }
-        .card-portrait { flex: 0 0 160px; height: 240px; }
-        .card-landscape { flex: 0 0 260px; height: 146px; }
-        .card-portrait-content, .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
-        .card-landscape-content { padding: 10px 15px; text-align: left; }
-        .card-portrait:hover, .card-landscape:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); z-index: 10;}
-        .card-portrait h4, .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        .card-portrait { flex: 0 0 160px; height: 240px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #1a1a1a; }
+        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
+        .card-portrait:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); z-index: 10;}
+        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
-        .p-stranger { background-image: url('stranger_pings.jpg'); } .p-dragon { background-image: url('como_treinar_ia.jpg'); } .p-pix { background-image: url('deepfake_pix.jpg'); } .p-kpop { background-image: url('guerreiras_kpop.jpg'); } .p-nicolas { background-image: url('nicolas_o_grande.jpg'); } .p-lalalan { background-image: url('la_la_lan.jpg'); } .p-opensource { background-image: url('open_source.jpg'); } .p-procurando { background-image: url('procurando_ip.jpg'); } .p-honeypot { background-image: url('pote_de_mel.jpg'); } .p-mitm { background-image: url('homem_no_meio.jpg'); } .p-firewall { background-image: url('muralha_de_fogo.jpg'); } .p-metaverso { background-image: url('fuga_metaverso.jpg'); } .p-iot { background-image: url('rebeliao_torradeiras.jpg'); }
+        .card-landscape { flex: 0 0 260px; height: 146px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #1a1a1a; }
+        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
+        .card-landscape:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); z-index: 10;}
+        .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
-        #series-details-screen { background: var(--netflix-bg); z-index: 45; overflow-y: auto; overflow-x: hidden; }
-        .details-hero { height: 85vh; min-height: 600px; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('watermarked_img_10919591568350661226.jpg') center/cover no-repeat; }
+        .card-movie { flex: 0 0 350px; height: 200px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; display:flex; align-items:flex-end; padding:15px;}
+        .card-movie:hover { transform: translateY(-8px) scale(1.02); border-color: var(--netflix-red); box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5); z-index: 10;}
+        .card-movie-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); pointer-events: none;}
+        .card-movie-content { position: relative; z-index: 2; width: 100%;}
+        .card-movie h4 { font-size: 1.5rem; font-weight: bold; color: #fff; margin:0; font-family: 'Bebas Neue', cursive; letter-spacing: 1px;}
+        .card-movie p { font-size: 0.9rem; color: #ccc; margin-top: 5px;}
+
+        /* POSTERS COM FALLBACKS */
+        .p-stranger { background: linear-gradient(135deg, #2b1055, #7597de), url('stranger_pings.jpg'); background-size: cover; }
+        .p-dragon { background: linear-gradient(135deg, #1b2838, #2a475e), url('como_treinar_ia.jpg'); background-size: cover; }
+        .p-pix { background: linear-gradient(135deg, #0f2027, #203a43), url('deepfake_pix.jpg'); background-size: cover; }
+        .p-kpop { background: linear-gradient(135deg, #654ea3, #eaafc8), url('guerreiras_kpop.jpg'); background-size: cover; }
+        .p-nicolas { background: linear-gradient(135deg, #3a1c71, #d76d77), url('nicolas_o_grande.jpg'); background-size: cover; }
+        .p-lalalan { background: linear-gradient(135deg, #134e5e, #71b280), url('la_la_lan.jpg'); background-size: cover; }
+        .p-opensource { background: linear-gradient(135deg, #11998e, #38ef7d), url('open_source.jpg'); background-size: cover; }
+        .p-procurando { background: linear-gradient(135deg, #005aa7, #fffde4), url('procurando_ip.jpg'); background-size: cover; }
+        .p-honeypot { background: linear-gradient(135deg, #f12711, #f5af19), url('pote_de_mel.jpg'); background-size: cover; }
+        .p-mitm { background: linear-gradient(135deg, #232526, #414345), url('homem_no_meio.jpg'); background-size: cover; }
+        .p-firewall { background: linear-gradient(135deg, #e52d27, #b31217), url('muralha_de_fogo.jpg'); background-size: cover; }
+        .p-metaverso { background: linear-gradient(135deg, #8a2387, #e94057), url('fuga_metaverso.jpg'); background-size: cover; }
+        .p-iot { background: linear-gradient(135deg, #4b6cb7, #182848), url('rebeliao_torradeiras.jpg'); background-size: cover; }
+
+        /* TELA DE EPISÓDIOS */
+        .details-hero { height: 85vh; min-height: 600px; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('watermarked_img_10919591568350661226.jpg'), #1c1c1c center/cover no-repeat; }
         .details-content { max-width: 600px; z-index: 2; margin-top: 50px; }
         .details-content h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; line-height: 1; margin-bottom: 15px; }
-        .episodes-list { padding: 20px 4% 50px 4%; background: #141414; }
-        .ep-item { display: flex; align-items: center; gap: 20px; padding: 20px 0; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s;}
-        .ep-item:hover { background: rgba(255,255,255,0.05); }
-        .ep-thumb { width: 140px; height: 80px; flex-shrink: 0; border-radius: 4px; background: #222; border: 1px solid #444; display: flex; align-items: center; justify-content: center;}
-        .ep-number { font-family: 'Bebas Neue'; font-size: 2.5rem; color: #fff; text-shadow: 2px 2px 5px #000; z-index: 2; }
-        .ep-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: #fff;}
-        .ep-info p { font-size: 0.9rem; color: var(--text-dim); }
 
-        #mini-profile-menu { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        #mini-profile-menu h2 { font-size: 3rem; margin-bottom: 30px; font-weight: 300; }
-        .mini-profiles { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;}
-        .mini-card { text-align: center; cursor: pointer; transition: 0.2s; color: var(--text-dim); }
-        .mini-card:hover { transform: scale(1.05); color: #fff; }
-        .mini-avatar { width: 100px; height: 100px; border-radius: 4px; margin-bottom: 10px; background-size: cover; background-position: center; }
-
-        /* TOAST DE TURNO */
+        /* NOTIFICAÇÕES E POPUPS GLOBAIS */
         #turn-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.95); border: 2px solid var(--netflix-red); padding: 15px 30px; border-radius: 50px; color: #fff; z-index: 10000; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(229,9,20,0.4); display: flex; align-items: center; gap: 15px; pointer-events: none;}
         #turn-toast.show { top: 30px; }
-
-        /* TELA DE APRESENTAÇÃO */
-        #player-screen { background: #000; z-index: 50; position: relative; overflow: hidden;}
         
-        /* ATMOSFERAS (FUNDO) */
-        .atm-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; opacity: 0; transition: opacity 1s; }
-        .atm-fog { background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.8) 100%); animation: pulseFog 8s infinite alternate; }
-        .atm-stars { background: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)), radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)), radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px; animation: starDrift 30s linear infinite; }
-        .atm-dust { background: radial-gradient(3px 3px at 50px 50px, rgba(212, 175, 55, 0.3), rgba(0,0,0,0)), radial-gradient(2px 2px at 100px 150px, rgba(212, 175, 55, 0.4), rgba(0,0,0,0)); background-size: 150px 150px; animation: dustDrift 15s linear infinite; }
-        .atm-matrix { background: repeating-linear-gradient(180deg, rgba(0,255,0,0.02) 0px, transparent 2px, transparent 10px); background-size: 100% 20px; animation: matrixRain 5s linear infinite; }
-        @keyframes pulseFog { 0% { opacity: 0.5; } 100% { opacity: 0.9; } }
-        @keyframes starDrift { from { transform: translateY(0) translateX(0); } to { transform: translateY(-200px) translateX(-50px); } }
-        @keyframes dustDrift { from { transform: translateY(0); } to { transform: translateY(-150px); } }
-        @keyframes matrixRain { from { background-position: 0 0; } to { background-position: 0 100%; } }
-
-        .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
-        .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; height: 100%; z-index: 20;}
-        .slide { position: absolute; width: 100%; max-width: 1200px; padding: 0 4%; opacity: 0; pointer-events: none; transition: 0.5s; transform: scale(0.95); }
-        .slide.active { opacity: 1; pointer-events: auto; transform: scale(1); }
-        
-        .slide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-        .text-col h2 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; color: #fff; margin-bottom: 5px; border-left: 4px solid var(--netflix-red); padding-left: 15px; line-height: 1;}
-        .text-col p { font-size: 1.25rem; line-height: 1.6; color: #ccc; margin-top: 20px; }
-        .highlight { color: var(--netflix-red); font-weight: bold; }
-        
-        /* LETREIRO (20 segundos) */
-        .ticker-box { background: rgba(229, 9, 20, 0.1); border-left: 3px solid #E50914; padding: 8px 12px; margin-top: 10px; margin-bottom: 15px; font-style: italic; color: #aaa; font-size: 1.1rem; transition: opacity 0.4s; min-height: 45px; display: flex; align-items: center;}
-        
-        /* POPUP DE CONQUISTAS */
         #ach-popup { position: fixed; bottom: -100px; right: 20px; background: rgba(20,20,20,0.95); border-left: 5px solid var(--rpg-gold); border-radius: 4px; padding: 15px 25px; color: #fff; font-family: 'Inter', sans-serif; font-weight: bold; box-shadow: 0 0 20px rgba(0,0,0,0.8); transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10000; display: flex; align-items: center; gap: 15px; pointer-events: none;}
         #ach-popup.show { bottom: 30px; }
         .ach-icon { font-size: 2rem; color: var(--rpg-gold); }
 
-        .visual-col { background: #111; border-radius: 8px; border: 1px solid #333; height: 450px; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: flex; flex-direction: column;}
+        /* =========================================================
+           PLAYER 1: A APRESENTAÇÃO CLÁSSICA
+           ========================================================= */
+        #player-screen { background: #000; }
+        .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
+        .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; height: 100%; z-index: 20;}
+        .slide { position: absolute; width: 100%; max-width: 1200px; padding: 0 4%; opacity: 0; pointer-events: none; transition: 0.5s; }
+        .slide.active { opacity: 1; pointer-events: auto; }
+        .slide-grid { display: flex; align-items: center; width: 100%; position: relative; gap: 20px;}
+        
+        .text-col { flex: 1; padding-right: 20px; z-index: 1; transform: translateX(100%); opacity: 0; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .slide.active .text-col { transform: translateX(0); opacity: 1; transition-delay: 0.2s; }
+        .visual-col { flex: 1; background: #111; border-radius: 8px; border: 1px solid #333; height: 450px; position: relative; overflow: hidden; box-shadow: -20px 0 40px rgba(0,0,0,0.9); z-index: 10; display: flex; flex-direction: column;}
+        
+        .text-col h2 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; color: #fff; margin-bottom: 5px; border-left: 4px solid var(--netflix-red); padding-left: 15px; line-height: 1;}
+        .text-col p { font-size: 1.25rem; line-height: 1.6; color: #ccc; margin-top: 10px; }
+        .highlight { color: var(--netflix-red); font-weight: bold; }
+        .ticker-box { background: rgba(229, 9, 20, 0.1); border-left: 3px solid #E50914; padding: 8px 12px; margin-top: 10px; margin-bottom: 15px; font-style: italic; color: #aaa; font-size: 1rem; transition: opacity 0.4s; min-height: 40px; display: flex; align-items: center;}
         .rpg-top { background: #222; height: 40px; display: flex; align-items: center; padding: 0 15px; gap: 10px; border-bottom: 2px solid var(--rpg-gold); z-index: 5; position: relative; font-family: 'Bebas Neue', cursive; font-size: 1.2rem; letter-spacing: 1px;}
-        .rpg-top i { color: var(--rpg-gold); }
-        .sim-screen { flex-grow: 1; position: relative; width: 100%; background: #1a1a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
+        .sim-screen { flex-grow: 1; position: relative; width: 100%; background: #1a1a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
 
-        /* --- ANIMAÇÕES MELHORADAS --- */
-
-        /* 1. Mapa Deslizando (Fixado) */
-        .map-pan { position: absolute; top:0; left:0; width: 100%; height: 100%; background: url('watermarked_img_10919591568350661226.jpg') repeat-x; background-size: cover; background-position: left center; animation: panMapBg 20s linear infinite; opacity: 0.5; z-index: 1;}
-        @keyframes panMapBg { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
-
-        /* 2. Geocentrismo Travado */
-        .geo-system { position: relative; width: 220px; height: 220px; border: 3px dashed #555; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2;}
-        .geo-earth { font-size: 5rem; color: #3b82f6; z-index: 2; }
-        .geo-lock { position: absolute; font-size: 3.5rem; color: #E50914; z-index: 3; animation: pulseLock 1.5s infinite alternate; }
+        .map-pan { position: absolute; top:0; left:0; width: 200%; height: 100%; background: url('watermarked_img_10919591568350661226.jpg'), #222 repeat-x; background-size: auto 100%; animation: panMapBg 30s linear infinite; opacity: 0.4; }
+        @keyframes panMapBg { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        
+        .geo-system { position: relative; width: 220px; height: 220px; border: 4px dashed #555; border-radius: 50%; display: flex; align-items: center; justify-content: center;}
+        .geo-earth { font-size: 5rem; color: #3b82f6; }
+        .geo-lock { position: absolute; font-size: 4rem; color: #E50914; animation: pulseLock 1.5s infinite alternate; }
         @keyframes pulseLock { 0% { transform: scale(1); text-shadow: 0 0 10px #E50914; } 100% { transform: scale(1.15); text-shadow: 0 0 30px #ff5555; } }
-
-        /* 3. Lanterna da Razão (Melhorada) */
-        .lantern-container { width: 100%; height: 100%; position: absolute; top:0; left:0; background: #050505; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 30px; font-size: 3rem; color: rgba(255,255,255,0.1); overflow: hidden; z-index: 1; }
-        .lantern-light { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.95) 15%, #050505 30%); animation: swingLantern 6s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; pointer-events: none;}
-        @keyframes swingLantern { 0% { transform: translate(10%, 15%); } 50% { transform: translate(-10%, 25%); } 100% { transform: translate(25%, -10%); } }
-
-        /* 4. Heliocentrismo Girando */
-        .helio-system { position: relative; width: 250px; height: 250px; border: 2px dashed rgba(245, 158, 11, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: spinSystem 10s linear infinite; z-index: 2;}
+        
+        .lantern-container { width: 100%; height: 100%; position: relative; background: #3d2b1f; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 30px; font-size: 3rem; color: #111; }
+        .lantern-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; animation: lanternMove 6s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
+        @keyframes lanternMove { 0% { clip-path: circle(25% at 20% 50%); } 50% { clip-path: circle(25% at 50% 20%); } 100% { clip-path: circle(25% at 80% 60%); } }
+        
+        .helio-system { position: relative; width: 250px; height: 250px; border: 2px dashed rgba(245, 158, 11, 0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; animation: spinSystem 10s linear infinite;}
         .helio-sun { font-size: 5rem; color: #f59e0b; position: absolute; animation: counterSpin 10s linear infinite; text-shadow: 0 0 30px rgba(245,158,11,0.6);}
         .helio-earth { font-size: 2rem; color: #3b82f6; position: absolute; top: -15px; }
         @keyframes spinSystem { 100% { transform: rotate(360deg); } }
         @keyframes counterSpin { 100% { transform: rotate(-360deg); } }
-
-        /* 5. A Lente do Telescópio */
-        .sky-bg { position: absolute; top:0; left:0; width: 100%; height: 100%; background: radial-gradient(circle, #222 10%, #000 90%); z-index: 1;}
-        .telescope-lens { width: 160px; height: 160px; border: 6px solid #3b82f6; border-radius: 50%; position: absolute; backdrop-filter: brightness(2) contrast(1.5); animation: searchSky 5s ease-in-out infinite alternate; box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.4); display:flex; align-items:center; justify-content:center; z-index: 2;}
+        
+        .sky-bg { position: absolute; top:0; left:0; width: 100%; height: 100%; background: radial-gradient(circle, #1a1a2e 10%, #000 90%); }
+        .telescope-lens { width: 160px; height: 160px; border: 6px solid #3b82f6; border-radius: 50%; position: absolute; backdrop-filter: brightness(2.5) contrast(1.2); animation: searchSky 6s ease-in-out infinite alternate; box-shadow: inset 0 0 20px rgba(59,130,246,0.5), 0 0 40px rgba(59,130,246,0.4); display:flex; align-items:center; justify-content:center;}
         @keyframes searchSky { 0% { transform: translate(-100px, -50px); } 100% { transform: translate(100px, 50px); } }
-
-        /* 6. Quebrando Ilusões (Máscara Cortada) */
-        .idol-container { position: relative; font-size: 6rem; color: #555; z-index: 2; display:flex; justify-content:center; align-items:center;}
-        .idol-mask { animation: shakeIdol 3s infinite; }
-        .idol-slash { position: absolute; font-size: 8rem; color: #E50914; transform: scale(0); opacity: 0; animation: slashStrike 3s infinite; text-shadow: 0 0 20px #E50914; }
-        @keyframes shakeIdol { 0%, 85% { transform: translate(0,0) rotate(0deg); filter: grayscale(1); } 87% { transform: translate(-5px, 5px) rotate(-5deg); filter: grayscale(0) drop-shadow(0 0 10px red); } 89% { transform: translate(5px, -5px) rotate(5deg); } 91% { transform: translate(-5px, -5px) rotate(-5deg); } 100% { transform: translate(0,0) rotate(0deg); } }
-        @keyframes slashStrike { 0%, 85% { transform: scale(2) rotate(45deg); opacity: 0; } 87% { transform: scale(1) rotate(45deg); opacity: 1; } 100% { transform: scale(1.1) rotate(45deg); opacity: 0; } }
-
-        /* 7. O Laboratório Empírico (Ondas contidas no frasco) */
-        .potion-lab { position: relative; display: flex; align-items: center; justify-content: center; height: 100%; z-index: 2;}
-        .potion-flask { width: 120px; height: 150px; border: 5px solid #fff; border-top: none; border-radius: 0 0 60px 60px; position: relative; overflow: hidden; box-shadow: inset 0 -30px 40px rgba(16, 185, 129, 0.8), 0 0 20px rgba(16,185,129,0.3); }
-        .potion-liquid { position: absolute; bottom: -50px; left: -50px; width: 200px; height: 200px; background: rgba(16, 185, 129, 0.8); border-radius: 40%; animation: liquidWave 3s infinite linear; }
-        .potion-liquid:nth-child(2) { bottom: -60px; background: rgba(5, 150, 105, 0.9); animation: liquidWave 4s infinite linear reverse; border-radius: 45%; }
-        .bubbles { position: absolute; background: #fff; border-radius: 50%; opacity: 0; }
-        .b1 { width: 12px; height: 12px; animation: floatUpBubbles 2s infinite linear; left: 30px; bottom: 10px;}
-        .b2 { width: 18px; height: 18px; animation: floatUpBubbles 2.5s infinite linear 0.5s; left: 60px; bottom: 5px;}
-        .b3 { width: 8px; height: 8px; animation: floatUpBubbles 1.8s infinite linear 1s; left: 80px; bottom: 15px;}
-        @keyframes liquidWave { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes floatUpBubbles { 0% { transform: translateY(0) scale(0.5); opacity: 0.8; } 100% { transform: translateY(-120px) scale(1.5); opacity: 0; } }
-
-        /* 8. O Glitch de Descartes */
-        .doubt-glitch { font-size: 5rem; font-family: 'Share Tech Mono', monospace; font-weight: bold; color: #fff; animation: glitchText 0.3s infinite; position: relative; z-index: 2; letter-spacing: 5px;}
+        
+        .idol-container { position: relative; width: 120px; height: 150px; }
+        .idol-half { font-size: 8rem; color: #555; position: absolute; top: 0; left: 0; transition: all 0.5s;}
+        .idol-left { clip-path: polygon(0 0, 50% 0, 40% 100%, 0 100%); animation: splitLeft 3s infinite; }
+        .idol-right { clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%); animation: splitRight 3s infinite; }
+        .idol-glow { position: absolute; top: 50%; left: 50%; width: 10px; height: 150px; background: #E50914; transform: translate(-50%, -50%) rotate(15deg); opacity: 0; box-shadow: 0 0 30px #E50914; animation: slashGlow 3s infinite; }
+        @keyframes splitLeft { 0%, 70% { transform: translateX(0) rotate(0); filter: grayscale(1); } 75%, 100% { transform: translateX(-15px) rotate(-10deg); filter: brightness(0.5); } }
+        @keyframes splitRight { 0%, 70% { transform: translateX(0) rotate(0); filter: grayscale(1); } 75%, 100% { transform: translateX(15px) rotate(10deg); filter: brightness(0.5); } }
+        @keyframes slashGlow { 0%, 65% { opacity: 0; transform: translate(-50%, -50%) rotate(15deg) scaleY(0); } 70% { opacity: 1; transform: translate(-50%, -50%) rotate(15deg) scaleY(1.5); } 80%, 100% { opacity: 0; } }
+        
+        .potion-lab { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;}
+        .flask-neck { width: 40px; height: 60px; border: 4px solid #fff; border-bottom: none; border-radius: 8px 8px 0 0; position: absolute; top: 80px; z-index: 3; background: rgba(255,255,255,0.05);}
+        .flask-body { width: 140px; height: 140px; border: 4px solid #fff; border-radius: 50%; position: absolute; top: 130px; overflow: hidden; z-index: 2; box-shadow: inset 0 -20px 40px rgba(16,185,129,0.5); }
+        .liquid { width: 200px; height: 200px; background: rgba(16,185,129,0.8); position: absolute; top: 60px; left: -30px; border-radius: 40%; animation: waveAction 3s infinite linear;}
+        .liquid2 { width: 200px; height: 200px; background: rgba(5,150,105,0.9); position: absolute; top: 70px; left: -30px; border-radius: 45%; animation: waveAction 4s infinite linear reverse;}
+        .potion-bubbles { position: absolute; background: #fff; border-radius: 50%; animation: floatBubbles 2s infinite linear; opacity: 0; z-index: 5;}
+        .b1 { width: 12px; height: 12px; left: 30px; bottom: 10px; animation-delay: 0s;} .b2 { width: 18px; height: 18px; left: 60px; bottom: 5px; animation-delay: 0.5s;} .b3 { width: 8px; height: 8px; left: 80px; bottom: 15px; animation-delay: 1s;}
+        @keyframes waveAction { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes floatBubbles { 0% { transform: translateY(0); opacity: 0.8; } 100% { transform: translateY(-100px); opacity: 0; } }
+        
+        .doubt-glitch { font-size: 5rem; font-family: 'Share Tech Mono', monospace; font-weight: bold; color: #fff; animation: glitchText 0.3s infinite; letter-spacing: 5px;}
         @keyframes glitchText { 0% { transform: translate(0); text-shadow: -3px 0 #E50914, 3px 0 #3b82f6; } 20% { transform: translate(-3px, 3px); } 40% { transform: translate(-3px, -3px); text-shadow: 3px 0 #E50914, -3px 0 #3b82f6; } 60% { transform: translate(3px, 3px); } 80% { transform: translate(3px, -3px); text-shadow: none; } 100% { transform: translate(0); } }
-
-        /* 9. A Mente Racional */
-        .brain-gear { font-size: 7rem; color: #3b82f6; animation: glowBrain 3s infinite alternate; position: relative; z-index: 2;}
+        
+        .brain-gear { font-size: 7rem; color: #3b82f6; animation: glowBrain 3s infinite alternate;}
         @keyframes glowBrain { 0% { filter: drop-shadow(0 0 10px #3b82f6); transform: scale(1); } 100% { filter: drop-shadow(0 0 40px #00f0ff); transform: scale(1.1); } }
 
-        /* 10. A Síntese Newtoniana (Maçã e Choque) */
-        .newton-scene { position: relative; width: 100%; height: 100%; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; z-index: 2;}
-        .newton-apple { font-size: 4rem; color: #E50914; position: absolute; z-index: 10; animation: appleGravity 4s infinite cubic-bezier(0.55, 0.085, 0.68, 0.53); top: -100px; }
-        .math-grid { position: absolute; bottom: 30px; width: 200px; height: 60px; border-bottom: 3px solid #3b82f6; border-radius: 50%; opacity: 0; animation: synthShockwave 4s infinite ease-out; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono'; color:#3b82f6; font-size:1.5rem; white-space: nowrap;}
-        @keyframes appleGravity { 0% { top: -100px; opacity: 1; } 45% { top: 60%; transform: scale(1); opacity: 1; } 50% { top: 60%; transform: scaleY(0.6) scaleX(1.2); opacity: 1; } 55% { top: 60%; transform: scale(1); opacity: 1; } 100% { top: 60%; opacity: 0; } }
-        @keyframes synthShockwave { 0%, 45% { transform: scale(0.2); opacity: 0; } 50% { transform: scale(0.5); opacity: 1; border-color: #E50914; color:#E50914;} 100% { transform: scale(3); opacity: 0; border-color: #3b82f6; color:#3b82f6;} }
+        .newton-scene { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 50px;}
+        .newton-apple { font-size: 5rem; color: #E50914; animation: appleDrop 4s infinite ease-in; z-index: 10; transform-origin: bottom; }
+        .math-wave { position: absolute; bottom: 50px; font-family: 'Share Tech Mono'; font-size: 2.5rem; color: #3b82f6; opacity: 0; animation: mathShock 4s infinite ease-out; white-space: nowrap; font-weight: bold;}
+        
+        @keyframes appleDrop { 0% { transform: translateY(-300px); } 40% { transform: translateY(0) scale(1); } 45% { transform: translateY(0) scaleY(0.6) scaleX(1.4); } 50% { transform: translateY(-40px) scale(1); } 55% { transform: translateY(0); } 100% { transform: translateY(0); } }
+        @keyframes mathShock { 0%, 40% { transform: scale(0.5); opacity: 0; filter: blur(10px); } 45% { transform: scale(1.2); opacity: 1; filter: blur(0); text-shadow: 0 0 30px #3b82f6, 0 0 10px #fff;} 100% { transform: scale(3.5); opacity: 0; filter: blur(20px); } }
 
-        /* CONTROLES INFERIORES */
         .player-controls { position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px 4%; z-index: 40;}
         .progress-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.2); }
         .progress-bar-fill { height: 100%; background: var(--netflix-red); width: 0%; transition: 0.3s; }
@@ -201,19 +215,448 @@
         .control-btn { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; transition: 0.2s;}
         .control-btn:hover { color: var(--netflix-red); }
 
-        /* OVERLAYS ESPECIAIS */
-        #inquisition-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(20, 0, 0, 0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; }
+
+        /* =========================================================
+           PLAYER 2: O FILME CINEMATOGRÁFICO 3D (COM SUPER ANIMAÇÕES)
+           ========================================================= */
+        #cinematic-stage { background: #000; }
+        
+        .stage-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 900; background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent); }
+        
+        .cine-scene { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            opacity: 0; 
+            pointer-events: none; 
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .cine-text-box { 
+            position: absolute; 
+            z-index: 50; 
+            max-width: 620px; 
+            opacity: 0; 
+            transition: all 1.1s cubic-bezier(0.16, 1, 0.3, 1); 
+            text-shadow: 0 5px 25px rgba(0,0,0,0.95); 
+            pointer-events: none;
+        }
+        .cine-title { font-family: 'Bebas Neue', cursive; font-size: 5rem; line-height: 0.95; color: var(--netflix-red); margin-bottom: 12px; }
+        .cine-desc { font-size: 1.45rem; color: #e0e0e0; line-height: 1.55; text-shadow: 0 2px 10px #000; font-weight: 300;}
+
+        /* BARRAS DE NAVEGAÇÃO FLUTUANTES DO MODO FILME */
+        .cine-nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 950;
+            background: rgba(20, 20, 20, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s;
+        }
+        .cine-nav-arrow:hover {
+            background: var(--netflix-red);
+            border-color: #fff;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.8);
+        }
+        .cine-prev { left: 25px; }
+        .cine-next { right: 25px; }
+
+        .cine-dots-bar {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 14px;
+            z-index: 950;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+        }
+        .cine-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .cine-dot:hover { background: #fff; transform: scale(1.2); }
+        .cine-dot.active { background: var(--netflix-red); width: 35px; border-radius: 10px; box-shadow: 0 0 15px var(--netflix-red); }
+
+        /* ================= CENA 1: BIBLIOTECA MEDIEVAL ================= */
+        #cine-library { background: radial-gradient(circle at center, #232328 0%, #050505 100%); perspective: 1200px; }
+        .cine-pillar { 
+            position: absolute; 
+            top: -10%; 
+            width: 260px; 
+            height: 120%; 
+            background: linear-gradient(90deg, #09090b, #1f1f23, #09090b); 
+            box-shadow: 30px 0 60px rgba(0,0,0,0.95); 
+            z-index: 100;
+            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .cine-pillar.left { left: 8%; }
+        .cine-pillar.right { right: 8%; box-shadow: -30px 0 60px rgba(0,0,0,0.95); }
+
+        .cine-book-glow {
+            position: absolute;
+            font-size: 8rem;
+            color: #d4af37;
+            filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.6));
+            animation: bookFloat 5s infinite ease-in-out;
+            z-index: 30;
+            opacity: 0.85;
+        }
+        @keyframes bookFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
+
+        .inq-vignette {
+            position: absolute;
+            top:0; left:0; width:100%; height:100%;
+            box-shadow: inset 0 0 180px rgba(229, 9, 20, 0.85);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s;
+            z-index: 80;
+        }
+
+        .inq-chains {
+            position: absolute;
+            font-size: 11rem;
+            color: #E50914;
+            opacity: 0;
+            transform: scale(0.4) rotate(-15deg);
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 45px #E50914);
+            z-index: 90;
+        }
+
+        .cine-text-box.cl-1 { left: 12%; transform: translateX(-120px); } 
+        .cine-text-box.cl-2 { right: 12%; transform: translateX(120px); text-align: right; }
+
+        /* ETAPAS 0 E 1 */
+        #cinematic-stage[data-step="0"] #cine-library { opacity: 1; pointer-events: auto; }
+        #cinematic-stage[data-step="0"] .cl-1 { opacity: 1; transform: translateX(250px); } 
+        #cinematic-stage[data-step="0"] .cl-2 { opacity: 0; }
+
+        #cinematic-stage[data-step="1"] #cine-library { opacity: 1; pointer-events: auto; }
+        #cinematic-stage[data-step="1"] .cl-1 { opacity: 0; transform: translateY(-60px); }
+        #cinematic-stage[data-step="1"] .cl-2 { opacity: 1; transform: translateX(-250px); }
+        #cinematic-stage[data-step="1"] .inq-vignette { opacity: 1; }
+        #cinematic-stage[data-step="1"] .inq-chains { opacity: 1; transform: scale(1) rotate(0deg); }
+        #cinematic-stage[data-step="1"] .cine-pillar.left { transform: translateX(50px) scale(1.05); }
+        #cinematic-stage[data-step="1"] .cine-pillar.right { transform: translateX(-50px) scale(1.05); }
+
+        /* ================= CENA 2: ESPAÇO E COSMOS ================= */
+        #cine-space { 
+            background: #020205; 
+            clip-path: circle(0% at 50% 50%); 
+            transition: clip-path 1.8s cubic-bezier(0.7, 0, 0.3, 1), transform 1.5s ease-in-out; 
+            z-index: 61;
+        }
+        
+        .cine-stars { 
+            position: absolute; 
+            width: 250vw; 
+            height: 250vh; 
+            background: radial-gradient(2px 2px at 30px 40px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 90px 120px, #a5b4fc, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 150px 70px, #fbbf24, rgba(0,0,0,0)); 
+            background-size: 180px 180px; 
+            animation: spacePan 40s linear infinite;
+        }
+        @keyframes spacePan { from { transform: translate(0, 0); } to { transform: translate(-180px, -180px); } }
+
+        .cine-space-system {
+            position: relative;
+            width: 800px;
+            height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cine-sun-flares {
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 70%);
+            animation: coronaPulse 3s infinite alternate ease-in-out;
+        }
+        @keyframes coronaPulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.35); opacity: 1; } }
+
+        .cine-sun { 
+            position: absolute; 
+            width: 280px; 
+            height: 280px; 
+            background: radial-gradient(circle, #fde047 15%, #f59e0b 60%, #b45309 100%); 
+            border-radius: 50%; 
+            box-shadow: 0 0 100px #f59e0b, 0 0 180px rgba(245,158,11,0.5); 
+            z-index: 10;
+        }
+
+        .cine-orbit-path {
+            position: absolute;
+            width: 650px;
+            height: 650px;
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 50%;
+            animation: orbitTurn 25s linear infinite;
+        }
+        .cine-earth-orb {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #60a5fa, #1d4ed8);
+            border-radius: 50%;
+            box-shadow: 0 0 35px #3b82f6;
+        }
+        @keyframes orbitTurn { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* HUD TELESCÓPIO DE GALILEU */
+        .telescope-hud-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.2s ease;
+            z-index: 30;
+        }
+        .hud-circle {
+            width: 520px;
+            height: 520px;
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: inset 0 0 40px rgba(59, 130, 246, 0.2);
+            animation: hudScan 12s linear infinite;
+        }
+        .hud-crosshair-x { position: absolute; width: 600px; height: 1px; background: rgba(59, 130, 246, 0.3); }
+        .hud-crosshair-y { position: absolute; height: 600px; width: 1px; background: rgba(59, 130, 246, 0.3); }
+        .hud-coords {
+            position: absolute;
+            bottom: 120px;
+            font-family: 'Share Tech Mono', monospace;
+            color: #60a5fa;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        @keyframes hudScan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .cine-text-box.cs-1 { left: 10%; top: 48%; transform: translateY(-50%); }
+        .cine-text-box.cs-2 { right: 10%; top: 48%; transform: translateY(-50%); text-align: right;}
+
+        /* ETAPAS 2 E 3 */
+        #cinematic-stage[data-step="2"] #cine-space,
+        #cinematic-stage[data-step="3"] #cine-space { 
+            clip-path: circle(150% at 50% 50%); 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+        #cinematic-stage[data-step="2"] .cs-1 { opacity: 1; transform: translate(50px, -50%); }
+        #cinematic-stage[data-step="2"] .cs-2 { opacity: 0; }
+
+        #cinematic-stage[data-step="3"] .cs-1 { opacity: 0; transform: translate(0, -60%); }
+        #cinematic-stage[data-step="3"] .cs-2 { opacity: 1; transform: translate(-50px, -50%); }
+        #cinematic-stage[data-step="3"] .cine-space-system { transform: scale(1.4) rotate(-12deg); }
+        #cinematic-stage[data-step="3"] .telescope-hud-overlay { opacity: 1; }
+
+        /* ================= CENA 3: MESA (EMPIRISMO & RACIONALISMO) ================= */
+        #cine-desk { 
+            background: #0d0d0f; 
+            transform: translateY(100vh); 
+            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), filter 1s ease; 
+            z-index: 62;
+        }
+        .cine-surface { 
+            position: absolute; 
+            bottom: -20vh; 
+            left: 0; 
+            width: 200vw; 
+            height: 55vh; 
+            background: linear-gradient(180deg, #1f1f27 0%, #0a0a0d 100%); 
+            transform: perspective(600px) rotateX(50deg); 
+            box-shadow: 0 -30px 60px rgba(0,0,0,0.95); 
+            z-index: 10;
+            border-top: 2px solid rgba(255,255,255,0.08);
+        }
+        .cine-pan { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 200vw; 
+            height: 100vh; 
+            display: flex; 
+            transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .cine-side { width: 100vw; height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; }
+
+        /* Lado 1: Empirismo */
+        .empirismo-elements { position: absolute; left: 15vw; bottom: 25vh; z-index: 20; }
+        .cine-flask-main { font-size: 14rem; color: #10b981; filter: drop-shadow(0 0 45px rgba(16, 185, 129, 0.7)); }
+        .cine-smoke-plume {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 65%);
+            filter: blur(40px);
+            animation: smokePuff 4s infinite alternate ease-in-out;
+        }
+        @keyframes smokePuff { 0% { transform: translateX(-50%) scale(0.9) translateY(0); opacity: 0.5; } 100% { transform: translateX(-40%) scale(1.3) translateY(-40px); opacity: 0.9; } }
+
+        /* Lado 2: Racionalismo */
+        .racionalismo-elements { position: absolute; right: 15vw; top: 22vh; z-index: 20; display:flex; flex-direction:column; align-items:center; }
+        .cine-gear-system { position: relative; width: 300px; height: 300px; }
+        .gear-primary { position: absolute; font-size: 16rem; color: rgba(59, 130, 246, 0.2); animation: gearSpin 20s linear infinite; }
+        .gear-secondary { position: absolute; top: -40px; right: -50px; font-size: 9rem; color: rgba(212, 175, 55, 0.25); animation: gearSpinRev 12s linear infinite; }
+        .cartesian-grid {
+            position: absolute;
+            bottom: -50px;
+            width: 320px;
+            height: 140px;
+            border: 2px solid rgba(59,130,246,0.4);
+            background: repeating-linear-gradient(0deg, rgba(59,130,246,0.1), rgba(59,130,246,0.1) 1px, transparent 1px, transparent 20px),
+                        repeating-linear-gradient(90deg, rgba(59,130,246,0.1), rgba(59,130,246,0.1) 1px, transparent 1px, transparent 20px);
+            transform: perspective(300px) rotateX(45deg);
+        }
+        @keyframes gearSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes gearSpinRev { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        .cine-text-box.cd-1 { left: 45vw; top: 35vh; }
+        .cine-text-box.cd-2 { left: 15vw; top: 35vh; }
+
+        /* ETAPAS 4 E 5 */
+        #cinematic-stage[data-step="4"] #cine-space,
+        #cinematic-stage[data-step="5"] #cine-space,
+        #cinematic-stage[data-step="6"] #cine-space { transform: translateY(-100vh); }
+
+        #cinematic-stage[data-step="4"] #cine-desk,
+        #cinematic-stage[data-step="5"] #cine-desk { 
+            transform: translateY(0); 
+            opacity: 1; 
+            pointer-events: auto; 
+        }
+
+        #cinematic-stage[data-step="4"] .cine-pan { transform: translateX(0); }
+        #cinematic-stage[data-step="4"] .cd-1 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="4"] .cd-2 { opacity: 0; }
+
+        #cinematic-stage[data-step="5"] .cine-pan { transform: translateX(-100vw); }
+        #cinematic-stage[data-step="5"] .cd-1 { opacity: 0; }
+        #cinematic-stage[data-step="5"] .cd-2 { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+
+        /* ================= CENA 4: A SÍNTESE NEWTONIANA ================= */
+        #cine-apple { background: transparent; z-index: 63; }
+        
+        .spacetime-grid {
+            position: absolute;
+            bottom: 5vh;
+            width: 150vw;
+            height: 60vh;
+            background: radial-gradient(circle at center, transparent 10%, rgba(59, 130, 246, 0.15) 80%),
+                        repeating-radial-gradient(circle at center, transparent 0, transparent 30px, rgba(59, 130, 246, 0.25) 31px, transparent 32px);
+            transform: perspective(600px) rotateX(65deg);
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .cine-text-box.ca-1 { 
+            opacity: 0; 
+            transform: scale(0.65); 
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+        
+        .cine-giant-apple { 
+            font-size: 13rem; 
+            color: #E50914; 
+            animation: giantAppleDrop 4.5s infinite ease-in; 
+            text-shadow: 0 25px 60px rgba(0,0,0,0.9); 
+            z-index: 10; 
+            position: relative;
+        }
+        .cine-math-wave { 
+            position: absolute; 
+            top: 100px; 
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 5rem; 
+            color: #3b82f6; 
+            opacity: 0; 
+            animation: giantMathShock 4.5s infinite ease-out; 
+            white-space: nowrap; 
+            font-weight: bold;
+        }
+        
+        @keyframes giantAppleDrop { 
+            0% { transform: translateY(-400px); } 
+            38% { transform: translateY(0) scale(1); } 
+            43% { transform: translateY(0) scaleY(0.65) scaleX(1.35); } 
+            50% { transform: translateY(-45px) scale(1); } 
+            57% { transform: translateY(0); } 
+            100% { transform: translateY(0); } 
+        }
+        @keyframes giantMathShock { 
+            0%, 38% { transform: scale(0.4); opacity: 0; filter: blur(10px); } 
+            43% { transform: scale(1.15); opacity: 1; filter: blur(0); text-shadow: 0 0 60px #3b82f6, 0 0 20px #fff;} 
+            100% { transform: scale(3.2); opacity: 0; filter: blur(25px); } 
+        }
+
+        /* ETAPA 6 */
+        #cinematic-stage[data-step="6"] #cine-desk { 
+            transform: translateY(0) scale(0.85); 
+            filter: blur(15px) brightness(0.2); 
+            pointer-events: none;
+        } 
+        #cinematic-stage[data-step="6"] #cine-apple { opacity: 1; pointer-events: auto; }
+        #cinematic-stage[data-step="6"] .ca-1 { opacity: 1; transform: scale(1); transition-delay: 0.8s; }
+
+        /* OVERLAYS DE EVENTOS */
+        #inquisition-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(20, 0, 0, 0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; }
         .inq-box { border: 4px double #E50914; background: #111; padding: 40px; border-radius: 8px; max-width: 600px; position: relative; }
         .btn-retract { background: transparent; color: #E50914; border: 2px solid #E50914; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 30px; transition: 0.3s; font-family: 'Share Tech Mono', monospace;}
         .btn-retract:hover { background: #E50914; color: #fff; }
-        #eppur-msg { display: none; color: #aaa; font-style: italic; margin-top: 15px; font-size: 1.1rem; }
 
-        #idle-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
+        #idle-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
         .btn-idle { background: #fff; color: #000; border: none; padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 30px; transition: 0.2s;}
-        .btn-idle:hover { background: #ccc; }
 
         .lis-container { display: flex; width: 100%; height: 350px; gap: 15px; margin-top: 20px; }
-        .lis-choice { flex: 1; border: 2px solid #444; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; padding: 20px; text-align: center; }
+        .lis-choice { flex: 1; border: 2px solid #444; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; padding: 20px; text-align: center; pointer-events: auto;}
         .lis-choice.empirismo { background: linear-gradient(135deg, #0f2027 0%, #203a43 100%); }
         .lis-choice.racionalismo { background: linear-gradient(135deg, #141e30 0%, #243b55 100%); }
         .lis-choice:hover { border-color: #3b82f6; filter: brightness(1.2); transform: scale(1.02); }
@@ -221,30 +664,41 @@
         #lis-notification { position: absolute; top: 30px; left: 40px; font-size: 1.5rem; color: #fff; z-index: 10000; opacity: 0; transition: opacity 0.5s; text-shadow: 2px 2px 5px #000; pointer-events: none;}
         .butterfly-pulse { animation: pulseB 2s infinite; display: inline-block; margin-right: 10px; color: #00f0ff;}
         @keyframes pulseB { 0%, 100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 10px #00f0ff); } 50% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 20px #00f0ff); } }
-        #lis-dark-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 9998; display: none; }
+        #lis-dark-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.8); z-index: 9998; display: none; }
 
-        #credits-screen { justify-content: center; align-items: center; background: #000; z-index: 100; text-align: center; padding: 30px; }
-        .credits-list { list-style: none; padding: 0; margin: 30px 0; font-size: 1.5rem; line-height: 2; }
+        #credits-screen { justify-content: center; align-items: center; background: #000; text-align: center; padding: 30px; }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 900px) {
+            .slide-grid { flex-direction: column; }
+            .visual-col { height: 280px; width: 100%; box-shadow: none; }
+            .text-col { padding-right: 0; }
+            .text-col h2 { font-size: 2.2rem; }
+            .hero h1 { font-size: 3rem; }
+            .cine-title { font-size: 3.2rem; }
+            .cine-desc { font-size: 1.15rem; }
+            .cine-nav-arrow { width: 45px; height: 45px; font-size: 1.2rem; }
+            .lis-container { flex-direction: column; height: auto; }
+        }
     </style>
 </head>
 <body>
 
-    <audio id="tudum-audio" preload="auto"><source src="tudum.mp3" type="audio/mpeg"></audio>
-
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
+    <!-- TELA DE PERFIS -->
     <div id="profile-screen" class="screen active">
-        <h1>Quem est&aacute; apresentando?</h1>
+        <h1>Quem vai iniciar a apresenta&ccedil;&atilde;o?</h1>
         <div class="profiles-container">
-            <div class="profile-card" data-profile="Francisco"><div class="avatar av-francisco"></div><span>Francisco</span></div>
-            <div class="profile-card" data-profile="JP Santos"><div class="avatar av-jsantos"></div><span>JP Santos</span></div>
-            <div class="profile-card" data-profile="Pedro"><div class="avatar av-pedro"></div><span>Pedro</span></div>
-            <div class="profile-card" data-profile="JP Silva"><div class="avatar av-jsilva"></div><span>JP Silva</span></div>
-            <div class="profile-card" data-profile="Nicolas"><div class="avatar av-nicolas"></div><span>Nicolas</span></div>
+            <div class="profile-card" onclick="window.selectProfile('Francisco')"><div class="avatar c1"><i class="fa-solid fa-user"></i></div><span>Francisco</span></div>
+            <div class="profile-card" onclick="window.selectProfile('JP Santos')"><div class="avatar c2"><i class="fa-solid fa-user-astronaut"></i></div><span>JP Santos</span></div>
+            <div class="profile-card" onclick="window.selectProfile('Pedro')"><div class="avatar c3"><i class="fa-solid fa-user-ninja"></i></div><span>Pedro</span></div>
+            <div class="profile-card" onclick="window.selectProfile('JP Silva')"><div class="avatar c4"><i class="fa-solid fa-user-secret"></i></div><span>JP Silva</span></div>
+            <div class="profile-card" onclick="window.selectProfile('Nicolas')"><div class="avatar c5"><i class="fa-solid fa-user-tie"></i></div><span>Nicolas</span></div>
         </div>
     </div>
 
-    <!-- TOAST DE TURNO (Substitui o menu chato) -->
+    <!-- TOAST DE TURNO -->
     <div id="turn-toast">
         <i class="fa-solid fa-microphone-lines" style="font-size: 2rem; color: var(--netflix-red);"></i>
         <div>
@@ -253,10 +707,11 @@
         </div>
     </div>
 
+    <!-- TELA INICIAL IFPIFLIX -->
     <div id="home-screen" class="screen">
         <nav class="home-nav">
-            <div class="nav-logo" id="btn-nav-logo">IFPIFLIX</div>
-            <div style="cursor:pointer;" onclick="goToProfiles()"><span id="nav-profile-name" style="margin-right:10px; font-weight:bold;"></span><i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i></div>
+            <div class="nav-logo" onclick="window.switchScreen('home-screen')">IFPIFLIX</div>
+            <div style="cursor:pointer;" onclick="window.switchScreen('profile-screen')"><span id="nav-profile-name" style="margin-right:10px; font-weight:bold;">Francisco</span><i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i></div>
         </nav>
         <div class="hero">
             <div class="hero-content">
@@ -264,20 +719,24 @@
                 <h1>A CI&Ecirc;NCIA MODERNA</h1>
                 <p style="font-size: 1.2rem; margin-bottom: 10px; color: #ccc;">A Revolu&ccedil;&atilde;o Cient&iacute;fica Moderna e a forja de uma Nova Concep&ccedil;&atilde;o de M&eacute;todo.</p>
                 <div class="hero-buttons">
-                    <button class="btn-play" id="btn-start-presentation"><i class="fa-solid fa-play"></i> Iniciar Jornada</button>
-                    <button class="btn-info" onclick="openSeriesDetails()"><i class="fa-solid fa-book-journal-whills"></i> O Grim&oacute;rio</button>
+                    <button class="btn-play" onclick="window.startPresentationAt(0)"><i class="fa-solid fa-play"></i> Apresenta&ccedil;&atilde;o Cl&aacute;ssica</button>
+                    <button class="btn-info" onclick="window.switchScreen('series-details-screen')"><i class="fa-solid fa-book-journal-whills"></i> O Grim&oacute;rio</button>
                 </div>
             </div>
         </div>
         <div class="catalog-container">
-            <h2 class="row-title">Semin&aacute;rios de Filosofia (Outros Grupos)</h2>
-            <div class="posters-container" style="margin-bottom: 25px;">
-                <div class="card-portrait" style="background:#222;"><div class="card-portrait-content"><h4>Game of Cosmos: A Era Medieval<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 01: Ciência Antiga</span></h4></div></div>
-                <div class="card-portrait" style="background:#333;"><div class="card-portrait-content"><h4>Stranger Paradigms<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 03: Ciência Contemporânea</span></h4></div></div>
-                <div class="card-portrait" style="background:#444;"><div class="card-portrait-content"><h4>Harry Popper e a Ordem da Ci&ecirc;ncia<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 04: Popper, Kuhn e Bachelard</span></h4></div></div>
-                <div class="card-portrait" style="background:#555;"><div class="card-portrait-content"><h4>Black Method: O Dilema<br><span style="font-size:0.75rem; color:#aaa; font-weight:normal;">Tema 05: Ciência e Sociedade</span></h4></div></div>
+            <h2 class="row-title">Lan&ccedil;amento: Experi&ecirc;ncia Cinematogr&aacute;fica (Modo Filme 3D)</h2>
+            <div class="posters-container" style="margin-bottom: 30px;">
+                <div class="card-movie" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.85)), url('watermarked_img_10919591568350661226.jpg'), #222;" onclick="window.startCinematicMovie()">
+                    <div class="card-movie-overlay"></div>
+                    <div class="card-movie-content">
+                        <h4 style="font-size: 2rem;">O Filme: A Jornada</h4>
+                        <p>C&acirc;mera Din&acirc;mica &bull; Sem Slides &bull; 100% Imersivo</p>
+                    </div>
+                </div>
             </div>
 
+            <!-- FILMES RESTAURADOS DE T.I. -->
             <h2 class="row-title">Recomendados para Alunos de TI</h2>
             <div class="posters-container">
                 <div class="card-portrait p-opensource"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
@@ -289,32 +748,30 @@
                 <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
                 <div class="card-portrait p-lalalan"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
             </div>
+
+            <h2 class="row-title">Baseados em Temas da Turma</h2>
+            <div class="landscape-row">
+                <div class="card-landscape p-honeypot"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
+                <div class="card-landscape p-mitm"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
+                <div class="card-landscape p-firewall"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
+                <div class="card-landscape p-metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
+                <div class="card-landscape p-iot"><div class="card-landscape-content"><h4>Rebeli&atilde;o das Torradeiras</h4></div></div>
+            </div>
         </div>
     </div>
 
     <!-- TELA DE EPISÓDIOS -->
     <div id="series-details-screen" class="screen">
         <nav class="home-nav">
-            <div class="nav-logo" onclick="switchScreen('home-screen')">IFPIFLIX</div>
-            <button onclick="switchScreen('home-screen')" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            <div class="nav-logo" onclick="window.switchScreen('home-screen')">IFPIFLIX</div>
+            <button onclick="window.switchScreen('home-screen')" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
         </nav>
         <div class="details-hero">
             <div class="details-content">
                 <div style="color: var(--rpg-gold); font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">O GRIM&Oacute;RIO DA MODERNIDADE</div>
                 <h1>M&Eacute;TODO E REVOLU&Ccedil;&Atilde;O</h1>
-                <button class="btn-play" onclick="startPresentationAt(0)" style="margin-top: 15px;"><i class="fa-solid fa-play"></i> Iniciar Apresenta&ccedil;&atilde;o</button>
+                <button class="btn-play" onclick="window.startPresentationAt(0)" style="margin-top: 15px;"><i class="fa-solid fa-play"></i> Iniciar Apresenta&ccedil;&atilde;o</button>
             </div>
-        </div>
-        <div class="episodes-list">
-            <h3>Cap&iacute;tulos da Jornada</h3>
-            <div class="ep-item" onclick="startPresentationAt(0)"><div class="ep-thumb"><span class="ep-number">1</span></div><div class="ep-info"><h4>1. O Renascimento</h4></div></div>
-            <div class="ep-item" onclick="startPresentationAt(2)"><div class="ep-thumb"><span class="ep-number">2</span></div><div class="ep-info"><h4>2. Tradição Medieval</h4></div></div>
-            <div class="ep-item" onclick="startPresentationAt(4)"><div class="ep-thumb"><span class="ep-number">3</span></div><div class="ep-info"><h4>3. A Ruptura</h4></div></div>
-            <div class="ep-item" onclick="startPresentationAt(5)"><div class="ep-thumb"><span class="ep-number">4</span></div><div class="ep-info"><h4>4. Revolução Cosmológica</h4></div></div>
-            <div class="ep-item" onclick="startPresentationAt(7)"><div class="ep-thumb"><span class="ep-number">5</span></div><div class="ep-info"><h4>5. A Escolha</h4></div></div>
-            <div class="ep-item" onclick="startPresentationAt(8)"><div class="ep-thumb"><span class="ep-number">6</span></div><div class="ep-info"><h4>6. O Empirismo de Bacon</h4></div></div>
-            <div class="ep-item" onclick="startPresentationAt(10)"><div class="ep-thumb"><span class="ep-number">7</span></div><div class="ep-info"><h4>7. O Racionalismo</h4></div></div>
-            <div class="ep-item" onclick="startPresentationAt(12)"><div class="ep-thumb"><span class="ep-number">8</span></div><div class="ep-info"><h4>8. Síntese Newtoniana</h4></div></div>
         </div>
     </div>
 
@@ -324,13 +781,14 @@
         <span id="ach-text">Conquista Desbloqueada</span>
     </div>
 
-    <!-- FUNDO ATMOSFÉRICO GLOBAL -->
+    <!-- =======================================================
+         PLAYER 1: A APRESENTAÇÃO CLÁSSICA
+         ======================================================= -->
     <div id="player-screen" class="screen">
-        <div id="atm-layer" class="atm-layer"></div>
         <div class="player-header">
-            <button id="btn-back-to-home" class="control-btn"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="control-btn" onclick="window.switchScreen('home-screen')"><i class="fa-solid fa-arrow-left"></i></button>
             <div style="display:flex; flex-direction: column; margin-left: 10px;">
-                <span style="font-weight: bold;">A Ci&ecirc;ncia Moderna</span>
+                <span style="font-weight: bold;">A Ci&ecirc;ncia Moderna (Cl&aacute;ssico)</span>
                 <span id="player-ep-title" style="color: #aaa; font-size: 0.9rem;">T1:E1</span>
             </div>
         </div>
@@ -355,7 +813,7 @@
                         <div class="ticker-box" id="ticker-1">...</div>
                         <h3 class="highlight">Nova Perspectiva</h3><p>A transforma&ccedil;&atilde;o cultural abriu espa&ccedil;o para o surgimento de novas formas de pensar a ci&ecirc;ncia e o mundo.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Exploração</div><div class="sim-screen"><div class="map-pan"></div><div style="background:rgba(0,0,0,0.8); padding:20px; border-radius:8px; z-index:10;"><i class="fa-solid fa-unlock-keyhole" style="font-size:3rem; color:var(--rpg-gold);"></i><h3 style="color:#fff; margin-top:10px;">Nova &Aacute;rea Desbloqueada</h3></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Exploração</div><div class="sim-screen"><div class="map-pan"></div><i class="fa-solid fa-unlock-keyhole" style="font-size:4rem; color:var(--rpg-gold); z-index:2;"></i></div></div>
                 </div>
             </div>
 
@@ -388,7 +846,7 @@
                         <div class="ticker-box" id="ticker-4">...</div>
                         <h3 class="highlight">Da Contempla&ccedil;&atilde;o &agrave; A&ccedil;&atilde;o</h3><p>O ser humano parou de apenas "admirar" o mundo de forma passiva e passou a investigar ativamente como as coisas funcionam.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-lightbulb"></i> Lanterna da Razão</div><div class="sim-screen"><div class="lantern-container"><i class="fa-solid fa-eye"></i><i class="fa-solid fa-atom"></i><i class="fa-solid fa-vial"></i></div><div class="lantern-light"></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-lightbulb"></i> Lanterna da Razão</div><div class="sim-screen"><div class="lantern-container"><i class="fa-solid fa-eye"></i><i class="fa-solid fa-atom"></i><i class="fa-solid fa-vial"></i><div class="lantern-mask"></div></div></div></div>
                 </div>
             </div>
 
@@ -410,27 +868,23 @@
                         <div class="ticker-box" id="ticker-6">...</div>
                         <h3 class="highlight">Galileu Galilei</h3><p>Utilizando o telesc&oacute;pio para comprovar a teoria, ele afirmou: <em>"A natureza est&aacute; escrita em caracteres matem&aacute;ticos"</em>.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-telescope"></i> Visão Aprimorada</div><div class="sim-screen"><div class="sky-bg"></div><div class="telescope-lens"><i class="fa-solid fa-star" style="font-size:2rem; color:#fff;"></i></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-binoculars"></i> Visão Aprimorada</div><div class="sim-screen"><div class="sky-bg"></div><div class="telescope-lens"><i class="fa-solid fa-star" style="font-size:2rem; color:#fff;"></i></div></div></div>
                 </div>
             </div>
 
             <!-- A ESCOLHA -->
             <div class="slide" id="slide-7">
-                <div class="slide-grid" style="grid-template-columns: 1fr;">
-                    <div class="text-col" style="text-align:center;">
-                        <h2 style="border:none; padding:0; font-size:4.5rem; text-shadow: 0 0 15px var(--netflix-red);">A ENCRUZILHADA DO M&Eacute;TODO</h2>
-                        <p>Como voc&ecirc;s buscam a verdade absoluta?</p>
+                <div class="slide-grid" style="flex-direction: column;">
+                    <div style="text-align:center; z-index: 15; width: 100%;">
+                        <h2 style="font-family:'Bebas Neue'; font-size:4.5rem; color:#fff; text-shadow: 0 0 15px var(--netflix-red);">A ENCRUZILHADA DO M&Eacute;TODO</h2>
+                        <p style="font-size:1.2rem; color:#ccc;">Como voc&ecirc;s buscam a verdade absoluta?</p>
                     </div>
-                    <div class="lis-container">
-                        <div class="lis-choice empirismo" onclick="triggerLisChoice(8)">
-                            <i class="fa-solid fa-eye"></i>
-                            <h3>Acreditar nos Sentidos</h3>
-                            <p>Testar e experimentar (Bacon).</p>
+                    <div class="lis-container" style="z-index: 10;">
+                        <div class="lis-choice empirismo" onclick="window.triggerLisChoice(8)">
+                            <i class="fa-solid fa-eye"></i><h3>Acreditar nos Sentidos</h3><p>Testar e experimentar (Bacon).</p>
                         </div>
-                        <div class="lis-choice racionalismo" onclick="triggerLisChoice(10)">
-                            <i class="fa-solid fa-brain"></i>
-                            <h3>Duvidar de Tudo</h3>
-                            <p>Usar apenas a lógica pura (Descartes).</p>
+                        <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(10)">
+                            <i class="fa-solid fa-brain"></i><h3>Duvidar de Tudo</h3><p>Usar apenas a lógica pura (Descartes).</p>
                         </div>
                     </div>
                 </div>
@@ -443,7 +897,7 @@
                         <div class="ticker-box" id="ticker-8">...</div>
                         <h3 class="highlight">A Queda dos Ídolos</h3><p>Francis Bacon criticou os "Ídolos": falsos preconceitos que cegam a mente. É preciso limpar a mente antes de investigar.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-hammer"></i> Quebrando Ilusões</div><div class="sim-screen"><div class="idol-container"><i class="fa-solid fa-mask idol-mask"></i><i class="fa-solid fa-slash idol-slash"></i></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-hammer"></i> Quebrando Ilusões</div><div class="sim-screen"><div class="idol-container"><i class="fa-solid fa-user-shield idol-half idol-left"></i><i class="fa-solid fa-user-shield idol-half idol-right"></i><div class="idol-glow"></div></div></div></div>
                 </div>
             </div>
 
@@ -454,7 +908,7 @@
                         <div class="ticker-box" id="ticker-9">...</div>
                         <h3 class="highlight">O Método Indutivo</h3><p>A ci&ecirc;ncia deve partir da observa&ccedil;&atilde;o e de experimentos repetidos. Não basta achar, é preciso testar na prática!</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-flask"></i> Laboratório Empírico</div><div class="sim-screen"><div class="potion-lab"><div class="potion-flask"><div class="potion-liquid"></div><div class="potion-liquid"></div><div class="bubbles b1"></div><div class="bubbles b2"></div><div class="bubbles b3"></div></div></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-flask"></i> Laboratório Empírico</div><div class="sim-screen"><div class="potion-lab"><div class="flask-neck"></div><div class="flask-body"><div class="liquid"></div><div class="liquid2"></div><div class="potion-bubbles b1"></div><div class="potion-bubbles b2"></div><div class="potion-bubbles b3"></div></div></div></div></div>
                 </div>
             </div>
 
@@ -487,17 +941,17 @@
                         <div class="ticker-box" id="ticker-12">...</div>
                         <h3 class="highlight">O Método Científico</h3><p>Newton consolida a revolução. Racionalismo e Empirismo se unem para formar o <strong>Método Hipotético-Dedutivo</strong>.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-trophy"></i> Fim da Campanha</div><div class="sim-screen"><div class="newton-scene"><i class="fa-solid fa-apple-whole newton-apple"></i><div class="math-grid">F = G(m1m2)/r²</div></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-trophy"></i> Fim da Campanha</div><div class="sim-screen"><div class="newton-scene"><i class="fa-solid fa-apple-whole newton-apple"></i><div class="math-wave">F = G(m1m2)/r²</div></div></div></div>
                 </div>
             </div>
 
-            <!-- NOVO FINAL COM PROPAGANDA -->
+            <!-- SLIDE 13: PROPAGANDA -->
             <div class="slide" id="slide-13">
-                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center;">
-                    <h1 style="font-family:'Bebas Neue'; font-size:6rem; color:var(--netflix-red); text-shadow: 0 0 30px rgba(229,9,20,0.8); margin-bottom:10px;">ASSINE O IFPIFLIX</h1>
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; width: 100%; z-index: 50;">
+                    <h1 style="font-family:'Bebas Neue'; font-size:7rem; color:var(--netflix-red); text-shadow: 0 0 30px rgba(229,9,20,0.8); margin-bottom:10px;">ASSINE O IFPIFLIX</h1>
                     <p style="font-size:2rem; color:#fff;">Acesso ilimitado à sabedoria universal.</p>
-                    <div style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 50px; border-radius: 8px; font-size: 2.5rem; font-weight: bold; margin-top: 30px; box-shadow: 0 10px 30px rgba(229,9,20,0.5);">
-                        POR APENAS R$ 67,90 <span style="font-size: 1.2rem; font-weight: normal;">/ mês</span>
+                    <div style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 50px; border-radius: 8px; font-size: 3rem; font-weight: bold; margin-top: 30px; box-shadow: 0 10px 30px rgba(229,9,20,0.5);">
+                        POR APENAS R$ 67,90 <span style="font-size: 1.5rem; font-weight: normal;">/ mês</span>
                     </div>
                 </div>
             </div>
@@ -508,27 +962,127 @@
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
             <div class="nav-buttons">
                 <button class="control-btn" id="btn-prev-slide"><i class="fa-solid fa-backward-step"></i></button>
-                <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer;" id="btn-change-profile">🗣 <span id="current-presenter-name">Francisco</span></span>
+                <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer;" onclick="window.switchScreen('profile-screen')">🗣 <span id="current-presenter-name">Francisco</span></span>
                 <button class="control-btn" id="btn-next-slide"><i class="fa-solid fa-forward-step"></i></button>
             </div>
         </div>
     </div>
 
-    <!-- OVERLAYS ESPECIAIS (Inquisição e Idle) -->
+
+    <!-- =======================================================
+         PLAYER 2: O FILME CINEMATOGRÁFICO 3D (SUPER REINVENTADO)
+         ======================================================= -->
+    <div id="cinematic-stage" class="screen">
+        <div class="stage-header">
+            <button class="control-btn" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; z-index: 1000;" onclick="window.switchScreen('home-screen')"><i class="fa-solid fa-arrow-left"></i></button>
+            <div style="display:flex; flex-direction: column; margin-left: 10px;">
+                <span style="font-weight: bold;">O Filme: A Jornada 3D</span>
+                <span id="cine-ep-title" style="color: #aaa; font-size: 0.9rem;">Cena 1</span>
+            </div>
+            <span style="margin-left: auto; background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; z-index: 1000;">🗣 <span id="cine-presenter-name">Francisco</span></span>
+        </div>
+
+        <!-- BOTÕES LATERAIS DE NAVEGAÇÃO -->
+        <button class="cine-nav-arrow cine-prev" title="Cena Anterior" onclick="updateCineCamera(currentCineIdx - 1)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="cine-nav-arrow cine-next" title="Próxima Cena" onclick="updateCineCamera(currentCineIdx + 1)"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <!-- INDICADORES DE CENA EM BOLINHAS -->
+        <div class="cine-dots-bar">
+            <span class="cine-dot" onclick="updateCineCamera(0)"></span>
+            <span class="cine-dot" onclick="updateCineCamera(1)"></span>
+            <span class="cine-dot" onclick="updateCineCamera(2)"></span>
+            <span class="cine-dot" onclick="updateCineCamera(3)"></span>
+            <span class="cine-dot" onclick="updateCineCamera(4)"></span>
+            <span class="cine-dot" onclick="updateCineCamera(5)"></span>
+            <span class="cine-dot" onclick="updateCineCamera(6)"></span>
+        </div>
+
+        <!-- CENA 1: BIBLIOTECA -->
+        <div id="cine-library" class="cine-scene">
+            <div class="inq-vignette"></div>
+            <div class="cine-pillar left"></div>
+            <div class="cine-pillar right"></div>
+            <div class="cine-book-glow"><i class="fa-solid fa-book-bible"></i></div>
+            <div class="inq-chains"><i class="fa-solid fa-lock"></i></div>
+            <div class="cine-text-box cl-1"><h2 class="cine-title">A TRADI&Ccedil;&Atilde;O</h2><p class="cine-desc">O mundo medieval era amarrado pelo dogmatismo. A Terra repousava imóvel como centro de tudo.</p></div>
+            <div class="cine-text-box cl-2"><h2 class="cine-title">O DOGMA</h2><p class="cine-desc">Questionar as escrituras ou Aristóteles era proibido. A autoridade eclesiástica valia mais do que qualquer observação real.</p></div>
+        </div>
+
+        <!-- CENA 2: ESPAÇO -->
+        <div id="cine-space" class="cine-scene">
+            <div class="cine-stars"></div>
+            <div class="cine-space-system">
+                <div class="cine-sun-flares"></div>
+                <div class="cine-sun"></div>
+                <div class="cine-orbit-path"><div class="cine-earth-orb"></div></div>
+            </div>
+            <div class="telescope-hud-overlay">
+                <div class="hud-circle"></div>
+                <div class="hud-crosshair-x"></div>
+                <div class="hud-crosshair-y"></div>
+                <div class="hud-coords">SISTEMA HELIOCÊNTRICO &bull; TELESCÓPIO 1610</div>
+            </div>
+            <div class="cine-text-box cs-1"><h2 class="cine-title">O HELIOCENTRISMO</h2><p class="cine-desc">Copérnico muda o centro do jogo. O Sol assume o comando, e a Terra gira no vazio cósmico.</p></div>
+            <div class="cine-text-box cs-2"><h2 class="cine-title">O TELESC&Oacute;PIO</h2><p class="cine-desc">Galileu prova que a natureza está escrita em caracteres matemáticos. A luneta derruba séculos de dogma.</p></div>
+        </div>
+
+        <!-- CENA 3: MESA (EMPIRISMO E RACIONALISMO) -->
+        <div id="cine-desk" class="cine-scene">
+            <div class="cine-surface"></div>
+            <div class="cine-pan">
+                <!-- Lado 1: Bacon / Empirismo -->
+                <div class="cine-side">
+                    <div class="empirismo-elements">
+                        <i class="fa-solid fa-flask cine-flask-main"></i>
+                        <div class="cine-smoke-plume"></div>
+                    </div>
+                    <div class="cine-text-box cd-1"><h2 class="cine-title" style="color:#10b981;">O EMPIRISMO</h2><p class="cine-desc">Francis Bacon exige que a ciência suje as mãos. Apenas a observação e a experimentação destroem os Ídolos da mente.</p></div>
+                </div>
+                <!-- Lado 2: Descartes / Racionalismo -->
+                <div class="cine-side">
+                    <div class="racionalismo-elements">
+                        <div class="cine-gear-system">
+                            <i class="fa-solid fa-gear gear-primary"></i>
+                            <i class="fa-solid fa-gear gear-secondary"></i>
+                            <div class="cartesian-grid"></div>
+                        </div>
+                    </div>
+                    <div class="cine-text-box cd-2"><h2 class="cine-title" style="color:#3b82f6;">O RACIONALISMO</h2><p class="cine-desc">Descartes usa a Dúvida Metódica para alcançar a razão pura. Apenas a lógica é inabalável. "Penso, logo existo".</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CENA 4: A SÍNTESE -->
+        <div id="cine-apple" class="cine-scene">
+            <div class="spacetime-grid"></div>
+            <div class="cine-text-box ca-1">
+                <div style="position:relative; display:flex; justify-content:center; align-items:center; height: 320px; width: 100%;">
+                    <i class="fa-solid fa-apple-whole cine-giant-apple"></i>
+                    <div class="cine-math-wave">F = G(m1m2)/r²</div>
+                </div>
+                <h2 class="cine-title" style="border:none; text-shadow:0 0 35px #E50914; margin-top:20px;">A S&Iacute;NTESE</h2>
+                <p class="cine-desc">Newton unifica a razão e a experiência no Método Científico Moderno.</p>
+            </div>
+        </div>
+
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.2); z-index: 900;"><div id="cine-progress" style="height: 100%; background: var(--netflix-red); width: 0%; transition: width 0.3s ease-out;"></div></div>
+    </div>
+
+
+    <!-- OVERLAYS DE EVENTOS -->
     <div id="inquisition-overlay">
         <div class="inq-box">
             <i class="fa-solid fa-cross" style="font-size: 4rem; color: #E50914; margin-bottom: 20px;"></i>
             <h2 style="font-family: 'Bebas Neue'; font-size: 3rem; color: #fff; letter-spacing: 2px;">CENSURA DA SANTA INQUISI&Ccedil;&Atilde;O</h2>
-            <p style="font-size: 1.2rem; color: #ccc; margin-top: 15px; line-height: 1.6;">O modelo Heliocêntrico de Galileu Galilei foi classificado como heresia. A transmissão foi bloqueada pelo Tribunal do Santo Ofício.</p>
+            <p style="font-size: 1.2rem; color: #ccc; margin-top: 15px; line-height: 1.6;">O modelo Heliocêntrico de Galileu Galilei foi classificado como heresia. A transmissão foi bloqueada.</p>
             <button class="btn-retract" id="btn-abjure"><i class="fa-solid fa-feather-pointed"></i> Assinar Retrata&ccedil;&atilde;o</button>
-            <div id="eppur-msg">"Eppur si muove..."</div>
+            <div id="eppur-msg" style="display: none; color: #aaa; font-style: italic; margin-top: 15px;">"Eppur si muove..."</div>
         </div>
     </div>
 
     <div id="idle-overlay">
         <h2 style="font-size: 2.5rem; color: #fff; font-weight: normal;">Tem algu&eacute;m assistindo?</h2>
-        <p style="font-size: 1.2rem; color: #aaa; margin-top: 10px;">A apresenta&ccedil;&atilde;o j&aacute; dura bastante tempo...</p>
-        <button class="btn-idle" id="btn-continue-watching">Continuar Assistindo</button>
+        <button class="btn-idle" id="btn-resume-idle">Continuar Assistindo</button>
     </div>
 
     <div id="lis-dark-overlay"></div>
@@ -541,65 +1095,79 @@
             <div style="font-family: 'Bebas Neue'; font-size: 5rem; color: var(--netflix-red); letter-spacing: 3px;">IFPIFLIX</div>
             <h2 style="font-size: 2rem; margin-bottom: 10px;">Fim da Apresenta&ccedil;&atilde;o</h2>
             <p style="color: #888; font-size: 1.1rem;">Filosofia: A Ciência Moderna &mdash; Grupo 6</p>
-            <ul class="credits-list">
-                <li>Aventureiro • <strong>Francisco</strong></li><li>Aventureiro • <strong>JP Santos</strong></li><li>Aventureiro • <strong>Pedro</strong></li><li>Aventureiro • <strong>JP Silva</strong></li><li>Aventureiro • <strong>Nicolas</strong></li>
-            </ul>
+            <button class="btn-play" onclick="window.switchScreen('home-screen')" style="margin-top: 20px;">Voltar ao Início</button>
         </div>
     </div>
 
+
     <script>
         const script = [ 
-            { id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Francisco",
-              atm: "atm-dust", ach: "[🌍 Conquista: O Mundo Expandiu]",
+            { id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Francisco", ach: "[🌍 Conquista: O Mundo Expandiu]",
               tickers: ["A Europa acordando de uma soneca de 1000 anos...", "O feudalismo caiu, a ciência subiu.", "Navegações bombando, dogmas caindo."] }, 
-            { id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Francisco",
-              atm: "atm-dust", ach: "[💡 Conquista: Acordou do sono dogmático]",
+            { id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Francisco", ach: "",
               tickers: ["Galera começou a ler os gregos sem a censura da Igreja.", "O centro do universo não somos nós? Chocante."] }, 
-            { id: 2, title: "Cap 2: Tradição Medieval (Geocentrismo)", presenter: "JP Santos",
-              atm: "atm-fog", ach: "[🔒 Bloqueado: Proibido pensar fora da caixa]",
+            { id: 2, title: "Cap 2: Tradição Medieval (Geocentrismo)", presenter: "JP Santos", ach: "[🔒 Bloqueado: Pensar fora da caixa]",
               tickers: ["Aristóteles disse que a Terra tava parada. Fonte: Confia.", "Ptolomeu meteu 50 círculos mágicos pro cálculo dar certo."] }, 
-            { id: 3, title: "Cap 2: Tradição Medieval (Autoridade)", presenter: "JP Santos",
-              atm: "atm-fog", ach: "[📜 Conquista: Acreditou em Ptolomeu cegamente]",
+            { id: 3, title: "Cap 2: Tradição Medieval (Autoridade)", presenter: "JP Santos", ach: "",
               tickers: ["Igreja: 'Se tá num livro velho e em latim, é verdade'.", "Questionar a regra resultava em fogueira instantânea."] }, 
-            { id: 4, title: "Cap 3: A Ruptura", presenter: "Pedro",
-              atm: "atm-dust", ach: "[🔍 Conquista: A Luz da Razão Encontrada]",
+            { id: 4, title: "Cap 3: A Ruptura", presenter: "Pedro", ach: "[🔍 Conquista: A Luz da Razão Encontrada]",
               tickers: ["O homem moderno: 'E se a gente testasse essa parada?'", "A contemplação passiva saiu do chat.", "Investigação ativa entrou no chat."] }, 
-            { id: 5, title: "Cap 4: Revolução Cosmológica (Copérnico)", presenter: "JP Silva",
-              atm: "atm-stars", ach: "[🌞 Conquista: O Sol assumiu o controle]",
+            { id: 5, title: "Cap 4: Revolução Cosmológica (Copérnico)", presenter: "JP Silva", ach: "[🌞 Conquista: O Sol assumiu o controle]",
               tickers: ["Copérnico: 'Galera, o Sol tá no meio, não a gente'.", "Tirar a Terra do centro ofendeu muito o ego humano."] }, 
-            { id: 6, title: "Cap 4: Revolução Cosmológica (Galileu)", presenter: "JP Silva",
-              atm: "atm-stars", ach: "[🏆 Conquista: Irritou a Igreja Católica]",
+            { id: 6, title: "Cap 4: Revolução Cosmológica (Galileu)", presenter: "JP Silva", ach: "[🏆 Conquista: Irritou a Igreja Católica]",
               tickers: ["Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.", "Eppur si muove: o primeiro 'falei, tô leve' da história."] }, 
-            { id: 7, title: "Especial: A Escolha", presenter: "Todos", atm: "none", ach: "", tickers: [] }, 
-            { id: 8, title: "Cap 5: Empirismo (Os Ídolos)", presenter: "Nicolas",
-              atm: "atm-dust", ach: "[⚔️ Conquista: Derrotou os Ídolos da Caverna]",
+            { id: 7, title: "Especial: A Escolha", presenter: "Todos", ach: "", tickers: [] }, 
+            { id: 8, title: "Cap 5: Empirismo (Os Ídolos)", presenter: "Nicolas", ach: "[⚔️ Conquista: Derrotou os Ídolos]",
               tickers: ["Ídolo da Caverna = viver na própria bolha.", "Bacon: Antes de fazer ciência, limpe sua mente dos fakes."] }, 
-            { id: 9, title: "Cap 5: Empirismo (Método Indutivo)", presenter: "Nicolas",
-              atm: "atm-dust", ach: "[🧪 Nível Up: XP de Experiência Prática Ganho]",
+            { id: 9, title: "Cap 5: Empirismo (Método Indutivo)", presenter: "Nicolas", ach: "[🧪 Nível Up: Experiência Prática]",
               tickers: ["Bacon morreu de pneumonia tentando congelar uma galinha.", "Se não testou na prática, meu anjo, é só fanfic."] }, 
-            { id: 10, title: "Cap 6: Racionalismo (Dúvida Metódica)", presenter: "Francisco",
-              atm: "atm-matrix", ach: "[⚠️ Aviso: Nível de Crise Existencial Crítico]",
+            { id: 10, title: "Cap 6: Racionalismo (Dúvida Metódica)", presenter: "Francisco", ach: "[⚠️ Aviso: Crise Existencial Crítica]",
               tickers: ["Descartes ficou dias trancado num quarto. Saúde mental: zero.", "E se tudo for uma simulação?"] }, 
-            { id: 11, title: "Cap 6: Racionalismo (Penso, logo existo)", presenter: "Francisco",
-              atm: "atm-matrix", ach: "[🧠 Conquista: Provou que não é um NPC]",
+            { id: 11, title: "Cap 6: Racionalismo (Penso, logo existo)", presenter: "Francisco", ach: "[🧠 Conquista: Provou que não é um NPC]",
               tickers: ["Duvidou tanto de tudo que quase sumiu da existência.", "A única certeza: eu existo porque tô com dor de cabeça de pensar."] }, 
-            { id: 12, title: "Cap 7: Síntese Newtoniana", presenter: "JP Santos",
-              atm: "none", ach: "[🍎 Item Lendário Equipado: A Maçã da Gravidade]",
-              tickers: ["Uma maçã caiu, e o cara inventou o cálculo.", "Newton uniu o Racionalismo e o Empirismo na amizade.", "Física virou o meta do jogo."] },
-            { id: 13, title: "Fim: Assine Já", presenter: "Todos", atm: "none", ach: "", tickers: [] }
+            { id: 12, title: "Cap 7: Síntese Newtoniana", presenter: "JP Santos", ach: "[🍎 Item Lendário: A Maçã da Gravidade]",
+              tickers: ["Uma maçã caiu, e o cara inventou o cálculo.", "Newton uniu o Racionalismo e o Empirismo na amizade."] },
+            { id: 13, title: "Fim: Assine Já", presenter: "Todos", ach: "", tickers: [] }
         ];
 
-        let activeProfile = null; let currentSlide = 0; let targetSlide = 0; let started = false;
-        let inquisitionPlayed = false; let idlePlayed = false;
-        let tickerInterval; let achTimeout;
+        let activeProfile = "Francisco"; 
+        let currentSlide = -1; 
+        let started = false;
+        let inquisitionPlayed = false; 
+        let tickerInterval; 
+        let achTimeout;
+        let isLisActive = false;
 
-        function switchScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); const t = document.getElementById(id); if(t) t.classList.add('active'); }
-        window.openSeriesDetails = function() { switchScreen('series-details-screen'); }
-        window.goToProfiles = function() { switchScreen('profile-screen'); }
+        function isModalOpen() {
+            const inq = document.getElementById('inquisition-overlay');
+            const idle = document.getElementById('idle-overlay');
+            const lis = document.getElementById('lis-dark-overlay');
+            return (inq && inq.style.display === 'flex') ||
+                   (idle && idle.style.display === 'flex') ||
+                   (lis && lis.style.display === 'block');
+        }
 
-        function selectProfile(name) {
-            activeProfile = name; document.getElementById('nav-profile-name').innerHTML = name; document.getElementById('current-presenter-name').innerHTML = name;
-            if (!started) { switchScreen('home-screen'); } else { simulateLoading(() => { renderSlide(targetSlide); switchScreen('player-screen'); }); }
+        window.switchScreen = function(id) { 
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active'); 
+        }
+        
+        window.selectProfile = function(name) {
+            activeProfile = name; 
+            const navEl = document.getElementById('nav-profile-name');
+            const curEl = document.getElementById('current-presenter-name');
+            const cineEl = document.getElementById('cine-presenter-name');
+
+            if (navEl) navEl.innerHTML = name;
+            if (curEl) curEl.innerHTML = name;
+            if (cineEl) cineEl.innerHTML = name;
+
+            if (!started) { 
+                window.switchScreen('home-screen'); 
+            } else { 
+                simulateLoading(() => { window.switchScreen('player-screen'); }); 
+            }
         }
         
         function showPresenterToast(name) {
@@ -609,24 +1177,29 @@
             setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
+        function triggerScreenShake(screenId) {
+            const screen = document.getElementById(screenId);
+            if (!screen) return;
+            screen.classList.remove('shake-active');
+            void screen.offsetWidth;
+            screen.classList.add('shake-active');
+            setTimeout(() => { screen.classList.remove('shake-active'); }, 400);
+        }
+
         function renderSlide(idx) {
+            if(idx < 0) return;
+            if(idx >= script.length) { window.switchScreen('credits-screen'); return; }
+            
             currentSlide = idx; 
             const data = script[idx];
             document.getElementById('player-ep-title').innerHTML = data.title; 
             document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
             
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active')); 
-            document.getElementById(`slide-${idx}`).classList.add('active');
+            document.querySelectorAll('#player-screen .slide').forEach(s => s.classList.remove('active')); 
+            const targetSlide = document.getElementById(`slide-${idx}`);
+            if (targetSlide) targetSlide.classList.add('active');
 
-            const atmLayer = document.getElementById('atm-layer');
-            atmLayer.className = 'atm-layer'; 
-            if(data.atm && data.atm !== 'none') {
-                atmLayer.classList.add(data.atm);
-                atmLayer.style.opacity = 1;
-            } else {
-                atmLayer.style.opacity = 0;
-            }
-
+            // TICKERS
             clearInterval(tickerInterval);
             const tickerEl = document.getElementById(`ticker-${idx}`);
             if(tickerEl && data.tickers && data.tickers.length > 0) {
@@ -636,10 +1209,16 @@
                 tickerInterval = setInterval(() => {
                     tIdx = (tIdx + 1) % data.tickers.length;
                     tickerEl.style.opacity = 0;
-                    setTimeout(() => { tickerEl.innerHTML = data.tickers[tIdx]; tickerEl.style.opacity = 1; }, 400);
-                }, 20000); // Trocando a cada 20 segundos
+                    setTimeout(() => { 
+                        if (currentSlide === idx) {
+                            tickerEl.innerHTML = data.tickers[tIdx]; 
+                            tickerEl.style.opacity = 1; 
+                        }
+                    }, 400);
+                }, 20000);
             }
 
+            // CONQUISTAS
             clearTimeout(achTimeout);
             const achBox = document.getElementById('ach-popup');
             achBox.classList.remove('show');
@@ -648,72 +1227,192 @@
                     document.getElementById('ach-text').innerHTML = data.ach;
                     achBox.classList.add('show');
                     setTimeout(() => { achBox.classList.remove('show'); }, 5000);
-                }, 500); // Conquista aparece em 0.5s após o slide abrir
+                }, 500); 
             }
 
-            if (idx === 6 && !inquisitionPlayed) { setTimeout(() => { document.getElementById('inquisition-overlay').style.display = 'flex'; }, 500); }
-            if (idx === 12 && !idlePlayed) { setTimeout(() => { document.getElementById('idle-overlay').style.display = 'flex'; }, 2000); }
+            // SHAKES E EVENTOS ESPECIAIS
+            if (idx === 4) { triggerScreenShake('player-screen'); }
+            if (idx === 6 && !inquisitionPlayed) { 
+                setTimeout(() => { document.getElementById('inquisition-overlay').style.display = 'flex'; }, 500); 
+            }
+            if (idx === 8) { triggerScreenShake('player-screen'); }
         }
 
-        document.getElementById('btn-abjure').addEventListener('click', () => {
+        const btnAbjure = document.getElementById('btn-abjure');
+        btnAbjure.addEventListener('click', () => {
+            btnAbjure.style.pointerEvents = 'none';
             document.getElementById('eppur-msg').style.display = 'block';
-            setTimeout(() => { document.getElementById('inquisition-overlay').style.display = 'none'; inquisitionPlayed = true; }, 2000);
+            setTimeout(() => { 
+                document.getElementById('inquisition-overlay').style.display = 'none'; 
+                inquisitionPlayed = true; 
+                btnAbjure.style.pointerEvents = 'auto';
+            }, 2000);
         });
 
-        document.getElementById('btn-continue-watching').addEventListener('click', () => { document.getElementById('idle-overlay').style.display = 'none'; idlePlayed = true; });
-
         window.triggerLisChoice = function(targetIdx) {
+            if (isLisActive) return;
+            isLisActive = true;
+
             document.getElementById('lis-dark-overlay').style.display = 'block';
-            const notif = document.getElementById('lis-notification');
-            notif.style.opacity = '1';
+            document.getElementById('lis-notification').style.opacity = '1';
+            
             setTimeout(() => {
-                notif.style.opacity = '0'; document.getElementById('lis-dark-overlay').style.display = 'none';
+                document.getElementById('lis-notification').style.opacity = '0';
+                document.getElementById('lis-dark-overlay').style.display = 'none';
                 if (activeProfile !== script[targetIdx].presenter && script[targetIdx].presenter !== "Todos") { 
                     activeProfile = script[targetIdx].presenter;
-                    document.getElementById('nav-profile-name').innerHTML = activeProfile;
                     document.getElementById('current-presenter-name').innerHTML = activeProfile;
                     showPresenterToast(activeProfile);
                 } 
                 renderSlide(targetIdx);
+                isLisActive = false;
             }, 3000);
         }
 
         document.getElementById('btn-next-slide').addEventListener('click', () => { 
-            let n = currentSlide + 1; 
-            if(n >= script.length) { switchScreen('credits-screen'); } 
-            else { 
-                if(activeProfile !== script[n].presenter && script[n].presenter !== "Todos" && n !== 7) { 
-                    activeProfile = script[n].presenter;
-                    document.getElementById('nav-profile-name').innerHTML = activeProfile;
-                    document.getElementById('current-presenter-name').innerHTML = activeProfile;
-                    showPresenterToast(activeProfile);
-                }
-                renderSlide(n); 
+            if (currentSlide === 7) {
+                triggerScreenShake('player-screen');
+                return;
             }
+            let n = currentSlide + 1; 
+            if(n < script.length && activeProfile !== script[n].presenter && script[n].presenter !== "Todos" && n !== 7) { 
+                activeProfile = script[n].presenter;
+                document.getElementById('current-presenter-name').innerHTML = activeProfile;
+                showPresenterToast(activeProfile);
+            }
+            renderSlide(n); 
         });
 
-        document.getElementById('btn-prev-slide').addEventListener('click', () => { if(currentSlide > 0) renderSlide(currentSlide - 1); });
+        document.getElementById('btn-prev-slide').addEventListener('click', () => { 
+            if(currentSlide > 0) renderSlide(currentSlide - 1); 
+        });
 
-        // CONTROLE PELAS SETINHAS DO TECLADO
+        function simulateLoading(callback) { 
+            window.switchScreen('loading-screen'); 
+            let p = 0; 
+            const txt = document.getElementById('loading-perc'); 
+            const int = setInterval(() => { 
+                p += Math.floor(Math.random() * 30) + 15; 
+                if(p >= 100) { 
+                    p = 100; 
+                    clearInterval(int); 
+                    setTimeout(callback, 300); 
+                } 
+                txt.innerHTML = p + '%'; 
+            }, 150); 
+        }
+        
+        window.startPresentationAt = function(index) { 
+            activeProfile = script[index].presenter; 
+            document.getElementById('current-presenter-name').innerHTML = activeProfile; 
+            started = true; 
+            simulateLoading(() => { 
+                renderSlide(index); 
+                window.switchScreen('player-screen'); 
+            }); 
+        }
+
+        /* =========================================================
+           LÓGICA DO FILME (MODO CINEMÁTICO 3D)
+           ========================================================= */
+        const cineScript = [
+            { step: 0, title: "1. A Tradição", presenter: "Francisco" },
+            { step: 1, title: "1. O Dogma", presenter: "JP Santos" },
+            { step: 2, title: "2. O Cosmos", presenter: "JP Silva" },
+            { step: 3, title: "2. A Ruptura", presenter: "JP Silva" },
+            { step: 4, title: "3. O Empirismo", presenter: "Nicolas" },
+            { step: 5, title: "3. O Racionalismo", presenter: "Francisco" },
+            { step: 6, title: "4. A Síntese", presenter: "JP Santos" }
+        ];
+
+        let currentCineIdx = -1;
+
+        window.startCinematicMovie = function() {
+            simulateLoading(() => {
+                window.switchScreen('cinematic-stage');
+                updateCineCamera(0);
+            });
+        }
+
+        window.updateCineCamera = function(idx) {
+            if(idx < 0) return;
+            if(idx >= cineScript.length) { window.switchScreen('credits-screen'); return; }
+
+            const data = cineScript[idx];
+            currentCineIdx = idx;
+
+            if (activeProfile !== data.presenter) { 
+                activeProfile = data.presenter;
+                document.getElementById('cine-presenter-name').innerHTML = activeProfile;
+                showPresenterToast(activeProfile);
+            }
+
+            document.getElementById('cine-ep-title').innerHTML = data.title;
+            document.getElementById('cine-progress').style.width = `${((idx + 1) / cineScript.length) * 100}%`;
+            document.getElementById('cinematic-stage').setAttribute('data-step', data.step);
+
+            // Atualiza indicadores de bolinhas
+            document.querySelectorAll('.cine-dot').forEach((dot, dIdx) => {
+                dot.classList.toggle('active', dIdx === idx);
+            });
+
+            // Shakes de impacto no modo cinema
+            if(idx === 1) { setTimeout(() => triggerScreenShake('cinematic-stage'), 400); }
+            if(idx === 6) { setTimeout(() => triggerScreenShake('cinematic-stage'), 1200); }
+        }
+
+        // CONTROLES DE TECLADO UNIFICADOS
         document.addEventListener('keydown', (e) => {
+            if (isModalOpen()) return;
+
             if (document.getElementById('player-screen').classList.contains('active')) {
-                // Bloqueia setinha no slide de escolha (Para forçar clicar na tela)
-                if (currentSlide === 7 && e.key === 'ArrowRight') {
-                    // Opcional: Se quiser que a seta funcione e pule a escolha, libere a linha abaixo. Deixei bloqueada pra manter a mágica.
+                if (currentSlide === 7 && (e.key === 'ArrowRight' || e.key === ' ')) {
+                    triggerScreenShake('player-screen');
                     return; 
                 }
-                if (e.key === 'ArrowRight') { document.getElementById('btn-next-slide').click(); }
-                if (e.key === 'ArrowLeft') { document.getElementById('btn-prev-slide').click(); }
+                if (e.key === 'ArrowRight' || e.key === ' ') { 
+                    e.preventDefault(); 
+                    document.getElementById('btn-next-slide').click(); 
+                }
+                if (e.key === 'ArrowLeft') { 
+                    e.preventDefault(); 
+                    document.getElementById('btn-prev-slide').click(); 
+                }
+            }
+            else if (document.getElementById('cinematic-stage').classList.contains('active')) {
+                if (e.key === 'ArrowRight' || e.key === ' ') { 
+                    e.preventDefault(); 
+                    updateCineCamera(currentCineIdx + 1); 
+                }
+                if (e.key === 'ArrowLeft') { 
+                    e.preventDefault(); 
+                    updateCineCamera(currentCineIdx - 1); 
+                }
             }
         });
 
-        function simulateLoading(callback) { switchScreen('loading-screen'); let p = 0; const txt = document.getElementById('loading-perc'); const int = setInterval(() => { p += Math.floor(Math.random() * 30) + 15; if(p >= 100) { p = 100; clearInterval(int); setTimeout(callback, 300); } txt.innerHTML = p + '%'; }, 150); }
-        window.startPresentationAt = function(index) { targetSlide = index; activeProfile = script[index].presenter; document.getElementById('nav-profile-name').innerHTML = activeProfile; document.getElementById('current-presenter-name').innerHTML = activeProfile; started = true; simulateLoading(() => { renderSlide(index); switchScreen('player-screen'); }); }
-        
-        document.querySelectorAll('.profile-card').forEach(c => { c.addEventListener('click', () => { selectProfile(c.getAttribute('data-profile')); }); });
-        document.getElementById('btn-start-presentation').addEventListener('click', () => startPresentationAt(0));
-        document.getElementById('btn-change-profile').addEventListener('click', () => switchScreen('profile-screen'));
-        document.getElementById('btn-back-to-home').addEventListener('click', () => switchScreen('home-screen'));
+        // GESTÃO DE INATIVIDADE
+        let idleTimer;
+        function resetIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+                const isPlaying = document.getElementById('player-screen').classList.contains('active') ||
+                                  document.getElementById('cinematic-stage').classList.contains('active');
+                if (isPlaying && !isModalOpen()) {
+                    document.getElementById('idle-overlay').style.display = 'flex';
+                }
+            }, 90000);
+        }
+
+        ['mousemove', 'keydown', 'click', 'touchstart'].forEach(evt => {
+            window.addEventListener(evt, resetIdleTimer, { passive: true });
+        });
+        resetIdleTimer();
+
+        document.getElementById('btn-resume-idle').addEventListener('click', () => {
+            document.getElementById('idle-overlay').style.display = 'none';
+            resetIdleTimer();
+        });
     </script>
 </body>
 </html>
