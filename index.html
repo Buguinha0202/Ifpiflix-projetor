@@ -12,15 +12,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* VARIÁVEIS E BASE GERAL */
-        :root { --netflix-red: #E50914; --netflix-dark: #000000; --netflix-bg: #141414; --text-dim: #808080; --rpg-gold: #d4af37;}
+        /* =========================================
+           VARIÁVEIS E BASE GERAL
+           ========================================= */
+        :root { 
+            --netflix-red: #E50914; 
+            --netflix-dark: #000000; 
+            --netflix-bg: #141414; 
+            --text-dim: #808080; 
+            --rpg-gold: #d4af37;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { background-color: var(--netflix-dark); color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; width: 100vw; height: 100vh; user-select: none; }
 
-        /* SCREENS COM CONTROLO ESTRITO DE CAMADAS E CLIQUE */
+        /* GESTÃO DE TELAS */
         .screen { 
-            position: fixed; 
+            position: fixed !important; 
             top: 0; 
             left: 0; 
             width: 100vw; 
@@ -28,28 +36,22 @@
             opacity: 0; 
             pointer-events: none; 
             visibility: hidden; 
-            transition: opacity 0.5s ease, visibility 0.5s; 
+            transition: opacity 0.5s ease; 
             display: flex; 
             flex-direction: column; 
             z-index: 10; 
             overflow: hidden;
         }
-
         .screen.active { 
             opacity: 1; 
-            pointer-events: auto; 
+            pointer-events: auto !important; 
             visibility: visible; 
             z-index: 100; 
         }
-
-        /* Garante que nenhum elemento interior de telas inativas bloqueie cliques */
-        .screen:not(.active) * {
-            pointer-events: none !important;
-        }
-
+        .screen:not(.active) * { pointer-events: none !important; }
+        
         #home-screen, #series-details-screen { overflow-y: auto; overflow-x: hidden; }
 
-        /* EFEITO CAMERA SHAKE */
         @keyframes screenShake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-2px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(0, 0) rotate(0deg); } }
         .shake-active { animation: screenShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
 
@@ -59,73 +61,170 @@
         .loading-text { font-size: 1.5rem; font-weight: bold; color: var(--netflix-red); font-family: 'Bebas Neue', cursive; letter-spacing: 2px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        #profile-screen { justify-content: center; align-items: center; background: #141414; }
-        #profile-screen h1 { font-size: 3rem; font-weight: 400; margin-bottom: 40px; color: #fff; text-align: center; }
-        .profiles-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 1000px; }
-        .profile-card { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; padding: 10px; border-radius: 8px; position: relative; pointer-events: auto;}
+        #profile-screen { justify-content: center; align-items: center; background: #141414; padding: 20px; }
+        #profile-screen h1 { font-size: 2.8rem; font-weight: 400; margin-bottom: 35px; color: #fff; text-align: center; }
+        .profiles-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 1100px; }
+        .profile-card { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; padding: 10px; border-radius: 8px; position: relative; pointer-events: auto !important;}
         
-        .avatar { width: 120px; height: 120px; border-radius: 4px; display:flex; align-items:center; justify-content:center; font-size: 3.5rem; color: #fff; border: 2px solid transparent; transition: 0.3s; }
-        .c1 { background-color: #E50914; } .c2 { background-color: #10b981; } .c3 { background-color: #3b82f6; } .c4 { background-color: #f59e0b; } .c5 { background-color: #8b5cf6; }
+        .avatar { 
+            width: 120px; 
+            height: 120px; 
+            border-radius: 6px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 3rem; 
+            color: rgba(255,255,255,0.7); 
+            border: 2px solid transparent; 
+            transition: 0.3s; 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
         
-        .profile-card:hover .avatar { outline: 4px solid #fff; transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
-        .profile-card span { color: var(--text-dim); font-size: 1.2rem; transition: 0.3s; font-weight: 600;}
+        /* AVATARES DA EQUIPE */
+        .av-davi        { background-image: url('davi.jpg'); background-color: #6366f1; }
+        .av-maria       { background-image: url('maria.jpg'); background-color: #ec4899; }
+        .av-francisco   { background-image: url('francisco.jpg'); background-color: #E50914; }
+        .av-pedro       { background-image: url('pedro.jpg'); background-color: #10b981; }
+        .av-marcelo     { background-image: url('marcelo.jpg'); background-color: #f59e0b; }
+        .av-samuel      { background-image: url('samuel.jpg'); background-color: #06b6d4; }
+        .av-jsantos     { background-image: url('jsantos.jpg'); background-color: #3b82f6; }
+        
+        .profile-card:hover .avatar { outline: 4px solid #fff; transform: scale(1.06); box-shadow: 0 10px 25px rgba(0,0,0,0.6);}
+        .profile-card span { color: var(--text-dim); font-size: 1.15rem; transition: 0.3s; font-weight: 600;}
         .profile-card:hover span { color: #fff; }
 
-        /* TELA INICIAL (IFPIFLIX LOBBY) */
+        /* LOBBY / HOME */
         .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
-        .hero { height: 95vh; min-height: 700px; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, rgba(0,0,0,0.9) 30%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('watermarked_img_10919591568350661226.jpg'), #1c1c1c center/cover no-repeat; }
-        .hero-content { max-width: 650px; margin-top: 50px;}
-        .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; margin-bottom: 10px; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); line-height: 1; }
+        .hero { height: 90vh; min-height: 620px; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, rgba(0,0,0,0.95) 35%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 25%), url('watermarked_img_10919591568350661226.jpg'), #1c1c1c center/cover no-repeat; }
+        .hero-content { max-width: 680px; margin-top: 40px;}
+        .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4.8rem; margin-bottom: 5px; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); line-height: 0.95; }
         .hero-buttons { display: flex; gap: 15px; margin-top: 25px; }
         .btn-play, .btn-info { padding: 12px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.2s;}
         .btn-play { background: #fff; color: #000; } .btn-play:hover { background: #ccc; }
         .btn-info { background: rgba(109, 109, 110, 0.7); color: #fff; } .btn-info:hover { background: rgba(109, 109, 110, 0.9); }
         
-        .catalog-container { padding: 0 4% 50px 4%; position: relative; z-index: 10; margin-top: -50px;}
-        .row-title { font-size: 1.3rem; font-weight: bold; color: #e5e5e5; margin-bottom: 12px; margin-top: 20px; }
+        .catalog-container { padding: 0 4% 60px 4%; position: relative; z-index: 10; margin-top: -30px;}
+        .row-title { font-size: 1.35rem; font-weight: bold; color: #e5e5e5; margin-bottom: 15px; margin-top: 30px; }
         
-        .posters-container, .landscape-row { display: flex; gap: 15px; overflow-x: auto; scrollbar-width: none; padding-bottom: 15px; width: 100%; }
+        /* FILEIRAS ARRASTÁVEIS */
+        .posters-container, .landscape-row { 
+            display: flex; 
+            gap: 16px; 
+            overflow-x: auto; 
+            scrollbar-width: none; 
+            padding-bottom: 15px; 
+            width: 100%; 
+            cursor: grab;
+            user-select: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .posters-container.active-drag, .landscape-row.active-drag {
+            cursor: grabbing;
+        }
         .posters-container::-webkit-scrollbar, .landscape-row::-webkit-scrollbar { display: none; }
         
-        .card-portrait { flex: 0 0 160px; height: 240px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #1a1a1a; }
-        .card-portrait-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px; text-align: center; }
-        .card-portrait:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); z-index: 10;}
-        .card-portrait h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        /* CARDS EM PÉ (PORTRAIT) */
+        .card-portrait { 
+            flex: 0 0 190px; 
+            height: 285px; 
+            border-radius: 6px; 
+            overflow: hidden; 
+            position: relative; 
+            background-size: cover; 
+            background-position: center; 
+            cursor: pointer; 
+            border: 2px solid #222; 
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; 
+            background-color: #1a1a1a; 
+        }
+        .card-portrait-content { 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            min-height: 95px; 
+            height: auto; 
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.8) 70%, transparent 100%); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-end; 
+            padding: 12px 10px; 
+            text-align: center; 
+        }
+        .card-portrait:hover { transform: translateY(-8px) scale(1.03); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.35); z-index: 10;}
+        .card-portrait h4 { 
+            font-size: 0.93rem; 
+            font-weight: bold; 
+            color: #fff; 
+            line-height: 1.25; 
+            margin: 0; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+            word-wrap: break-word;
+        }
 
-        .card-landscape { flex: 0 0 260px; height: 146px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #1a1a1a; }
-        .card-landscape-content { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 10px 15px; text-align: left; }
-        .card-landscape:hover { transform: translateY(-8px) scale(1.04); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); z-index: 10;}
-        .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.1; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
+        /* CARDS DEITADOS (LANDSCAPE) */
+        .card-landscape { 
+            flex: 0 0 270px; 
+            height: 155px; 
+            border-radius: 6px; 
+            overflow: hidden; 
+            position: relative; 
+            background-size: cover; 
+            background-position: center; 
+            cursor: pointer; 
+            border: 2px solid #222; 
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; 
+            background-color: #1a1a1a; 
+        }
+        .card-landscape-content { 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            min-height: 65px; 
+            height: auto; 
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-end; 
+            padding: 10px 15px; 
+            text-align: left; 
+        }
+        .card-landscape:hover { transform: translateY(-6px) scale(1.03); border-color: var(--netflix-red); box-shadow: 0 10px 25px rgba(229, 9, 20, 0.3); z-index: 10;}
+        .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.2; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
-        .card-movie { flex: 0 0 350px; height: 200px; border-radius: 6px; overflow: hidden; position: relative; background-size: cover; background-position: center; cursor: pointer; border: 2px solid #222; transition: all 0.3s; background-color: #111; display:flex; align-items:flex-end; padding:15px;}
-        .card-movie:hover { transform: translateY(-8px) scale(1.02); border-color: var(--netflix-red); box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5); z-index: 10;}
-        .card-movie-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); pointer-events: none;}
-        .card-movie-content { position: relative; z-index: 2; width: 100%;}
-        .card-movie h4 { font-size: 1.5rem; font-weight: bold; color: #fff; margin:0; font-family: 'Bebas Neue', cursive; letter-spacing: 1px;}
-        .card-movie p { font-size: 0.9rem; color: #ccc; margin-top: 5px;}
+        /* IMAGENS DOS 5 TEMAS */
+        .p-tema1 { background-image: url('de_volta_passado.jpg'), linear-gradient(135deg, #2b1055, #0a0a14); }
+        .p-tema2 { background-image: url('guerra_civil.jpg'), linear-gradient(135deg, #E50914, #1a0003); }
+        .p-tema3 { background-image: url('doutor_einstein.jpg'), linear-gradient(135deg, #0052d4, #0f2027); }
+        .p-tema4 { background-image: url('fragmentado.jpg'), linear-gradient(135deg, #434343, #000000); }
+        .p-tema5 { background-image: url('nao_olhe_etica.jpg'), linear-gradient(135deg, #11998e, #1f1c18); }
 
-        /* POSTERS COM FALLBACKS */
-        .p-stranger { background: linear-gradient(135deg, #2b1055, #7597de), url('stranger_pings.jpg'); background-size: cover; }
-        .p-dragon { background: linear-gradient(135deg, #1b2838, #2a475e), url('como_treinar_ia.jpg'); background-size: cover; }
-        .p-pix { background: linear-gradient(135deg, #0f2027, #203a43), url('deepfake_pix.jpg'); background-size: cover; }
-        .p-kpop { background: linear-gradient(135deg, #654ea3, #eaafc8), url('guerreiras_kpop.jpg'); background-size: cover; }
-        .p-nicolas { background: linear-gradient(135deg, #3a1c71, #d76d77), url('nicolas_o_grande.jpg'); background-size: cover; }
-        .p-lalalan { background: linear-gradient(135deg, #134e5e, #71b280), url('la_la_lan.jpg'); background-size: cover; }
-        .p-opensource { background: linear-gradient(135deg, #11998e, #38ef7d), url('open_source.jpg'); background-size: cover; }
-        .p-procurando { background: linear-gradient(135deg, #005aa7, #fffde4), url('procurando_ip.jpg'); background-size: cover; }
-        .p-honeypot { background: linear-gradient(135deg, #f12711, #f5af19), url('pote_de_mel.jpg'); background-size: cover; }
-        .p-mitm { background: linear-gradient(135deg, #232526, #414345), url('homem_no_meio.jpg'); background-size: cover; }
-        .p-firewall { background: linear-gradient(135deg, #e52d27, #b31217), url('muralha_de_fogo.jpg'); background-size: cover; }
-        .p-metaverso { background: linear-gradient(135deg, #8a2387, #e94057), url('fuga_metaverso.jpg'); background-size: cover; }
-        .p-iot { background: linear-gradient(135deg, #4b6cb7, #182848), url('rebeliao_torradeiras.jpg'); background-size: cover; }
+        /* IMAGENS DE T.I. E SÉRIES */
+        .p-stranger   { background-image: url('stranger_pings.jpg'), linear-gradient(135deg, #2b1055, #7597de); }
+        .p-dragon     { background-image: url('como_treinar_ia.jpg'), linear-gradient(135deg, #1b2838, #2a475e); }
+        .p-pix        { background-image: url('deepfake_pix.jpg'), linear-gradient(135deg, #0f2027, #203a43); }
+        .p-kpop       { background-image: url('guerreiras_kpop.jpg'), linear-gradient(135deg, #654ea3, #eaafc8); }
+        .p-nicolas    { background-image: url('nicolas_o_grande.jpg'), linear-gradient(135deg, #3a1c71, #d76d77); }
+        .p-lalalan    { background-image: url('la_la_lan.jpg'), linear-gradient(135deg, #134e5e, #71b280); }
+        .p-opensource { background-image: url('open_source.jpg'), linear-gradient(135deg, #11998e, #38ef7d); }
+        .p-procurando { background-image: url('procurando_ip.jpg'), linear-gradient(135deg, #005aa7, #fffde4); }
+        .p-honeypot   { background-image: url('pote_de_mel.jpg'), linear-gradient(135deg, #f12711, #f5af19); }
+        .p-mitm       { background-image: url('homem_no_meio.jpg'), linear-gradient(135deg, #232526, #414345); }
+        .p-firewall   { background-image: url('muralha_de_fogo.jpg'), linear-gradient(135deg, #e52d27, #b31217); }
+        .p-metaverso  { background-image: url('fuga_metaverso.jpg'), linear-gradient(135deg, #8a2387, #e94057); }
+        .p-iot        { background-image: url('rebeliao_torradeiras.jpg'), linear-gradient(135deg, #4b6cb7, #182848); }
 
-        /* TELA DE EPISÓDIOS */
         .details-hero { height: 85vh; min-height: 600px; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('watermarked_img_10919591568350661226.jpg'), #1c1c1c center/cover no-repeat; }
         .details-content { max-width: 600px; z-index: 2; margin-top: 50px; }
         .details-content h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; line-height: 1; margin-bottom: 15px; }
 
-        /* NOTIFICAÇÕES E POPUPS GLOBAIS */
+        /* NOTIFICAÇÕES GLOBAIS */
         #turn-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.95); border: 2px solid var(--netflix-red); padding: 15px 30px; border-radius: 50px; color: #fff; z-index: 10000; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(229,9,20,0.4); display: flex; align-items: center; gap: 15px; pointer-events: none;}
         #turn-toast.show { top: 30px; }
         
@@ -133,14 +232,13 @@
         #ach-popup.show { bottom: 30px; }
         .ach-icon { font-size: 2rem; color: var(--rpg-gold); }
 
-        /* =========================================================
-           PLAYER 1: A APRESENTAÇÃO CLÁSSICA
-           ========================================================= */
+        /* PLAYER 1: APRESENTAÇÃO CLÁSSICA */
         #player-screen { background: #000; }
         .player-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 30; }
         .slide-area { flex-grow: 1; position: relative; display: flex; align-items: center; justify-content: center; padding: 70px 4% 90px 4%; height: 100%; z-index: 20;}
-        .slide { position: absolute; width: 100%; max-width: 1200px; padding: 0 4%; opacity: 0; pointer-events: none; transition: 0.5s; }
-        .slide.active { opacity: 1; pointer-events: auto; }
+        .slide { position: absolute; width: 100%; max-width: 1200px; padding: 0 4%; opacity: 0; pointer-events: none; visibility: hidden; transition: opacity 0.5s; }
+        .slide.active { opacity: 1; pointer-events: auto; visibility: visible; }
+        .slide:not(.active) * { pointer-events: none !important; }
         .slide-grid { display: flex; align-items: center; width: 100%; position: relative; gap: 20px;}
         
         .text-col { flex: 1; padding-right: 20px; z-index: 1; transform: translateX(100%); opacity: 0; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -162,7 +260,7 @@
         .geo-lock { position: absolute; font-size: 4rem; color: #E50914; animation: pulseLock 1.5s infinite alternate; }
         @keyframes pulseLock { 0% { transform: scale(1); text-shadow: 0 0 10px #E50914; } 100% { transform: scale(1.15); text-shadow: 0 0 30px #ff5555; } }
         
-        .lantern-container { width: 100%; height: 100%; position: relative; background: #3d2b1f; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 30px; font-size: 3rem; color: #111; }
+        .lantern-container { width: 100%; height: 100%; position: relative; background: #26190f; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 30px; font-size: 3rem; color: var(--rpg-gold); }
         .lantern-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; animation: lanternMove 6s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;}
         @keyframes lanternMove { 0% { clip-path: circle(25% at 20% 50%); } 50% { clip-path: circle(25% at 50% 20%); } 100% { clip-path: circle(25% at 80% 60%); } }
         
@@ -215,13 +313,11 @@
         .control-btn { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; transition: 0.2s;}
         .control-btn:hover { color: var(--netflix-red); }
 
-
         /* =========================================================
-           PLAYER 2: O FILME CINEMATOGRÁFICO 3D (COM SUPER ANIMAÇÕES)
+           PLAYER 2: MODO CINEMATOGRÁFICO 3D
            ========================================================= */
         #cinematic-stage { background: #000; }
-        
-        .stage-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 900; background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent); }
+        .stage-header { padding: 15px 4%; display: flex; align-items: center; gap: 15px; position: absolute; width: 100%; z-index: 900; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); }
         
         .cine-scene { 
             position: absolute; 
@@ -231,10 +327,10 @@
             height: 100vh; 
             opacity: 0; 
             pointer-events: none; 
-            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); 
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s ease; 
             display: flex; 
             align-items: center; 
-            justify-content: center;
+            justify-content: center; 
             overflow: hidden;
         }
 
@@ -243,420 +339,112 @@
             z-index: 50; 
             max-width: 620px; 
             opacity: 0; 
-            transition: all 1.1s cubic-bezier(0.16, 1, 0.3, 1); 
-            text-shadow: 0 5px 25px rgba(0,0,0,0.95); 
-            pointer-events: none;
-        }
-        .cine-title { font-family: 'Bebas Neue', cursive; font-size: 5rem; line-height: 0.95; color: var(--netflix-red); margin-bottom: 12px; }
-        .cine-desc { font-size: 1.45rem; color: #e0e0e0; line-height: 1.55; text-shadow: 0 2px 10px #000; font-weight: 300;}
-
-        /* BARRAS DE NAVEGAÇÃO FLUTUANTES DO MODO FILME */
-        .cine-nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 950;
-            background: rgba(20, 20, 20, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            cursor: pointer;
+            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); 
+            text-shadow: 0 5px 20px rgba(0,0,0,0.95); 
+            pointer-events: none; 
+            transform: translateY(40px);
+            background: rgba(0,0,0,0.78);
+            padding: 25px 30px;
+            border-left: 4px solid var(--netflix-red);
+            border-radius: 0 8px 8px 0;
             backdrop-filter: blur(8px);
-            transition: all 0.3s;
         }
-        .cine-nav-arrow:hover {
-            background: var(--netflix-red);
-            border-color: #fff;
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 0 25px rgba(229, 9, 20, 0.8);
-        }
-        .cine-prev { left: 25px; }
-        .cine-next { right: 25px; }
+        .cine-title { font-family: 'Bebas Neue', cursive; font-size: 5rem; line-height: 1; color: var(--netflix-red); margin-bottom: 10px; }
+        .cine-desc { font-size: 1.45rem; color: #ccc; line-height: 1.5; text-shadow: 0 2px 10px #000;}
+        .cine-ticker { background: rgba(229, 9, 20, 0.15); border-left: 3px solid #E50914; padding: 10px 15px; margin: 15px 0 15px 0; font-style: italic; color: #bbb; font-size: 1.1rem; border-radius: 4px; min-height: 40px; display: flex; align-items: center;}
 
-        .cine-dots-bar {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 14px;
-            z-index: 950;
-            background: rgba(0,0,0,0.7);
-            padding: 10px 20px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.15);
-            backdrop-filter: blur(5px);
-        }
-        .cine-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .cine-dot:hover { background: #fff; transform: scale(1.2); }
-        .cine-dot.active { background: var(--netflix-red); width: 35px; border-radius: 10px; box-shadow: 0 0 15px var(--netflix-red); }
+        /* Ativação das cenas por data-step */
+        #cinematic-stage[data-step="0"] #cine-renaissance, 
+        #cinematic-stage[data-step="1"] #cine-renaissance { opacity: 1; pointer-events: auto; }
+        #cinematic-stage[data-step="0"] .cine-txt-0 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="1"] .cine-txt-1 { opacity: 1; transform: translateY(0); }
 
-        /* ================= CENA 1: BIBLIOTECA MEDIEVAL ================= */
-        #cine-library { background: radial-gradient(circle at center, #232328 0%, #050505 100%); perspective: 1200px; }
-        .cine-pillar { 
-            position: absolute; 
-            top: -10%; 
-            width: 260px; 
-            height: 120%; 
-            background: linear-gradient(90deg, #09090b, #1f1f23, #09090b); 
-            box-shadow: 30px 0 60px rgba(0,0,0,0.95); 
-            z-index: 100;
-            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .cine-pillar.left { left: 8%; }
-        .cine-pillar.right { right: 8%; box-shadow: -30px 0 60px rgba(0,0,0,0.95); }
+        #cinematic-stage[data-step="2"] #cine-library, 
+        #cinematic-stage[data-step="3"] #cine-library { opacity: 1; pointer-events: auto; }
+        #cinematic-stage[data-step="2"] .cine-txt-2 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="3"] .cine-txt-3 { opacity: 1; transform: translateY(0); }
 
-        .cine-book-glow {
-            position: absolute;
-            font-size: 8rem;
-            color: #d4af37;
-            filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.6));
-            animation: bookFloat 5s infinite ease-in-out;
-            z-index: 30;
-            opacity: 0.85;
-        }
-        @keyframes bookFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
+        #cinematic-stage[data-step="4"] #cine-rupture { opacity: 1; pointer-events: auto; }
+        #cinematic-stage[data-step="4"] .cine-txt-4 { opacity: 1; transform: translate(-50%, 0); }
 
-        .inq-vignette {
-            position: absolute;
-            top:0; left:0; width:100%; height:100%;
-            box-shadow: inset 0 0 180px rgba(229, 9, 20, 0.85);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 1s;
-            z-index: 80;
-        }
+        #cinematic-stage[data-step="5"] #cine-space, 
+        #cinematic-stage[data-step="6"] #cine-space { opacity: 1; pointer-events: auto; clip-path: circle(150% at 50% 50%); }
+        #cinematic-stage[data-step="5"] .cine-txt-5 { opacity: 1; transform: translate(450px, -50%); }
+        #cinematic-stage[data-step="6"] .cine-txt-6 { opacity: 1; transform: translate(-250px, 150px); }
 
-        .inq-chains {
-            position: absolute;
-            font-size: 11rem;
-            color: #E50914;
-            opacity: 0;
-            transform: scale(0.4) rotate(-15deg);
-            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 0 45px #E50914);
-            z-index: 90;
-        }
+        #cinematic-stage[data-step="7"] #cine-choice { opacity: 1; pointer-events: auto; }
 
-        .cine-text-box.cl-1 { left: 12%; transform: translateX(-120px); } 
-        .cine-text-box.cl-2 { right: 12%; transform: translateX(120px); text-align: right; }
-
-        /* ETAPAS 0 E 1 */
-        #cinematic-stage[data-step="0"] #cine-library { opacity: 1; pointer-events: auto; }
-        #cinematic-stage[data-step="0"] .cl-1 { opacity: 1; transform: translateX(250px); } 
-        #cinematic-stage[data-step="0"] .cl-2 { opacity: 0; }
-
-        #cinematic-stage[data-step="1"] #cine-library { opacity: 1; pointer-events: auto; }
-        #cinematic-stage[data-step="1"] .cl-1 { opacity: 0; transform: translateY(-60px); }
-        #cinematic-stage[data-step="1"] .cl-2 { opacity: 1; transform: translateX(-250px); }
-        #cinematic-stage[data-step="1"] .inq-vignette { opacity: 1; }
-        #cinematic-stage[data-step="1"] .inq-chains { opacity: 1; transform: scale(1) rotate(0deg); }
-        #cinematic-stage[data-step="1"] .cine-pillar.left { transform: translateX(50px) scale(1.05); }
-        #cinematic-stage[data-step="1"] .cine-pillar.right { transform: translateX(-50px) scale(1.05); }
-
-        /* ================= CENA 2: ESPAÇO E COSMOS ================= */
-        #cine-space { 
-            background: #020205; 
-            clip-path: circle(0% at 50% 50%); 
-            transition: clip-path 1.8s cubic-bezier(0.7, 0, 0.3, 1), transform 1.5s ease-in-out; 
-            z-index: 61;
-        }
+        #cinematic-stage[data-step="8"] #cine-desk, 
+        #cinematic-stage[data-step="9"] #cine-desk, 
+        #cinematic-stage[data-step="10"] #cine-desk, 
+        #cinematic-stage[data-step="11"] #cine-desk { opacity: 1; pointer-events: auto; transform: translateY(0); }
         
-        .cine-stars { 
-            position: absolute; 
-            width: 250vw; 
-            height: 250vh; 
-            background: radial-gradient(2px 2px at 30px 40px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 90px 120px, #a5b4fc, rgba(0,0,0,0)), radial-gradient(1.5px 1.5px at 150px 70px, #fbbf24, rgba(0,0,0,0)); 
-            background-size: 180px 180px; 
-            animation: spacePan 40s linear infinite;
-        }
-        @keyframes spacePan { from { transform: translate(0, 0); } to { transform: translate(-180px, -180px); } }
+        #cinematic-stage[data-step="8"] .cine-txt-8 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="9"] .cine-txt-9 { opacity: 1; transform: translateY(0); }
+        
+        #cinematic-stage[data-step="10"] .cine-pan, 
+        #cinematic-stage[data-step="11"] .cine-pan { transform: translateX(-100vw); }
+        #cinematic-stage[data-step="10"] .cine-txt-10 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="11"] .cine-txt-11 { opacity: 1; transform: translateY(0); }
 
-        .cine-space-system {
-            position: relative;
-            width: 800px;
-            height: 800px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        #cinematic-stage[data-step="12"] #cine-desk { opacity: 0.25; transform: translateY(0) scale(0.9); filter: blur(10px); }
+        #cinematic-stage[data-step="12"] #cine-apple { opacity: 1; pointer-events: auto; }
+        #cinematic-stage[data-step="12"] .cine-txt-12 { opacity: 1; transform: scale(1); }
 
-        .cine-sun-flares {
-            position: absolute;
-            width: 420px;
-            height: 420px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 70%);
-            animation: coronaPulse 3s infinite alternate ease-in-out;
-        }
-        @keyframes coronaPulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.35); opacity: 1; } }
+        #cinematic-stage[data-step="13"] #cine-ad { opacity: 1; pointer-events: auto; }
 
-        .cine-sun { 
-            position: absolute; 
-            width: 280px; 
-            height: 280px; 
-            background: radial-gradient(circle, #fde047 15%, #f59e0b 60%, #b45309 100%); 
-            border-radius: 50%; 
-            box-shadow: 0 0 100px #f59e0b, 0 0 180px rgba(245,158,11,0.5); 
-            z-index: 10;
-        }
+        /* Cenários 3D */
+        #cine-renaissance { background: radial-gradient(circle at center, #222 0%, #000 100%); }
+        .cine-map-grid { position: absolute; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(212, 175, 55, 0.08) 80px, rgba(212, 175, 55, 0.08) 82px), repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(212, 175, 55, 0.08) 80px, rgba(212, 175, 55, 0.08) 82px); animation: panMapBg 40s linear infinite; }
+        .cine-ship { font-size: 14rem; color: rgba(212, 175, 55, 0.85); filter: drop-shadow(0 15px 30px rgba(0,0,0,0.9)); }
+        .cine-txt-0 { left: 10vw; text-align: left; }
+        .cine-txt-1 { right: 10vw; text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
 
-        .cine-orbit-path {
-            position: absolute;
-            width: 650px;
-            height: 650px;
-            border: 2px dashed rgba(255,255,255,0.2);
-            border-radius: 50%;
-            animation: orbitTurn 25s linear infinite;
-        }
-        .cine-earth-orb {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle, #60a5fa, #1d4ed8);
-            border-radius: 50%;
-            box-shadow: 0 0 35px #3b82f6;
-        }
-        @keyframes orbitTurn { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        #cine-library { background: #080808; perspective: 1000px; }
+        .cine-stained-glass { position: absolute; width: 100vw; height: 100vh; background: conic-gradient(from 0deg at 50% 50%, #2a0845, #6441a5, #2a0845); opacity: 0.18; animation: glassSpin 20s linear infinite; }
+        .cine-altar { position: relative; font-size: 16rem; color: #444; filter: drop-shadow(0 20px 30px #000); }
+        .cine-txt-2 { left: 10vw; text-align: left; }
+        .cine-txt-3 { right: 10vw; text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
+        @keyframes glassSpin { 100% { transform: rotate(360deg); } }
 
-        /* HUD TELESCÓPIO DE GALILEU */
-        .telescope-hud-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1.2s ease;
-            z-index: 30;
-        }
-        .hud-circle {
-            width: 520px;
-            height: 520px;
-            border: 2px solid rgba(59, 130, 246, 0.4);
-            border-radius: 50%;
-            position: absolute;
-            box-shadow: inset 0 0 40px rgba(59, 130, 246, 0.2);
-            animation: hudScan 12s linear infinite;
-        }
-        .hud-crosshair-x { position: absolute; width: 600px; height: 1px; background: rgba(59, 130, 246, 0.3); }
-        .hud-crosshair-y { position: absolute; height: 600px; width: 1px; background: rgba(59, 130, 246, 0.3); }
-        .hud-coords {
-            position: absolute;
-            bottom: 120px;
-            font-family: 'Share Tech Mono', monospace;
-            color: #60a5fa;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 8px 16px;
-            border-radius: 4px;
-            border: 1px solid rgba(59, 130, 246, 0.4);
-        }
-        @keyframes hudScan { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #cine-rupture { background: #000; }
+        .cine-txt-4 { left: 50%; transform: translate(-50%, 40px); text-align: center; border-left: none; border-bottom: 4px solid var(--netflix-red); border-radius: 8px;}
 
-        .cine-text-box.cs-1 { left: 10%; top: 48%; transform: translateY(-50%); }
-        .cine-text-box.cs-2 { right: 10%; top: 48%; transform: translateY(-50%); text-align: right;}
+        #cine-space { background: #020205; clip-path: circle(0% at 50% 50%); transition: clip-path 2s cubic-bezier(0.7, 0, 0.3, 1); z-index: 61;}
+        .cine-stars { position: absolute; width: 200vw; height: 200vh; background: radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 90px 40px, #aaa, rgba(0,0,0,0)); background-size: 150px 150px; animation: spacePan 40s linear infinite;}
+        .cine-sun { position: absolute; top: 50%; left: 20%; transform: translateY(-50%); width: 380px; height: 380px; background: radial-gradient(circle, #f59e0b, #b45309); border-radius: 50%; box-shadow: 0 0 100px #f59e0b; z-index: 100;}
+        .cine-earth { position: absolute; top: 20%; right: 20%; width: 190px; height: 190px; background: radial-gradient(circle, #3b82f6, #1e3a8a); border-radius: 50%; box-shadow: 0 0 50px #3b82f6; z-index: 100;}
+        .cine-txt-5 { left: 20%; top: 50%; transform: translate(-50px, -50%); }
+        .cine-txt-6 { right: 20%; top: 20%; transform: translate(50px, 150px); text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
+        @keyframes spacePan { from { transform: translate(0,0); } to { transform: translate(-150px, -150px); } }
 
-        /* ETAPAS 2 E 3 */
-        #cinematic-stage[data-step="2"] #cine-space,
-        #cinematic-stage[data-step="3"] #cine-space { 
-            clip-path: circle(150% at 50% 50%); 
-            opacity: 1; 
-            pointer-events: auto; 
-        }
-        #cinematic-stage[data-step="2"] .cs-1 { opacity: 1; transform: translate(50px, -50%); }
-        #cinematic-stage[data-step="2"] .cs-2 { opacity: 0; }
+        #cine-choice { background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 65; }
 
-        #cinematic-stage[data-step="3"] .cs-1 { opacity: 0; transform: translate(0, -60%); }
-        #cinematic-stage[data-step="3"] .cs-2 { opacity: 1; transform: translate(-50px, -50%); }
-        #cinematic-stage[data-step="3"] .cine-space-system { transform: scale(1.4) rotate(-12deg); }
-        #cinematic-stage[data-step="3"] .telescope-hud-overlay { opacity: 1; }
+        #cine-desk { background: #111; transform: translateY(100vh); transition: transform 1.5s ease-in-out; z-index: 62;}
+        .cine-surface { position: absolute; bottom: -20vh; left: 0; width: 200vw; height: 50vh; background: #222; transform: perspective(500px) rotateX(45deg); box-shadow: 0 -20px 50px rgba(0,0,0,0.9); z-index: 10;}
+        .cine-pan { position: absolute; top: 0; left: 0; width: 200vw; height: 100vh; display: flex; transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .cine-side { width: 100vw; height: 100vh; position: relative; }
+        .cine-smoke { position: absolute; bottom: 30vh; left: 10vw; width: 600px; height: 600px; background: radial-gradient(circle, rgba(16,185,129,0.3) 0%, transparent 60%); filter: blur(30px); z-index: 100; animation: lanternMove 5s infinite alternate;}
+        .cine-cauldron { position: absolute; bottom: 20vh; left: 15vw; font-size: 15rem; color: #333; z-index: 110; filter: drop-shadow(0 20px 20px #000); }
+        .cine-gears { position: absolute; top: 20vh; right: 15vw; font-size: 15rem; color: rgba(255,255,255,0.05); animation: spin 20s linear infinite; z-index: 10;}
+        .cine-txt-8, .cine-txt-9 { left: 40vw; top: 25vh; }
+        .cine-txt-10, .cine-txt-11 { left: 15vw; top: 30vh; }
 
-        /* ================= CENA 3: MESA (EMPIRISMO & RACIONALISMO) ================= */
-        #cine-desk { 
-            background: #0d0d0f; 
-            transform: translateY(100vh); 
-            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), filter 1s ease; 
-            z-index: 62;
-        }
-        .cine-surface { 
-            position: absolute; 
-            bottom: -20vh; 
-            left: 0; 
-            width: 200vw; 
-            height: 55vh; 
-            background: linear-gradient(180deg, #1f1f27 0%, #0a0a0d 100%); 
-            transform: perspective(600px) rotateX(50deg); 
-            box-shadow: 0 -30px 60px rgba(0,0,0,0.95); 
-            z-index: 10;
-            border-top: 2px solid rgba(255,255,255,0.08);
-        }
-        .cine-pan { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 200vw; 
-            height: 100vh; 
-            display: flex; 
-            transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        .cine-side { width: 100vw; height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; }
-
-        /* Lado 1: Empirismo */
-        .empirismo-elements { position: absolute; left: 15vw; bottom: 25vh; z-index: 20; }
-        .cine-flask-main { font-size: 14rem; color: #10b981; filter: drop-shadow(0 0 45px rgba(16, 185, 129, 0.7)); }
-        .cine-smoke-plume {
-            position: absolute;
-            bottom: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 65%);
-            filter: blur(40px);
-            animation: smokePuff 4s infinite alternate ease-in-out;
-        }
-        @keyframes smokePuff { 0% { transform: translateX(-50%) scale(0.9) translateY(0); opacity: 0.5; } 100% { transform: translateX(-40%) scale(1.3) translateY(-40px); opacity: 0.9; } }
-
-        /* Lado 2: Racionalismo */
-        .racionalismo-elements { position: absolute; right: 15vw; top: 22vh; z-index: 20; display:flex; flex-direction:column; align-items:center; }
-        .cine-gear-system { position: relative; width: 300px; height: 300px; }
-        .gear-primary { position: absolute; font-size: 16rem; color: rgba(59, 130, 246, 0.2); animation: gearSpin 20s linear infinite; }
-        .gear-secondary { position: absolute; top: -40px; right: -50px; font-size: 9rem; color: rgba(212, 175, 55, 0.25); animation: gearSpinRev 12s linear infinite; }
-        .cartesian-grid {
-            position: absolute;
-            bottom: -50px;
-            width: 320px;
-            height: 140px;
-            border: 2px solid rgba(59,130,246,0.4);
-            background: repeating-linear-gradient(0deg, rgba(59,130,246,0.1), rgba(59,130,246,0.1) 1px, transparent 1px, transparent 20px),
-                        repeating-linear-gradient(90deg, rgba(59,130,246,0.1), rgba(59,130,246,0.1) 1px, transparent 1px, transparent 20px);
-            transform: perspective(300px) rotateX(45deg);
-        }
-        @keyframes gearSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes gearSpinRev { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-        .cine-text-box.cd-1 { left: 45vw; top: 35vh; }
-        .cine-text-box.cd-2 { left: 15vw; top: 35vh; }
-
-        /* ETAPAS 4 E 5 */
-        #cinematic-stage[data-step="4"] #cine-space,
-        #cinematic-stage[data-step="5"] #cine-space,
-        #cinematic-stage[data-step="6"] #cine-space { transform: translateY(-100vh); }
-
-        #cinematic-stage[data-step="4"] #cine-desk,
-        #cinematic-stage[data-step="5"] #cine-desk { 
-            transform: translateY(0); 
-            opacity: 1; 
-            pointer-events: auto; 
-        }
-
-        #cinematic-stage[data-step="4"] .cine-pan { transform: translateX(0); }
-        #cinematic-stage[data-step="4"] .cd-1 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="4"] .cd-2 { opacity: 0; }
-
-        #cinematic-stage[data-step="5"] .cine-pan { transform: translateX(-100vw); }
-        #cinematic-stage[data-step="5"] .cd-1 { opacity: 0; }
-        #cinematic-stage[data-step="5"] .cd-2 { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
-
-        /* ================= CENA 4: A SÍNTESE NEWTONIANA ================= */
         #cine-apple { background: transparent; z-index: 63; }
-        
-        .spacetime-grid {
-            position: absolute;
-            bottom: 5vh;
-            width: 150vw;
-            height: 60vh;
-            background: radial-gradient(circle at center, transparent 10%, rgba(59, 130, 246, 0.15) 80%),
-                        repeating-radial-gradient(circle at center, transparent 0, transparent 30px, rgba(59, 130, 246, 0.25) 31px, transparent 32px);
-            transform: perspective(600px) rotateX(65deg);
-            pointer-events: none;
-            opacity: 0.8;
-        }
+        .cine-txt-12 { transform: scale(0.6); text-align: center; display: flex; flex-direction: column; align-items: center; border-left: none; border-radius: 8px;}
+        .cine-giant-apple { font-size: 12rem; color: #E50914; animation: giantAppleDrop 4s infinite ease-in; text-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 10; position: relative;}
+        .cine-math-wave { position: absolute; top: 100px; font-family: 'Share Tech Mono'; font-size: 6rem; color: #3b82f6; opacity: 0; animation: giantMathShock 4s infinite ease-out; white-space: nowrap; font-weight: bold;}
+        @keyframes giantAppleDrop { 0% { transform: translateY(-400px); } 40% { transform: translateY(0) scale(1); } 45% { transform: translateY(0) scaleY(0.7) scaleX(1.3); } 50% { transform: translateY(-40px) scale(1); } 55% { transform: translateY(0); } 100% { transform: translateY(0); } }
+        @keyframes giantMathShock { 0%, 40% { transform: scale(0.5); opacity: 0; filter: blur(10px); } 45% { transform: scale(1.2); opacity: 1; filter: blur(0); text-shadow: 0 0 50px #3b82f6;} 100% { transform: scale(3); opacity: 0; filter: blur(20px); } }
 
-        .cine-text-box.ca-1 { 
-            opacity: 0; 
-            transform: scale(0.65); 
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
-        }
-        
-        .cine-giant-apple { 
-            font-size: 13rem; 
-            color: #E50914; 
-            animation: giantAppleDrop 4.5s infinite ease-in; 
-            text-shadow: 0 25px 60px rgba(0,0,0,0.9); 
-            z-index: 10; 
-            position: relative;
-        }
-        .cine-math-wave { 
-            position: absolute; 
-            top: 100px; 
-            font-family: 'Share Tech Mono', monospace; 
-            font-size: 5rem; 
-            color: #3b82f6; 
-            opacity: 0; 
-            animation: giantMathShock 4.5s infinite ease-out; 
-            white-space: nowrap; 
-            font-weight: bold;
-        }
-        
-        @keyframes giantAppleDrop { 
-            0% { transform: translateY(-400px); } 
-            38% { transform: translateY(0) scale(1); } 
-            43% { transform: translateY(0) scaleY(0.65) scaleX(1.35); } 
-            50% { transform: translateY(-45px) scale(1); } 
-            57% { transform: translateY(0); } 
-            100% { transform: translateY(0); } 
-        }
-        @keyframes giantMathShock { 
-            0%, 38% { transform: scale(0.4); opacity: 0; filter: blur(10px); } 
-            43% { transform: scale(1.15); opacity: 1; filter: blur(0); text-shadow: 0 0 60px #3b82f6, 0 0 20px #fff;} 
-            100% { transform: scale(3.2); opacity: 0; filter: blur(25px); } 
-        }
-
-        /* ETAPA 6 */
-        #cinematic-stage[data-step="6"] #cine-desk { 
-            transform: translateY(0) scale(0.85); 
-            filter: blur(15px) brightness(0.2); 
-            pointer-events: none;
-        } 
-        #cinematic-stage[data-step="6"] #cine-apple { opacity: 1; pointer-events: auto; }
-        #cinematic-stage[data-step="6"] .ca-1 { opacity: 1; transform: scale(1); transition-delay: 0.8s; }
+        #cine-ad { background: #000; z-index: 70; }
 
         /* OVERLAYS DE EVENTOS */
-        #inquisition-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(20, 0, 0, 0.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; text-align: center; }
-        .inq-box { border: 4px double #E50914; background: #111; padding: 40px; border-radius: 8px; max-width: 600px; position: relative; }
-        .btn-retract { background: transparent; color: #E50914; border: 2px solid #E50914; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 30px; transition: 0.3s; font-family: 'Share Tech Mono', monospace;}
-        .btn-retract:hover { background: #E50914; color: #fff; }
-
         #idle-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
         .btn-idle { background: #fff; color: #000; border: none; padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 30px; transition: 0.2s;}
 
-        .lis-container { display: flex; width: 100%; height: 350px; gap: 15px; margin-top: 20px; }
-        .lis-choice { flex: 1; border: 2px solid #444; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; padding: 20px; text-align: center; pointer-events: auto;}
+        .lis-container { display: flex; width: 100%; height: 320px; gap: 15px; margin-top: 20px; }
+        .lis-choice { flex: 1; border: 2px solid #444; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; padding: 20px; text-align: center;}
         .lis-choice.empirismo { background: linear-gradient(135deg, #0f2027 0%, #203a43 100%); }
         .lis-choice.racionalismo { background: linear-gradient(135deg, #141e30 0%, #243b55 100%); }
         .lis-choice:hover { border-color: #3b82f6; filter: brightness(1.2); transform: scale(1.02); }
@@ -667,34 +455,44 @@
         #lis-dark-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.8); z-index: 9998; display: none; }
 
         #credits-screen { justify-content: center; align-items: center; background: #000; text-align: center; padding: 30px; }
-
-        /* RESPONSIVIDADE */
-        @media (max-width: 900px) {
-            .slide-grid { flex-direction: column; }
-            .visual-col { height: 280px; width: 100%; box-shadow: none; }
-            .text-col { padding-right: 0; }
-            .text-col h2 { font-size: 2.2rem; }
-            .hero h1 { font-size: 3rem; }
-            .cine-title { font-size: 3.2rem; }
-            .cine-desc { font-size: 1.15rem; }
-            .cine-nav-arrow { width: 45px; height: 45px; font-size: 1.2rem; }
-            .lis-container { flex-direction: column; height: auto; }
-        }
     </style>
 </head>
 <body>
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
-    <!-- TELA DE PERFIS -->
+    <!-- TELA DE PERFIS COM OS 7 INTEGRANTES EM ORDEM -->
     <div id="profile-screen" class="screen active">
         <h1>Quem vai iniciar a apresenta&ccedil;&atilde;o?</h1>
         <div class="profiles-container">
-            <div class="profile-card" onclick="window.selectProfile('Francisco')"><div class="avatar c1"><i class="fa-solid fa-user"></i></div><span>Francisco</span></div>
-            <div class="profile-card" onclick="window.selectProfile('JP Santos')"><div class="avatar c2"><i class="fa-solid fa-user-astronaut"></i></div><span>JP Santos</span></div>
-            <div class="profile-card" onclick="window.selectProfile('Pedro')"><div class="avatar c3"><i class="fa-solid fa-user-ninja"></i></div><span>Pedro</span></div>
-            <div class="profile-card" onclick="window.selectProfile('JP Silva')"><div class="avatar c4"><i class="fa-solid fa-user-secret"></i></div><span>JP Silva</span></div>
-            <div class="profile-card" onclick="window.selectProfile('Nicolas')"><div class="avatar c5"><i class="fa-solid fa-user-tie"></i></div><span>Nicolas</span></div>
+            <div class="profile-card" onclick="window.selectProfile('Davi')">
+                <div class="avatar av-davi"><i class="fa-solid fa-user"></i></div>
+                <span>Davi</span>
+            </div>
+            <div class="profile-card" onclick="window.selectProfile('Maria Helena')">
+                <div class="avatar av-maria"><i class="fa-solid fa-user"></i></div>
+                <span>Maria Helena</span>
+            </div>
+            <div class="profile-card" onclick="window.selectProfile('Francisco L')">
+                <div class="avatar av-francisco"><i class="fa-solid fa-user"></i></div>
+                <span>Francisco L</span>
+            </div>
+            <div class="profile-card" onclick="window.selectProfile('Pedro')">
+                <div class="avatar av-pedro"><i class="fa-solid fa-user-ninja"></i></div>
+                <span>Pedro</span>
+            </div>
+            <div class="profile-card" onclick="window.selectProfile('Marcelo')">
+                <div class="avatar av-marcelo"><i class="fa-solid fa-user-tie"></i></div>
+                <span>Marcelo</span>
+            </div>
+            <div class="profile-card" onclick="window.selectProfile('Samuel')">
+                <div class="avatar av-samuel"><i class="fa-solid fa-user-gear"></i></div>
+                <span>Samuel</span>
+            </div>
+            <div class="profile-card" onclick="window.selectProfile('JP Santos')">
+                <div class="avatar av-jsantos"><i class="fa-solid fa-user-astronaut"></i></div>
+                <span>JP Santos</span>
+            </div>
         </div>
     </div>
 
@@ -711,56 +509,107 @@
     <div id="home-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" onclick="window.switchScreen('home-screen')">IFPIFLIX</div>
-            <div style="cursor:pointer;" onclick="window.switchScreen('profile-screen')"><span id="nav-profile-name" style="margin-right:10px; font-weight:bold;">Francisco</span><i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i></div>
+            <div style="cursor:pointer;" onclick="window.switchScreen('profile-screen')">
+                <span id="nav-profile-name" style="margin-right:10px; font-weight:bold;">Davi</span>
+                <i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i>
+            </div>
         </nav>
+        
+        <!-- BANNER PRINCIPAL (HERO) -->
         <div class="hero">
             <div class="hero-content">
-                <div style="color: var(--rpg-gold); font-weight: bold; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 5px;"><i class="fa-solid fa-scroll"></i> S&Eacute;RIE ORIGINAL FILOSOFIA</div>
-                <h1>A CI&Ecirc;NCIA MODERNA</h1>
-                <p style="font-size: 1.2rem; margin-bottom: 10px; color: #ccc;">A Revolu&ccedil;&atilde;o Cient&iacute;fica Moderna e a forja de uma Nova Concep&ccedil;&atilde;o de M&eacute;todo.</p>
+                <div style="color: var(--rpg-gold); font-weight: bold; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 8px;">
+                    <i class="fa-solid fa-clapperboard"></i> FILME ORIGINAL &bull; TEMA 02
+                </div>
+                <h1>GUERRA CIVIL</h1>
+                <p style="font-size: 1.3rem; margin-bottom: 5px; color: var(--netflix-red); font-weight: bold; letter-spacing: 1px;">
+                    EMPIRISMO VS RACIONALISMO
+                </p>
+                <p style="font-size: 1.15rem; margin-bottom: 15px; color: #ccc; line-height: 1.5;">
+                    A Revolu&ccedil;&atilde;o Cient&iacute;fica Moderna, a queda dos dogmas e a forja do M&eacute;todo Cient&iacute;fico por Newton.
+                </p>
                 <div class="hero-buttons">
-                    <button class="btn-play" onclick="window.startPresentationAt(0)"><i class="fa-solid fa-play"></i> Apresenta&ccedil;&atilde;o Cl&aacute;ssica</button>
+                    <button class="btn-play" onclick="window.startCinematicMovie()"><i class="fa-solid fa-play"></i> Assistir ao Filme</button>
                     <button class="btn-info" onclick="window.switchScreen('series-details-screen')"><i class="fa-solid fa-book-journal-whills"></i> O Grim&oacute;rio</button>
                 </div>
             </div>
         </div>
+
+        <!-- CATÁLOGO GERAL REORGANIZADO -->
         <div class="catalog-container">
-            <h2 class="row-title">Lan&ccedil;amento: Experi&ecirc;ncia Cinematogr&aacute;fica (Modo Filme 3D)</h2>
-            <div class="posters-container" style="margin-bottom: 30px;">
-                <div class="card-movie" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.85)), url('watermarked_img_10919591568350661226.jpg'), #222;" onclick="window.startCinematicMovie()">
-                    <div class="card-movie-overlay"></div>
-                    <div class="card-movie-content">
-                        <h4 style="font-size: 2rem;">O Filme: A Jornada</h4>
-                        <p>C&acirc;mera Din&acirc;mica &bull; Sem Slides &bull; 100% Imersivo</p>
+            
+            <!-- LINHA 1: LANÇAMENTOS DOS 5 TEMAS (CARDS EM PÉ) -->
+            <h2 class="row-title">Lan&ccedil;amentos da Turma &bull; Os 5 Temas de Filosofia</h2>
+            <div class="posters-container">
+                
+                <!-- TEMA 01 -->
+                <div class="card-portrait p-tema1">
+                    <div class="card-portrait-content">
+                        <span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TEMA 01</span>
+                        <h4>De Volta para o Passado: Presos na Escol&aacute;stica</h4>
+                    </div>
+                </div>
+
+                <!-- TEMA 02 (O NOSSO FILME PRINCIPAL) -->
+                <div class="card-portrait p-tema2" style="border-color: var(--netflix-red); box-shadow: 0 0 15px rgba(229,9,20,0.5);" onclick="window.startCinematicMovie()">
+                    <div class="card-portrait-content">
+                        <span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 02 &bull; NOSSO GRUPO</span>
+                        <h4>Guerra Civil: Empirismo vs Racionalismo</h4>
+                    </div>
+                </div>
+
+                <!-- TEMA 03 -->
+                <div class="card-portrait p-tema3">
+                    <div class="card-portrait-content">
+                        <span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span>
+                        <h4>Doutor Einstein no Multiverso da Relatividade</h4>
+                    </div>
+                </div>
+
+                <!-- TEMA 04 -->
+                <div class="card-portrait p-tema4">
+                    <div class="card-portrait-content">
+                        <span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TEMA 04</span>
+                        <h4>Fragmentado: Os Obst&aacute;culos da Mente</h4>
+                    </div>
+                </div>
+
+                <!-- TEMA 05 -->
+                <div class="card-portrait p-tema5">
+                    <div class="card-portrait-content">
+                        <span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span>
+                        <h4>N&atilde;o Olhe para a &Eacute;tica</h4>
                     </div>
                 </div>
             </div>
 
-            <!-- FILMES RESTAURADOS DE T.I. -->
-            <h2 class="row-title">Recomendados para Alunos de TI</h2>
+            <!-- LINHA 2: SÉRIES E CURTAS DA SALA (CARDS EM PÉ) -->
+            <h2 class="row-title">S&eacute;ries e Curtas de T.I.</h2>
             <div class="posters-container">
-                <div class="card-portrait p-opensource"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
                 <div class="card-portrait p-stranger"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
                 <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
-                <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake:<br>O Pre&ccedil;o do Pix</h4></div></div>
+                <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake: O Pre&ccedil;o do Pix</h4></div></div>
+                <div class="card-portrait p-opensource"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
                 <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
                 <div class="card-portrait p-procurando"><div class="card-portrait-content"><h4>Procurando IP</h4></div></div>
                 <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
                 <div class="card-portrait p-lalalan"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
             </div>
 
-            <h2 class="row-title">Baseados em Temas da Turma</h2>
+            <!-- LINHA 3: TRABALHOS ANTIGOS (CARDS DEITADOS / LANDSCAPE) -->
+            <h2 class="row-title">Trabalhos Antigos</h2>
             <div class="landscape-row">
-                <div class="card-landscape p-honeypot"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
                 <div class="card-landscape p-mitm"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
                 <div class="card-landscape p-firewall"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
                 <div class="card-landscape p-metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
                 <div class="card-landscape p-iot"><div class="card-landscape-content"><h4>Rebeli&atilde;o das Torradeiras</h4></div></div>
+                <div class="card-landscape p-honeypot"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
             </div>
+
         </div>
     </div>
 
-    <!-- TELA DE EPISÓDIOS -->
+    <!-- TELA DE EPISÓDIOS (O GRIMÓRIO - MODO CLÁSSICO) -->
     <div id="series-details-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-logo" onclick="window.switchScreen('home-screen')">IFPIFLIX</div>
@@ -768,9 +617,10 @@
         </nav>
         <div class="details-hero">
             <div class="details-content">
-                <div style="color: var(--rpg-gold); font-weight: bold; letter-spacing: 2px; font-size: 0.8rem;">O GRIM&Oacute;RIO DA MODERNIDADE</div>
-                <h1>M&Eacute;TODO E REVOLU&Ccedil;&Atilde;O</h1>
-                <button class="btn-play" onclick="window.startPresentationAt(0)" style="margin-top: 15px;"><i class="fa-solid fa-play"></i> Iniciar Apresenta&ccedil;&atilde;o</button>
+                <div style="color: var(--rpg-gold); font-weight: bold; letter-spacing: 2px; font-size: 0.85rem;">ARQUIVO HIST&Oacute;RICO &bull; APRESENTA&Ccedil;&Atilde;O EM SLIDES</div>
+                <h1>O GRIM&Oacute;RIO: MODO CL&Aacute;SSICO</h1>
+                <p style="color: #bbb; font-size: 1.15rem; margin-top: 8px; line-height: 1.5;">14 Slides com intera&ccedil;&otilde;es visuais completas, simula&ccedil;&otilde;es e mapa dos conceitos da Revolu&ccedil;&atilde;o Cient&iacute;fica.</p>
+                <button class="btn-play" onclick="window.startPresentationAt(0)" style="margin-top: 20px;"><i class="fa-solid fa-chalkboard-user"></i> Iniciar Apresenta&ccedil;&atilde;o Cl&aacute;ssica</button>
             </div>
         </div>
     </div>
@@ -782,11 +632,11 @@
     </div>
 
     <!-- =======================================================
-         PLAYER 1: A APRESENTAÇÃO CLÁSSICA
+         PLAYER 1: APRESENTAÇÃO CLÁSSICA
          ======================================================= -->
     <div id="player-screen" class="screen">
         <div class="player-header">
-            <button class="control-btn" onclick="window.switchScreen('home-screen')"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="control-btn" onclick="window.switchScreen('series-details-screen')"><i class="fa-solid fa-arrow-left"></i></button>
             <div style="display:flex; flex-direction: column; margin-left: 10px;">
                 <span style="font-weight: bold;">A Ci&ecirc;ncia Moderna (Cl&aacute;ssico)</span>
                 <span id="player-ep-title" style="color: #aaa; font-size: 0.9rem;">T1:E1</span>
@@ -799,7 +649,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>01. O RENASCIMENTO</h2>
-                        <div class="ticker-box" id="ticker-0">Aguardando fofocas históricas...</div>
+                        <div class="ticker-box" id="ticker-0">A Europa acordando de uma soneca de 1000 anos...</div>
                         <h3 class="highlight">O Fim da Escol&aacute;stica</h3><p>A Modernidade surge como um novo cen&aacute;rio. O mundo medieval entra em colapso e as antigas verdades começam a ser questionadas.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Mapa-M&uacute;ndi</div><div class="sim-screen"><div class="map-pan"></div></div></div>
@@ -810,7 +660,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>01. O RENASCIMENTO</h2>
-                        <div class="ticker-box" id="ticker-1">...</div>
+                        <div class="ticker-box" id="ticker-1">Galera começou a ler os gregos sem censura.</div>
                         <h3 class="highlight">Nova Perspectiva</h3><p>A transforma&ccedil;&atilde;o cultural abriu espa&ccedil;o para o surgimento de novas formas de pensar a ci&ecirc;ncia e o mundo.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Exploração</div><div class="sim-screen"><div class="map-pan"></div><i class="fa-solid fa-unlock-keyhole" style="font-size:4rem; color:var(--rpg-gold); z-index:2;"></i></div></div>
@@ -821,7 +671,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>02. TRADI&Ccedil;&Atilde;O MEDIEVAL</h2>
-                        <div class="ticker-box" id="ticker-2">...</div>
+                        <div class="ticker-box" id="ticker-2">Aristóteles disse que a Terra tava parada. Fonte: Confia.</div>
                         <h3 class="highlight">O Dom&iacute;nio do Geocentrismo</h3><p>O modelo de Ptolomeu reinava absoluto. A Terra era o centro imóvel e inquestionável, amarrada por dogmas.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-landmark-dome"></i> Paradigma Antigo</div><div class="sim-screen"><div class="geo-system"><i class="fa-solid fa-earth-americas geo-earth"></i><i class="fa-solid fa-lock geo-lock"></i></div></div></div>
@@ -832,7 +682,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>02. TRADI&Ccedil;&Atilde;O MEDIEVAL</h2>
-                        <div class="ticker-box" id="ticker-3">...</div>
+                        <div class="ticker-box" id="ticker-3">Igreja: 'Se tá num livro velho e em latim, é verdade'.</div>
                         <h3 class="highlight">Princípio da Autoridade</h3><p>A verdade não dependia de testes, mas sim do "Princ&iacute;pio de Autoridade", mantido pela Igreja.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-book-skull"></i> Regras Bloqueadas</div><div class="sim-screen"><i class="fa-solid fa-book" style="font-size:5rem; color:#aaa;"></i><h3 style="margin-top:30px; color:#E50914;">Status: Dogmatismo</h3></div></div>
@@ -843,7 +693,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>03. A GRANDE RUPTURA</h2>
-                        <div class="ticker-box" id="ticker-4">...</div>
+                        <div class="ticker-box" id="ticker-4">O homem moderno: 'E se a gente testasse essa parada?'</div>
                         <h3 class="highlight">Da Contempla&ccedil;&atilde;o &agrave; A&ccedil;&atilde;o</h3><p>O ser humano parou de apenas "admirar" o mundo de forma passiva e passou a investigar ativamente como as coisas funcionam.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-lightbulb"></i> Lanterna da Razão</div><div class="sim-screen"><div class="lantern-container"><i class="fa-solid fa-eye"></i><i class="fa-solid fa-atom"></i><i class="fa-solid fa-vial"></i><div class="lantern-mask"></div></div></div></div>
@@ -854,7 +704,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>04. REVOLU&Ccedil;&Atilde;O COSMOL&Oacute;GICA</h2>
-                        <div class="ticker-box" id="ticker-5">...</div>
+                        <div class="ticker-box" id="ticker-5">Copérnico: 'Galera, o Sol tá no meio, não a gente'.</div>
                         <h3 class="highlight">O Heliocentrismo</h3><p>Copérnico muda o centro do tabuleiro! O Sol assume o centro do sistema e a Terra gira em volta dele.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-sun"></i> O Novo Centro</div><div class="sim-screen"><div class="helio-system"><i class="fa-solid fa-sun helio-sun"></i><i class="fa-solid fa-earth-americas helio-earth"></i></div></div></div>
@@ -865,7 +715,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>04. REVOLU&Ccedil;&Atilde;O COSMOL&Oacute;GICA</h2>
-                        <div class="ticker-box" id="ticker-6">...</div>
+                        <div class="ticker-box" id="ticker-6">Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.</div>
                         <h3 class="highlight">Galileu Galilei</h3><p>Utilizando o telesc&oacute;pio para comprovar a teoria, ele afirmou: <em>"A natureza est&aacute; escrita em caracteres matem&aacute;ticos"</em>.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-binoculars"></i> Visão Aprimorada</div><div class="sim-screen"><div class="sky-bg"></div><div class="telescope-lens"><i class="fa-solid fa-star" style="font-size:2rem; color:#fff;"></i></div></div></div>
@@ -894,7 +744,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>05. O EMPIRISMO</h2>
-                        <div class="ticker-box" id="ticker-8">...</div>
+                        <div class="ticker-box" id="ticker-8">Ídolo da Caverna = viver na própria bolha.</div>
                         <h3 class="highlight">A Queda dos Ídolos</h3><p>Francis Bacon criticou os "Ídolos": falsos preconceitos que cegam a mente. É preciso limpar a mente antes de investigar.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-hammer"></i> Quebrando Ilusões</div><div class="sim-screen"><div class="idol-container"><i class="fa-solid fa-user-shield idol-half idol-left"></i><i class="fa-solid fa-user-shield idol-half idol-right"></i><div class="idol-glow"></div></div></div></div>
@@ -905,7 +755,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>05. O EMPIRISMO</h2>
-                        <div class="ticker-box" id="ticker-9">...</div>
+                        <div class="ticker-box" id="ticker-9">Se não testou na prática, meu anjo, é só fanfic.</div>
                         <h3 class="highlight">O Método Indutivo</h3><p>A ci&ecirc;ncia deve partir da observa&ccedil;&atilde;o e de experimentos repetidos. Não basta achar, é preciso testar na prática!</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-flask"></i> Laboratório Empírico</div><div class="sim-screen"><div class="potion-lab"><div class="flask-neck"></div><div class="flask-body"><div class="liquid"></div><div class="liquid2"></div><div class="potion-bubbles b1"></div><div class="potion-bubbles b2"></div><div class="potion-bubbles b3"></div></div></div></div></div>
@@ -916,7 +766,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>06. O RACIONALISMO</h2>
-                        <div class="ticker-box" id="ticker-10">...</div>
+                        <div class="ticker-box" id="ticker-10">Descartes ficou dias trancado num quarto.</div>
                         <h3 class="highlight">A Dúvida Metódica</h3><p>Descartes utiliza a <strong>D&uacute;vida Met&oacute;dica</strong> para duvidar de tudo que não for absolutamente claro e evidente.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-bug"></i> Desconstrução</div><div class="sim-screen"><div class="doubt-glitch">DUVIDE</div></div></div>
@@ -927,7 +777,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>06. O RACIONALISMO</h2>
-                        <div class="ticker-box" id="ticker-11">...</div>
+                        <div class="ticker-box" id="ticker-11">A única certeza: eu existo porque penso.</div>
                         <h3 class="highlight">Penso, logo existo</h3><p>A raz&atilde;o l&oacute;gica e a matemática se tornam a base inquebr&aacute;vel para o pensamento cient&iacute;fico moderno.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-brain"></i> A Forja da Mente</div><div class="sim-screen"><i class="fa-solid fa-brain brain-gear"></i></div></div>
@@ -938,7 +788,7 @@
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>07. A S&Iacute;NTESE NEWTONIANA</h2>
-                        <div class="ticker-box" id="ticker-12">...</div>
+                        <div class="ticker-box" id="ticker-12">Uma maçã caiu, e o cara inventou o cálculo.</div>
                         <h3 class="highlight">O Método Científico</h3><p>Newton consolida a revolução. Racionalismo e Empirismo se unem para formar o <strong>Método Hipotético-Dedutivo</strong>.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-trophy"></i> Fim da Campanha</div><div class="sim-screen"><div class="newton-scene"><i class="fa-solid fa-apple-whole newton-apple"></i><div class="math-wave">F = G(m1m2)/r²</div></div></div></div>
@@ -962,124 +812,163 @@
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
             <div class="nav-buttons">
                 <button class="control-btn" id="btn-prev-slide"><i class="fa-solid fa-backward-step"></i></button>
-                <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer;" onclick="window.switchScreen('profile-screen')">🗣 <span id="current-presenter-name">Francisco</span></span>
+                <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer;" onclick="window.switchScreen('profile-screen')">🗣 <span id="current-presenter-name">Davi</span></span>
                 <button class="control-btn" id="btn-next-slide"><i class="fa-solid fa-forward-step"></i></button>
             </div>
         </div>
     </div>
 
-
     <!-- =======================================================
-         PLAYER 2: O FILME CINEMATOGRÁFICO 3D (SUPER REINVENTADO)
+         PLAYER 2: MODO CINEMATOGRÁFICO 3D
          ======================================================= -->
     <div id="cinematic-stage" class="screen">
         <div class="stage-header">
             <button class="control-btn" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; z-index: 1000;" onclick="window.switchScreen('home-screen')"><i class="fa-solid fa-arrow-left"></i></button>
             <div style="display:flex; flex-direction: column; margin-left: 10px;">
-                <span style="font-weight: bold;">O Filme: A Jornada 3D</span>
+                <span style="font-weight: bold;">Guerra Civil: O Filme 3D</span>
                 <span id="cine-ep-title" style="color: #aaa; font-size: 0.9rem;">Cena 1</span>
             </div>
-            <span style="margin-left: auto; background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; z-index: 1000;">🗣 <span id="cine-presenter-name">Francisco</span></span>
+            <span style="margin-left: auto; background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; z-index: 1000;">🗣 <span id="cine-presenter-name">Davi</span></span>
         </div>
 
-        <!-- BOTÕES LATERAIS DE NAVEGAÇÃO -->
-        <button class="cine-nav-arrow cine-prev" title="Cena Anterior" onclick="updateCineCamera(currentCineIdx - 1)"><i class="fa-solid fa-chevron-left"></i></button>
-        <button class="cine-nav-arrow cine-next" title="Próxima Cena" onclick="updateCineCamera(currentCineIdx + 1)"><i class="fa-solid fa-chevron-right"></i></button>
-
-        <!-- INDICADORES DE CENA EM BOLINHAS -->
-        <div class="cine-dots-bar">
-            <span class="cine-dot" onclick="updateCineCamera(0)"></span>
-            <span class="cine-dot" onclick="updateCineCamera(1)"></span>
-            <span class="cine-dot" onclick="updateCineCamera(2)"></span>
-            <span class="cine-dot" onclick="updateCineCamera(3)"></span>
-            <span class="cine-dot" onclick="updateCineCamera(4)"></span>
-            <span class="cine-dot" onclick="updateCineCamera(5)"></span>
-            <span class="cine-dot" onclick="updateCineCamera(6)"></span>
+        <!-- 0 & 1: RENASCIMENTO -->
+        <div id="cine-renaissance" class="cine-scene">
+            <div class="cine-map-grid"></div>
+            <i class="fa-solid fa-sailboat cine-ship"></i>
+            <div class="cine-text-box cine-txt-0">
+                <h2 class="cine-title">01. O RENASCIMENTO</h2>
+                <div class="cine-ticker" id="cine-ticker-0">A Europa acordando de uma soneca de 1000 anos...</div>
+                <p class="cine-desc">A Modernidade surge como um novo cenário. O mundo medieval entra em colapso e as antigas verdades começam a ser questionadas.</p>
+            </div>
+            <div class="cine-text-box cine-txt-1">
+                <div class="cine-ticker" id="cine-ticker-1">Galera começou a ler os gregos sem censura.</div>
+                <p class="cine-desc">A transformação cultural abriu espaço para o surgimento de novas formas de pensar a ciência e o mundo.</p>
+            </div>
         </div>
 
-        <!-- CENA 1: BIBLIOTECA -->
+        <!-- 2 & 3: BIBLIOTECA MEDIEVAL -->
         <div id="cine-library" class="cine-scene">
-            <div class="inq-vignette"></div>
-            <div class="cine-pillar left"></div>
-            <div class="cine-pillar right"></div>
-            <div class="cine-book-glow"><i class="fa-solid fa-book-bible"></i></div>
-            <div class="inq-chains"><i class="fa-solid fa-lock"></i></div>
-            <div class="cine-text-box cl-1"><h2 class="cine-title">A TRADI&Ccedil;&Atilde;O</h2><p class="cine-desc">O mundo medieval era amarrado pelo dogmatismo. A Terra repousava imóvel como centro de tudo.</p></div>
-            <div class="cine-text-box cl-2"><h2 class="cine-title">O DOGMA</h2><p class="cine-desc">Questionar as escrituras ou Aristóteles era proibido. A autoridade eclesiástica valia mais do que qualquer observação real.</p></div>
+            <div class="cine-stained-glass"></div>
+            <div class="cine-altar">
+                <i class="fa-solid fa-book-journal-whills"></i>
+                <i class="fa-solid fa-link" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--netflix-red); font-size: 8rem; opacity: 0.8;"></i>
+            </div>
+            <div class="cine-text-box cine-txt-2">
+                <h2 class="cine-title">02. TRADI&Ccedil;&Atilde;O MEDIEVAL</h2>
+                <div class="cine-ticker" id="cine-ticker-2">Aristóteles disse que a Terra tava parada. Fonte: Confia.</div>
+                <p class="cine-desc">O modelo de Ptolomeu reinava absoluto. A Terra era o centro imóvel e inquestionável, amarrada por dogmas.</p>
+            </div>
+            <div class="cine-text-box cine-txt-3">
+                <div class="cine-ticker" id="cine-ticker-3">Igreja: 'Se tá num livro velho e em latim, é verdade'.</div>
+                <p class="cine-desc">A verdade não dependia de testes, mas sim do "Princípio de Autoridade", mantido pela Igreja.</p>
+            </div>
         </div>
 
-        <!-- CENA 2: ESPAÇO -->
+        <!-- 4: A RUPTURA -->
+        <div id="cine-rupture" class="cine-scene">
+            <div class="lantern-container"><div class="lantern-mask"></div></div>
+            <div class="cine-text-box cine-txt-4">
+                <h2 class="cine-title" style="border:none;">03. A GRANDE RUPTURA</h2>
+                <div class="cine-ticker" id="cine-ticker-4">O homem moderno: 'E se a gente testasse essa parada?'</div>
+                <p class="cine-desc">O ser humano parou de apenas "admirar" o mundo de forma passiva e passou a investigar ativamente como as coisas funcionam.</p>
+            </div>
+        </div>
+
+        <!-- 5 & 6: ESPAÇO -->
         <div id="cine-space" class="cine-scene">
             <div class="cine-stars"></div>
-            <div class="cine-space-system">
-                <div class="cine-sun-flares"></div>
-                <div class="cine-sun"></div>
-                <div class="cine-orbit-path"><div class="cine-earth-orb"></div></div>
+            <div class="cine-sun"></div>
+            <div class="cine-earth"></div>
+            <div class="cine-text-box cine-txt-5">
+                <h2 class="cine-title">04. REV. COSMOL&Oacute;GICA</h2>
+                <div class="cine-ticker" id="cine-ticker-5">Copérnico: 'Galera, o Sol tá no meio, não a gente'.</div>
+                <p class="cine-desc">Copérnico muda o centro do tabuleiro! O Sol assume o centro do sistema e a Terra gira em volta dele.</p>
             </div>
-            <div class="telescope-hud-overlay">
-                <div class="hud-circle"></div>
-                <div class="hud-crosshair-x"></div>
-                <div class="hud-crosshair-y"></div>
-                <div class="hud-coords">SISTEMA HELIOCÊNTRICO &bull; TELESCÓPIO 1610</div>
+            <div class="cine-text-box cine-txt-6">
+                <div class="cine-ticker" id="cine-ticker-6">Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.</div>
+                <p class="cine-desc">Utilizando o telescópio para comprovar a teoria, Galileu afirmou: "A natureza está escrita em caracteres matemáticos".</p>
             </div>
-            <div class="cine-text-box cs-1"><h2 class="cine-title">O HELIOCENTRISMO</h2><p class="cine-desc">Copérnico muda o centro do jogo. O Sol assume o comando, e a Terra gira no vazio cósmico.</p></div>
-            <div class="cine-text-box cs-2"><h2 class="cine-title">O TELESC&Oacute;PIO</h2><p class="cine-desc">Galileu prova que a natureza está escrita em caracteres matemáticos. A luneta derruba séculos de dogma.</p></div>
         </div>
 
-        <!-- CENA 3: MESA (EMPIRISMO E RACIONALISMO) -->
+        <!-- 7: A ESCOLHA NO MODO FILME -->
+        <div id="cine-choice" class="cine-scene">
+            <div style="text-align: center; max-width: 800px; width: 90%; z-index: 10;">
+                <h2 style="font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: #fff; text-shadow: 0 0 20px var(--netflix-red); margin-bottom: 10px;">A ENCRUZILHADA DO M&Eacute;TODO</h2>
+                <p style="font-size: 1.3rem; color: #ccc; margin-bottom: 25px;">Como vocês buscam a verdade absoluta?</p>
+                <div class="lis-container">
+                    <div class="lis-choice empirismo" onclick="window.triggerLisChoice(8)">
+                        <i class="fa-solid fa-eye"></i>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Acreditar nos Sentidos</h3>
+                        <p style="color: #bbb;">Testar e experimentar (Bacon).</p>
+                    </div>
+                    <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(10)">
+                        <i class="fa-solid fa-brain"></i>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Duvidar de Tudo</h3>
+                        <p style="color: #bbb;">Usar apenas a lógica pura (Descartes).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8, 9, 10, 11: A MESA (BACON & DESCARTES) -->
         <div id="cine-desk" class="cine-scene">
             <div class="cine-surface"></div>
             <div class="cine-pan">
-                <!-- Lado 1: Bacon / Empirismo -->
                 <div class="cine-side">
-                    <div class="empirismo-elements">
-                        <i class="fa-solid fa-flask cine-flask-main"></i>
-                        <div class="cine-smoke-plume"></div>
+                    <i class="fa-solid fa-flask cine-cauldron"></i><div class="cine-smoke"></div>
+                    <div class="cine-text-box cine-txt-8">
+                        <h2 class="cine-title">05. O EMPIRISMO</h2>
+                        <div class="cine-ticker" id="cine-ticker-8">Ídolo da Caverna = viver na própria bolha.</div>
+                        <p class="cine-desc">Bacon criticou os "Ídolos": falsos preconceitos que cegam a mente. É preciso limpar a mente antes de investigar.</p>
                     </div>
-                    <div class="cine-text-box cd-1"><h2 class="cine-title" style="color:#10b981;">O EMPIRISMO</h2><p class="cine-desc">Francis Bacon exige que a ciência suje as mãos. Apenas a observação e a experimentação destroem os Ídolos da mente.</p></div>
+                    <div class="cine-text-box cine-txt-9">
+                        <div class="cine-ticker" id="cine-ticker-9">Se não testou na prática, meu anjo, é só fanfic.</div>
+                        <p class="cine-desc">A ciência deve partir da observação e de experimentos repetidos. Não basta achar, é preciso testar na prática!</p>
+                    </div>
                 </div>
-                <!-- Lado 2: Descartes / Racionalismo -->
                 <div class="cine-side">
-                    <div class="racionalismo-elements">
-                        <div class="cine-gear-system">
-                            <i class="fa-solid fa-gear gear-primary"></i>
-                            <i class="fa-solid fa-gear gear-secondary"></i>
-                            <div class="cartesian-grid"></div>
-                        </div>
+                    <i class="fa-solid fa-gears cine-gears"></i>
+                    <div class="cine-text-box cine-txt-10">
+                        <h2 class="cine-title">06. O RACIONALISMO</h2>
+                        <div class="cine-ticker" id="cine-ticker-10">Descartes ficou dias trancado num quarto.</div>
+                        <p class="cine-desc">Descartes utiliza a Dúvida Metódica para duvidar de tudo que não for absolutamente claro e evidente.</p>
                     </div>
-                    <div class="cine-text-box cd-2"><h2 class="cine-title" style="color:#3b82f6;">O RACIONALISMO</h2><p class="cine-desc">Descartes usa a Dúvida Metódica para alcançar a razão pura. Apenas a lógica é inabalável. "Penso, logo existo".</p></div>
+                    <div class="cine-text-box cine-txt-11">
+                        <div class="cine-ticker" id="cine-ticker-11">A única certeza: eu existo porque penso.</div>
+                        <p class="cine-desc">A razão lógica e a matemática se tornam a base inquebrável para o pensamento. "Penso, logo existo".</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- CENA 4: A SÍNTESE -->
+        <!-- 12: A SÍNTESE -->
         <div id="cine-apple" class="cine-scene">
-            <div class="spacetime-grid"></div>
-            <div class="cine-text-box ca-1">
-                <div style="position:relative; display:flex; justify-content:center; align-items:center; height: 320px; width: 100%;">
+            <div class="cine-text-box cine-txt-12">
+                <div style="position:relative; display:flex; justify-content:center; align-items:center; height: 300px; width: 100%;">
                     <i class="fa-solid fa-apple-whole cine-giant-apple"></i>
                     <div class="cine-math-wave">F = G(m1m2)/r²</div>
                 </div>
-                <h2 class="cine-title" style="border:none; text-shadow:0 0 35px #E50914; margin-top:20px;">A S&Iacute;NTESE</h2>
-                <p class="cine-desc">Newton unifica a razão e a experiência no Método Científico Moderno.</p>
+                <h2 class="cine-title" style="border:none; text-shadow:0 0 30px #E50914; margin-top:20px;">07. A S&Iacute;NTESE NEWTONIANA</h2>
+                <div class="cine-ticker" id="cine-ticker-12" style="border:none; justify-content:center; background:none;">Uma maçã caiu, e o cara inventou o cálculo.</div>
+                <p class="cine-desc">Newton consolida a revolução. Racionalismo e Empirismo se unem para formar o Método Hipotético-Dedutivo.</p>
             </div>
         </div>
 
-        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 5px; background: rgba(255,255,255,0.2); z-index: 900;"><div id="cine-progress" style="height: 100%; background: var(--netflix-red); width: 0%; transition: width 0.3s ease-out;"></div></div>
-    </div>
-
-
-    <!-- OVERLAYS DE EVENTOS -->
-    <div id="inquisition-overlay">
-        <div class="inq-box">
-            <i class="fa-solid fa-cross" style="font-size: 4rem; color: #E50914; margin-bottom: 20px;"></i>
-            <h2 style="font-family: 'Bebas Neue'; font-size: 3rem; color: #fff; letter-spacing: 2px;">CENSURA DA SANTA INQUISI&Ccedil;&Atilde;O</h2>
-            <p style="font-size: 1.2rem; color: #ccc; margin-top: 15px; line-height: 1.6;">O modelo Heliocêntrico de Galileu Galilei foi classificado como heresia. A transmissão foi bloqueada.</p>
-            <button class="btn-retract" id="btn-abjure"><i class="fa-solid fa-feather-pointed"></i> Assinar Retrata&ccedil;&atilde;o</button>
-            <div id="eppur-msg" style="display: none; color: #aaa; font-style: italic; margin-top: 15px;">"Eppur si muove..."</div>
+        <!-- 13: FIM -->
+        <div id="cine-ad" class="cine-scene">
+            <div style="max-width: 800px; text-align: center;">
+                <h1 style="font-family:'Bebas Neue'; font-size:7rem; color:var(--netflix-red); text-shadow: 0 0 40px rgba(229,9,20,0.8); margin-bottom:0;">ASSINE O IFPIFLIX</h1>
+                <p style="font-size:2rem; color:#fff; margin-bottom: 30px;">Acesso ilimitado &agrave; sabedoria universal.</p>
+                <div style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 50px; border-radius: 8px; font-size: 3rem; font-weight: bold; box-shadow: 0 10px 30px rgba(229,9,20,0.5); display: inline-block;">
+                    R$ 67,90 <span style="font-size: 1.5rem; font-weight: normal;">/ m&ecirc;s</span>
+                </div>
+            </div>
         </div>
+
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.2); z-index: 900;"><div id="cine-progress" style="height: 100%; background: var(--netflix-red); width: 0%; transition: width 0.3s ease-out;"></div></div>
     </div>
 
+    <!-- OVERLAYS GLOBAIS DE EVENTOS -->
     <div id="idle-overlay">
         <h2 style="font-size: 2.5rem; color: #fff; font-weight: normal;">Tem algu&eacute;m assistindo?</h2>
         <button class="btn-idle" id="btn-resume-idle">Continuar Assistindo</button>
@@ -1099,82 +988,85 @@
         </div>
     </div>
 
-
     <script>
+        /* =========================================================
+           ROTEIRO ATUALIZADO COM OS 7 APRESENTADORES NA ORDEM
+           ========================================================= */
         const script = [ 
-            { id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Francisco", ach: "[🌍 Conquista: O Mundo Expandiu]",
+            { id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Davi", ach: "[🌍 Conquista: O Mundo Expandiu]",
               tickers: ["A Europa acordando de uma soneca de 1000 anos...", "O feudalismo caiu, a ciência subiu.", "Navegações bombando, dogmas caindo."] }, 
-            { id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Francisco", ach: "",
-              tickers: ["Galera começou a ler os gregos sem a censura da Igreja.", "O centro do universo não somos nós? Chocante."] }, 
-            { id: 2, title: "Cap 2: Tradição Medieval (Geocentrismo)", presenter: "JP Santos", ach: "[🔒 Bloqueado: Pensar fora da caixa]",
+            { id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Davi", ach: "",
+              tickers: ["Galera começou a ler os gregos sem censura.", "O centro do universo não somos nós? Chocante."] }, 
+            { id: 2, title: "Cap 2: Tradição Medieval (Geocentrismo)", presenter: "Maria Helena", ach: "[🔒 Bloqueado: Pensar fora da caixa]",
               tickers: ["Aristóteles disse que a Terra tava parada. Fonte: Confia.", "Ptolomeu meteu 50 círculos mágicos pro cálculo dar certo."] }, 
-            { id: 3, title: "Cap 2: Tradição Medieval (Autoridade)", presenter: "JP Santos", ach: "",
+            { id: 3, title: "Cap 2: Tradição Medieval (Autoridade)", presenter: "Maria Helena", ach: "",
               tickers: ["Igreja: 'Se tá num livro velho e em latim, é verdade'.", "Questionar a regra resultava em fogueira instantânea."] }, 
-            { id: 4, title: "Cap 3: A Ruptura", presenter: "Pedro", ach: "[🔍 Conquista: A Luz da Razão Encontrada]",
+            { id: 4, title: "Cap 3: A Ruptura", presenter: "Francisco L", ach: "[🔍 Conquista: A Luz da Razão Encontrada]",
               tickers: ["O homem moderno: 'E se a gente testasse essa parada?'", "A contemplação passiva saiu do chat.", "Investigação ativa entrou no chat."] }, 
-            { id: 5, title: "Cap 4: Revolução Cosmológica (Copérnico)", presenter: "JP Silva", ach: "[🌞 Conquista: O Sol assumiu o controle]",
+            { id: 5, title: "Cap 4: Revolução Cosmológica (Copérnico)", presenter: "Pedro", ach: "[🌞 Conquista: O Sol assumiu o controle]",
               tickers: ["Copérnico: 'Galera, o Sol tá no meio, não a gente'.", "Tirar a Terra do centro ofendeu muito o ego humano."] }, 
-            { id: 6, title: "Cap 4: Revolução Cosmológica (Galileu)", presenter: "JP Silva", ach: "[🏆 Conquista: Irritou a Igreja Católica]",
+            { id: 6, title: "Cap 4: Revolução Cosmológica (Galileu)", presenter: "Pedro", ach: "[🏆 Conquista: A Luneta de Galileu]",
               tickers: ["Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.", "Eppur si muove: o primeiro 'falei, tô leve' da história."] }, 
             { id: 7, title: "Especial: A Escolha", presenter: "Todos", ach: "", tickers: [] }, 
-            { id: 8, title: "Cap 5: Empirismo (Os Ídolos)", presenter: "Nicolas", ach: "[⚔️ Conquista: Derrotou os Ídolos]",
+            { id: 8, title: "Cap 5: Empirismo (Os Ídolos)", presenter: "Marcelo", ach: "[⚔️ Conquista: Derrotou os Ídolos]",
               tickers: ["Ídolo da Caverna = viver na própria bolha.", "Bacon: Antes de fazer ciência, limpe sua mente dos fakes."] }, 
-            { id: 9, title: "Cap 5: Empirismo (Método Indutivo)", presenter: "Nicolas", ach: "[🧪 Nível Up: Experiência Prática]",
+            { id: 9, title: "Cap 5: Empirismo (Método Indutivo)", presenter: "Marcelo", ach: "[🧪 Nível Up: Experiência Prática]",
               tickers: ["Bacon morreu de pneumonia tentando congelar uma galinha.", "Se não testou na prática, meu anjo, é só fanfic."] }, 
-            { id: 10, title: "Cap 6: Racionalismo (Dúvida Metódica)", presenter: "Francisco", ach: "[⚠️ Aviso: Crise Existencial Crítica]",
-              tickers: ["Descartes ficou dias trancado num quarto. Saúde mental: zero.", "E se tudo for uma simulação?"] }, 
-            { id: 11, title: "Cap 6: Racionalismo (Penso, logo existo)", presenter: "Francisco", ach: "[🧠 Conquista: Provou que não é um NPC]",
-              tickers: ["Duvidou tanto de tudo que quase sumiu da existência.", "A única certeza: eu existo porque tô com dor de cabeça de pensar."] }, 
+            { id: 10, title: "Cap 6: Racionalismo (Dúvida Metódica)", presenter: "Samuel", ach: "[⚠️ Aviso: Crise Existencial Crítica]",
+              tickers: ["Descartes ficou dias trancado num quarto.", "E se tudo for uma simulação?"] }, 
+            { id: 11, title: "Cap 6: Racionalismo (Penso, logo existo)", presenter: "Samuel", ach: "[🧠 Conquista: Provou que não é um NPC]",
+              tickers: ["Duvidou tanto de tudo que quase sumiu da existência.", "A única certeza: eu existo porque penso."] }, 
             { id: 12, title: "Cap 7: Síntese Newtoniana", presenter: "JP Santos", ach: "[🍎 Item Lendário: A Maçã da Gravidade]",
               tickers: ["Uma maçã caiu, e o cara inventou o cálculo.", "Newton uniu o Racionalismo e o Empirismo na amizade."] },
             { id: 13, title: "Fim: Assine Já", presenter: "Todos", ach: "", tickers: [] }
         ];
 
-        let activeProfile = "Francisco"; 
+        let activeProfile = "Davi"; 
         let currentSlide = -1; 
-        let started = false;
-        let inquisitionPlayed = false; 
-        let tickerInterval; 
-        let achTimeout;
+        let currentCineIdx = -1;
+        let tickerIntervalC, tickerIntervalM; 
+        let achTimeout, toastTimeout;
         let isLisActive = false;
 
         function isModalOpen() {
-            const inq = document.getElementById('inquisition-overlay');
             const idle = document.getElementById('idle-overlay');
             const lis = document.getElementById('lis-dark-overlay');
-            return (inq && inq.style.display === 'flex') ||
-                   (idle && idle.style.display === 'flex') ||
-                   (lis && lis.style.display === 'block');
+            return (idle && idle.style.display === 'flex') || (lis && lis.style.display === 'block');
         }
 
         window.switchScreen = function(id) { 
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
             const target = document.getElementById(id);
-            if (target) target.classList.add('active'); 
+            if (target) target.classList.add('active');
+            if (id !== 'player-screen' && id !== 'cinematic-stage') {
+                const idle = document.getElementById('idle-overlay');
+                if (idle) idle.style.display = 'none';
+                isLisActive = false;
+            }
         }
         
         window.selectProfile = function(name) {
             activeProfile = name; 
-            const navEl = document.getElementById('nav-profile-name');
-            const curEl = document.getElementById('current-presenter-name');
-            const cineEl = document.getElementById('cine-presenter-name');
-
-            if (navEl) navEl.innerHTML = name;
-            if (curEl) curEl.innerHTML = name;
-            if (cineEl) cineEl.innerHTML = name;
-
-            if (!started) { 
-                window.switchScreen('home-screen'); 
-            } else { 
-                simulateLoading(() => { window.switchScreen('player-screen'); }); 
-            }
+            document.getElementById('nav-profile-name').textContent = name; 
+            window.switchScreen('home-screen');
         }
         
-        function showPresenterToast(name) {
-            const toast = document.getElementById('turn-toast');
-            document.getElementById('toast-presenter-name').innerHTML = name;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        function applyPresenter(name, toast = false) {
+            if (!name || name === "Todos") return;
+            if (activeProfile !== name) {
+                activeProfile = name;
+                if (toast) {
+                    clearTimeout(toastTimeout);
+                    const toastEl = document.getElementById('turn-toast');
+                    document.getElementById('toast-presenter-name').textContent = name;
+                    toastEl.classList.add('show');
+                    toastTimeout = setTimeout(() => { toastEl.classList.remove('show'); }, 3000);
+                }
+            }
+            const curEl = document.getElementById('current-presenter-name');
+            const cineEl = document.getElementById('cine-presenter-name');
+            if (curEl) curEl.textContent = name;
+            if (cineEl) cineEl.textContent = name;
         }
 
         function triggerScreenShake(screenId) {
@@ -1186,233 +1078,254 @@
             setTimeout(() => { screen.classList.remove('shake-active'); }, 400);
         }
 
-        function renderSlide(idx) {
-            if(idx < 0) return;
-            if(idx >= script.length) { window.switchScreen('credits-screen'); return; }
-            
-            currentSlide = idx; 
+        function triggerAchievementsAndEvents(idx, isMovie) {
             const data = script[idx];
-            document.getElementById('player-ep-title').innerHTML = data.title; 
-            document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
-            
-            document.querySelectorAll('#player-screen .slide').forEach(s => s.classList.remove('active')); 
-            const targetSlide = document.getElementById(`slide-${idx}`);
-            if (targetSlide) targetSlide.classList.add('active');
-
-            // TICKERS
-            clearInterval(tickerInterval);
-            const tickerEl = document.getElementById(`ticker-${idx}`);
-            if(tickerEl && data.tickers && data.tickers.length > 0) {
-                let tIdx = 0;
-                tickerEl.innerHTML = data.tickers[tIdx];
-                tickerEl.style.opacity = 1;
-                tickerInterval = setInterval(() => {
-                    tIdx = (tIdx + 1) % data.tickers.length;
-                    tickerEl.style.opacity = 0;
-                    setTimeout(() => { 
-                        if (currentSlide === idx) {
-                            tickerEl.innerHTML = data.tickers[tIdx]; 
-                            tickerEl.style.opacity = 1; 
-                        }
-                    }, 400);
-                }, 20000);
-            }
-
-            // CONQUISTAS
             clearTimeout(achTimeout);
+            
             const achBox = document.getElementById('ach-popup');
             achBox.classList.remove('show');
             if(data.ach && data.ach !== "") {
                 achTimeout = setTimeout(() => {
-                    document.getElementById('ach-text').innerHTML = data.ach;
+                    document.getElementById('ach-text').textContent = data.ach;
                     achBox.classList.add('show');
                     setTimeout(() => { achBox.classList.remove('show'); }, 5000);
                 }, 500); 
             }
 
-            // SHAKES E EVENTOS ESPECIAIS
-            if (idx === 4) { triggerScreenShake('player-screen'); }
-            if (idx === 6 && !inquisitionPlayed) { 
-                setTimeout(() => { document.getElementById('inquisition-overlay').style.display = 'flex'; }, 500); 
-            }
-            if (idx === 8) { triggerScreenShake('player-screen'); }
+            const screenId = isMovie ? 'cinematic-stage' : 'player-screen';
+            if (idx === 4 || idx === 8 || idx === 12) { triggerScreenShake(screenId); }
         }
 
-        const btnAbjure = document.getElementById('btn-abjure');
-        btnAbjure.addEventListener('click', () => {
-            btnAbjure.style.pointerEvents = 'none';
-            document.getElementById('eppur-msg').style.display = 'block';
-            setTimeout(() => { 
-                document.getElementById('inquisition-overlay').style.display = 'none'; 
-                inquisitionPlayed = true; 
-                btnAbjure.style.pointerEvents = 'auto';
-            }, 2000);
-        });
+        /* PLAYER CLÁSSICO */
+        function renderSlide(idx) {
+            if(idx < 0) return;
+            if(idx >= script.length) { window.switchScreen('credits-screen'); return; }
+            
+            clearInterval(tickerIntervalC);
+            currentSlide = idx; 
+            const data = script[idx];
+            document.getElementById('player-ep-title').textContent = data.title; 
+            document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
+            applyPresenter(data.presenter);
+            
+            document.querySelectorAll('#player-screen .slide').forEach(s => s.classList.remove('active')); 
+            const targetSlide = document.getElementById(`slide-${idx}`);
+            if (targetSlide) targetSlide.classList.add('active');
 
+            const tickerEl = document.getElementById(`ticker-${idx}`);
+            if(tickerEl && data.tickers && data.tickers.length > 0) {
+                let tIdx = 0; 
+                tickerEl.textContent = data.tickers[0]; 
+                tickerEl.style.opacity = 1;
+                tickerIntervalC = setInterval(() => {
+                    tIdx = (tIdx + 1) % data.tickers.length;
+                    tickerEl.style.opacity = 0;
+                    setTimeout(() => { 
+                        if (currentSlide === idx) { 
+                            tickerEl.textContent = data.tickers[tIdx]; 
+                            tickerEl.style.opacity = 1; 
+                        } 
+                    }, 400);
+                }, 20000);
+            }
+            triggerAchievementsAndEvents(idx, false);
+        }
+
+        /* MODO CINEMATOGRÁFICO 3D */
+        function updateCineCamera(idx) {
+            if(idx < 0) return;
+            if(idx >= script.length) { window.switchScreen('credits-screen'); return; }
+
+            clearInterval(tickerIntervalM);
+            const data = script[idx];
+            currentCineIdx = idx;
+
+            applyPresenter(data.presenter, true);
+
+            document.getElementById('cine-ep-title').textContent = data.title;
+            document.getElementById('cine-progress').style.width = `${((idx + 1) / script.length) * 100}%`;
+            document.getElementById('cinematic-stage').setAttribute('data-step', idx);
+
+            const tickerEl = document.getElementById(`cine-ticker-${idx}`);
+            if(tickerEl && data.tickers && data.tickers.length > 0) {
+                let tIdx = 0; 
+                tickerEl.textContent = data.tickers[0]; 
+                tickerEl.style.opacity = 1;
+                tickerIntervalM = setInterval(() => {
+                    tIdx = (tIdx + 1) % data.tickers.length;
+                    tickerEl.style.opacity = 0;
+                    setTimeout(() => { 
+                        if (currentCineIdx === idx) { 
+                            tickerEl.textContent = data.tickers[tIdx]; 
+                            tickerEl.style.opacity = 1; 
+                        } 
+                    }, 400);
+                }, 20000);
+            }
+            triggerAchievementsAndEvents(idx, true);
+        }
+
+        /* ESCOLHA COMPARTILHADA */
         window.triggerLisChoice = function(targetIdx) {
             if (isLisActive) return;
             isLisActive = true;
-
             document.getElementById('lis-dark-overlay').style.display = 'block';
             document.getElementById('lis-notification').style.opacity = '1';
             
             setTimeout(() => {
                 document.getElementById('lis-notification').style.opacity = '0';
                 document.getElementById('lis-dark-overlay').style.display = 'none';
-                if (activeProfile !== script[targetIdx].presenter && script[targetIdx].presenter !== "Todos") { 
-                    activeProfile = script[targetIdx].presenter;
-                    document.getElementById('current-presenter-name').innerHTML = activeProfile;
-                    showPresenterToast(activeProfile);
-                } 
-                renderSlide(targetIdx);
+                
+                const isMovie = document.getElementById('cinematic-stage').classList.contains('active');
+                if (script[targetIdx] && script[targetIdx].presenter) { 
+                    applyPresenter(script[targetIdx].presenter, true); 
+                }
+                
+                if (isMovie) { updateCineCamera(targetIdx); } 
+                else { renderSlide(targetIdx); }
                 isLisActive = false;
             }, 3000);
         }
 
         document.getElementById('btn-next-slide').addEventListener('click', () => { 
-            if (currentSlide === 7) {
-                triggerScreenShake('player-screen');
-                return;
-            }
-            let n = currentSlide + 1; 
-            if(n < script.length && activeProfile !== script[n].presenter && script[n].presenter !== "Todos" && n !== 7) { 
-                activeProfile = script[n].presenter;
-                document.getElementById('current-presenter-name').innerHTML = activeProfile;
-                showPresenterToast(activeProfile);
-            }
-            renderSlide(n); 
+            if (isLisActive || isModalOpen()) return; 
+            if (currentSlide === 7) { triggerScreenShake('player-screen'); return; } 
+            renderSlide(currentSlide + 1); 
         });
-
+        
         document.getElementById('btn-prev-slide').addEventListener('click', () => { 
-            if(currentSlide > 0) renderSlide(currentSlide - 1); 
+            if (isLisActive || isModalOpen()) return; 
+            renderSlide(currentSlide - 1); 
         });
 
         function simulateLoading(callback) { 
-            window.switchScreen('loading-screen'); 
-            let p = 0; 
-            const txt = document.getElementById('loading-perc'); 
+            window.switchScreen('loading-screen');
+            let p = 0; const txt = document.getElementById('loading-perc');
+            txt.textContent = '0%';
             const int = setInterval(() => { 
                 p += Math.floor(Math.random() * 30) + 15; 
-                if(p >= 100) { 
-                    p = 100; 
-                    clearInterval(int); 
-                    setTimeout(callback, 300); 
-                } 
-                txt.innerHTML = p + '%'; 
+                if(p >= 100) { p = 100; clearInterval(int); txt.textContent = '100%'; setTimeout(callback, 300); return; } 
+                txt.textContent = p + '%'; 
             }, 150); 
         }
         
         window.startPresentationAt = function(index) { 
-            activeProfile = script[index].presenter; 
-            document.getElementById('current-presenter-name').innerHTML = activeProfile; 
-            started = true; 
             simulateLoading(() => { 
                 renderSlide(index); 
                 window.switchScreen('player-screen'); 
             }); 
         }
-
-        /* =========================================================
-           LÓGICA DO FILME (MODO CINEMÁTICO 3D)
-           ========================================================= */
-        const cineScript = [
-            { step: 0, title: "1. A Tradição", presenter: "Francisco" },
-            { step: 1, title: "1. O Dogma", presenter: "JP Santos" },
-            { step: 2, title: "2. O Cosmos", presenter: "JP Silva" },
-            { step: 3, title: "2. A Ruptura", presenter: "JP Silva" },
-            { step: 4, title: "3. O Empirismo", presenter: "Nicolas" },
-            { step: 5, title: "3. O Racionalismo", presenter: "Francisco" },
-            { step: 6, title: "4. A Síntese", presenter: "JP Santos" }
-        ];
-
-        let currentCineIdx = -1;
-
-        window.startCinematicMovie = function() {
-            simulateLoading(() => {
-                window.switchScreen('cinematic-stage');
-                updateCineCamera(0);
-            });
+        
+        window.startCinematicMovie = function() { 
+            simulateLoading(() => { 
+                currentCineIdx = -1; 
+                window.switchScreen('cinematic-stage'); 
+                updateCineCamera(0); 
+            }); 
         }
 
-        window.updateCineCamera = function(idx) {
-            if(idx < 0) return;
-            if(idx >= cineScript.length) { window.switchScreen('credits-screen'); return; }
-
-            const data = cineScript[idx];
-            currentCineIdx = idx;
-
-            if (activeProfile !== data.presenter) { 
-                activeProfile = data.presenter;
-                document.getElementById('cine-presenter-name').innerHTML = activeProfile;
-                showPresenterToast(activeProfile);
-            }
-
-            document.getElementById('cine-ep-title').innerHTML = data.title;
-            document.getElementById('cine-progress').style.width = `${((idx + 1) / cineScript.length) * 100}%`;
-            document.getElementById('cinematic-stage').setAttribute('data-step', data.step);
-
-            // Atualiza indicadores de bolinhas
-            document.querySelectorAll('.cine-dot').forEach((dot, dIdx) => {
-                dot.classList.toggle('active', dIdx === idx);
-            });
-
-            // Shakes de impacto no modo cinema
-            if(idx === 1) { setTimeout(() => triggerScreenShake('cinematic-stage'), 400); }
-            if(idx === 6) { setTimeout(() => triggerScreenShake('cinematic-stage'), 1200); }
-        }
-
-        // CONTROLES DE TECLADO UNIFICADOS
         document.addEventListener('keydown', (e) => {
             if (isModalOpen()) return;
-
             if (document.getElementById('player-screen').classList.contains('active')) {
-                if (currentSlide === 7 && (e.key === 'ArrowRight' || e.key === ' ')) {
-                    triggerScreenShake('player-screen');
+                if (currentSlide === 7 && (e.key === 'ArrowRight' || e.key === ' ')) { 
+                    e.preventDefault(); 
+                    triggerScreenShake('player-screen'); 
                     return; 
                 }
-                if (e.key === 'ArrowRight' || e.key === ' ') { 
-                    e.preventDefault(); 
-                    document.getElementById('btn-next-slide').click(); 
-                }
-                if (e.key === 'ArrowLeft') { 
-                    e.preventDefault(); 
-                    document.getElementById('btn-prev-slide').click(); 
-                }
+                if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); document.getElementById('btn-next-slide').click(); }
+                if (e.key === 'ArrowLeft') { e.preventDefault(); document.getElementById('btn-prev-slide').click(); }
             }
             else if (document.getElementById('cinematic-stage').classList.contains('active')) {
-                if (e.key === 'ArrowRight' || e.key === ' ') { 
+                if (currentCineIdx === 7 && (e.key === 'ArrowRight' || e.key === ' ')) { 
                     e.preventDefault(); 
-                    updateCineCamera(currentCineIdx + 1); 
+                    triggerScreenShake('cinematic-stage'); 
+                    return; 
                 }
-                if (e.key === 'ArrowLeft') { 
-                    e.preventDefault(); 
-                    updateCineCamera(currentCineIdx - 1); 
-                }
+                if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); updateCineCamera(currentCineIdx + 1); }
+                if (e.key === 'ArrowLeft') { e.preventDefault(); updateCineCamera(currentCineIdx - 1); }
             }
         });
 
-        // GESTÃO DE INATIVIDADE
+        /* GESTÃO DE INATIVIDADE */
         let idleTimer;
         function resetIdleTimer() {
             clearTimeout(idleTimer);
             idleTimer = setTimeout(() => {
-                const isPlaying = document.getElementById('player-screen').classList.contains('active') ||
-                                  document.getElementById('cinematic-stage').classList.contains('active');
-                if (isPlaying && !isModalOpen()) {
-                    document.getElementById('idle-overlay').style.display = 'flex';
+                const isPlaying = document.getElementById('player-screen').classList.contains('active') || document.getElementById('cinematic-stage').classList.contains('active');
+                if (isPlaying && !isModalOpen() && currentSlide !== 7 && currentCineIdx !== 7) { 
+                    document.getElementById('idle-overlay').style.display = 'flex'; 
                 }
             }, 90000);
         }
-
-        ['mousemove', 'keydown', 'click', 'touchstart'].forEach(evt => {
-            window.addEventListener(evt, resetIdleTimer, { passive: true });
-        });
+        ['mousemove', 'keydown', 'click'].forEach(evt => { window.addEventListener(evt, resetIdleTimer, { passive: true }); });
         resetIdleTimer();
 
-        document.getElementById('btn-resume-idle').addEventListener('click', () => {
-            document.getElementById('idle-overlay').style.display = 'none';
-            resetIdleTimer();
+        document.getElementById('btn-resume-idle').addEventListener('click', () => { 
+            document.getElementById('idle-overlay').style.display = 'none'; 
+            resetIdleTimer(); 
         });
+
+        /* =========================================================
+           SISTEMA DE ARRASTAR PARA OS LADOS (DRAG-TO-SCROLL & WHEEL)
+           ========================================================= */
+        function initDragToScroll() {
+            const sliders = document.querySelectorAll('.posters-container, .landscape-row');
+            
+            sliders.forEach(slider => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+                let hasMoved = false;
+
+                slider.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    hasMoved = false;
+                    slider.classList.add('active-drag');
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                });
+
+                slider.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    slider.classList.remove('active-drag');
+                });
+
+                slider.addEventListener('mouseup', () => {
+                    isDown = false;
+                    slider.classList.remove('active-drag');
+                });
+
+                slider.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    hasMoved = true;
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 1.8; // Sensibilidade de arraste
+                    slider.scrollLeft = scrollLeft - walk;
+                });
+
+                // Evita disparar cliques nos cards se o usuário estava arrastando a tela
+                slider.querySelectorAll('.card-portrait, .card-landscape').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (hasMoved) {
+                            e.stopImmediatePropagation();
+                            hasMoved = false;
+                        }
+                    }, true);
+                });
+
+                // Rolar para os lados com a roda do mouse (Wheel)
+                slider.addEventListener('wheel', (e) => {
+                    if (e.deltaY !== 0) {
+                        e.preventDefault();
+                        slider.scrollLeft += e.deltaY * 1.2;
+                    }
+                }, { passive: false });
+            });
+        }
+
+        // Inicia o sistema de arraste assim que a página carregar
+        window.addEventListener('DOMContentLoaded', initDragToScroll);
     </script>
 </body>
 </html>
