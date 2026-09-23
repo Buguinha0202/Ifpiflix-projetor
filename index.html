@@ -625,6 +625,17 @@
             align-items: center; justify-content: center; transition: 0.2s;
         }
         .modal-close-btn:hover { background: #333; }
+
+        /* Controle do Vídeo no Banner */
+        #m-trailer-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; pointer-events: none; transition: opacity 1s ease;
+        }
+        #m-trailer-video.playing { opacity: 1; }
+        
+        /* Garante que o gradiente e os botões fiquem acima do vídeo */
+        .modal-hero-gradient { z-index: 2; pointer-events: none; }
+        .modal-hero-content { z-index: 3; }
         
         .modal-hero {
             height: 380px; position: relative; background-size: cover;
@@ -1222,6 +1233,9 @@
             <button class="modal-close-btn" onclick="window.closeTitleModal(event, true)"><i class="fa-solid fa-xmark"></i></button>
             
             <div class="modal-hero" id="m-hero">
+
+                <video id="m-trailer-video" loop playsinline></video>
+
                 <div class="modal-hero-gradient"></div>
                 <div class="modal-hero-content">
                     <h1 class="modal-title" id="m-title">Guerra Civil</h1>
@@ -1353,8 +1367,8 @@
             "deepfake-pix": {
                 title: "DEEPFAKE", subtitle: "O PREÇO DO PIX",
                 bg: "deepfake_pix.jpg",
-                banner: "banner_deepfake.jpg", // <--- Adicione sua imagem de banner larga aqui
-                trailer: "deepfake.mp3",       // <--- Arquivo de áudio que será tocado
+                banner: "bdeepfake.jpg", // <--- Adicione sua imagem de banner larga aqui
+                trailer: "trailer.mp4",       // <--- Arquivo de áudio que será tocado
                 match: "90% Relevante", year: "2022", age: "14", duration: "1h 54m",
                 synopsis: "Um documentário tenso sobre um grupo de cibercriminosos que utiliza inteligência artificial para clonar rostos e esvaziar contas bancárias em segundos.",
                 cast: "Ryan Hacking, Emma Token", genres: "Documentário Criminal, Suspense", tags: "Segurança Digital, Golpes", isMain: false
@@ -1433,12 +1447,22 @@
             }
         };
 
+        let trailerTimeout; // Controla o tempo de 5 segundos
+
         window.openTitleModal = function(movieId) {
-            const data = filmesDB[movieId] || filmesDB["guerra-civil"]; // Fallback de segurança
+            const data = filmesDB[movieId] || filmesDB["guerra-civil"]; 
+            const imgBackground = data.banner ? data.banner : data.bg;
             
-            // Popula os dados
+            // Reseta o vídeo e cancela timers antigos sempre que a modal abre
+            clearTimeout(trailerTimeout);
+            const videoEl = document.getElementById('m-trailer-video');
+            videoEl.pause();
+            videoEl.removeAttribute('src');
+            videoEl.classList.remove('playing');
+            
+            // Popula os dados de texto e imagem
             document.getElementById('m-title').innerHTML = data.title + (data.subtitle ? `<br><span style="font-size:1.5rem; color:var(--netflix-red);">${data.subtitle}</span>` : '');
-            document.getElementById('m-hero').style.backgroundImage = `url('${data.bg}'), linear-gradient(135deg, #222, #000)`;
+            document.getElementById('m-hero').style.backgroundImage = `url('${imgBackground}'), linear-gradient(135deg, #222, #000)`;
             document.getElementById('m-match').textContent = data.match;
             document.getElementById('m-year').textContent = data.year;
             document.getElementById('m-age').textContent = data.age;
@@ -1448,37 +1472,68 @@
             document.getElementById('m-genres').textContent = data.genres;
             document.getElementById('m-tags').textContent = data.tags;
 
-            // Configura o botão de Play
             const playBtn = document.getElementById('m-btn-play');
+            
             if(data.isMain) {
                 playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Filme 3D';
                 playBtn.onclick = function() { 
                     window.closeTitleModal(null, true);
                     window.startCinematicMovie(); 
                 };
+            } else if (data.trailer) {
+                playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Trailer';
+                
+                // AÇÃO 1: Clique manual abre em tela cheia com som
+                playBtn.onclick = function() {
+                    clearTimeout(trailerTimeout); // Impede o autoplay de fundo se clicou antes
+                    videoEl.src = data.trailer;
+                    videoEl.muted = false; // Som ativado
+                    videoEl.play();
+                    videoEl.classList.add('playing');
+                    
+                    // Força tela cheia
+                    if (videoEl.requestFullscreen) { videoEl.requestFullscreen(); }
+                    else if (videoEl.webkitRequestFullscreen) { videoEl.webkitRequestFullscreen(); }
+                };
+
+                // AÇÃO 2: Autoplay automático após 5 segundos (sem som)
+                trailerTimeout = setTimeout(() => {
+                    videoEl.src = data.trailer;
+                    videoEl.muted = true; // Navegadores exigem que o autoplay seja mudo
+                    videoEl.play().then(() => {
+                        videoEl.classList.add('playing');
+                    }).catch(e => console.log("Autoplay bloqueado pelo navegador"));
+                }, 5000);
+                
             } else {
                 playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Em Breve';
                 playBtn.onclick = null;
             }
 
-            // Gera as recomendações dinâmicas (Usando suas imagens de T.I. como exemplo)
-            const recContainer = document.getElementById('m-recommendations');
-            recContainer.innerHTML = `
-                <div class="more-card"><div class="more-img" style="background-image:url('stranger_pings.jpg')"></div><div class="more-info"><h4>Stranger Pings</h4><i class="fa-solid fa-plus"></i></div></div>
-                <div class="more-card"><div class="more-img" style="background-image:url('como_treinar_ia.jpg')"></div><div class="more-info"><h4>Treinar IA</h4><i class="fa-solid fa-plus"></i></div></div>
-                <div class="more-card"><div class="more-img" style="background-image:url('procurando_ip.jpg')"></div><div class="more-info"><h4>Procurando IP</h4><i class="fa-solid fa-plus"></i></div></div>
-            `;
-
-            // Mostra o Modal bloqueando a rolagem do fundo
             document.getElementById('title-modal-overlay').classList.add('show');
         }
 
         window.closeTitleModal = function(e, force = false) {
-            // Fecha apenas se clicar no fundo escuro (overlay) ou no botão X
             if (force || e.target.id === 'title-modal-overlay') {
                 document.getElementById('title-modal-overlay').classList.remove('show');
+                
+                // Interrompe qualquer vídeo ou timeout ativo ao fechar
+                clearTimeout(trailerTimeout);
+                const videoEl = document.getElementById('m-trailer-video');
+                videoEl.pause();
+                videoEl.classList.remove('playing');
+                
+                if (document.fullscreenElement) { document.exitFullscreen(); }
             }
         }
+
+        // Listener de Segurança: Pausa o vídeo caso o usuário aperte ESC para sair da tela cheia
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                const videoEl = document.getElementById('m-trailer-video');
+                if (videoEl) videoEl.pause();
+            }
+        });
 
         function isModalOpen() {
             const idle = document.getElementById('idle-overlay');
