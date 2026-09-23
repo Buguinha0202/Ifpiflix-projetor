@@ -725,6 +725,12 @@
         #lis-dark-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.8); z-index: 9998; display: none; }
 
         #credits-screen { justify-content: center; align-items: center; background: #000; text-align: center; padding: 30px; }
+
+        /* Esconde os textos e o degradê escuro de todos os cards do catálogo */
+        .card-portrait-content, .card-landscape-content {
+            display: none !important;
+        }
+
     </style>
 </head>
 <body>
@@ -1378,16 +1384,17 @@
             },
             "tema-4": {
                 title: "OBSESSÃO", subtitle: "O CRITÉRIO DA FALSIFICABILIDADE",
-                bg: "obsessao.png", 
-                banner: "bobsessao.png", // <--- ADICIONE ESTA LINHA
+                bg: "obsessao.jpg", 
+                banner: "bobsessao.jpg", 
                 match: "85% Relevante", year: "2016", age: "14", duration: "1h 57m",
                 synopsis: "Um cientista com múltiplas hipóteses precisa encontrar uma forma de refutar todas elas (Popper) antes que sua personalidade pseudocientífica assuma o controle.",
                 cast: "James McArquivo, Anya Taylor-Join", genres: "Suspense Psicológico", tags: "Ciência vs Pseudociência", isMain: false
-            },
+            }, // <--- ATENÇÃO A ESTA VÍRGULA AQUI!
+
             "tema-5": {
                 title: "NÃO OLHE PARA A ÉTICA", subtitle: "",
-                bg: "nao_olhe_etica.png", 
-                banner: "bnao_olhe_etica.png", // <--- ADICIONE ESTA LINHA
+                bg: "nao_olhe_etica.jpg", 
+                banner: "bnao_olhe_etica.jpg", 
                 match: "95% Relevante", year: "2021", age: "16", duration: "2h 18m",
                 synopsis: "Dois desenvolvedores de software descobrem que uma IA sem filtros morais está prestes a destruir a sociedade, mas ninguém na internet parece se importar.",
                 cast: "Leonardo DiCaptcha, Jennifer Latência", genres: "Comédia de Erros, Sátira", tags: "Tecnologia, Bioética", isMain: false
@@ -1396,59 +1403,58 @@
             // ================= SÉRIES E CURTAS DE T.I. =================
             "stranger-pings": {
                 title: "STRANGER PINGS", subtitle: "",
-                bg: "stranger_pings.jpg", match: "98% Relevante", year: "2016", age: "12", duration: "4 Temporadas",
-                banner: "bstranger_pings.jpg",
+                bg: "stranger_pings.jpg", 
+                match: "98% Relevante", year: "2016", age: "12", duration: "4 Temporadas",
                 synopsis: "Quando a conexão de uma pequena cidade desaparece, um grupo de jovens nerds descobre um universo paralelo sombrio onde a latência é infinita e o ping é de 999ms.",
                 cast: "Millie Byte Brown, Finn Hardware", genres: "Suspense, Nostalgia Anos 80", tags: "Redes, Mundo Invertido", isMain: false
             },
             "treinar-ia": {
                 title: "COMO TREINAR A SUA I.A.", subtitle: "",
-                bg: "como_treinar_ia.jpg", match: "94% Relevante", year: "2010", age: "Livre", duration: "1h 38m",
-                banner: "btreinar_ia.jpg",
+                bg: "como_treinar_ia.jpg", 
+                match: "94% Relevante", year: "2010", age: "Livre", duration: "1h 38m",
                 synopsis: "Um jovem programador viking desafia as tradições de sua vila ao fazer amizade com uma Inteligência Artificial considerada perigosa e indomável.",
                 cast: "Jay Barch Linux, America Ferramenta", genres: "Animação, Aventura", tags: "Machine Learning, Amizade", isMain: false
             },
             "deepfake-pix": {
                 title: "DEEPFAKE", subtitle: "O PREÇO DO PIX",
                 bg: "deepfake_pix.jpg",
-                banner: "bdeepfake.jpg", // <--- Adicione sua imagem de banner larga aqui
-                trailer: "trailer.mp4",       // <--- Arquivo de áudio que será tocado
+                trailer: "trailer.mp4",       
                 match: "90% Relevante", year: "2022", age: "14", duration: "1h 54m",
                 synopsis: "Um documentário tenso sobre um grupo de cibercriminosos que utiliza inteligência artificial para clonar rostos e esvaziar contas bancárias em segundos.",
                 cast: "Ryan Hacking, Emma Token", genres: "Documentário Criminal, Suspense", tags: "Segurança Digital, Golpes", isMain: false
             },
             "open-source": {
                 title: "OPEN SOURCE", subtitle: "",
-                bg: "open_source.jpg", match: "97% Relevante", year: "2023", age: "16", duration: "3h 00m",
-                banner: "bopen_source.jpg",
+                bg: "open_source.jpg", 
+                match: "97% Relevante", year: "2023", age: "16", duration: "3h 00m",
                 synopsis: "A história épica e dramática do programador que liderou o projeto de criação do sistema livre mais poderoso do mundo, mudando o rumo da tecnologia para sempre.",
                 cast: "Cillian Motherboard, Robert Download Jr.", genres: "Drama Biográfico, Épico", tags: "Linux, Código Aberto", isMain: false
             },
             "kpop": {
                 title: "GUERREIRAS DO POP 3", subtitle: "",
-                bg: "guerreiras_kpop.jpg", match: "82% Relevante", year: "2017", age: "10", duration: "1h 33m",
-                banner: "bguerreiras_kpop.jpg",
+                bg: "guerreiras_kpop.jpg", 
+                match: "82% Relevante", year: "2017", age: "10", duration: "1h 33m",
                 synopsis: "O famoso grupo de idols precisa usar suas habilidades de canto, coreografia sincronizada e injeção de SQL para desativar um vírus mundial durante a turnê de despedida.",
                 cast: "Anna Kernel, Rebel Wireless", genres: "Musical, Comédia de Ação", tags: "K-pop, Hacking", isMain: false
             },
             "procurando-ip": {
                 title: "PROCURANDO IP", subtitle: "",
-                bg: "procurando_ip.jpg", match: "96% Relevante", year: "2003", age: "Livre", duration: "1h 40m",
-                banner: "bprocuando_ip.jpg",
+                bg: "procurando_ip.jpg", 
+                match: "96% Relevante", year: "2003", age: "Livre", duration: "1h 40m",
                 synopsis: "Um pacotinho de dados se perde na imensidão da Deep Web, e seu pai precisa atravessar roteadores perigosos e firewalls gigantes para trazê-lo de volta para casa.",
                 cast: "Albert Boots, Ellen DeGe-Network", genres: "Animação, Família", tags: "Redes, Roteamento", isMain: false
             },
             "nicolas": {
                 title: "NICOLAS O GRANDE", subtitle: "",
-                bg: "nicolas_o_grande.jpg", match: "80% Relevante", year: "2004", age: "16", duration: "2h 55m",
-                banner: "bnicolas_o_grande.jpg",
+                bg: "nicolas_o_grande.jpg", 
+                match: "80% Relevante", year: "2004", age: "16", duration: "2h 55m",
                 synopsis: "A jornada épica de um jovem imperador dos códigos que conquistou todos os repositórios do mundo conhecido e unificou linguagens de programação antes dos 30 anos.",
                 cast: "Colin Firewall, Angelina Java", genres: "Ação Histórica, Guerra", tags: "Biografia, Império", isMain: false
             },
             "lalalan": {
                 title: "LA LA LAN", subtitle: "",
-                bg: "la_la_lan.jpg", match: "91% Relevante", year: "2016", age: "12", duration: "2h 08m",
-                banner: "bla_la_lan.jpg",
+                bg: "la_la_lan.jpg", 
+                match: "91% Relevante", year: "2016", age: "12", duration: "2h 08m",
                 synopsis: "Um técnico de infraestrutura e uma web designer tentam equilibrar o amor e a estabilidade da conexão local enquanto buscam seus sonhos no Vale do Silício.",
                 cast: "Ryan Hostling, Emma Storage", genres: "Musical, Romance", tags: "Rede Local, Sonhos", isMain: false
             },
