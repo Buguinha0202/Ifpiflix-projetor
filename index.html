@@ -13,6 +13,12 @@
 
     <style>
 
+
+        /* Esconde o ícone de usuário APENAS nos perfis que já possuem foto */
+        .av-davi i, .av-maria i, .av-francisco i, .av-pedro i, .av-marcelo i, .av-samuel i, .av-jsantos i {
+            opacity: 0;
+        }
+
         /* =========================================================
            PLAYER DE VÍDEO IN-SITE
            ========================================================= */
@@ -689,6 +695,25 @@
         .modal-btn-play:hover { background: #ccc; }
         .modal-btn-icon { background: rgba(42,42,42,0.6); color: #fff; border: 2px solid rgba(255,255,255,0.5); width: 45px; height: 45px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;}
         .modal-btn-icon:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+        /* =========================================
+           LISTA DE EPISÓDIOS (SÉRIE)
+           ========================================= */
+        .episodes-list { display: flex; flex-direction: column; gap: 10px; }
+        .episode-item { display: flex; align-items: center; gap: 15px; padding: 15px; border-radius: 8px; background: #1f1f1f; cursor: pointer; transition: 0.3s; border-bottom: 1px solid #333; }
+        .episode-item:hover { background: #2f2f2f; }
+        .ep-number { font-size: 1.5rem; color: #777; width: 30px; text-align: center; font-weight: bold; }
+        .ep-img { width: 140px; height: 80px; background-size: cover; background-position: center; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
+        .ep-img i { font-size: 1.5rem; color: #fff; opacity: 0; transition: 0.3s; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 50%; border: 1px solid #fff; }
+        .episode-item:hover .ep-img i { opacity: 1; }
+        .ep-details { flex-grow: 1; }
+        .ep-details h4 { font-size: 1.1rem; color: #fff; margin-bottom: 5px; }
+        .ep-details p { font-size: 0.9rem; color: #aaa; line-height: 1.4; }
+        
+        /* Destaque para o Episódio Especial (Modo Clássico) */
+        .special-ep { border: 1px solid var(--rpg-gold); background: rgba(212, 175, 55, 0.05); }
+        .special-ep:hover { background: rgba(212, 175, 55, 0.15); }
+        .special-ep .ep-number { color: var(--rpg-gold); }
         
         .modal-info-grid {
             display: grid; grid-template-columns: 2fr 1fr; gap: 30px; padding: 0 40px 40px 40px;
@@ -731,6 +756,71 @@
             display: none !important;
         }
 
+
+        /* =========================================================
+           📱 ADAPTAÇÃO PARA CELULARES (RESPONSIVIDADE)
+           ========================================================= */
+        @media (max-width: 768px) {
+            /* 1. Textos e Botões da Tela Inicial */
+            .hero h1 { font-size: 3.5rem; }
+            .hero-content { margin-top: 80px; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .btn-play, .btn-info { width: 100%; justify-content: center; }
+            
+            /* 2. Modal de Detalhes do Filme */
+            .modal-hero { height: 250px; }
+            .modal-title { font-size: 2.5rem; }
+            .modal-hero-content { left: 20px; right: 20px; bottom: 10px; }
+            .modal-info-grid { grid-template-columns: 1fr; padding: 0 20px 20px 20px; gap: 15px; }
+            .modal-more-like { padding: 0 20px 20px 20px; }
+            
+            /* 3. Lista de Episódios */
+            .episode-item { flex-direction: column; text-align: center; gap: 10px; }
+            .ep-img { width: 100%; height: 150px; }
+            .ep-number { width: 100%; text-align: center; margin-bottom: -5px; }
+
+            /* 4. Player Clássico (Slides) */
+            .slide-grid { flex-direction: column; gap: 10px; margin-top: 20px; }
+            .text-col { padding-right: 0; text-align: center; }
+            .text-col h2 { font-size: 2.2rem; border-left: none; border-bottom: 3px solid var(--netflix-red); padding-left: 0; padding-bottom: 5px; }
+            .visual-col { height: 280px; width: 100%; }
+            .slide-area { padding-top: 50px; }
+            .lis-container { flex-direction: column; height: auto; }
+            
+            /* 5. Player 3D (Modo Cinematográfico) */
+            .cine-title { font-size: 2.5rem; }
+            .cine-desc { font-size: 1rem; }
+            
+            /* Força as caixas de texto do filme 3D a ficarem na parte de baixo da tela */
+            .cine-text-box {
+                width: 90vw !important;
+                left: 5vw !important;
+                right: auto !important;
+                top: auto !important;
+                bottom: 8vh !important;
+                transform: translateY(0) !important;
+                text-align: center !important;
+                border: none !important;
+                border-top: 4px solid var(--netflix-red) !important;
+                border-radius: 8px !important;
+                padding: 15px !important;
+            }
+            
+            /* Encolhe o Sistema Solar gigante para caber na tela do celular */
+            .cine-solar-system {
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.45); /* Reduz para 45% do tamanho original */
+            }
+            
+            /* Ajusta a maçã gigante e a fórmula de Newton */
+            .cine-giant-apple { font-size: 8rem; }
+            .cine-math-wave { font-size: 3rem; top: 50px; }
+            
+            /* Ajusta a tela de Perfis */
+            .avatar { width: 90px; height: 90px; }
+            #profile-screen h1 { font-size: 2rem; }
+        }
+
     </style>
 </head>
 <body>
@@ -742,31 +832,31 @@
         <h1>Quem vai iniciar a apresenta&ccedil;&atilde;o?</h1>
         <div class="profiles-container">
             <div class="profile-card" onclick="window.selectProfile('Davi')">
-                <div class="avatar av-davi"><i class="fa-solid fa-user"></i></div>
+                <div class="avatar av-davi"></div>
                 <span>Davi</span>
             </div>
             <div class="profile-card" onclick="window.selectProfile('Maria Helena')">
-                <div class="avatar av-maria"><i class="fa-solid fa-user"></i></div>
+                <div class="avatar av-maria"></div>
                 <span>Maria Helena</span>
             </div>
             <div class="profile-card" onclick="window.selectProfile('Francisco L')">
-                <div class="avatar av-francisco"><i class="fa-solid fa-user"></i></div>
+                <div class="avatar av-francisco"></div>
                 <span>Francisco L</span>
             </div>
             <div class="profile-card" onclick="window.selectProfile('Pedro')">
-                <div class="avatar av-pedro"><i class="fa-solid fa-user-ninja"></i></div>
+                <div class="avatar av-pedro"></div>
                 <span>Pedro</span>
             </div>
             <div class="profile-card" onclick="window.selectProfile('Marcelo')">
-                <div class="avatar av-marcelo"><i class="fa-solid fa-user-tie"></i></div>
+                <div class="avatar av-marcelo"></div>
                 <span>Marcelo</span>
             </div>
             <div class="profile-card" onclick="window.selectProfile('Samuel')">
-                <div class="avatar av-samuel"><i class="fa-solid fa-user-gear"></i></div>
+                <div class="avatar av-samuel"></div>
                 <span>Samuel</span>
             </div>
             <div class="profile-card" onclick="window.selectProfile('JP Santos')">
-                <div class="avatar av-jsantos"><i class="fa-solid fa-user-astronaut"></i></div>
+                <div class="avatar av-jsantos"></div>
                 <span>JP Santos</span>
             </div>
         </div>
@@ -806,7 +896,7 @@
                 </p>
                 <div class="hero-buttons">
                     <button class="btn-play" onclick="window.startCinematicMovie()"><i class="fa-solid fa-play"></i> Assistir ao Filme</button>
-                    <button class="btn-info" onclick="window.switchScreen('series-details-screen')"><i class="fa-solid fa-book-journal-whills"></i> O Grim&oacute;rio</button>
+                    <button class="btn-info" onclick="window.openTitleModal('guerra-civil')"><i class="fa-solid fa-list"></i> Ver Epis&oacute;dios</button>
                 </div>
             </div>
         </div>
@@ -1305,7 +1395,7 @@
             </div>
             
             <div class="modal-more-like">
-                <h3>Recomendações da Turma</h3>
+                <h3 id="m-bottom-title">Recomendações da Turma</h3>
                 <div class="more-grid" id="m-recommendations">
                     <!-- Cards gerados via JS -->
                 </div>
@@ -1369,7 +1459,7 @@
             "guerra-civil": {
                 title: "GUERRA CIVIL", subtitle: "EMPIRISMO VS RACIONALISMO",
                 bg: "guerra_civil.png", 
-                banner: "bguerra_civil.png", // <--- ADICIONE ESTA LINHA
+                banner: "banner.png", // <--- ADICIONE ESTA LINHA
                 match: "99% Relevante", year: "2016", age: "12", duration: "2h 27m",
                 synopsis: "A Revolução Científica Moderna, a queda dos dogmas e a forja do Método Científico por Newton. Acompanhe a maior batalha intelectual da história entre defensores da experiência prática e adeptos da lógica pura.",
                 cast: "Davi, Maria Helena, Francisco L, Pedro, Marcelo, Samuel, JP Santos", genres: "Ação, Documentário, Filosofia", tags: "Heliocentrismo, Bacon, Descartes", isMain: true
@@ -1504,7 +1594,7 @@
             const container = document.getElementById('title-modal-content');
             const isOpen = overlay.classList.contains('show');
 
-            // Função interna que apenas carrega os dados
+            // Função interna que carrega os dados
             const loadData = () => {
                 const data = filmesDB[movieId] || filmesDB["guerra-civil"]; 
                 const imgBackground = data.banner ? data.banner : data.bg;
@@ -1548,12 +1638,12 @@
                             videoEl.pause(); 
                             videoEl.classList.remove('playing');
                         }
-                        window.openVideoPlayer(data.trailer); 
+                        window.openVideoPlayer(`https://buguinha0202.github.io/Ifpiflix-projetor/${data.trailer}`); 
                     };
 
                     trailerTimeout = setTimeout(() => {
                         if (videoEl) {
-                            videoEl.src = data.trailer;
+                            videoEl.src = `https://buguinha0202.github.io/Ifpiflix-projetor/${data.trailer}`;
                             videoEl.muted = true; 
                             videoEl.play().then(() => {
                                 videoEl.classList.add('playing');
@@ -1566,53 +1656,111 @@
                     playBtn.onclick = null;
                 }
 
+                // ==========================================
+                // LÓGICA DE EPISÓDIOS VS RECOMENDAÇÕES
+                // ==========================================
                 const recContainer = document.getElementById('m-recommendations');
+                const bottomTitle = document.getElementById('m-bottom-title');
+                
+                // Prevenção de erro caso o HTML não tenha sido atualizado
+                if (!bottomTitle) {
+                    console.error("Faltou colocar o id='m-bottom-title' no <h3> do HTML!");
+                    return;
+                }
+
                 recContainer.innerHTML = ''; 
-                
-                const otherMovies = Object.keys(filmesDB).filter(id => id !== movieId);
-                const shuffled = otherMovies.sort(() => 0.5 - Math.random());
-                const recommendations = shuffled.slice(0, 3);
-                
-                let recHTML = '';
-                recommendations.forEach(recId => {
-                    const recData = filmesDB[recId];
-                    const shortTitle = recData.title.length > 18 ? recData.title.substring(0, 18) + '...' : recData.title;
+
+                if (movieId === 'guerra-civil') {
+                    // SE FOR O FILME PRINCIPAL, MOSTRA OS EPISÓDIOS
+                    bottomTitle.textContent = 'Episódios';
+                    recContainer.className = 'episodes-list';
                     
-                    const recLinkOtimizado = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/${recData.bg}&w=200&output=webp`;
+                    const baseImg = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/`;
                     
-                    recHTML += `
-                        <div class="more-card" onclick="event.stopPropagation(); window.openTitleModal('${recId}')">
-                            <div class="more-img" style="background-image:url('${recLinkOtimizado}')"></div>
-                            <div class="more-info">
-                                <h4>${shortTitle}</h4>
-                                <i class="fa-solid fa-play" style="color: #fff; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.4); padding: 8px; border-radius: 50%;"></i>
-                            </div>
+                    recContainer.innerHTML = `
+                        <div class="episode-item" onclick="window.closeTitleModal(null, true); window.startCinematicMovieAt(0)">
+                            <div class="ep-number">1</div>
+                            <div class="ep-img" style="background-image: url('${baseImg}bguerra_civil.jpg&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
+                            <div class="ep-details"><h4>O Renascimento</h4><p>A Europa acordando de uma soneca de 1000 anos. O fim da Escolástica.</p></div>
+                        </div>
+                        <div class="episode-item" onclick="window.closeTitleModal(null, true); window.startCinematicMovieAt(2)">
+                            <div class="ep-number">2</div>
+                            <div class="ep-img" style="background-image: url('${baseImg}bguerra_civil.jpg&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
+                            <div class="ep-details"><h4>Tradição Medieval</h4><p>O domínio do Geocentrismo e o Princípio da Autoridade da Igreja.</p></div>
+                        </div>
+                        <div class="episode-item" onclick="window.closeTitleModal(null, true); window.startCinematicMovieAt(4)">
+                            <div class="ep-number">3</div>
+                            <div class="ep-img" style="background-image: url('${baseImg}bguerra_civil.jpg&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
+                            <div class="ep-details"><h4>A Ruptura & Rev. Cosmológica</h4><p>Copérnico muda o centro do tabuleiro e Galileu aponta o telescópio.</p></div>
+                        </div>
+                        <div class="episode-item" onclick="window.closeTitleModal(null, true); window.startCinematicMovieAt(8)">
+                            <div class="ep-number">4</div>
+                            <div class="ep-img" style="background-image: url('${baseImg}bguerra_civil.jpg&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
+                            <div class="ep-details"><h4>O Empirismo</h4><p>Francis Bacon, a queda dos Ídolos e a força do Método Indutivo.</p></div>
+                        </div>
+                        <div class="episode-item" onclick="window.closeTitleModal(null, true); window.startCinematicMovieAt(10)">
+                            <div class="ep-number">5</div>
+                            <div class="ep-img" style="background-image: url('${baseImg}bguerra_civil.jpg&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
+                            <div class="ep-details"><h4>O Racionalismo</h4><p>Descartes, a Dúvida Metódica e a famosa frase: Penso, logo existo.</p></div>
+                        </div>
+                        <div class="episode-item" onclick="window.closeTitleModal(null, true); window.startCinematicMovieAt(12)">
+                            <div class="ep-number">6</div>
+                            <div class="ep-img" style="background-image: url('${baseImg}bguerra_civil.jpg&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
+                            <div class="ep-details"><h4>A Síntese Newtoniana</h4><p>A união perfeita entre Racionalismo e Empirismo. O Método Científico.</p></div>
+                        </div>
+                        
+                        <!-- EPISÓDIO ESPECIAL: MODO CLÁSSICO -->
+                        <div class="episode-item special-ep" onclick="window.closeTitleModal(null, true); window.startPresentationAt(0)">
+                            <div class="ep-number"><i class="fa-solid fa-star"></i></div>
+                            <div class="ep-img" style="background-image: url('${baseImg}aff.png&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
+                            <div class="ep-details"><h4>O Grimório (Modo Clássico)</h4><p>Apresentação original em slides com simulações e mapa de conceitos.</p></div>
                         </div>
                     `;
-                });
-                recContainer.innerHTML = recHTML;
+                } else {
+                    // SE FOR OUTRO FILME, MOSTRA AS RECOMENDAÇÕES
+                    bottomTitle.textContent = 'Recomendações da Turma';
+                    recContainer.className = 'more-grid';
+                    
+                    const otherMovies = Object.keys(filmesDB).filter(id => id !== movieId);
+                    const shuffled = otherMovies.sort(() => 0.5 - Math.random());
+                    const recommendations = shuffled.slice(0, 3);
+                    
+                    let recHTML = '';
+                    recommendations.forEach(recId => {
+                        const recData = filmesDB[recId];
+                        const shortTitle = recData.title.length > 18 ? recData.title.substring(0, 18) + '...' : recData.title;
+                        const recImg = recData.banner ? recData.banner : recData.bg;
+                        const recLinkOtimizado = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/${recImg}&w=300&output=webp`;
+                        
+                        recHTML += `
+                            <div class="more-card" onclick="event.stopPropagation(); window.openTitleModal('${recId}')">
+                                <div class="more-img" style="background-image:url('${recLinkOtimizado}')"></div>
+                                <div class="more-info">
+                                    <h4>${shortTitle}</h4>
+                                    <i class="fa-solid fa-play" style="color: #fff; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.4); padding: 8px; border-radius: 50%;"></i>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    recContainer.innerHTML = recHTML;
+                }
             };
 
             // LÓGICA DE ANIMAÇÃO
             if (isOpen) {
-                // 1. Apaga a modal atual e encolhe um pouco
                 container.classList.add('modal-transitioning');
-                
-                // 2. Rola a tela de volta para o topo suavemente
                 overlay.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                // 3. Espera 300ms (tempo da animação CSS), troca os dados e faz aparecer de novo
                 setTimeout(() => {
                     loadData();
                     container.classList.remove('modal-transitioning');
                 }, 300);
             } else {
-                // Se a modal estava fechada, só carrega e abre normalmente
                 loadData();
                 overlay.classList.add('show');
-                overlay.scrollTop = 0; // Garante que abre no topo
+                overlay.scrollTop = 0; 
             }
         }
+
         window.closeTitleModal = function(e, force = false) {
             if (force || e.target.id === 'title-modal-overlay') {
                 document.getElementById('title-modal-overlay').classList.remove('show');
@@ -1826,8 +1974,12 @@
             }
 
         document.getElementById('btn-next-slide').addEventListener('click', () => { 
-            if (isLisActive || isModalOpen()) return; 
+            if (isLisActive || isModalOpen() || isPlayingPostCredits) return; 
             if (currentSlide === 7) { triggerScreenShake('player-screen'); return; } 
+            
+            // Intercepta a transição para a tela de assinatura
+            if (currentSlide === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+            
             renderSlide(currentSlide + 1); 
         });
         
@@ -1854,32 +2006,41 @@
             }); 
         }
         
-        window.startCinematicMovie = function() { 
+        window.startCinematicMovieAt = function(index) { 
             simulateLoading(() => { 
                 currentCineIdx = -1; 
                 window.switchScreen('cinematic-stage'); 
-                updateCineCamera(0); 
+                updateCineCamera(index); 
             }); 
+        }
+        
+        window.startCinematicMovie = function() { 
+            window.startCinematicMovieAt(0); 
         }
 
         document.addEventListener('keydown', (e) => {
-            if (isModalOpen()) return;
+            if (isModalOpen() || isPlayingPostCredits) return;
+            
             if (document.getElementById('player-screen').classList.contains('active')) {
                 if (currentSlide === 7 && (e.key === 'ArrowRight' || e.key === ' ')) { 
-                    e.preventDefault(); 
-                    triggerScreenShake('player-screen'); 
-                    return; 
+                    e.preventDefault(); triggerScreenShake('player-screen'); return; 
                 }
-                if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); document.getElementById('btn-next-slide').click(); }
+                if (e.key === 'ArrowRight' || e.key === ' ') { 
+                    e.preventDefault(); 
+                    if (currentSlide === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+                    document.getElementById('btn-next-slide').click(); 
+                }
                 if (e.key === 'ArrowLeft') { e.preventDefault(); document.getElementById('btn-prev-slide').click(); }
             }
             else if (document.getElementById('cinematic-stage').classList.contains('active')) {
                 if (currentCineIdx === 7 && (e.key === 'ArrowRight' || e.key === ' ')) { 
-                    e.preventDefault(); 
-                    triggerScreenShake('cinematic-stage'); 
-                    return; 
+                    e.preventDefault(); triggerScreenShake('cinematic-stage'); return; 
                 }
-                if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); updateCineCamera(currentCineIdx + 1); }
+                if (e.key === 'ArrowRight' || e.key === ' ') { 
+                    e.preventDefault(); 
+                    if (currentCineIdx === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+                    updateCineCamera(currentCineIdx + 1); 
+                }
                 if (e.key === 'ArrowLeft') { e.preventDefault(); updateCineCamera(currentCineIdx - 1); }
             }
         });
@@ -1971,8 +2132,101 @@
             });
         }
 
+        /* =========================================================
+           SISTEMA DE SWIPE (ARRASTAR O DEDO NO CELULAR)
+           ========================================================= */
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, {passive: true});
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            if (isModalOpen() || isLisActive || isPlayingPostCredits) return;
+
+            const diffX = touchStartX - touchEndX;
+            const diffY = Math.abs(touchStartY - touchEndY);
+
+            if (diffY > Math.abs(diffX)) return;
+
+            if (diffX > 50) {
+                if (document.getElementById('player-screen').classList.contains('active')) {
+                    if (currentSlide === 7) { triggerScreenShake('player-screen'); return; }
+                    if (currentSlide === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+                    document.getElementById('btn-next-slide').click();
+                } else if (document.getElementById('cinematic-stage').classList.contains('active')) {
+                    if (currentCineIdx === 7) { triggerScreenShake('cinematic-stage'); return; }
+                    if (currentCineIdx === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+                    updateCineCamera(currentCineIdx + 1);
+                }
+            } 
+            else if (diffX < -50) {
+                if (document.getElementById('player-screen').classList.contains('active')) {
+                    document.getElementById('btn-prev-slide').click();
+                } else if (document.getElementById('cinematic-stage').classList.contains('active')) {
+                    updateCineCamera(currentCineIdx - 1);
+                }
+            }
+        }
+
         // Inicia o sistema de arraste assim que a página carregar
         window.addEventListener('DOMContentLoaded', initDragToScroll);
+
+        /* =========================================================
+           SISTEMA DE CENA PÓS-CRÉDITOS
+           ========================================================= */
+        let hasPlayedPostCredits = false;
+        let isPlayingPostCredits = false;
+
+        function playPostCredits() {
+            isPlayingPostCredits = true;
+            const overlay = document.getElementById('post-credits-overlay');
+            const video = document.getElementById('post-credits-video');
+            
+            overlay.style.display = 'flex';
+            
+            // LINK DO VÍDEO NO GITHUB (Mude pos_credito.mp4 se o seu arquivo tiver outro nome)
+            video.src = 'https://buguinha0202.github.io/Ifpiflix-projetor/pos_credito.mp4';
+            
+            video.play().catch(e => {
+                // Se der erro no autoplay, pula direto pra assinatura
+                skipPostCredits();
+            });
+
+            // Quando o vídeo acabar sozinho, pula pra assinatura
+            video.onended = () => {
+                skipPostCredits();
+            };
+        }
+
+        window.skipPostCredits = function() {
+            const overlay = document.getElementById('post-credits-overlay');
+            const video = document.getElementById('post-credits-video');
+            
+            video.pause();
+            video.removeAttribute('src');
+            overlay.style.display = 'none';
+            
+            hasPlayedPostCredits = true;
+            isPlayingPostCredits = false;
+            
+            // Descobre em qual modo o usuário estava e avança para a tela de assinatura
+            if (document.getElementById('cinematic-stage').classList.contains('active')) {
+                updateCineCamera(13);
+            } else {
+                renderSlide(13);
+            }
+        }
 
     </script> <!-- O SCRIPT DEVE TERMINAR AQUI -->
 
@@ -1982,6 +2236,14 @@
             <i class="fa-solid fa-arrow-left"></i> Voltar
         </button>
         <video id="main-video-element" controls playsinline></video>
+    </div>
+
+    <!-- =======================================================
+         CENA PÓS-CRÉDITOS
+         ======================================================= -->
+    <div id="post-credits-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center;">
+        <video id="post-credits-video" playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
+        <button onclick="skipPostCredits()" style="position: absolute; bottom: 30px; right: 30px; background: rgba(255,255,255,0.2); color: #fff; border: 1px solid #fff; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: bold; transition: 0.3s; z-index: 10001;">Pular Cena <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
 </body>
