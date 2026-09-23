@@ -393,19 +393,25 @@
         #cinematic-stage[data-step="1"] .cine-txt-1 { opacity: 1; transform: translateY(0); }
 
         #cinematic-stage[data-step="2"] #cine-library, 
-        #cinematic-stage[data-step="3"] #cine-library { opacity: 1; pointer-events: auto; }
+        #cinematic-stage[data-step="2_1"] #cine-library, 
+        #cinematic-stage[data-step="3"] #cine-library, 
+        #cinematic-stage[data-step="3_1"] #cine-library { opacity: 1; pointer-events: auto; }
+
         #cinematic-stage[data-step="2"] .cine-txt-2 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="2_1"] .cine-txt-2_1 { opacity: 1; transform: translateY(0); }
         #cinematic-stage[data-step="3"] .cine-txt-3 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="3_1"] .cine-txt-3_1 { opacity: 1; transform: translateY(0); }
 
         #cinematic-stage[data-step="4"] #cine-rupture { opacity: 1; pointer-events: auto; }
         #cinematic-stage[data-step="4"] .cine-txt-4 { opacity: 1; transform: translate(-50%, 0); }
 
         #cinematic-stage[data-step="5"] #cine-space, 
-        #cinematic-stage[data-step="6"] #cine-space { opacity: 1; pointer-events: auto; clip-path: circle(150% at 50% 50%); }
+        #cinematic-stage[data-step="6"] #cine-space,
+        #cinematic-stage[data-step="6_1"] #cine-space { opacity: 1; pointer-events: auto; clip-path: circle(150% at 50% 50%); }
 
-        /* Entradas suaves centralizadas verticalmente à direita */
         #cinematic-stage[data-step="5"] .cine-txt-5 { opacity: 1; transform: translateY(-50%); }
         #cinematic-stage[data-step="6"] .cine-txt-6 { opacity: 1; transform: translateY(-50%); }
+        #cinematic-stage[data-step="6_1"] .cine-txt-6_1 { opacity: 1; transform: translateY(-50%); }
 
         #cinematic-stage[data-step="7"] #cine-choice { opacity: 1; pointer-events: auto; }
 
@@ -438,8 +444,8 @@
         #cine-library { background: #080808; perspective: 1000px; }
         .cine-stained-glass { position: absolute; width: 100vw; height: 100vh; background: conic-gradient(from 0deg at 50% 50%, #2a0845, #6441a5, #2a0845); opacity: 0.18; animation: glassSpin 20s linear infinite; }
         .cine-altar { position: relative; font-size: 16rem; color: #444; filter: drop-shadow(0 20px 30px #000); }
-        .cine-txt-2 { left: 10vw; text-align: left; }
-        .cine-txt-3 { right: 10vw; text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
+        .cine-txt-2, .cine-txt-2_1 { left: 10vw; text-align: left; }
+        .cine-txt-3, .cine-txt-3_1 { right: 10vw; text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
         @keyframes glassSpin { 100% { transform: rotate(360deg); } }
 
         #cine-rupture { background: #000; }
@@ -590,7 +596,7 @@
 }
 
 /* CAIXAS DE TEXTO (LADO DIREITO COM LEITURA PROTEGIDA) */
-.cine-txt-5, .cine-txt-6 { 
+.cine-txt-5, .cine-txt-6, .cine-txt-6_1 { 
     position: absolute;
     left: 54vw; 
     right: auto;
@@ -1009,26 +1015,49 @@
             </div>
 
             <div class="slide" id="slide-2">
-                <div class="slide-grid">
-                    <div class="text-col">
-                        <h2>02. TRADI&Ccedil;&Atilde;O MEDIEVAL</h2>
-                        <div class="ticker-box" id="ticker-2">Aristóteles disse que a Terra tava parada. Fonte: Confia.</div>
-                        <h3 class="highlight">O Dom&iacute;nio do Geocentrismo</h3><p>O modelo de Ptolomeu reinava absoluto. A Terra era o centro imóvel e inquestionável, amarrada por dogmas.</p>
-                    </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-landmark-dome"></i> Paradigma Antigo</div><div class="sim-screen"><div class="geo-system"><i class="fa-solid fa-earth-americas geo-earth"></i><i class="fa-solid fa-lock geo-lock"></i></div></div></div>
-                </div>
-            </div>
+    <div class="slide-grid">
+        <div class="text-col">
+            <h2>02. ANTES DA REVOLUÇÃO</h2>
+            <div class="ticker-box" id="ticker-2">A tradição ditava as regras.</div>
+            <h3 class="highlight">O Domínio do Passado</h3><p>As pessoas aprendiam sobre a natureza principalmente por meio da tradição e das ideias de pessoas consideradas importantes, como Aristóteles e autoridades da Igreja.</p>
+        </div>
+        <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-landmark-dome"></i> Paradigma Antigo</div><div class="sim-screen"><div class="geo-system"><i class="fa-solid fa-earth-americas geo-earth"></i><i class="fa-solid fa-lock geo-lock"></i></div></div></div>
+    </div>
+</div>
+
+<div class="slide" id="slide-2_1">
+    <div class="slide-grid">
+        <div class="text-col">
+            <h2>02. GEOCENTRISMO</h2>
+            <div class="ticker-box" id="ticker-2_1">A Terra no centro de tudo.</div>
+            <h3 class="highlight">O Universo Fechado</h3><p>Acreditava que a Terra estava parada no centro do Universo e que o Sol, a Lua e outros astros giravam ao redor da Terra.</p>
+        </div>
+        <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-globe"></i> Sistema Ptolomaico</div><div class="sim-screen"><div class="geo-system"><i class="fa-solid fa-earth-americas geo-earth"></i></div></div></div>
+    </div>
+</div>
+
 
             <div class="slide" id="slide-3">
-                <div class="slide-grid">
-                    <div class="text-col">
-                        <h2>02. TRADI&Ccedil;&Atilde;O MEDIEVAL</h2>
-                        <div class="ticker-box" id="ticker-3">Igreja: 'Se tá num livro velho e em latim, é verdade'.</div>
-                        <h3 class="highlight">Princípio da Autoridade</h3><p>A verdade não dependia de testes, mas sim do "Princ&iacute;pio de Autoridade", mantido pela Igreja.</p>
-                    </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-book-skull"></i> Regras Bloqueadas</div><div class="sim-screen"><i class="fa-solid fa-book" style="font-size:5rem; color:#aaa;"></i><h3 style="margin-top:30px; color:#E50914;">Status: Dogmatismo</h3></div></div>
-                </div>
-            </div>
+    <div class="slide-grid">
+        <div class="text-col">
+            <h2>02. PRINCÍPIO DE AUTORIDADE</h2>
+            <div class="ticker-box" id="ticker-3">Aristóteles falou, tá falado.</div>
+            <h3 class="highlight">Verdade Inquestionável</h3><p>Uma ideia era considerada verdadeira porque uma pessoa importante dizia que era verdade. Não era necessário testar ou comprovar na prática.</p>
+        </div>
+        <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-book-skull"></i> Regras Bloqueadas</div><div class="sim-screen"><i class="fa-solid fa-book" style="font-size:5rem; color:#aaa;"></i><h3 style="margin-top:30px; color:#E50914;">Status: Dogmatismo</h3></div></div>
+    </div>
+</div>
+
+<div class="slide" id="slide-3_1">
+    <div class="slide-grid">
+        <div class="text-col">
+            <h2>02. A MUDANÇA</h2>
+            <div class="ticker-box" id="ticker-3_1">Observar e testar virou a nova moda.</div>
+            <h3 class="highlight">O Despertar</h3><p>A Revolução Científica mudou essa maneira de pensar. Os estudiosos começaram a valorizar mais a observação, a investigação e a experimentação.</p>
+        </div>
+        <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-eye"></i> Nova Visão</div><div class="sim-screen"><i class="fa-solid fa-microscope" style="font-size:5rem; color:#3b82f6;"></i></div></div>
+    </div>
+</div>
 
             <div class="slide" id="slide-4">
                 <div class="slide-grid">
@@ -1062,6 +1091,17 @@
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-binoculars"></i> Visão Aprimorada</div><div class="sim-screen"><div class="sky-bg"></div><div class="telescope-lens"><i class="fa-solid fa-star" style="font-size:2rem; color:#fff;"></i></div></div></div>
                 </div>
             </div>
+
+            <div class="slide" id="slide-6_1">
+    <div class="slide-grid">
+        <div class="text-col">
+            <h2>04. REVOLUÇÃO COSMOLÓGICA</h2>
+            <div class="ticker-box" id="ticker-6_1">Kepler: “Círculo perfeito? Não exatamente.”</div>
+            <h3 class="highlight">Órbitas Elípticas</h3><p>Ao analisar o movimento dos planetas, Kepler descobriu que suas órbitas ao redor do Sol são elípticas, aperfeiçoando o modelo heliocêntrico.</p>
+        </div>
+        <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-meteor"></i> Leis de Kepler</div><div class="sim-screen"><div class="helio-system" style="border-radius: 50% / 30%;"><i class="fa-solid fa-sun helio-sun"></i><i class="fa-solid fa-earth-americas helio-earth"></i></div></div></div>
+    </div>
+</div>
 
             <!-- A ESCOLHA -->
             <div class="slide" id="slide-7">
@@ -1188,22 +1228,38 @@
         </div>
 
         <!-- 2 & 3: BIBLIOTECA MEDIEVAL -->
-        <div id="cine-library" class="cine-scene">
-            <div class="cine-stained-glass"></div>
-            <div class="cine-altar">
-                <i class="fa-solid fa-book-journal-whills"></i>
-                <i class="fa-solid fa-link" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--netflix-red); font-size: 8rem; opacity: 0.8;"></i>
-            </div>
-            <div class="cine-text-box cine-txt-2">
-                <h2 class="cine-title">02. TRADI&Ccedil;&Atilde;O MEDIEVAL</h2>
-                <div class="cine-ticker" id="cine-ticker-2">Aristóteles disse que a Terra tava parada. Fonte: Confia.</div>
-                <p class="cine-desc">O modelo de Ptolomeu reinava absoluto. A Terra era o centro imóvel e inquestionável, amarrada por dogmas.</p>
-            </div>
-            <div class="cine-text-box cine-txt-3">
-                <div class="cine-ticker" id="cine-ticker-3">Igreja: 'Se tá num livro velho e em latim, é verdade'.</div>
-                <p class="cine-desc">A verdade não dependia de testes, mas sim do "Princípio de Autoridade", mantido pela Igreja.</p>
-            </div>
-        </div>
+        <!-- 2, 2_1, 3, 3_1: BIBLIOTECA MEDIEVAL -->
+<div id="cine-library" class="cine-scene">
+    <div class="cine-stained-glass"></div>
+    <div class="cine-altar">
+        <i class="fa-solid fa-book-journal-whills"></i>
+        <i class="fa-solid fa-link" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--netflix-red); font-size: 8rem; opacity: 0.8;"></i>
+    </div>
+    
+    <div class="cine-text-box cine-txt-2">
+        <h2 class="cine-title">02. ANTES DA REVOLUÇÃO</h2>
+        <div class="cine-ticker" id="cine-ticker-2">A tradição ditava as regras.</div>
+        <p class="cine-desc">As pessoas aprendiam sobre a natureza principalmente por meio da tradição e das ideias de pessoas consideradas importantes, como Aristóteles e autoridades da Igreja.</p>
+    </div>
+    
+    <div class="cine-text-box cine-txt-2_1">
+        <h2 class="cine-title">02. GEOCENTRISMO</h2>
+        <div class="cine-ticker" id="cine-ticker-2_1">A Terra no centro de tudo.</div>
+        <p class="cine-desc">Acreditava que a Terra estava parada no centro do Universo e que o Sol, a Lua e outros astros giravam ao redor da Terra.</p>
+    </div>
+
+    <div class="cine-text-box cine-txt-3">
+        <h2 class="cine-title">02. PRINCÍPIO DE AUTORIDADE</h2>
+        <div class="cine-ticker" id="cine-ticker-3">Aristóteles falou, tá falado.</div>
+        <p class="cine-desc">Uma ideia era considerada verdadeira porque uma pessoa importante dizia que era verdade. Não era necessário testar ou comprovar na prática.</p>
+    </div>
+
+    <div class="cine-text-box cine-txt-3_1">
+        <h2 class="cine-title">02. A MUDANÇA</h2>
+        <div class="cine-ticker" id="cine-ticker-3_1">Observar e testar virou a nova moda.</div>
+        <p class="cine-desc">A Revolução Científica mudou essa maneira de pensar. Os estudiosos começaram a valorizar mais a observação, a investigação e a experimentação.</p>
+    </div>
+</div>
 
         <!-- 4: A RUPTURA -->
         <div id="cine-rupture" class="cine-scene">
@@ -1255,6 +1311,12 @@
                 <div class="cine-ticker" id="cine-ticker-6">Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.</div>
                 <p class="cine-desc">Utilizando o telescópio para comprovar a teoria, Galileu afirmou: "A natureza está escrita em caracteres matemáticos".</p>
             </div>
+
+            <div class="cine-text-box cine-txt-6_1">
+        <h2 class="cine-title">04. REV. COSMOLÓGICA</h2>
+        <div class="cine-ticker" id="cine-ticker-6_1">Kepler: “Círculo perfeito? Não exatamente.”</div>
+        <p class="cine-desc">Ao analisar o movimento dos planetas, Kepler descobriu que suas órbitas ao redor do Sol são elípticas, aperfeiçoando o modelo heliocêntrico.</p>
+    </div>
         </div>
 
         <!-- 7: A ESCOLHA NO MODO FILME -->
@@ -1408,20 +1470,25 @@
            ROTEIRO ATUALIZADO COM OS 7 APRESENTADORES NA ORDEM
            ========================================================= */
         const script = [ 
-            { id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Davi", ach: "[🌍 Conquista: O Mundo Expandiu]",
-              tickers: ["A Europa acordando de uma soneca de 1000 anos...", "O feudalismo caiu, a ciência subiu.", "Navegações bombando, dogmas caindo."] }, 
-            { id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Davi", ach: "",
-              tickers: ["Galera começou a ler os gregos sem censura.", "O centro do universo não somos nós? Chocante."] }, 
-            { id: 2, title: "Cap 2: Tradição Medieval (Geocentrismo)", presenter: "Maria Helena", ach: "[🔒 Bloqueado: Pensar fora da caixa]",
-              tickers: ["Aristóteles disse que a Terra tava parada. Fonte: Confia.", "Ptolomeu meteu 50 círculos mágicos pro cálculo dar certo."] }, 
-            { id: 3, title: "Cap 2: Tradição Medieval (Autoridade)", presenter: "Maria Helena", ach: "",
-              tickers: ["Igreja: 'Se tá num livro velho e em latim, é verdade'.", "Questionar a regra resultava em fogueira instantânea."] }, 
-            { id: 4, title: "Cap 3: A Ruptura", presenter: "Francisco L", ach: "[🔍 Conquista: A Luz da Razão Encontrada]",
-              tickers: ["O homem moderno: 'E se a gente testasse essa parada?'", "A contemplação passiva saiu do chat.", "Investigação ativa entrou no chat."] }, 
-            { id: 5, title: "Cap 4: Revolução Cosmológica (Copérnico)", presenter: "Pedro", ach: "[🌞 Conquista: O Sol assumiu o controle]",
-              tickers: ["Copérnico: 'Galera, o Sol tá no meio, não a gente'.", "Tirar a Terra do centro ofendeu muito o ego humano."] }, 
-            { id: 6, title: "Cap 4: Revolução Cosmológica (Galileu)", presenter: "Pedro", ach: "[🏆 Conquista: A Luneta de Galileu]",
-              tickers: ["Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.", "Eppur si muove: o primeiro 'falei, tô leve' da história."] }, 
+            // ... (mantenha o id 0 e 1 como estão)
+{ id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Davi", ach: "[🌍 Conquista: O Mundo Expandiu]", tickers: ["A Europa acordando de uma soneca de 1000 anos...", "O feudalismo caiu, a ciência subiu.", "Navegações bombando, dogmas caindo."] }, 
+{ id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Davi", ach: "", tickers: ["Galera começou a ler os gregos sem censura.", "O centro do universo não somos nós? Chocante."] }, 
+
+// 👇 NOVO TÓPICO 2 (4 Partes) 👇
+{ id: "2", title: "Cap 2: Antes da Rev. Científica", presenter: "Maria Helena", ach: "[🔒 Bloqueado: Pensar fora da caixa]", tickers: ["A tradição ditava as regras."] }, 
+{ id: "2_1", title: "Cap 2: Geocentrismo", presenter: "Maria Helena", ach: "", tickers: ["A Terra no centro de tudo."] }, 
+{ id: "3", title: "Cap 2: Princípio de Autoridade", presenter: "Maria Helena", ach: "", tickers: ["Aristóteles falou, tá falado."] }, 
+{ id: "3_1", title: "Cap 2: A Mudança", presenter: "Maria Helena", ach: "", tickers: ["Observar e testar virou a nova moda."] }, 
+
+// ... (mantenha o id 4 e 5 como estão)
+{ id: 4, title: "Cap 3: A Ruptura", presenter: "Francisco L", ach: "[🔍 Conquista: A Luz da Razão Encontrada]", tickers: ["O homem moderno: 'E se a gente testasse essa parada?'", "A contemplação passiva saiu do chat.", "Investigação ativa entrou no chat."] }, 
+{ id: 5, title: "Cap 4: Revolução Cosmológica (Copérnico)", presenter: "Pedro", ach: "[🌞 Conquista: O Sol assumiu o controle]", tickers: ["Copérnico: 'Galera, o Sol tá no meio, não a gente'.", "Tirar a Terra do centro ofendeu muito o ego humano."] }, 
+{ id: 6, title: "Cap 4: Revolução Cosmológica (Galileu)", presenter: "Pedro", ach: "[🏆 Conquista: A Luneta de Galileu]", tickers: ["Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.", "Eppur si muove: o primeiro 'falei, tô leve' da história."] }, 
+
+// 👇 NOVO TÓPICO 4 (Kepler) 👇
+{ id: "6_1", title: "Cap 4: Revolução Cosmológica (Kepler)", presenter: "Pedro", ach: "", tickers: ["Kepler: “Círculo perfeito? Não exatamente.”"] }, 
+
+// ... (mantenha o resto do id 7 em diante como está)
             { id: 7, title: "Especial: A Escolha", presenter: "Todos", ach: "", tickers: [] }, 
             { id: 8, title: "Cap 5: Empirismo (Os Ídolos)", presenter: "Marcelo", ach: "[⚔️ Conquista: Derrotou os Ídolos]",
               tickers: ["Ídolo da Caverna = viver na própria bolha.", "Bacon: Antes de fazer ciência, limpe sua mente dos fakes."] }, 
@@ -1887,10 +1954,10 @@
             applyPresenter(data.presenter);
             
             document.querySelectorAll('#player-screen .slide').forEach(s => s.classList.remove('active')); 
-            const targetSlide = document.getElementById(`slide-${idx}`);
+            const targetSlide = document.getElementById(`slide-${data.id}`);
             if (targetSlide) targetSlide.classList.add('active');
 
-            const tickerEl = document.getElementById(`ticker-${idx}`);
+            const tickerEl = document.getElementById(`ticker-${data.id}`);
             if(tickerEl && data.tickers && data.tickers.length > 0) {
                 let tIdx = 0; 
                 tickerEl.textContent = data.tickers[0]; 
@@ -1922,9 +1989,9 @@
 
             document.getElementById('cine-ep-title').textContent = data.title;
             document.getElementById('cine-progress').style.width = `${((idx + 1) / script.length) * 100}%`;
-            document.getElementById('cinematic-stage').setAttribute('data-step', idx);
+            document.getElementById('cinematic-stage').setAttribute('data-step', data.id);
 
-            const tickerEl = document.getElementById(`cine-ticker-${idx}`);
+            const tickerEl = document.getElementById(`cine-ticker-${data.id}`);
             if(tickerEl && data.tickers && data.tickers.length > 0) {
                 let tIdx = 0; 
                 tickerEl.textContent = data.tickers[0]; 
@@ -1944,41 +2011,42 @@
         }
 
         /* ESCOLHA COMPARTILHADA */
-        /* ESCOLHA COMPARTILHADA (SEMPRE SEGUE A ORDEM LINEAR NO SLIDE 8) */
-            window.triggerLisChoice = function(targetIdx) {
-                if (isLisActive) return;
-                isLisActive = true;
-                
-                // Força a ir sempre para o slide 8 (Empirismo -> depois Racionalismo)
-                const nextIdx = 8;
+        window.triggerLisChoice = function(targetIdx) {
+            if (isLisActive) return;
+            isLisActive = true;
+            
+            // Procura na lista qual é a posição exata do slide com ID 8 (Empirismo)
+            const nextIdx = script.findIndex(s => s.id == 8);
 
-                document.getElementById('lis-dark-overlay').style.display = 'block';
-                document.getElementById('lis-notification').style.opacity = '1';
+            document.getElementById('lis-dark-overlay').style.display = 'block';
+            document.getElementById('lis-notification').style.opacity = '1';
+            
+            setTimeout(() => {
+                document.getElementById('lis-notification').style.opacity = '0';
+                document.getElementById('lis-dark-overlay').style.display = 'none';
                 
-                setTimeout(() => {
-                    document.getElementById('lis-notification').style.opacity = '0';
-                    document.getElementById('lis-dark-overlay').style.display = 'none';
-                    
-                    const isMovie = document.getElementById('cinematic-stage').classList.contains('active');
-                    if (script[nextIdx] && script[nextIdx].presenter) { 
-                        applyPresenter(script[nextIdx].presenter, true); 
-                    }
-                    
-                    if (isMovie) { 
-                        updateCineCamera(nextIdx); 
-                    } else { 
-                        renderSlide(nextIdx); 
-                    }
-                    isLisActive = false;
-                }, 3000);
-            }
+                const isMovie = document.getElementById('cinematic-stage').classList.contains('active');
+                if (script[nextIdx] && script[nextIdx].presenter) { 
+                    applyPresenter(script[nextIdx].presenter, true); 
+                }
+                
+                if (isMovie) { 
+                    updateCineCamera(nextIdx); 
+                } else { 
+                    renderSlide(nextIdx); 
+                }
+                isLisActive = false;
+            }, 3000);
+        }
 
         document.getElementById('btn-next-slide').addEventListener('click', () => { 
             if (isLisActive || isModalOpen() || isPlayingPostCredits) return; 
-            if (currentSlide === 7) { triggerScreenShake('player-screen'); return; } 
             
-            // Intercepta a transição para a tela de assinatura
-            if (currentSlide === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+            // Agora ele verifica se o ID é 7 (A Escolha)
+            if (script[currentSlide].id == 7) { triggerScreenShake('player-screen'); return; } 
+            
+            // Intercepta a transição para a tela de assinatura (ID 12)
+            if (script[currentSlide].id == 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
             
             renderSlide(currentSlide + 1); 
         });
@@ -1999,18 +2067,22 @@
             }, 150); 
         }
         
-        window.startPresentationAt = function(index) { 
+        window.startPresentationAt = function(targetId) { 
             simulateLoading(() => { 
-                renderSlide(index); 
+                // Encontra a posição real na lista baseada no ID
+                const idx = script.findIndex(s => s.id == targetId);
+                renderSlide(idx !== -1 ? idx : 0); 
                 window.switchScreen('player-screen'); 
             }); 
         }
         
-        window.startCinematicMovieAt = function(index) { 
+        window.startCinematicMovieAt = function(targetId) { 
             simulateLoading(() => { 
                 currentCineIdx = -1; 
                 window.switchScreen('cinematic-stage'); 
-                updateCineCamera(index); 
+                // Encontra a posição real na lista baseada no ID
+                const idx = script.findIndex(s => s.id == targetId);
+                updateCineCamera(idx !== -1 ? idx : 0); 
             }); 
         }
         
@@ -2022,23 +2094,23 @@
             if (isModalOpen() || isPlayingPostCredits) return;
             
             if (document.getElementById('player-screen').classList.contains('active')) {
-                if (currentSlide === 7 && (e.key === 'ArrowRight' || e.key === ' ')) { 
+                if (script[currentSlide].id == 7 && (e.key === 'ArrowRight' || e.key === ' ')) { 
                     e.preventDefault(); triggerScreenShake('player-screen'); return; 
                 }
                 if (e.key === 'ArrowRight' || e.key === ' ') { 
                     e.preventDefault(); 
-                    if (currentSlide === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+                    if (script[currentSlide].id == 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
                     document.getElementById('btn-next-slide').click(); 
                 }
                 if (e.key === 'ArrowLeft') { e.preventDefault(); document.getElementById('btn-prev-slide').click(); }
             }
             else if (document.getElementById('cinematic-stage').classList.contains('active')) {
-                if (currentCineIdx === 7 && (e.key === 'ArrowRight' || e.key === ' ')) { 
+                if (script[currentCineIdx].id == 7 && (e.key === 'ArrowRight' || e.key === ' ')) { 
                     e.preventDefault(); triggerScreenShake('cinematic-stage'); return; 
                 }
                 if (e.key === 'ArrowRight' || e.key === ' ') { 
                     e.preventDefault(); 
-                    if (currentCineIdx === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+                    if (script[currentCineIdx].id == 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
                     updateCineCamera(currentCineIdx + 1); 
                 }
                 if (e.key === 'ArrowLeft') { e.preventDefault(); updateCineCamera(currentCineIdx - 1); }
@@ -2051,18 +2123,15 @@
             clearTimeout(idleTimer);
             idleTimer = setTimeout(() => {
                 const isPlaying = document.getElementById('player-screen').classList.contains('active') || document.getElementById('cinematic-stage').classList.contains('active');
-                if (isPlaying && !isModalOpen() && currentSlide !== 7 && currentCineIdx !== 7) { 
+                
+                const isChoiceSlide = (currentSlide >= 0 && script[currentSlide].id == 7) || 
+                                      (currentCineIdx >= 0 && script[currentCineIdx].id == 7);
+
+                if (isPlaying && !isModalOpen() && !isChoiceSlide) { 
                     document.getElementById('idle-overlay').style.display = 'flex'; 
                 }
             }, 90000);
         }
-        ['mousemove', 'keydown', 'click'].forEach(evt => { window.addEventListener(evt, resetIdleTimer, { passive: true }); });
-        resetIdleTimer();
-
-        document.getElementById('btn-resume-idle').addEventListener('click', () => { 
-            document.getElementById('idle-overlay').style.display = 'none'; 
-            resetIdleTimer(); 
-        });
 
         /* =========================================================
            SISTEMA DE ARRASTAR PARA OS LADOS (DRAG-TO-SCROLL & WHEEL)
@@ -2151,7 +2220,7 @@
             handleSwipe();
         }, {passive: true});
 
-        function handleSwipe() {
+       function handleSwipe() {
             if (isModalOpen() || isLisActive || isPlayingPostCredits) return;
 
             const diffX = touchStartX - touchEndX;
@@ -2161,12 +2230,12 @@
 
             if (diffX > 50) {
                 if (document.getElementById('player-screen').classList.contains('active')) {
-                    if (currentSlide === 7) { triggerScreenShake('player-screen'); return; }
-                    if (currentSlide === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+                    if (script[currentSlide].id == 7) { triggerScreenShake('player-screen'); return; }
+                    if (script[currentSlide].id == 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
                     document.getElementById('btn-next-slide').click();
                 } else if (document.getElementById('cinematic-stage').classList.contains('active')) {
-                    if (currentCineIdx === 7) { triggerScreenShake('cinematic-stage'); return; }
-                    if (currentCineIdx === 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
+                    if (script[currentCineIdx].id == 7) { triggerScreenShake('cinematic-stage'); return; }
+                    if (script[currentCineIdx].id == 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
                     updateCineCamera(currentCineIdx + 1);
                 }
             } 
