@@ -122,6 +122,7 @@
             cursor: grab;
             user-select: none;
             -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
         }
         .posters-container.active-drag, .landscape-row.active-drag {
             cursor: grabbing;
@@ -369,8 +370,10 @@
 
         #cinematic-stage[data-step="5"] #cine-space, 
         #cinematic-stage[data-step="6"] #cine-space { opacity: 1; pointer-events: auto; clip-path: circle(150% at 50% 50%); }
-        #cinematic-stage[data-step="5"] .cine-txt-5 { opacity: 1; transform: translate(450px, -50%); }
-        #cinematic-stage[data-step="6"] .cine-txt-6 { opacity: 1; transform: translate(-250px, 150px); }
+
+        /* Entradas suaves centralizadas verticalmente à direita */
+        #cinematic-stage[data-step="5"] .cine-txt-5 { opacity: 1; transform: translateY(-50%); }
+        #cinematic-stage[data-step="6"] .cine-txt-6 { opacity: 1; transform: translateY(-50%); }
 
         #cinematic-stage[data-step="7"] #cine-choice { opacity: 1; pointer-events: auto; }
 
@@ -410,12 +413,168 @@
         #cine-rupture { background: #000; }
         .cine-txt-4 { left: 50%; transform: translate(-50%, 40px); text-align: center; border-left: none; border-bottom: 4px solid var(--netflix-red); border-radius: 8px;}
 
-        #cine-space { background: #020205; clip-path: circle(0% at 50% 50%); transition: clip-path 2s cubic-bezier(0.7, 0, 0.3, 1); z-index: 61;}
-        .cine-stars { position: absolute; width: 200vw; height: 200vh; background: radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), radial-gradient(2px 2px at 90px 40px, #aaa, rgba(0,0,0,0)); background-size: 150px 150px; animation: spacePan 40s linear infinite;}
-        .cine-sun { position: absolute; top: 50%; left: 20%; transform: translateY(-50%); width: 380px; height: 380px; background: radial-gradient(circle, #f59e0b, #b45309); border-radius: 50%; box-shadow: 0 0 100px #f59e0b; z-index: 100;}
-        .cine-earth { position: absolute; top: 20%; right: 20%; width: 190px; height: 190px; background: radial-gradient(circle, #3b82f6, #1e3a8a); border-radius: 50%; box-shadow: 0 0 50px #3b82f6; z-index: 100;}
-        .cine-txt-5 { left: 20%; top: 50%; transform: translate(-50px, -50%); }
-        .cine-txt-6 { right: 20%; top: 20%; transform: translate(50px, 150px); text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
+/* =========================================================
+   CENÁRIO ESPACIAL COM ÓRBITAS HELIOCÊNTRICAS (CAP 4)
+   ========================================================= */
+#cine-space { 
+    background: radial-gradient(ellipse at 30% 50%, #0d1124 0%, #020205 75%); 
+    clip-path: circle(0% at 50% 50%); 
+    transition: clip-path 2s cubic-bezier(0.7, 0, 0.3, 1); 
+    z-index: 61;
+}
+
+.cine-stars { 
+    position: absolute; 
+    width: 200vw; 
+    height: 200vh; 
+    background: radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), 
+                radial-gradient(2px 2px at 90px 40px, #aaa, rgba(0,0,0,0)); 
+    background-size: 150px 150px; 
+    animation: spacePan 40s linear infinite;
+}
+
+/* PALCO DO SISTEMA SOLAR */
+.cine-solar-system {
+    position: absolute;
+    top: 50%;
+    left: 24vw;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    height: 620px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 15;
+}
+
+/* O SOL */
+.cine-sun { 
+    position: absolute; 
+    width: 130px; 
+    height: 130px; 
+    background: radial-gradient(circle, #fff 0%, #fcd34d 25%, #f59e0b 60%, #b45309 100%); 
+    border-radius: 50%; 
+    box-shadow: 0 0 50px rgba(245, 158, 11, 0.9), 0 0 100px rgba(245, 158, 11, 0.4); 
+    z-index: 25; 
+}
+
+/* ANÉIS DE ÓRBITA */
+.cine-orbit {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Animação genérica de órbita */
+@keyframes orbitSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 1. ÓRBITA INTERNA */
+.orbit-inner {
+    width: 240px;
+    height: 240px;
+    border: 1px dashed rgba(245, 158, 11, 0.28);
+    animation: orbitSpin 10s linear infinite;
+    z-index: 20;
+}
+.planet-inner {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 35% 35%, #fed7aa, #ea580c);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(234, 88, 12, 0.8);
+}
+
+/* 2. ÓRBITA DA TERRA */
+.orbit-earth {
+    width: 420px;
+    height: 420px;
+    border: 1px dashed rgba(59, 130, 246, 0.35);
+    animation: orbitSpin 24s linear infinite;
+    z-index: 22;
+}
+.cine-earth { 
+    position: absolute; 
+    top: 0; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 46px; 
+    height: 46px; 
+    background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8 70%, #0f172a); 
+    border-radius: 50%; 
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.85); 
+}
+
+/* Lua orbitando a Terra */
+.cine-moon-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    animation: orbitSpin 4s linear infinite;
+}
+.cine-moon {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* 3. ÓRBITA EXTERNA (MARTE) */
+.orbit-outer {
+    width: 600px;
+    height: 600px;
+    border: 1px dashed rgba(239, 68, 68, 0.22);
+    animation: orbitSpin 40s linear infinite;
+    z-index: 18;
+}
+.planet-outer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    background: radial-gradient(circle at 35% 35%, #fca5a5, #dc2626 70%, #450a0a);
+    border-radius: 50%;
+    box-shadow: 0 0 16px rgba(220, 38, 38, 0.7);
+}
+
+/* CAIXAS DE TEXTO (LADO DIREITO COM LEITURA PROTEGIDA) */
+.cine-txt-5, .cine-txt-6 { 
+    position: absolute;
+    left: 54vw; 
+    right: auto;
+    top: 50%; 
+    width: min(530px, 40vw);
+    transform: translateY(-50%) translateY(30px); 
+    text-align: left;
+    border-left: 4px solid var(--netflix-red);
+    border-right: none;
+    border-radius: 0 8px 8px 0;
+    background: rgba(8, 8, 12, 0.85);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
+    z-index: 50; 
+}
+
         @keyframes spacePan { from { transform: translate(0,0); } to { transform: translate(-150px, -150px); } }
 
         #cine-choice { background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 65; }
@@ -438,6 +597,72 @@
         @keyframes giantMathShock { 0%, 40% { transform: scale(0.5); opacity: 0; filter: blur(10px); } 45% { transform: scale(1.2); opacity: 1; filter: blur(0); text-shadow: 0 0 50px #3b82f6;} 100% { transform: scale(3); opacity: 0; filter: blur(20px); } }
 
         #cine-ad { background: #000; z-index: 70; }
+
+        /* =========================================================
+           MODAL DE DETALHES DO FILME (ESTILO NETFLIX)
+           ========================================================= */
+        #title-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+            z-index: 1000; display: flex; justify-content: center; align-items: flex-start;
+            overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            padding: 40px 0;
+        }
+        #title-modal-overlay.show { opacity: 1; pointer-events: auto; }
+        
+        .title-modal-container {
+            background: var(--netflix-bg); width: 95%; max-width: 850px;
+            border-radius: 10px; overflow: hidden; position: relative;
+            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8); margin: auto;
+        }
+        #title-modal-overlay.show .title-modal-container { transform: scale(1); }
+        
+        .modal-close-btn {
+            position: absolute; top: 15px; right: 15px; background: #181818;
+            color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%;
+            font-size: 1.2rem; cursor: pointer; z-index: 10; display: flex;
+            align-items: center; justify-content: center; transition: 0.2s;
+        }
+        .modal-close-btn:hover { background: #333; }
+        
+        .modal-hero {
+            height: 380px; position: relative; background-size: cover;
+            background-position: center; background-repeat: no-repeat;
+        }
+        .modal-hero-gradient {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 70%;
+            background: linear-gradient(to top, var(--netflix-bg) 0%, transparent 100%);
+        }
+        .modal-hero-content {
+            position: absolute; bottom: 20px; left: 40px; right: 40px;
+        }
+        .modal-title { font-family: 'Bebas Neue', cursive; font-size: 4rem; line-height: 1; text-shadow: 2px 2px 10px #000; margin-bottom: 15px;}
+        
+        .modal-controls { display: flex; gap: 15px; align-items: center; margin-bottom: 10px;}
+        .modal-btn-play { background: #fff; color: #000; border: none; padding: 10px 25px; font-size: 1.1rem; font-weight: bold; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .modal-btn-play:hover { background: #ccc; }
+        .modal-btn-icon { background: rgba(42,42,42,0.6); color: #fff; border: 2px solid rgba(255,255,255,0.5); width: 45px; height: 45px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s;}
+        .modal-btn-icon:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+        
+        .modal-info-grid {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 30px; padding: 0 40px 40px 40px;
+        }
+        .modal-meta { display: flex; gap: 10px; align-items: center; font-size: 1.1rem; margin-bottom: 15px; font-weight: 600;}
+        .meta-match { color: #46d369; }
+        .meta-age { border: 1px solid #aaa; padding: 1px 6px; font-size: 0.9rem; }
+        .modal-synopsis { font-size: 1.1rem; line-height: 1.6; color: #fff; }
+        .modal-cast { font-size: 0.95rem; color: #777; line-height: 1.5; margin-bottom: 10px;}
+        .modal-cast span { color: #ccc; }
+        
+        .modal-more-like { padding: 0 40px 40px 40px; }
+        .modal-more-like h3 { font-size: 1.5rem; margin-bottom: 20px; color: #fff; }
+        .more-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .more-card { background: #2f2f2f; border-radius: 6px; overflow: hidden; cursor: pointer; transition: 0.3s; }
+        .more-card:hover { transform: scale(1.05); }
+        .more-img { height: 120px; background-size: cover; background-position: center; }
+        .more-info { padding: 10px; display: flex; justify-content: space-between; align-items: center;}
+        .more-info h4 { font-size: 1rem; color: #fff; word-wrap: break-word; }
 
         /* OVERLAYS DE EVENTOS */
         #idle-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
@@ -538,72 +763,47 @@
         <!-- CATÁLOGO GERAL REORGANIZADO -->
         <div class="catalog-container">
             
-            <!-- LINHA 1: LANÇAMENTOS DOS 5 TEMAS (CARDS EM PÉ) -->
-            <h2 class="row-title">Lan&ccedil;amentos da Turma &bull; Os 5 Temas de Filosofia</h2>
+            <!-- LINHA 1: LANÇAMENTOS DOS 5 TEMAS -->
+            <h2 class="row-title">Lançamentos da Turma • Os 5 Temas de Filosofia</h2>
             <div class="posters-container">
-                
-                <!-- TEMA 01 -->
-                <div class="card-portrait p-tema1">
-                    <div class="card-portrait-content">
-                        <span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TEMA 01</span>
-                        <h4>Invocação do Dogma: O julgamento da Escolástica</h4>
-                    </div>
+                <div class="card-portrait p-tema1" onclick="window.openTitleModal('tema-1')">
+                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TEMA 01</span><h4>Invocação do Dogma</h4></div>
                 </div>
-
-                <!-- TEMA 02 (O NOSSO FILME PRINCIPAL) -->
-                <div class="card-portrait p-tema2" style="border-color: var(--netflix-red); box-shadow: 0 0 15px rgba(229,9,20,0.5);" onclick="window.startCinematicMovie()">
-                    <div class="card-portrait-content">
-                        <span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 02 </span>
-                        <h4>Guerra Civil: Empirismo vs Racionalismo</h4>
-                    </div>
+                <div class="card-portrait p-tema2" style="border-color: var(--netflix-red); box-shadow: 0 0 15px rgba(229,9,20,0.5);" onclick="window.openTitleModal('guerra-civil')">
+                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 02 </span><h4>Guerra Civil</h4></div>
                 </div>
-
-                <!-- TEMA 03 -->
-                <div class="card-portrait p-tema3">
-                    <div class="card-portrait-content">
-                        <span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span>
-                        <h4>Devoradores de Espaço-Tempo</h4>
-                    </div>
+                <div class="card-portrait p-tema3" onclick="window.openTitleModal('tema-3')">
+                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span><h4>Devoradores de Espaço-Tempo</h4></div>
                 </div>
-
-                <!-- TEMA 04 -->
-                <div class="card-portrait p-tema4">
-                    <div class="card-portrait-content">
-                        <span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TEMA 04</span>
-                        <h4>Obsessão: O Critério da Falsificabilidade</h4>
-                    </div>
+                <div class="card-portrait p-tema4" onclick="window.openTitleModal('tema-4')">
+                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TEMA 04</span><h4>Obsessão: Falsificabilidade</h4></div>
                 </div>
-
-                <!-- TEMA 05 -->
-                <div class="card-portrait p-tema5">
-                    <div class="card-portrait-content">
-                        <span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span>
-                        <h4>N&atilde;o Olhe para a &Eacute;tica</h4>
-                    </div>
+                <div class="card-portrait p-tema5" onclick="window.openTitleModal('tema-5')">
+                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span><h4>Não Olhe para a Ética</h4></div>
                 </div>
             </div>
 
-            <!-- LINHA 2: SÉRIES E CURTAS DA SALA (CARDS EM PÉ) -->
-            <h2 class="row-title">S&eacute;ries e Curtas de T.I.</h2>
+            <!-- LINHA 2: SÉRIES E CURTAS DE T.I. -->
+            <h2 class="row-title">Séries e Curtas de T.I.</h2>
             <div class="posters-container">
-                <div class="card-portrait p-stranger"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
-                <div class="card-portrait p-dragon"><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
-                <div class="card-portrait p-pix"><div class="card-portrait-content"><h4>Deepfake: O Pre&ccedil;o do Pix</h4></div></div>
-                <div class="card-portrait p-opensource"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
-                <div class="card-portrait p-kpop"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
-                <div class="card-portrait p-procurando"><div class="card-portrait-content"><h4>Procurando IP</h4></div></div>
-                <div class="card-portrait p-nicolas"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
-                <div class="card-portrait p-lalalan"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
+                <div class="card-portrait p-stranger" onclick="window.openTitleModal('stranger-pings')"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
+                <div class="card-portrait p-dragon" onclick="window.openTitleModal('treinar-ia')"><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
+                <div class="card-portrait p-pix" onclick="window.openTitleModal('deepfake-pix')"><div class="card-portrait-content"><h4>Deepfake: O Preço do Pix</h4></div></div>
+                <div class="card-portrait p-opensource" onclick="window.openTitleModal('open-source')"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
+                <div class="card-portrait p-kpop" onclick="window.openTitleModal('kpop')"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
+                <div class="card-portrait p-procurando" onclick="window.openTitleModal('procurando-ip')"><div class="card-portrait-content"><h4>Procurando IP</h4></div></div>
+                <div class="card-portrait p-nicolas" onclick="window.openTitleModal('nicolas')"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
+                <div class="card-portrait p-lalalan" onclick="window.openTitleModal('lalalan')"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
             </div>
 
-            <!-- LINHA 3: TRABALHOS ANTIGOS (CARDS DEITADOS / LANDSCAPE) -->
+            <!-- LINHA 3: TRABALHOS ANTIGOS -->
             <h2 class="row-title">Trabalhos Antigos</h2>
             <div class="landscape-row">
-                <div class="card-landscape p-mitm"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
-                <div class="card-landscape p-firewall"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
-                <div class="card-landscape p-metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
-                <div class="card-landscape p-iot"><div class="card-landscape-content"><h4>Rebeli&atilde;o das Torradeiras</h4></div></div>
-                <div class="card-landscape p-honeypot"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
+                <div class="card-landscape p-mitm" onclick="window.openTitleModal('mitm')"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
+                <div class="card-landscape p-firewall" onclick="window.openTitleModal('firewall')"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
+                <div class="card-landscape p-metaverso" onclick="window.openTitleModal('metaverso')"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
+                <div class="card-landscape p-iot" onclick="window.openTitleModal('iot')"><div class="card-landscape-content"><h4>Rebelião das Torradeiras</h4></div></div>
+                <div class="card-landscape p-honeypot" onclick="window.openTitleModal('honeypot')"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
             </div>
 
         </div>
@@ -733,7 +933,7 @@
                         <div class="lis-choice empirismo" onclick="window.triggerLisChoice(8)">
                             <i class="fa-solid fa-eye"></i><h3>Acreditar nos Sentidos</h3><p>Testar e experimentar (Bacon).</p>
                         </div>
-                        <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(10)">
+                        <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(8)">
                             <i class="fa-solid fa-brain"></i><h3>Duvidar de Tudo</h3><p>Usar apenas a lógica pura (Descartes).</p>
                         </div>
                     </div>
@@ -875,16 +1075,42 @@
         </div>
 
         <!-- 5 & 6: ESPAÇO -->
+        <!-- 5 & 6: ESPAÇO -->
         <div id="cine-space" class="cine-scene">
             <div class="cine-stars"></div>
-            <div class="cine-sun"></div>
-            <div class="cine-earth"></div>
+
+            <!-- SISTEMA SOLAR EM ÓRBITA -->
+            <div class="cine-solar-system">
+                <!-- O Sol central -->
+                <div class="cine-sun"></div>
+
+                <!-- Órbita 1: Planeta interno -->
+                <div class="cine-orbit orbit-inner">
+                    <div class="cine-planet planet-inner"></div>
+                </div>
+
+                <!-- Órbita 2: A Terra e a Lua -->
+                <div class="cine-orbit orbit-earth">
+                    <div class="cine-earth">
+                        <div class="cine-moon-orbit">
+                            <div class="cine-moon"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Órbita 3: Planeta externo -->
+                <div class="cine-orbit orbit-outer">
+                    <div class="cine-planet planet-outer"></div>
+                </div>
+            </div>
+
             <div class="cine-text-box cine-txt-5">
                 <h2 class="cine-title">04. REV. COSMOL&Oacute;GICA</h2>
                 <div class="cine-ticker" id="cine-ticker-5">Copérnico: 'Galera, o Sol tá no meio, não a gente'.</div>
                 <p class="cine-desc">Copérnico muda o centro do tabuleiro! O Sol assume o centro do sistema e a Terra gira em volta dele.</p>
             </div>
             <div class="cine-text-box cine-txt-6">
+                <h2 class="cine-title">04. REV. COSMOL&Oacute;GICA</h2>
                 <div class="cine-ticker" id="cine-ticker-6">Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.</div>
                 <p class="cine-desc">Utilizando o telescópio para comprovar a teoria, Galileu afirmou: "A natureza está escrita em caracteres matemáticos".</p>
             </div>
@@ -901,7 +1127,7 @@
                         <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Acreditar nos Sentidos</h3>
                         <p style="color: #bbb;">Testar e experimentar (Bacon).</p>
                     </div>
-                    <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(10)">
+                    <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(8)">
                         <i class="fa-solid fa-brain"></i>
                         <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Duvidar de Tudo</h3>
                         <p style="color: #bbb;">Usar apenas a lógica pura (Descartes).</p>
@@ -988,6 +1214,51 @@
         </div>
     </div>
 
+    <!-- =======================================================
+         MODAL DE DETALHES (SUBMENU)
+         ======================================================= -->
+    <div id="title-modal-overlay" onclick="window.closeTitleModal(event)">
+        <div class="title-modal-container" id="title-modal-content">
+            <button class="modal-close-btn" onclick="window.closeTitleModal(event, true)"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="modal-hero" id="m-hero">
+                <div class="modal-hero-gradient"></div>
+                <div class="modal-hero-content">
+                    <h1 class="modal-title" id="m-title">Guerra Civil</h1>
+                    <div class="modal-controls">
+                        <button class="modal-btn-play" id="m-btn-play"><i class="fa-solid fa-play"></i> Assistir Filme 3D</button>
+                        <button class="modal-btn-icon"><i class="fa-solid fa-plus"></i></button>
+                        <button class="modal-btn-icon"><i class="fa-regular fa-thumbs-up"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-info-grid">
+                <div>
+                    <div class="modal-meta">
+                        <span class="meta-match" id="m-match">98% Relevante</span>
+                        <span id="m-year">2026</span>
+                        <span class="meta-age" id="m-age">14</span>
+                        <span id="m-duration">1h 25m</span>
+                    </div>
+                    <p class="modal-synopsis" id="m-synopsis">Sinopse do filme vai aqui.</p>
+                </div>
+                <div>
+                    <div class="modal-cast"><span>Elenco:</span> <span id="m-cast">Davi, Maria Helena, Francisco L...</span></div>
+                    <div class="modal-cast"><span>Gêneros:</span> <span id="m-genres">Filosofia, Documentário</span></div>
+                    <div class="modal-cast"><span>Temas:</span> <span id="m-tags">Renascimento, Método Científico</span></div>
+                </div>
+            </div>
+            
+            <div class="modal-more-like">
+                <h3>Recomendações da Turma</h3>
+                <div class="more-grid" id="m-recommendations">
+                    <!-- Cards gerados via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         /* =========================================================
            ROTEIRO ATUALIZADO COM OS 7 APRESENTADORES NA ORDEM
@@ -1027,6 +1298,187 @@
         let tickerIntervalC, tickerIntervalM; 
         let achTimeout, toastTimeout;
         let isLisActive = false;
+
+        /* =========================================================
+           BANCO DE DADOS COMPLETO DA MODAL
+           ========================================================= */
+        const filmesDB = {
+            // ================= TEMAS DE FILOSOFIA =================
+            "tema-1": {
+                title: "INVOCAÇÃO DO DOGMA", subtitle: "O Julgamento da Escolástica",
+                bg: "de_volta_passado.png", match: "92% Relevante", year: "2013", age: "14", duration: "1h 52m",
+                synopsis: "Investigadores do pensamento tentam exorcizar dogmas medievais de uma universidade assombrada por monges aristotélicos. Baseado em fatos reais da Escolástica.",
+                cast: "Vera Formata, Patrick Windows", genres: "Terror Acadêmico, História", tags: "Idade Média, Fé vs Razão", isMain: false
+            },
+            "guerra-civil": {
+                title: "GUERRA CIVIL", subtitle: "EMPIRISMO VS RACIONALISMO",
+                bg: "guerra_civil.png", match: "99% Relevante", year: "2016", age: "12", duration: "2h 27m",
+                synopsis: "A Revolução Científica Moderna, a queda dos dogmas e a forja do Método Científico por Newton. Acompanhe a maior batalha intelectual da história entre defensores da experiência prática e adeptos da lógica pura.",
+                cast: "Davi, Maria Helena, Francisco L, Pedro, Marcelo, Samuel, JP Santos", genres: "Ação, Documentário, Filosofia", tags: "Heliocentrismo, Bacon, Descartes", isMain: true
+            },
+            "tema-3": {
+                title: "DEVORADORES DO ESPAÇO TEMPO", subtitle: "",
+                bg: "doutor_einstein.png", match: "88% Relevante", year: "2016", age: "10", duration: "1h 55m",
+                synopsis: "Um físico brilhante sofre um acidente e descobre que o tempo e o espaço são relativos, precisando proteger o tecido da realidade contra dogmáticos quânticos.",
+                cast: "Benedict Calculatch, Rachel McAtoms", genres: "Ficção Científica, Fantasia", tags: "Física Moderna, Relatividade", isMain: false
+            },
+            "tema-4": {
+                title: "OBSESSÃO", subtitle: "O CRITÉRIO DA FALSIFICABILIDADE",
+                bg: "fragmentado.png", match: "85% Relevante", year: "2016", age: "14", duration: "1h 57m",
+                synopsis: "Um cientista com múltiplas hipóteses precisa encontrar uma forma de refutar todas elas (Popper) antes que sua personalidade pseudocientífica assuma o controle.",
+                cast: "James McArquivo, Anya Taylor-Join", genres: "Suspense Psicológico", tags: "Ciência vs Pseudociência", isMain: false
+            },
+            "tema-5": {
+                title: "NÃO OLHE PARA A ÉTICA", subtitle: "",
+                bg: "nao_olhe_etica.png", match: "95% Relevante", year: "2021", age: "16", duration: "2h 18m",
+                synopsis: "Dois desenvolvedores de software descobrem que uma IA sem filtros morais está prestes a destruir a sociedade, mas ninguém na internet parece se importar.",
+                cast: "Leonardo DiCaptcha, Jennifer Latência", genres: "Comédia de Erros, Sátira", tags: "Tecnologia, Bioética", isMain: false
+            },
+
+            // ================= SÉRIES E CURTAS DE T.I. =================
+            "stranger-pings": {
+                title: "STRANGER PINGS", subtitle: "",
+                bg: "stranger_pings.jpg", match: "98% Relevante", year: "2016", age: "12", duration: "4 Temporadas",
+                banner: "bstranger_pings.jpg",
+                synopsis: "Quando a conexão de uma pequena cidade desaparece, um grupo de jovens nerds descobre um universo paralelo sombrio onde a latência é infinita e o ping é de 999ms.",
+                cast: "Millie Byte Brown, Finn Hardware", genres: "Suspense, Nostalgia Anos 80", tags: "Redes, Mundo Invertido", isMain: false
+            },
+            "treinar-ia": {
+                title: "COMO TREINAR A SUA I.A.", subtitle: "",
+                bg: "como_treinar_ia.jpg", match: "94% Relevante", year: "2010", age: "Livre", duration: "1h 38m",
+                banner: "btreinar_ia.jpg",
+                synopsis: "Um jovem programador viking desafia as tradições de sua vila ao fazer amizade com uma Inteligência Artificial considerada perigosa e indomável.",
+                cast: "Jay Barch Linux, America Ferramenta", genres: "Animação, Aventura", tags: "Machine Learning, Amizade", isMain: false
+            },
+            "deepfake-pix": {
+                title: "DEEPFAKE", subtitle: "O PREÇO DO PIX",
+                bg: "deepfake_pix.jpg",
+                banner: "banner_deepfake.jpg", // <--- Adicione sua imagem de banner larga aqui
+                trailer: "deepfake.mp3",       // <--- Arquivo de áudio que será tocado
+                match: "90% Relevante", year: "2022", age: "14", duration: "1h 54m",
+                synopsis: "Um documentário tenso sobre um grupo de cibercriminosos que utiliza inteligência artificial para clonar rostos e esvaziar contas bancárias em segundos.",
+                cast: "Ryan Hacking, Emma Token", genres: "Documentário Criminal, Suspense", tags: "Segurança Digital, Golpes", isMain: false
+            },
+            "open-source": {
+                title: "OPEN SOURCE", subtitle: "",
+                bg: "open_source.jpg", match: "97% Relevante", year: "2023", age: "16", duration: "3h 00m",
+                banner: "bopen_source.jpg",
+                synopsis: "A história épica e dramática do programador que liderou o projeto de criação do sistema livre mais poderoso do mundo, mudando o rumo da tecnologia para sempre.",
+                cast: "Cillian Motherboard, Robert Download Jr.", genres: "Drama Biográfico, Épico", tags: "Linux, Código Aberto", isMain: false
+            },
+            "kpop": {
+                title: "GUERREIRAS DO POP 3", subtitle: "",
+                bg: "guerreiras_kpop.jpg", match: "82% Relevante", year: "2017", age: "10", duration: "1h 33m",
+                banner: "bguerreiras_kpop.jpg",
+                synopsis: "O famoso grupo de idols precisa usar suas habilidades de canto, coreografia sincronizada e injeção de SQL para desativar um vírus mundial durante a turnê de despedida.",
+                cast: "Anna Kernel, Rebel Wireless", genres: "Musical, Comédia de Ação", tags: "K-pop, Hacking", isMain: false
+            },
+            "procurando-ip": {
+                title: "PROCURANDO IP", subtitle: "",
+                bg: "procurando_ip.jpg", match: "96% Relevante", year: "2003", age: "Livre", duration: "1h 40m",
+                banner: "bprocuando_ip.jpg",
+                synopsis: "Um pacotinho de dados se perde na imensidão da Deep Web, e seu pai precisa atravessar roteadores perigosos e firewalls gigantes para trazê-lo de volta para casa.",
+                cast: "Albert Boots, Ellen DeGe-Network", genres: "Animação, Família", tags: "Redes, Roteamento", isMain: false
+            },
+            "nicolas": {
+                title: "NICOLAS O GRANDE", subtitle: "",
+                bg: "nicolas_o_grande.jpg", match: "80% Relevante", year: "2004", age: "16", duration: "2h 55m",
+                banner: "bnicolas_o_grande.jpg",
+                synopsis: "A jornada épica de um jovem imperador dos códigos que conquistou todos os repositórios do mundo conhecido e unificou linguagens de programação antes dos 30 anos.",
+                cast: "Colin Firewall, Angelina Java", genres: "Ação Histórica, Guerra", tags: "Biografia, Império", isMain: false
+            },
+            "lalalan": {
+                title: "LA LA LAN", subtitle: "",
+                bg: "la_la_lan.jpg", match: "91% Relevante", year: "2016", age: "12", duration: "2h 08m",
+                banner: "bla_la_lan.jpg",
+                synopsis: "Um técnico de infraestrutura e uma web designer tentam equilibrar o amor e a estabilidade da conexão local enquanto buscam seus sonhos no Vale do Silício.",
+                cast: "Ryan Hostling, Emma Storage", genres: "Musical, Romance", tags: "Rede Local, Sonhos", isMain: false
+            },
+
+            // ================= TRABALHOS ANTIGOS =================
+            "mitm": {
+                title: "O HOMEM NO MEIO", subtitle: "",
+                bg: "homem_no_meio.jpg", match: "87% Relevante", year: "2013", age: "12", duration: "2h 23m",
+                banner: "homem_no_meio.jpg",
+                synopsis: "Um ataque cibernético silencioso ameaça interceptar todas as mensagens da cidade. Quem é o vilão invisível que ouve tudo o que você digita?",
+                cast: "Henry Cabo, Amy Adm", genres: "Ação, Super-herói", tags: "Man in the Middle, Criptografia", isMain: false
+            },
+            "firewall": {
+                title: "A MURALHA DE FOGO", subtitle: "",
+                bg: "muralha_de_fogo.jpg", match: "84% Relevante", year: "2006", age: "14", duration: "1h 45m",
+                banner: "muralha_de_fogo.jpg",
+                synopsis: "Um especialista em segurança digital é forçado a hackear o próprio sistema bancário impenetrável que ele projetou para salvar sua família de sequestradores.",
+                cast: "Harrison For-loop, Paul Bot", genres: "Ação, Suspense", tags: "Segurança de Redes", isMain: false
+            },
+            "metaverso": {
+                title: "FUGA DO METAVERSO", subtitle: "",
+                bg: "fuga_metaverso.jpg", match: "93% Relevante", year: "1999", age: "14", duration: "2h 16m",
+                banner: "fuga_metaverso.jpg",
+                synopsis: "Preso em uma realidade virtual opressora controlada por grandes corporações, um usuário comum precisa encontrar a saída de emergência antes que sua mente seja formatada.",
+                cast: "Keanu Ram, Carrie-Anne Mouse", genres: "Ficção Científica, Ação", tags: "Realidade Virtual, Matrix", isMain: false
+            },
+            "iot": {
+                title: "REBELIÃO DAS TORRADEIRAS", subtitle: "",
+                bg: "rebeliao_torradeiras.jpg", match: "89% Relevante", year: "2003", age: "14", duration: "1h 49m",
+                banner: "rebeliao_torradeiras.jpg",
+                synopsis: "O dia do juízo final começou pela cozinha. Eletrodomésticos inteligentes ganham consciência, conectam-se à rede e decidem que os humanos não sabem fazer o próprio café.",
+                cast: "Arnold Search-negger, Nick Stall", genres: "Ação, Ficção Pós-Apocalíptica", tags: "IoT, Inteligência Artificial", isMain: false
+            },
+            "honeypot": {
+                title: "O POTE DE MEL", subtitle: "",
+                bg: "pote_de_mel.jpg", match: "78% Relevante", year: "2011", age: "Livre", duration: "1h 03m",
+                banner: "pote_de_mel.jpg",
+                synopsis: "Uma armadilha cibernética irresistível disfarçada de servidor vulnerável atrai os piores hackers da internet para um labirinto fofinho sem saída.",
+                cast: "Jim Commits, John Filter", genres: "Animação, Suspense Fofo", tags: "Segurança, Honeypot", isMain: false
+            }
+        };
+
+        window.openTitleModal = function(movieId) {
+            const data = filmesDB[movieId] || filmesDB["guerra-civil"]; // Fallback de segurança
+            
+            // Popula os dados
+            document.getElementById('m-title').innerHTML = data.title + (data.subtitle ? `<br><span style="font-size:1.5rem; color:var(--netflix-red);">${data.subtitle}</span>` : '');
+            document.getElementById('m-hero').style.backgroundImage = `url('${data.bg}'), linear-gradient(135deg, #222, #000)`;
+            document.getElementById('m-match').textContent = data.match;
+            document.getElementById('m-year').textContent = data.year;
+            document.getElementById('m-age').textContent = data.age;
+            document.getElementById('m-duration').textContent = data.duration;
+            document.getElementById('m-synopsis').textContent = data.synopsis;
+            document.getElementById('m-cast').textContent = data.cast;
+            document.getElementById('m-genres').textContent = data.genres;
+            document.getElementById('m-tags').textContent = data.tags;
+
+            // Configura o botão de Play
+            const playBtn = document.getElementById('m-btn-play');
+            if(data.isMain) {
+                playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Filme 3D';
+                playBtn.onclick = function() { 
+                    window.closeTitleModal(null, true);
+                    window.startCinematicMovie(); 
+                };
+            } else {
+                playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Em Breve';
+                playBtn.onclick = null;
+            }
+
+            // Gera as recomendações dinâmicas (Usando suas imagens de T.I. como exemplo)
+            const recContainer = document.getElementById('m-recommendations');
+            recContainer.innerHTML = `
+                <div class="more-card"><div class="more-img" style="background-image:url('stranger_pings.jpg')"></div><div class="more-info"><h4>Stranger Pings</h4><i class="fa-solid fa-plus"></i></div></div>
+                <div class="more-card"><div class="more-img" style="background-image:url('como_treinar_ia.jpg')"></div><div class="more-info"><h4>Treinar IA</h4><i class="fa-solid fa-plus"></i></div></div>
+                <div class="more-card"><div class="more-img" style="background-image:url('procurando_ip.jpg')"></div><div class="more-info"><h4>Procurando IP</h4><i class="fa-solid fa-plus"></i></div></div>
+            `;
+
+            // Mostra o Modal bloqueando a rolagem do fundo
+            document.getElementById('title-modal-overlay').classList.add('show');
+        }
+
+        window.closeTitleModal = function(e, force = false) {
+            // Fecha apenas se clicar no fundo escuro (overlay) ou no botão X
+            if (force || e.target.id === 'title-modal-overlay') {
+                document.getElementById('title-modal-overlay').classList.remove('show');
+            }
+        }
 
         function isModalOpen() {
             const idle = document.getElementById('idle-overlay');
@@ -1166,26 +1618,34 @@
         }
 
         /* ESCOLHA COMPARTILHADA */
-        window.triggerLisChoice = function(targetIdx) {
-            if (isLisActive) return;
-            isLisActive = true;
-            document.getElementById('lis-dark-overlay').style.display = 'block';
-            document.getElementById('lis-notification').style.opacity = '1';
-            
-            setTimeout(() => {
-                document.getElementById('lis-notification').style.opacity = '0';
-                document.getElementById('lis-dark-overlay').style.display = 'none';
+        /* ESCOLHA COMPARTILHADA (SEMPRE SEGUE A ORDEM LINEAR NO SLIDE 8) */
+            window.triggerLisChoice = function(targetIdx) {
+                if (isLisActive) return;
+                isLisActive = true;
                 
-                const isMovie = document.getElementById('cinematic-stage').classList.contains('active');
-                if (script[targetIdx] && script[targetIdx].presenter) { 
-                    applyPresenter(script[targetIdx].presenter, true); 
-                }
+                // Força a ir sempre para o slide 8 (Empirismo -> depois Racionalismo)
+                const nextIdx = 8;
+
+                document.getElementById('lis-dark-overlay').style.display = 'block';
+                document.getElementById('lis-notification').style.opacity = '1';
                 
-                if (isMovie) { updateCineCamera(targetIdx); } 
-                else { renderSlide(targetIdx); }
-                isLisActive = false;
-            }, 3000);
-        }
+                setTimeout(() => {
+                    document.getElementById('lis-notification').style.opacity = '0';
+                    document.getElementById('lis-dark-overlay').style.display = 'none';
+                    
+                    const isMovie = document.getElementById('cinematic-stage').classList.contains('active');
+                    if (script[nextIdx] && script[nextIdx].presenter) { 
+                        applyPresenter(script[nextIdx].presenter, true); 
+                    }
+                    
+                    if (isMovie) { 
+                        updateCineCamera(nextIdx); 
+                    } else { 
+                        renderSlide(nextIdx); 
+                    }
+                    isLisActive = false;
+                }, 3000);
+            }
 
         document.getElementById('btn-next-slide').addEventListener('click', () => { 
             if (isLisActive || isModalOpen()) return; 
@@ -1315,17 +1775,22 @@
                 });
 
                 // Rolar para os lados com a roda do mouse (Wheel)
-                slider.addEventListener('wheel', (e) => {
-                    if (e.deltaY !== 0) {
+                lider.addEventListener('wheel', (e) => {
+                    // Se o usuário estiver usando Shift ou rolando na horizontal (trackpads / mouses com scroll horizontal)
+                    if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                         e.preventDefault();
-                        slider.scrollLeft += e.deltaY * 1.2;
+                        const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+                        slider.scrollLeft += delta;
                     }
+                    // Se for rolagem vertical comum (sem Shift), não faz nada e deixa a página rolar normalmente para cima/baixo!
                 }, { passive: false });
             });
         }
 
         // Inicia o sistema de arraste assim que a página carregar
         window.addEventListener('DOMContentLoaded', initDragToScroll);
+
+        
     </script>
 </body>
 </html>
