@@ -12,6 +12,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
+
+        /* =========================================================
+           PLAYER DE VÍDEO IN-SITE
+           ========================================================= */
+        .video-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; z-index: 10000; display: flex;
+            align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .video-overlay.show { opacity: 1; pointer-events: auto; }
+        
+        .close-video-btn {
+            position: absolute; top: 30px; left: 40px; z-index: 10001;
+            background: transparent; color: #fff; border: none;
+            font-size: 1.5rem; font-weight: bold; cursor: pointer; 
+            display: flex; align-items: center; gap: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9); transition: color 0.2s;
+        }
+        .close-video-btn:hover { color: var(--netflix-red); }
+        
+        #main-video-element {
+            width: 100%; height: 100%; max-height: 100vh; outline: none;
+            background: #000;
+        }
+
         /* =========================================
            VARIÁVEIS E BASE GERAL
            ========================================= */
@@ -85,13 +111,13 @@
         }
         
         /* AVATARES DA EQUIPE */
-        .av-davi        { background-image: url('davi.jpg'); background-color: #6366f1; }
-        .av-maria       { background-image: url('maria.jpg'); background-color: #ec4899; }
-        .av-francisco   { background-image: url('francisco.jpg'); background-color: #E50914; }
-        .av-pedro       { background-image: url('pedro.jpg'); background-color: #10b981; }
-        .av-marcelo     { background-image: url('marcelo.jpg'); background-color: #f59e0b; }
-        .av-samuel      { background-image: url('samuel.jpg'); background-color: #06b6d4; }
-        .av-jsantos     { background-image: url('jsantos.jpg'); background-color: #3b82f6; }
+        .av-davi        { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/davi.jpg&w=150&output=webp'); background-color: #6366f1; }
+        .av-maria       { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/maria.jpg&w=150&output=webp'); background-color: #ec4899; }
+        .av-francisco   { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/francisco.jpg&w=150&output=webp'); background-color: #E50914; }
+        .av-pedro       { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/pedro.jpg&w=150&output=webp'); background-color: #10b981; }
+        .av-marcelo     { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/marcelo.jpg&w=150&output=webp'); background-color: #f59e0b; }
+        .av-samuel      { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/samuel.jpg&w=150&output=webp'); background-color: #06b6d4; }
+        .av-jsantos     { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/jsantos.jpg&w=150&output=webp'); background-color: #3b82f6; }
         
         .profile-card:hover .avatar { outline: 4px solid #fff; transform: scale(1.06); box-shadow: 0 10px 25px rgba(0,0,0,0.6);}
         .profile-card span { color: var(--text-dim); font-size: 1.15rem; transition: 0.3s; font-weight: 600;}
@@ -100,7 +126,7 @@
         /* LOBBY / HOME */
         .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
-        .hero { height: 90vh; min-height: 620px; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 75%), linear-gradient(to top, #141414 0%, transparent 20%), url('banner.png') right center/contain no-repeat, #141414; }
+        .hero { height: 90vh; min-height: 620px; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 75%), linear-gradient(to top, #141414 0%, transparent 20%), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/banner.png&w=1200&output=webp') right center/contain no-repeat, #141414; }
         .hero-content { max-width: 520px; margin-top: 40px;}
         .hero h1 { font-family: 'Bebas Neue', cursive; font-size: 4.8rem; margin-bottom: 5px; text-shadow: 2px 2px 15px rgba(0,0,0,0.9); line-height: 0.95; }
         .hero-buttons { display: flex; gap: 15px; margin-top: 25px; }
@@ -200,28 +226,28 @@
         .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.2; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
         /* IMAGENS DOS 5 TEMAS */
-        .p-tema1 { background-image: url('de_volta_passado.png'), linear-gradient(135deg, #2b1055, #0a0a14); }
-        .p-tema2 { background-image: url('guerra_civil.png'), linear-gradient(135deg, #E50914, #1a0003); }
-        .p-tema3 { background-image: url('doutor_einstein.png'), linear-gradient(135deg, #0052d4, #0f2027); }
-        .p-tema4 { background-image: url('fragmentado.png'), linear-gradient(135deg, #434343, #000000); }
-        .p-tema5 { background-image: url('nao_olhe_etica.png'), linear-gradient(135deg, #11998e, #1f1c18); }
+        .p-tema1 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/invocacao_do_dogma.png&w=300&output=webp'), linear-gradient(135deg, #2b1055, #0a0a14); }
+        .p-tema2 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/guerra_civil.png&w=300&output=webp'), linear-gradient(135deg, #E50914, #1a0003); }
+        .p-tema3 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/devoradores_espaco_tempo.png&w=300&output=webp'), linear-gradient(135deg, #0052d4, #0f2027); }
+        .p-tema4 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/obsessao.png&w=300&output=webp'), linear-gradient(135deg, #434343, #000000); }
+        .p-tema5 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/nao_olhe_etica.png&w=300&output=webp'), linear-gradient(135deg, #11998e, #1f1c18); }
 
         /* IMAGENS DE T.I. E SÉRIES */
-        .p-stranger   { background-image: url('stranger_pings.jpg'), linear-gradient(135deg, #2b1055, #7597de); }
-        .p-dragon     { background-image: url('como_treinar_ia.jpg'), linear-gradient(135deg, #1b2838, #2a475e); }
-        .p-pix        { background-image: url('deepfake_pix.jpg'), linear-gradient(135deg, #0f2027, #203a43); }
-        .p-kpop       { background-image: url('guerreiras_kpop.jpg'), linear-gradient(135deg, #654ea3, #eaafc8); }
-        .p-nicolas    { background-image: url('nicolas_o_grande.jpg'), linear-gradient(135deg, #3a1c71, #d76d77); }
-        .p-lalalan    { background-image: url('la_la_lan.jpg'), linear-gradient(135deg, #134e5e, #71b280); }
-        .p-opensource { background-image: url('open_source.jpg'), linear-gradient(135deg, #11998e, #38ef7d); }
-        .p-procurando { background-image: url('procurando_ip.jpg'), linear-gradient(135deg, #005aa7, #fffde4); }
-        .p-honeypot   { background-image: url('pote_de_mel.jpg'), linear-gradient(135deg, #f12711, #f5af19); }
-        .p-mitm       { background-image: url('homem_no_meio.jpg'), linear-gradient(135deg, #232526, #414345); }
-        .p-firewall   { background-image: url('muralha_de_fogo.jpg'), linear-gradient(135deg, #e52d27, #b31217); }
-        .p-metaverso  { background-image: url('fuga_metaverso.jpg'), linear-gradient(135deg, #8a2387, #e94057); }
-        .p-iot        { background-image: url('rebeliao_torradeiras.jpg'), linear-gradient(135deg, #4b6cb7, #182848); }
+        .p-stranger   { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/stranger_pings.jpg&w=300&output=webp'), linear-gradient(135deg, #2b1055, #7597de); }
+        .p-dragon     { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/como_treinar_ia.jpg&w=300&output=webp'), linear-gradient(135deg, #1b2838, #2a475e); }
+        .p-pix        { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/deepfake_pix.jpg&w=300&output=webp'), linear-gradient(135deg, #0f2027, #203a43); }
+        .p-kpop       { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/guerreiras_kpop.jpg&w=300&output=webp'), linear-gradient(135deg, #654ea3, #eaafc8); }
+        .p-nicolas    { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/nicolas_o_grande.jpg&w=300&output=webp'), linear-gradient(135deg, #3a1c71, #d76d77); }
+        .p-lalalan    { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/la_la_lan.jpg&w=300&output=webp'), linear-gradient(135deg, #134e5e, #71b280); }
+        .p-opensource { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/open_source.jpg&w=300&output=webp'), linear-gradient(135deg, #11998e, #38ef7d); }
+        .p-procurando { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/procurando_ip.jpg&w=300&output=webp'), linear-gradient(135deg, #005aa7, #fffde4); }
+        .p-honeypot   { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/pote_de_mel.jpg&w=300&output=webp'), linear-gradient(135deg, #f12711, #f5af19); }
+        .p-mitm       { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/homem_no_meio.jpg&w=300&output=webp'), linear-gradient(135deg, #232526, #414345); }
+        .p-firewall   { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/muralha_de_fogo.jpg&w=300&output=webp'), linear-gradient(135deg, #e52d27, #b31217); }
+        .p-metaverso  { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/fuga_metaverso.jpg&w=300&output=webp'), linear-gradient(135deg, #8a2387, #e94057); }
+        .p-iot        { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/rebeliao_torradeiras.jpg&w=300&output=webp'), linear-gradient(135deg, #4b6cb7, #182848); }
 
-        .details-hero { height: 85vh; min-height: 600px; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('aff.png'), #1c1c1c center/cover no-repeat; }
+        .details-hero { height: 85vh; min-height: 600px; position: relative; padding: 0 4%; display: flex; align-items: center; background: linear-gradient(to right, #141414 40%, transparent 100%), linear-gradient(to top, #141414 0%, transparent 20%), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/aff.png&w=1200&output=webp'), #1c1c1c center/cover no-repeat; }
         .details-content { max-width: 600px; z-index: 2; margin-top: 50px; }
         .details-content h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; line-height: 1; margin-bottom: 15px; }
 
@@ -253,7 +279,7 @@
         .rpg-top { background: #222; height: 40px; display: flex; align-items: center; padding: 0 15px; gap: 10px; border-bottom: 2px solid var(--rpg-gold); z-index: 5; position: relative; font-family: 'Bebas Neue', cursive; font-size: 1.2rem; letter-spacing: 1px;}
         .sim-screen { flex-grow: 1; position: relative; width: 100%; background: #1a1a1a; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
 
-        .map-pan { position: absolute; top:0; left:0; width: 200%; height: 100%; background: url('aff.png'), #222 repeat-x; background-size: auto 100%; animation: panMapBg 30s linear infinite; opacity: 0.4; }
+        .map-pan { position: absolute; top:0; left:0; width: 200%; height: 100%; background: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/aff.png&w=1200&output=webp'), #222 repeat-x; background-size: auto 100%; animation: panMapBg 30s linear infinite; opacity: 0.4; }
         @keyframes panMapBg { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         
         .geo-system { position: relative; width: 220px; height: 220px; border: 4px dashed #555; border-radius: 50%; display: flex; align-items: center; justify-content: center;}
@@ -1320,7 +1346,8 @@
             // ================= TEMAS DE FILOSOFIA =================
             "tema-1": {
                 title: "INVOCAÇÃO DO DOGMA", subtitle: "O Julgamento da Escolástica",
-                bg: "de_volta_passado.png", match: "92% Relevante", year: "2013", age: "14", duration: "1h 52m",
+                bg: "invocacao_do_dogma.png", // <--- MUDOU AQUI
+                match: "92% Relevante", year: "2013", age: "14", duration: "1h 52m",
                 synopsis: "Investigadores do pensamento tentam exorcizar dogmas medievais de uma universidade assombrada por monges aristotélicos. Baseado em fatos reais da Escolástica.",
                 cast: "Vera Formata, Patrick Windows", genres: "Terror Acadêmico, História", tags: "Idade Média, Fé vs Razão", isMain: false
             },
@@ -1332,21 +1359,17 @@
             },
             "tema-3": {
                 title: "DEVORADORES DO ESPAÇO TEMPO", subtitle: "",
-                bg: "doutor_einstein.png", match: "88% Relevante", year: "2016", age: "10", duration: "1h 55m",
+                bg: "devoradores_espaco_tempo.png", // <--- MUDOU AQUI
+                match: "88% Relevante", year: "2016", age: "10", duration: "1h 55m",
                 synopsis: "Um físico brilhante sofre um acidente e descobre que o tempo e o espaço são relativos, precisando proteger o tecido da realidade contra dogmáticos quânticos.",
                 cast: "Benedict Calculatch, Rachel McAtoms", genres: "Ficção Científica, Fantasia", tags: "Física Moderna, Relatividade", isMain: false
             },
             "tema-4": {
                 title: "OBSESSÃO", subtitle: "O CRITÉRIO DA FALSIFICABILIDADE",
-                bg: "fragmentado.png", match: "85% Relevante", year: "2016", age: "14", duration: "1h 57m",
+                bg: "obsessao.png", // <--- MUDOU AQUI
+                match: "85% Relevante", year: "2016", age: "14", duration: "1h 57m",
                 synopsis: "Um cientista com múltiplas hipóteses precisa encontrar uma forma de refutar todas elas (Popper) antes que sua personalidade pseudocientífica assuma o controle.",
                 cast: "James McArquivo, Anya Taylor-Join", genres: "Suspense Psicológico", tags: "Ciência vs Pseudociência", isMain: false
-            },
-            "tema-5": {
-                title: "NÃO OLHE PARA A ÉTICA", subtitle: "",
-                bg: "nao_olhe_etica.png", match: "95% Relevante", year: "2021", age: "16", duration: "2h 18m",
-                synopsis: "Dois desenvolvedores de software descobrem que uma IA sem filtros morais está prestes a destruir a sociedade, mas ninguém na internet parece se importar.",
-                cast: "Leonardo DiCaptcha, Jennifer Latência", genres: "Comédia de Erros, Sátira", tags: "Tecnologia, Bioética", isMain: false
             },
 
             // ================= SÉRIES E CURTAS DE T.I. =================
@@ -1464,7 +1487,7 @@
             
             // Popula os dados de texto e imagem
             document.getElementById('m-title').innerHTML = data.title + (data.subtitle ? `<br><span style="font-size:1.5rem; color:var(--netflix-red);">${data.subtitle}</span>` : '');
-            document.getElementById('m-hero').style.backgroundImage = `url('${imgBackground}'), linear-gradient(135deg, #222, #000)`;
+            document.getElementById('m-hero').style.backgroundImage = `url('${linkOtimizado}'), linear-gradient(135deg, #222, #000)`;
             document.getElementById('m-match').textContent = data.match;
             document.getElementById('m-year').textContent = data.year;
             document.getElementById('m-age').textContent = data.age;
@@ -1475,6 +1498,7 @@
             document.getElementById('m-tags').textContent = data.tags;
 
             const playBtn = document.getElementById('m-btn-play');
+            const linkOtimizado = `https://wsrv.nl/?url=https://SEU_USUARIO.github.io/SEU_REPOSITORIO/${imgBackground}&w=800&output=webp`;
             
             if(data.isMain) {
                 playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Filme 3D';
@@ -1485,19 +1509,14 @@
             } else if (data.trailer) {
                 playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Trailer';
                 
-                // AÇÃO 1: Clique manual abre em tela cheia com som
+                // AÇÃO 1: Clique manual abre o player in-site
                 playBtn.onclick = function() {
-                    clearTimeout(trailerTimeout); // Impede o autoplay de fundo se clicou antes
+                    clearTimeout(trailerTimeout); // Impede o autoplay de fundo
                     if (videoEl) {
-                        videoEl.src = data.trailer;
-                        videoEl.muted = false; // Som ativado
-                        videoEl.play();
-                        videoEl.classList.add('playing');
-                        
-                        // Força tela cheia
-                        if (videoEl.requestFullscreen) { videoEl.requestFullscreen(); }
-                        else if (videoEl.webkitRequestFullscreen) { videoEl.webkitRequestFullscreen(); }
+                        videoEl.pause(); // Pausa o vídeo de fundo da modal
+                        videoEl.classList.remove('playing');
                     }
+                    window.openVideoPlayer(data.trailer); // Abre o novo player
                 };
 
                 // AÇÃO 2: Autoplay automático após 5 segundos (sem som)
@@ -1568,6 +1587,22 @@
             }
         }
 
+        window.openVideoPlayer = function(videoSrc) {
+            const overlay = document.getElementById('custom-video-player');
+            const video = document.getElementById('main-video-element');
+            video.src = videoSrc;
+            overlay.classList.add('show');
+            video.play();
+        }
+
+        window.closeVideoPlayer = function() {
+            const overlay = document.getElementById('custom-video-player');
+            const video = document.getElementById('main-video-element');
+            video.pause();
+            video.removeAttribute('src'); // Limpa o vídeo
+            overlay.classList.remove('show');
+        }
+
         // Listener de Segurança: Pausa o vídeo caso o usuário aperte ESC para sair da tela cheia
         document.addEventListener('fullscreenchange', () => {
             if (!document.fullscreenElement) {
@@ -1586,10 +1621,17 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
             const target = document.getElementById(id);
             if (target) target.classList.add('active');
+            
             if (id !== 'player-screen' && id !== 'cinematic-stage') {
                 const idle = document.getElementById('idle-overlay');
                 if (idle) idle.style.display = 'none';
                 isLisActive = false;
+                
+                // CORREÇÃO: Limpa os intervalos para não travar a memória
+                clearInterval(tickerIntervalC);
+                clearInterval(tickerIntervalM);
+                clearTimeout(achTimeout);
+                clearTimeout(toastTimeout);
             }
         }
         
@@ -1833,52 +1875,51 @@
                 let scrollLeft;
                 let hasMoved = false;
 
+                // --- EVENTOS DE MOUSE (PC) ---
                 slider.addEventListener('mousedown', (e) => {
-                    isDown = true;
-                    hasMoved = false;
-                    slider.classList.add('active-drag');
-                    startX = e.pageX - slider.offsetLeft;
-                    scrollLeft = slider.scrollLeft;
+                    isDown = true; hasMoved = false; slider.classList.add('active-drag');
+                    startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft;
                 });
-
-                slider.addEventListener('mouseleave', () => {
-                    isDown = false;
-                    slider.classList.remove('active-drag');
-                });
-
-                slider.addEventListener('mouseup', () => {
-                    isDown = false;
-                    slider.classList.remove('active-drag');
-                });
-
+                slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('active-drag'); });
+                slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active-drag'); });
                 slider.addEventListener('mousemove', (e) => {
                     if (!isDown) return;
-                    e.preventDefault();
-                    hasMoved = true;
+                    e.preventDefault(); hasMoved = true;
                     const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.8; // Sensibilidade de arraste
+                    const walk = (x - startX) * 1.8;
                     slider.scrollLeft = scrollLeft - walk;
                 });
 
-                // Evita disparar cliques nos cards se o usuário estava arrastando a tela
+                // --- EVENTOS DE TOQUE (CELULAR) ---
+                slider.addEventListener('touchstart', (e) => {
+                    isDown = true; hasMoved = false;
+                    startX = e.touches[0].pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+                }, {passive: true});
+                slider.addEventListener('touchend', () => { isDown = false; });
+                slider.addEventListener('touchmove', (e) => {
+                    if (!isDown) return;
+                    hasMoved = true;
+                    const x = e.touches[0].pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 1.8;
+                    slider.scrollLeft = scrollLeft - walk;
+                }, {passive: true});
+
+                // Evita disparar cliques nos cards se o usuário estava arrastando
                 slider.querySelectorAll('.card-portrait, .card-landscape').forEach(card => {
                     card.addEventListener('click', (e) => {
-                        if (hasMoved) {
-                            e.stopImmediatePropagation();
-                            hasMoved = false;
-                        }
+                        if (hasMoved) { e.stopImmediatePropagation(); hasMoved = false; }
                     }, true);
                 });
 
-                // Rolar para os lados com a roda do mouse (Wheel)
-                lider.addEventListener('wheel', (e) => {
-                    // Se o usuário estiver usando Shift ou rolando na horizontal (trackpads / mouses com scroll horizontal)
+                // --- ROLAGEM COM A RODA DO MOUSE (WHEEL) ---
+                // CORREÇÃO: 'slider' em vez de 'lider'
+                slider.addEventListener('wheel', (e) => {
                     if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                         e.preventDefault();
                         const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
                         slider.scrollLeft += delta;
                     }
-                    // Se for rolagem vertical comum (sem Shift), não faz nada e deixa a página rolar normalmente para cima/baixo!
                 }, { passive: false });
             });
         }
@@ -1886,7 +1927,15 @@
         // Inicia o sistema de arraste assim que a página carregar
         window.addEventListener('DOMContentLoaded', initDragToScroll);
 
-        
-    </script>
+    </script> <!-- O SCRIPT DEVE TERMINAR AQUI -->
+
+    <!-- O HTML DO PLAYER DEVE FICAR FORA DO SCRIPT -->
+    <div id="custom-video-player" class="video-overlay">
+        <button class="close-video-btn" onclick="window.closeVideoPlayer()">    
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+        </button>
+        <video id="main-video-element" controls playsinline></video>
+    </div>
+
 </body>
 </html>
