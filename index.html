@@ -1472,7 +1472,7 @@
 
         let trailerTimeout; // Controla o tempo de 5 segundos
 
-        window.openTitleModal = function(movieId) {
+       window.openTitleModal = function(movieId) {
             const data = filmesDB[movieId] || filmesDB["guerra-civil"]; 
             const imgBackground = data.banner ? data.banner : data.bg;
             
@@ -1485,9 +1485,13 @@
                 videoEl.classList.remove('playing');
             }
             
-            // Popula os dados de texto e imagem
+            // Popula os dados de texto
             document.getElementById('m-title').innerHTML = data.title + (data.subtitle ? `<br><span style="font-size:1.5rem; color:var(--netflix-red);">${data.subtitle}</span>` : '');
+            
+            // Link otimizado do GitHub para a imagem de fundo da modal
+            const linkOtimizado = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/${imgBackground}&w=800&output=webp`;
             document.getElementById('m-hero').style.backgroundImage = `url('${linkOtimizado}'), linear-gradient(135deg, #222, #000)`;
+            
             document.getElementById('m-match').textContent = data.match;
             document.getElementById('m-year').textContent = data.year;
             document.getElementById('m-age').textContent = data.age;
@@ -1498,7 +1502,6 @@
             document.getElementById('m-tags').textContent = data.tags;
 
             const playBtn = document.getElementById('m-btn-play');
-            const linkOtimizado = `https://wsrv.nl/?url=https://SEU_USUARIO.github.io/SEU_REPOSITORIO/${imgBackground}&w=800&output=webp`;
             
             if(data.isMain) {
                 playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Filme 3D';
@@ -1511,19 +1514,19 @@
                 
                 // AÇÃO 1: Clique manual abre o player in-site
                 playBtn.onclick = function() {
-                    clearTimeout(trailerTimeout); // Impede o autoplay de fundo
+                    clearTimeout(trailerTimeout); 
                     if (videoEl) {
-                        videoEl.pause(); // Pausa o vídeo de fundo da modal
+                        videoEl.pause(); 
                         videoEl.classList.remove('playing');
                     }
-                    window.openVideoPlayer(data.trailer); // Abre o novo player
+                    window.openVideoPlayer(data.trailer); 
                 };
 
                 // AÇÃO 2: Autoplay automático após 5 segundos (sem som)
                 trailerTimeout = setTimeout(() => {
                     if (videoEl) {
                         videoEl.src = data.trailer;
-                        videoEl.muted = true; // Navegadores exigem que o autoplay seja mudo
+                        videoEl.muted = true; 
                         videoEl.play().then(() => {
                             videoEl.classList.add('playing');
                         }).catch(e => console.log("Autoplay bloqueado pelo navegador"));
@@ -1535,31 +1538,25 @@
                 playBtn.onclick = null;
             }
 
-            // ==========================================
             // GERADOR DINÂMICO DE RECOMENDAÇÕES
-            // ==========================================
             const recContainer = document.getElementById('m-recommendations');
-            recContainer.innerHTML = ''; // Limpa as recomendações antigas
+            recContainer.innerHTML = ''; 
             
-            // Pega todos os filmes do banco, tirando o que está aberto no momento
             const otherMovies = Object.keys(filmesDB).filter(id => id !== movieId);
-            
-            // Embaralha a lista para sempre sugerir filmes diferentes
             const shuffled = otherMovies.sort(() => 0.5 - Math.random());
-            
-            // Seleciona 3 recomendações
             const recommendations = shuffled.slice(0, 3);
             
             let recHTML = '';
             recommendations.forEach(recId => {
                 const recData = filmesDB[recId];
-                
-                // Limita o tamanho do título para não quebrar o layout
                 const shortTitle = recData.title.length > 18 ? recData.title.substring(0, 18) + '...' : recData.title;
+                
+                // Link otimizado para as miniaturas das recomendações
+                const recLinkOtimizado = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/${recData.bg}&w=200&output=webp`;
                 
                 recHTML += `
                     <div class="more-card" onclick="event.stopPropagation(); window.openTitleModal('${recId}')">
-                        <div class="more-img" style="background-image:url('${recData.bg}')"></div>
+                        <div class="more-img" style="background-image:url('${recLinkOtimizado}')"></div>
                         <div class="more-info">
                             <h4>${shortTitle}</h4>
                             <i class="fa-solid fa-play" style="color: #fff; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.4); padding: 8px; border-radius: 50%;"></i>
@@ -1572,7 +1569,7 @@
             // Mostra a modal
             document.getElementById('title-modal-overlay').classList.add('show');
         }
-
+        
         window.closeTitleModal = function(e, force = false) {
             if (force || e.target.id === 'title-modal-overlay') {
                 document.getElementById('title-modal-overlay').classList.remove('show');
@@ -1866,7 +1863,7 @@
         /* =========================================================
            SISTEMA DE ARRASTAR PARA OS LADOS (DRAG-TO-SCROLL & WHEEL)
            ========================================================= */
-        function initDragToScroll() {
+       function initDragToScroll() {
             const sliders = document.querySelectorAll('.posters-container, .landscape-row');
             
             sliders.forEach(slider => {
@@ -1884,10 +1881,15 @@
                 slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active-drag'); });
                 slider.addEventListener('mousemove', (e) => {
                     if (!isDown) return;
-                    e.preventDefault(); hasMoved = true;
+                    e.preventDefault(); 
                     const x = e.pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.8;
-                    slider.scrollLeft = scrollLeft - walk;
+                    const walk = (x - startX);
+                    
+                    // Só considera que arrastou se moveu mais de 5 pixels (evita bloquear cliques acidentais)
+                    if (Math.abs(walk) > 5) {
+                        hasMoved = true;
+                    }
+                    slider.scrollLeft = scrollLeft - (walk * 1.8);
                 });
 
                 // --- EVENTOS DE TOQUE (CELULAR) ---
@@ -1899,10 +1901,13 @@
                 slider.addEventListener('touchend', () => { isDown = false; });
                 slider.addEventListener('touchmove', (e) => {
                     if (!isDown) return;
-                    hasMoved = true;
                     const x = e.touches[0].pageX - slider.offsetLeft;
-                    const walk = (x - startX) * 1.8;
-                    slider.scrollLeft = scrollLeft - walk;
+                    const walk = (x - startX);
+                    
+                    if (Math.abs(walk) > 5) {
+                        hasMoved = true;
+                    }
+                    slider.scrollLeft = scrollLeft - (walk * 1.8);
                 }, {passive: true});
 
                 // Evita disparar cliques nos cards se o usuário estava arrastando
@@ -1913,7 +1918,6 @@
                 });
 
                 // --- ROLAGEM COM A RODA DO MOUSE (WHEEL) ---
-                // CORREÇÃO: 'slider' em vez de 'lider'
                 slider.addEventListener('wheel', (e) => {
                     if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
                         e.preventDefault();
@@ -1923,7 +1927,7 @@
                 }, { passive: false });
             });
         }
-
+        
         // Inicia o sistema de arraste assim que a página carregar
         window.addEventListener('DOMContentLoaded', initDragToScroll);
 
