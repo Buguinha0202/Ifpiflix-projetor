@@ -1456,9 +1456,11 @@
             // Reseta o vídeo e cancela timers antigos sempre que a modal abre
             clearTimeout(trailerTimeout);
             const videoEl = document.getElementById('m-trailer-video');
-            videoEl.pause();
-            videoEl.removeAttribute('src');
-            videoEl.classList.remove('playing');
+            if (videoEl) {
+                videoEl.pause();
+                videoEl.removeAttribute('src');
+                videoEl.classList.remove('playing');
+            }
             
             // Popula os dados de texto e imagem
             document.getElementById('m-title').innerHTML = data.title + (data.subtitle ? `<br><span style="font-size:1.5rem; color:var(--netflix-red);">${data.subtitle}</span>` : '');
@@ -1486,23 +1488,27 @@
                 // AÇÃO 1: Clique manual abre em tela cheia com som
                 playBtn.onclick = function() {
                     clearTimeout(trailerTimeout); // Impede o autoplay de fundo se clicou antes
-                    videoEl.src = data.trailer;
-                    videoEl.muted = false; // Som ativado
-                    videoEl.play();
-                    videoEl.classList.add('playing');
-                    
-                    // Força tela cheia
-                    if (videoEl.requestFullscreen) { videoEl.requestFullscreen(); }
-                    else if (videoEl.webkitRequestFullscreen) { videoEl.webkitRequestFullscreen(); }
+                    if (videoEl) {
+                        videoEl.src = data.trailer;
+                        videoEl.muted = false; // Som ativado
+                        videoEl.play();
+                        videoEl.classList.add('playing');
+                        
+                        // Força tela cheia
+                        if (videoEl.requestFullscreen) { videoEl.requestFullscreen(); }
+                        else if (videoEl.webkitRequestFullscreen) { videoEl.webkitRequestFullscreen(); }
+                    }
                 };
 
                 // AÇÃO 2: Autoplay automático após 5 segundos (sem som)
                 trailerTimeout = setTimeout(() => {
-                    videoEl.src = data.trailer;
-                    videoEl.muted = true; // Navegadores exigem que o autoplay seja mudo
-                    videoEl.play().then(() => {
-                        videoEl.classList.add('playing');
-                    }).catch(e => console.log("Autoplay bloqueado pelo navegador"));
+                    if (videoEl) {
+                        videoEl.src = data.trailer;
+                        videoEl.muted = true; // Navegadores exigem que o autoplay seja mudo
+                        videoEl.play().then(() => {
+                            videoEl.classList.add('playing');
+                        }).catch(e => console.log("Autoplay bloqueado pelo navegador"));
+                    }
                 }, 5000);
                 
             } else {
@@ -1510,6 +1516,41 @@
                 playBtn.onclick = null;
             }
 
+            // ==========================================
+            // GERADOR DINÂMICO DE RECOMENDAÇÕES
+            // ==========================================
+            const recContainer = document.getElementById('m-recommendations');
+            recContainer.innerHTML = ''; // Limpa as recomendações antigas
+            
+            // Pega todos os filmes do banco, tirando o que está aberto no momento
+            const otherMovies = Object.keys(filmesDB).filter(id => id !== movieId);
+            
+            // Embaralha a lista para sempre sugerir filmes diferentes
+            const shuffled = otherMovies.sort(() => 0.5 - Math.random());
+            
+            // Seleciona 3 recomendações
+            const recommendations = shuffled.slice(0, 3);
+            
+            let recHTML = '';
+            recommendations.forEach(recId => {
+                const recData = filmesDB[recId];
+                
+                // Limita o tamanho do título para não quebrar o layout
+                const shortTitle = recData.title.length > 18 ? recData.title.substring(0, 18) + '...' : recData.title;
+                
+                recHTML += `
+                    <div class="more-card" onclick="event.stopPropagation(); window.openTitleModal('${recId}')">
+                        <div class="more-img" style="background-image:url('${recData.bg}')"></div>
+                        <div class="more-info">
+                            <h4>${shortTitle}</h4>
+                            <i class="fa-solid fa-play" style="color: #fff; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.4); padding: 8px; border-radius: 50%;"></i>
+                        </div>
+                    </div>
+                `;
+            });
+            recContainer.innerHTML = recHTML;
+
+            // Mostra a modal
             document.getElementById('title-modal-overlay').classList.add('show');
         }
 
