@@ -226,10 +226,10 @@
         .card-landscape h4 { font-size: 1rem; font-weight: bold; color: #fff; line-height: 1.2; margin:0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);}
 
         /* IMAGENS DOS 5 TEMAS */
-        .p-tema1 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/invocacao_do_dogma.png&w=300&output=webp'), linear-gradient(135deg, #2b1055, #0a0a14); }
+        .p-tema1 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/invocacao_do_dogma.jpg&w=300&output=webp'), linear-gradient(135deg, #2b1055, #0a0a14); }
         .p-tema2 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/guerra_civil.png&w=300&output=webp'), linear-gradient(135deg, #E50914, #1a0003); }
-        .p-tema3 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/devoradores_espaco_tempo.png&w=300&output=webp'), linear-gradient(135deg, #0052d4, #0f2027); }
-        .p-tema4 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/obsessao.png&w=300&output=webp'), linear-gradient(135deg, #434343, #000000); }
+        .p-tema3 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/devoradores_espaco_tempo.jpg&w=300&output=webp'), linear-gradient(135deg, #0052d4, #0f2027); }
+        .p-tema4 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/obsessao.jpg&w=300&output=webp'), linear-gradient(135deg, #434343, #000000); }
         .p-tema5 { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/nao_olhe_etica.png&w=300&output=webp'), linear-gradient(135deg, #11998e, #1f1c18); }
 
         /* IMAGENS DE T.I. E SÉRIES */
@@ -639,10 +639,18 @@
         .title-modal-container {
             background: var(--netflix-bg); width: 95%; max-width: 850px;
             border-radius: 10px; overflow: hidden; position: relative;
-            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.9); 
+            /* Adicionada transição de opacidade aqui: */
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
             box-shadow: 0 15px 40px rgba(0,0,0,0.8); margin: auto;
         }
         #title-modal-overlay.show .title-modal-container { transform: scale(1); }
+        
+        /* Nova classe para a animação de troca de filme */
+        .modal-transitioning {
+            opacity: 0 !important;
+            transform: scale(0.95) !important;
+        }
         
         .modal-close-btn {
             position: absolute; top: 15px; right: 15px; background: #181818;
@@ -1343,33 +1351,46 @@
            BANCO DE DADOS COMPLETO DA MODAL
            ========================================================= */
         const filmesDB = {
-            // ================= TEMAS DE FILOSOFIA =================
+           // ================= TEMAS DE FILOSOFIA =================
             "tema-1": {
                 title: "INVOCAÇÃO DO DOGMA", subtitle: "O Julgamento da Escolástica",
-                bg: "invocacao_do_dogma.png", // <--- MUDOU AQUI
+                bg: "invocacao_do_dogma.png", 
+                banner: "binvocacao_do_dogm.jpg", // <--- ADICIONE ESTA LINHA
                 match: "92% Relevante", year: "2013", age: "14", duration: "1h 52m",
                 synopsis: "Investigadores do pensamento tentam exorcizar dogmas medievais de uma universidade assombrada por monges aristotélicos. Baseado em fatos reais da Escolástica.",
                 cast: "Vera Formata, Patrick Windows", genres: "Terror Acadêmico, História", tags: "Idade Média, Fé vs Razão", isMain: false
             },
             "guerra-civil": {
                 title: "GUERRA CIVIL", subtitle: "EMPIRISMO VS RACIONALISMO",
-                bg: "guerra_civil.png", match: "99% Relevante", year: "2016", age: "12", duration: "2h 27m",
+                bg: "guerra_civil.png", 
+                banner: "bguerra_civil.png", // <--- ADICIONE ESTA LINHA
+                match: "99% Relevante", year: "2016", age: "12", duration: "2h 27m",
                 synopsis: "A Revolução Científica Moderna, a queda dos dogmas e a forja do Método Científico por Newton. Acompanhe a maior batalha intelectual da história entre defensores da experiência prática e adeptos da lógica pura.",
                 cast: "Davi, Maria Helena, Francisco L, Pedro, Marcelo, Samuel, JP Santos", genres: "Ação, Documentário, Filosofia", tags: "Heliocentrismo, Bacon, Descartes", isMain: true
             },
             "tema-3": {
                 title: "DEVORADORES DO ESPAÇO TEMPO", subtitle: "",
-                bg: "devoradores_espaco_tempo.png", // <--- MUDOU AQUI
+                bg: "devoradores_espaco_tempo.png", 
+                banner: "bdevoradores_espaco_tempo.png", // <--- ADICIONE ESTA LINHA
                 match: "88% Relevante", year: "2016", age: "10", duration: "1h 55m",
                 synopsis: "Um físico brilhante sofre um acidente e descobre que o tempo e o espaço são relativos, precisando proteger o tecido da realidade contra dogmáticos quânticos.",
                 cast: "Benedict Calculatch, Rachel McAtoms", genres: "Ficção Científica, Fantasia", tags: "Física Moderna, Relatividade", isMain: false
             },
             "tema-4": {
                 title: "OBSESSÃO", subtitle: "O CRITÉRIO DA FALSIFICABILIDADE",
-                bg: "obsessao.png", // <--- MUDOU AQUI
+                bg: "obsessao.png", 
+                banner: "bobsessao.png", // <--- ADICIONE ESTA LINHA
                 match: "85% Relevante", year: "2016", age: "14", duration: "1h 57m",
                 synopsis: "Um cientista com múltiplas hipóteses precisa encontrar uma forma de refutar todas elas (Popper) antes que sua personalidade pseudocientífica assuma o controle.",
                 cast: "James McArquivo, Anya Taylor-Join", genres: "Suspense Psicológico", tags: "Ciência vs Pseudociência", isMain: false
+            },
+            "tema-5": {
+                title: "NÃO OLHE PARA A ÉTICA", subtitle: "",
+                bg: "nao_olhe_etica.png", 
+                banner: "bnao_olhe_etica.png", // <--- ADICIONE ESTA LINHA
+                match: "95% Relevante", year: "2021", age: "16", duration: "2h 18m",
+                synopsis: "Dois desenvolvedores de software descobrem que uma IA sem filtros morais está prestes a destruir a sociedade, mas ninguém na internet parece se importar.",
+                cast: "Leonardo DiCaptcha, Jennifer Latência", genres: "Comédia de Erros, Sátira", tags: "Tecnologia, Bioética", isMain: false
             },
 
             // ================= SÉRIES E CURTAS DE T.I. =================
@@ -1472,104 +1493,120 @@
 
         let trailerTimeout; // Controla o tempo de 5 segundos
 
-       window.openTitleModal = function(movieId) {
-            const data = filmesDB[movieId] || filmesDB["guerra-civil"]; 
-            const imgBackground = data.banner ? data.banner : data.bg;
-            
-            // Reseta o vídeo e cancela timers antigos sempre que a modal abre
-            clearTimeout(trailerTimeout);
-            const videoEl = document.getElementById('m-trailer-video');
-            if (videoEl) {
-                videoEl.pause();
-                videoEl.removeAttribute('src');
-                videoEl.classList.remove('playing');
-            }
-            
-            // Popula os dados de texto
-            document.getElementById('m-title').innerHTML = data.title + (data.subtitle ? `<br><span style="font-size:1.5rem; color:var(--netflix-red);">${data.subtitle}</span>` : '');
-            
-            // Link otimizado do GitHub para a imagem de fundo da modal
-            const linkOtimizado = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/${imgBackground}&w=800&output=webp`;
-            document.getElementById('m-hero').style.backgroundImage = `url('${linkOtimizado}'), linear-gradient(135deg, #222, #000)`;
-            
-            document.getElementById('m-match').textContent = data.match;
-            document.getElementById('m-year').textContent = data.year;
-            document.getElementById('m-age').textContent = data.age;
-            document.getElementById('m-duration').textContent = data.duration;
-            document.getElementById('m-synopsis').textContent = data.synopsis;
-            document.getElementById('m-cast').textContent = data.cast;
-            document.getElementById('m-genres').textContent = data.genres;
-            document.getElementById('m-tags').textContent = data.tags;
+      window.openTitleModal = function(movieId) {
+            const overlay = document.getElementById('title-modal-overlay');
+            const container = document.getElementById('title-modal-content');
+            const isOpen = overlay.classList.contains('show');
 
-            const playBtn = document.getElementById('m-btn-play');
-            
-            if(data.isMain) {
-                playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Filme 3D';
-                playBtn.onclick = function() { 
-                    window.closeTitleModal(null, true);
-                    window.startCinematicMovie(); 
-                };
-            } else if (data.trailer) {
-                playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Trailer';
+            // Função interna que apenas carrega os dados
+            const loadData = () => {
+                const data = filmesDB[movieId] || filmesDB["guerra-civil"]; 
+                const imgBackground = data.banner ? data.banner : data.bg;
                 
-                // AÇÃO 1: Clique manual abre o player in-site
-                playBtn.onclick = function() {
-                    clearTimeout(trailerTimeout); 
-                    if (videoEl) {
-                        videoEl.pause(); 
-                        videoEl.classList.remove('playing');
-                    }
-                    window.openVideoPlayer(data.trailer); 
-                };
+                clearTimeout(trailerTimeout);
+                const videoEl = document.getElementById('m-trailer-video');
+                if (videoEl) {
+                    videoEl.pause();
+                    videoEl.removeAttribute('src');
+                    videoEl.classList.remove('playing');
+                }
+                
+                document.getElementById('m-title').innerHTML = data.title + (data.subtitle ? `<br><span style="font-size:1.5rem; color:var(--netflix-red);">${data.subtitle}</span>` : '');
+                
+                const linkOtimizado = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/${imgBackground}&w=800&output=webp`;
+                document.getElementById('m-hero').style.backgroundImage = `url('${linkOtimizado}'), linear-gradient(135deg, #222, #000)`;
+                
+                document.getElementById('m-match').textContent = data.match;
+                document.getElementById('m-year').textContent = data.year;
+                document.getElementById('m-age').textContent = data.age;
+                document.getElementById('m-duration').textContent = data.duration;
+                document.getElementById('m-synopsis').textContent = data.synopsis;
+                document.getElementById('m-cast').textContent = data.cast;
+                document.getElementById('m-genres').textContent = data.genres;
+                document.getElementById('m-tags').textContent = data.tags;
 
-                // AÇÃO 2: Autoplay automático após 5 segundos (sem som)
-                trailerTimeout = setTimeout(() => {
-                    if (videoEl) {
-                        videoEl.src = data.trailer;
-                        videoEl.muted = true; 
-                        videoEl.play().then(() => {
-                            videoEl.classList.add('playing');
-                        }).catch(e => console.log("Autoplay bloqueado pelo navegador"));
-                    }
-                }, 5000);
+                const playBtn = document.getElementById('m-btn-play');
                 
-            } else {
-                playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Em Breve';
-                playBtn.onclick = null;
-            }
+                if(data.isMain) {
+                    playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Filme 3D';
+                    playBtn.onclick = function() { 
+                        window.closeTitleModal(null, true);
+                        window.startCinematicMovie(); 
+                    };
+                } else if (data.trailer) {
+                    playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Trailer';
+                    
+                    playBtn.onclick = function() {
+                        clearTimeout(trailerTimeout); 
+                        if (videoEl) {
+                            videoEl.pause(); 
+                            videoEl.classList.remove('playing');
+                        }
+                        window.openVideoPlayer(data.trailer); 
+                    };
 
-            // GERADOR DINÂMICO DE RECOMENDAÇÕES
-            const recContainer = document.getElementById('m-recommendations');
-            recContainer.innerHTML = ''; 
-            
-            const otherMovies = Object.keys(filmesDB).filter(id => id !== movieId);
-            const shuffled = otherMovies.sort(() => 0.5 - Math.random());
-            const recommendations = shuffled.slice(0, 3);
-            
-            let recHTML = '';
-            recommendations.forEach(recId => {
-                const recData = filmesDB[recId];
-                const shortTitle = recData.title.length > 18 ? recData.title.substring(0, 18) + '...' : recData.title;
+                    trailerTimeout = setTimeout(() => {
+                        if (videoEl) {
+                            videoEl.src = data.trailer;
+                            videoEl.muted = true; 
+                            videoEl.play().then(() => {
+                                videoEl.classList.add('playing');
+                            }).catch(e => console.log("Autoplay bloqueado pelo navegador"));
+                        }
+                    }, 5000);
+                    
+                } else {
+                    playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Em Breve';
+                    playBtn.onclick = null;
+                }
+
+                const recContainer = document.getElementById('m-recommendations');
+                recContainer.innerHTML = ''; 
                 
-                // Link otimizado para as miniaturas das recomendações
-                const recLinkOtimizado = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/${recData.bg}&w=200&output=webp`;
+                const otherMovies = Object.keys(filmesDB).filter(id => id !== movieId);
+                const shuffled = otherMovies.sort(() => 0.5 - Math.random());
+                const recommendations = shuffled.slice(0, 3);
                 
-                recHTML += `
-                    <div class="more-card" onclick="event.stopPropagation(); window.openTitleModal('${recId}')">
-                        <div class="more-img" style="background-image:url('${recLinkOtimizado}')"></div>
-                        <div class="more-info">
-                            <h4>${shortTitle}</h4>
-                            <i class="fa-solid fa-play" style="color: #fff; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.4); padding: 8px; border-radius: 50%;"></i>
+                let recHTML = '';
+                recommendations.forEach(recId => {
+                    const recData = filmesDB[recId];
+                    const shortTitle = recData.title.length > 18 ? recData.title.substring(0, 18) + '...' : recData.title;
+                    
+                    const recLinkOtimizado = `https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/${recData.bg}&w=200&output=webp`;
+                    
+                    recHTML += `
+                        <div class="more-card" onclick="event.stopPropagation(); window.openTitleModal('${recId}')">
+                            <div class="more-img" style="background-image:url('${recLinkOtimizado}')"></div>
+                            <div class="more-info">
+                                <h4>${shortTitle}</h4>
+                                <i class="fa-solid fa-play" style="color: #fff; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.4); padding: 8px; border-radius: 50%;"></i>
+                            </div>
                         </div>
-                    </div>
-                `;
-            });
-            recContainer.innerHTML = recHTML;
+                    `;
+                });
+                recContainer.innerHTML = recHTML;
+            };
 
-            // Mostra a modal
-            document.getElementById('title-modal-overlay').classList.add('show');
+            // LÓGICA DE ANIMAÇÃO
+            if (isOpen) {
+                // 1. Apaga a modal atual e encolhe um pouco
+                container.classList.add('modal-transitioning');
+                
+                // 2. Rola a tela de volta para o topo suavemente
+                overlay.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // 3. Espera 300ms (tempo da animação CSS), troca os dados e faz aparecer de novo
+                setTimeout(() => {
+                    loadData();
+                    container.classList.remove('modal-transitioning');
+                }, 300);
+            } else {
+                // Se a modal estava fechada, só carrega e abre normalmente
+                loadData();
+                overlay.classList.add('show');
+                overlay.scrollTop = 0; // Garante que abre no topo
+            }
         }
-        
         window.closeTitleModal = function(e, force = false) {
             if (force || e.target.id === 'title-modal-overlay') {
                 document.getElementById('title-modal-overlay').classList.remove('show');
@@ -1927,7 +1964,7 @@
                 }, { passive: false });
             });
         }
-        
+
         // Inicia o sistema de arraste assim que a página carregar
         window.addEventListener('DOMContentLoaded', initDragToScroll);
 
