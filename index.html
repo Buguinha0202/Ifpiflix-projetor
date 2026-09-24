@@ -827,6 +827,30 @@
             #profile-screen h1 { font-size: 2rem; }
         }
 
+        /* =========================================================
+           TELA DE QUIZ INTERATIVO
+           ========================================================= */
+        #quiz-screen { background: #141414; overflow-y: auto; }
+        .quiz-container { max-width: 900px; margin: 80px auto 40px auto; padding: 0 4%; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .quiz-header-info { color: var(--rpg-gold); font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; letter-spacing: 2px; }
+        .quiz-context { color: #aaa; font-size: 1.1rem; margin-bottom: 20px; font-style: italic; }
+        .quiz-question { font-size: 2rem; color: #fff; line-height: 1.4; margin-bottom: 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        
+        .quiz-options-grid { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .quiz-btn { background: #222; border: 2px solid #444; color: #fff; padding: 20px; font-size: 1.2rem; border-radius: 8px; cursor: pointer; text-align: left; transition: all 0.3s; display: flex; align-items: center; gap: 15px; }
+        .quiz-btn:hover:not(.answered) { background: #333; border-color: #888; transform: translateX(10px); }
+        .quiz-letter { background: #444; color: #fff; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; flex-shrink: 0; }
+        
+        /* Estados de Resposta */
+        .quiz-btn.correct { background: rgba(16, 185, 129, 0.2); border-color: #10b981; pointer-events: none; }
+        .quiz-btn.correct .quiz-letter { background: #10b981; }
+        .quiz-btn.wrong { background: rgba(229, 9, 20, 0.2); border-color: var(--netflix-red); pointer-events: none; animation: screenShake 0.4s; filter: grayscale(0.5); opacity: 0.6;}
+        .quiz-btn.wrong .quiz-letter { background: var(--netflix-red); }
+        .quiz-btn.answered { pointer-events: none; }
+
+        #btn-next-quiz { background: var(--netflix-red); color: #fff; border: none; padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 40px; transition: 0.2s; display: none; animation: pulseLock 2s infinite alternate; }
+        #btn-next-quiz:hover { background: #b30710; }
+
     </style>
 </head>
 <body>
@@ -1103,23 +1127,7 @@
     </div>
 </div>
 
-            <!-- A ESCOLHA -->
-            <div class="slide" id="slide-7">
-                <div class="slide-grid" style="flex-direction: column;">
-                    <div style="text-align:center; z-index: 15; width: 100%;">
-                        <h2 style="font-family:'Bebas Neue'; font-size:4.5rem; color:#fff; text-shadow: 0 0 15px var(--netflix-red);">A ENCRUZILHADA DO M&Eacute;TODO</h2>
-                        <p style="font-size:1.2rem; color:#ccc;">Como voc&ecirc;s buscam a verdade absoluta?</p>
-                    </div>
-                    <div class="lis-container" style="z-index: 10;">
-                        <div class="lis-choice empirismo" onclick="window.triggerLisChoice(8)">
-                            <i class="fa-solid fa-eye"></i><h3>Acreditar nos Sentidos</h3><p>Testar e experimentar (Bacon).</p>
-                        </div>
-                        <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(8)">
-                            <i class="fa-solid fa-brain"></i><h3>Duvidar de Tudo</h3><p>Usar apenas a lógica pura (Descartes).</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="slide" id="slide-8">
                 <div class="slide-grid">
@@ -1162,6 +1170,24 @@
                         <h3 class="highlight">Penso, logo existo</h3><p>A raz&atilde;o l&oacute;gica e a matemática se tornam a base inquebr&aacute;vel para o pensamento cient&iacute;fico moderno.</p>
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-brain"></i> A Forja da Mente</div><div class="sim-screen"><i class="fa-solid fa-brain brain-gear"></i></div></div>
+                </div>
+            </div>
+
+            <!-- A ESCOLHA -->
+            <div class="slide" id="slide-7">
+                <div class="slide-grid" style="flex-direction: column;">
+                    <div style="text-align:center; z-index: 15; width: 100%;">
+                        <h2 style="font-family:'Bebas Neue'; font-size:4.5rem; color:#fff; text-shadow: 0 0 15px var(--netflix-red);">A ENCRUZILHADA DO M&Eacute;TODO</h2>
+                        <p style="font-size:1.2rem; color:#ccc;">Como voc&ecirc;s buscam a verdade absoluta?</p>
+                    </div>
+                    <div class="lis-container" style="z-index: 10;">
+                        <div class="lis-choice empirismo" onclick="window.triggerLisChoice(12)">
+                            <i class="fa-solid fa-eye"></i><h3>Acreditar nos Sentidos</h3><p>Testar e experimentar (Bacon).</p>
+                        </div>
+                        <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(12)">
+                            <i class="fa-solid fa-brain"></i><h3>Duvidar de Tudo</h3><p>Usar apenas a lógica pura (Descartes).</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1315,25 +1341,7 @@
     </div>
         </div>
 
-        <!-- 7: A ESCOLHA NO MODO FILME -->
-        <div id="cine-choice" class="cine-scene">
-            <div style="text-align: center; max-width: 800px; width: 90%; z-index: 10;">
-                <h2 style="font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: #fff; text-shadow: 0 0 20px var(--netflix-red); margin-bottom: 10px;">A ENCRUZILHADA DO M&Eacute;TODO</h2>
-                <p style="font-size: 1.3rem; color: #ccc; margin-bottom: 25px;">Como vocês buscam a verdade absoluta?</p>
-                <div class="lis-container">
-                    <div class="lis-choice empirismo" onclick="window.triggerLisChoice(8)">
-                        <i class="fa-solid fa-eye"></i>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Acreditar nos Sentidos</h3>
-                        <p style="color: #bbb;">Testar e experimentar (Bacon).</p>
-                    </div>
-                    <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(8)">
-                        <i class="fa-solid fa-brain"></i>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Duvidar de Tudo</h3>
-                        <p style="color: #bbb;">Usar apenas a lógica pura (Descartes).</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- 8, 9, 10, 11: A MESA (BACON & DESCARTES) -->
         <div id="cine-desk" class="cine-scene">
@@ -1361,6 +1369,26 @@
                     <div class="cine-text-box cine-txt-11">
                         <div class="cine-ticker" id="cine-ticker-11">A única certeza: eu existo porque penso.</div>
                         <p class="cine-desc">A razão lógica e a matemática se tornam a base inquebrável para o pensamento. "Penso, logo existo".</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7: A ESCOLHA NO MODO FILME -->
+        <div id="cine-choice" class="cine-scene">
+            <div style="text-align: center; max-width: 800px; width: 90%; z-index: 10;">
+                <h2 style="font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: #fff; text-shadow: 0 0 20px var(--netflix-red); margin-bottom: 10px;">A ENCRUZILHADA DO M&Eacute;TODO</h2>
+                <p style="font-size: 1.3rem; color: #ccc; margin-bottom: 25px;">Como vocês buscam a verdade absoluta?</p>
+                <div class="lis-container">
+                    <div class="lis-choice empirismo" onclick="window.triggerLisChoice(12)">
+                        <i class="fa-solid fa-eye"></i>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Acreditar nos Sentidos</h3>
+                        <p style="color: #bbb;">Testar e experimentar (Bacon).</p>
+                    </div>
+                    <div class="lis-choice racionalismo" onclick="window.triggerLisChoice(12)">
+                        <i class="fa-solid fa-brain"></i>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Duvidar de Tudo</h3>
+                        <p style="color: #bbb;">Usar apenas a lógica pura (Descartes).</p>
                     </div>
                 </div>
             </div>
@@ -1485,7 +1513,7 @@
 { id: "6_1", title: "Cap 4: Revolução Cosmológica (Kepler)", presenter: "Pedro", ach: "", tickers: ["Kepler: “Círculo perfeito? Não exatamente.”"] }, 
 
 // ... (mantenha o resto do id 7 em diante como está)
-            { id: 7, title: "Especial: A Escolha", presenter: "Todos", ach: "", tickers: [] }, 
+            
             { id: 8, title: "Cap 5: Empirismo (Os Ídolos)", presenter: "Marcelo", ach: "[⚔️ Conquista: Derrotou os Ídolos]",
               tickers: ["Ídolo da Caverna = viver na própria bolha.", "Bacon: Antes de fazer ciência, limpe sua mente dos fakes."] }, 
             { id: 9, title: "Cap 5: Empirismo (Método Indutivo)", presenter: "Marcelo", ach: "[🧪 Nível Up: Experiência Prática]",
@@ -1494,6 +1522,7 @@
               tickers: ["Descartes ficou dias trancado num quarto.", "E se tudo for uma simulação?"] }, 
             { id: 11, title: "Cap 6: Racionalismo (Penso, logo existo)", presenter: "Samuel", ach: "[🧠 Conquista: Provou que não é um NPC]",
               tickers: ["Duvidou tanto de tudo que quase sumiu da existência.", "A única certeza: eu existo porque penso."] }, 
+              { id: 7, title: "Especial: A Escolha", presenter: "Todos", ach: "", tickers: [] }, 
             { id: 12, title: "Cap 7: Síntese Newtoniana", presenter: "JP Santos", ach: "[🍎 Item Lendário: A Maçã da Gravidade]",
               tickers: ["Uma maçã caiu, e o cara inventou o cálculo.", "Newton uniu o Racionalismo e o Empirismo na amizade."] },
             { id: 13, title: "Fim: Assine Já", presenter: "Todos", ach: "", tickers: [] }
@@ -1778,6 +1807,12 @@
                             <div class="ep-img" style="background-image: url('${baseImg}aff.png&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
                             <div class="ep-details"><h4>O Grimório (Modo Clássico)</h4><p>Apresentação original em slides com simulações e mapa de conceitos.</p></div>
                         </div>
+                        <!-- EPISÓDIO ESPECIAL: QUIZ -->
+                        <div class="episode-item special-ep" style="border-color: #10b981; background: rgba(16, 185, 129, 0.05);" onclick="window.closeTitleModal(null, true); window.startQuiz()">
+                            <div class="ep-number" style="color: #10b981;"><i class="fa-solid fa-gamepad"></i></div>
+                            <div class="ep-img" style="background-image: url('${baseImg}banner.png&w=200&output=webp')"><i class="fa-solid fa-play"></i></div>
+                            <div class="ep-details"><h4>Episódio Interativo: O Quiz</h4><p>Teste os conhecimentos da turma com 7 questões sobre a Revolução Científica.</p></div>
+                        </div>
                     `;
                 } else {
                     // SE FOR OUTRO FILME, MOSTRA AS RECOMENDAÇÕES
@@ -2012,7 +2047,7 @@
             isLisActive = true;
             
             // Procura na lista qual é a posição exata do slide com ID 8 (Empirismo)
-            const nextIdx = script.findIndex(s => s.id == 8);
+            const nextIdx = script.findIndex(s => s.id == 12);
 
             document.getElementById('lis-dark-overlay').style.display = 'block';
             document.getElementById('lis-notification').style.opacity = '1';
@@ -2285,12 +2320,182 @@
             hasPlayedPostCredits = true;
             isPlayingPostCredits = false;
             
+            // 👇 A CORREÇÃO: Procura a posição exata do slide final (ID 13)
+            const finalIdx = script.findIndex(s => s.id == 13);
+            
             // Descobre em qual modo o usuário estava e avança para a tela de assinatura
             if (document.getElementById('cinematic-stage').classList.contains('active')) {
-                updateCineCamera(13);
+                updateCineCamera(finalIdx);
             } else {
-                renderSlide(13);
+                renderSlide(finalIdx);
             }
+        }
+
+        /* =========================================================
+           SISTEMA DE QUIZ INTERATIVO
+           ========================================================= */
+        const quizData = [
+            {
+                title: "QUESTÃO 01", context: "",
+                question: "Como é que as novas ideias do Renascimento e o foco no ser humano ajudaram a questionar as explicações religiosas da Idade Média sobre a natureza?",
+                options: [
+                    { letter: "A", text: "Colocaram a razão humana no centro, tratando a natureza como realidade observável.", correct: true },
+                    { letter: "B", text: "Defenderam o regresso aos dogmas medievais e a proibição da imprensa.", correct: false },
+                    { letter: "C", text: "Afirmaram que apenas os textos sagrados continham as leis do universo.", correct: false },
+                    { letter: "D", text: "Substituíram estudos práticos por crenças místicas da astrologia antiga.", correct: false },
+                    { letter: "E", text: "Limitaram o intercâmbio cultural para proteger a tradição escolástica.", correct: false }
+                ]
+            },
+            {
+                title: "QUESTÃO 02", context: "",
+                question: "O que defendia o modelo geocêntrico e de que forma a regra de não questionar os mestres antigos (princípio de autoridade) impedia a realização de novas experiências?",
+                options: [
+                    { letter: "A", text: "Afirmava que o Sol era o centro do universo e exigia verificações laboratoriais.", correct: false },
+                    { letter: "B", text: "A Terra era o centro imóvel; teses antigas eram incontestáveis, proibindo testes empíricos.", correct: true },
+                    { letter: "C", text: "Estabelecia uma identidade material perfeita entre a Terra e os céus.", correct: false },
+                    { letter: "D", text: "Propunha que a verdade científica só poderia ser validada através do método indutivo.", correct: false },
+                    { letter: "E", text: "Considerava a Terra um planeta em rotação governado por equações matemáticas.", correct: false }
+                ]
+            },
+            {
+                title: "QUESTÃO 03", context: "",
+                question: "O que mudou na forma de pensar para que os estudiosos deixassem de ser apenas espectadores da natureza e passassem a testar os fatos com experiências práticas?",
+                options: [
+                    { letter: "A", text: "O saber exigiu a interrogação ativa da realidade por observação, medição e teste.", correct: true },
+                    { letter: "B", text: "Os cientistas abandonaram a matemática para se dedicarem apenas à contemplação.", correct: false },
+                    { letter: "C", text: "A natureza começou a ser vista como uma ordem mística intocável e proibida.", correct: false },
+                    { letter: "D", text: "Apenas as deduções abstratas eram aceitas para decifrar os segredos naturais.", correct: false },
+                    { letter: "E", text: "A experimentação passou a depender de impressões sem necessidade de replicação.", correct: false }
+                ]
+            },
+            {
+                title: "QUESTÃO 04", context: "Galileu Galilei (1564–1642) - Luneta astronômica e física quantitativa",
+                question: "Quais foram as descobertas que Galileu fez com o telescópio para provar o heliocentrismo e por que razão ele dizia que a natureza está escrita em caracteres matemáticos?",
+                options: [
+                    { letter: "A", text: "Observou cometas e defendeu que as leis seguiam a lógica verbal do latim.", correct: false },
+                    { letter: "B", text: "Confirmou a imutabilidade das esferas celestes através de equações teóricas.", correct: false },
+                    { letter: "C", text: "Descobriu crateras lunares, provando a imperfeição dos céus através da geometria.", correct: true },
+                    { letter: "D", text: "Demonstrou que a Terra permanecia imóvel através de cálculos com a luneta.", correct: false },
+                    { letter: "E", text: "Verificou que as órbitas eram regidas exclusivamente pelas vontades dos astros.", correct: false }
+                ]
+            },
+            {
+                title: "QUESTÃO 05", context: "Francis Bacon (1561–1626) - O método indutivo e 'Saber é Poder'",
+                question: "Por que motivo defendia Francis Bacon que o conhecimento deve começar pela observação detalhada de fatos reais em vez de teorias abstratas?",
+                options: [
+                    { letter: "A", text: "Acreditava que a mente humana é infalível e não precisa de instrumentos.", correct: false },
+                    { letter: "B", text: "Defendia o método indutivo para criar leis a partir da observação e transformar a realidade.", correct: true },
+                    { letter: "C", text: "Considerava que as disputas de palavras medievais geravam novas tecnologias.", correct: false },
+                    { letter: "D", text: "Pretendia eliminar as experiências de laboratório, valorizando a reflexão pura.", correct: false },
+                    { letter: "E", text: "Defendia a subordinação das investigações aos manuais da Antiguidade.", correct: false }
+                ]
+            },
+            {
+                title: "QUESTÃO 06", context: "René Descartes (1596–1650) - Dúvida metódica e rigor analítico",
+                question: "Para que servia a dúvida metódica de Descartes e como é que ele chegou à famosa conclusão de que 'Penso, logo existo'?",
+                options: [
+                    { letter: "A", text: "Servia para rejeitar a razão lógica e promover a aceitação cega dos sentidos.", correct: false },
+                    { letter: "B", text: "Pretendia demonstrar que a matemática é incapaz de resolver problemas físicos.", correct: false },
+                    { letter: "C", text: "Foi criada para provar a impossibilidade de a mente humana atingir verdades.", correct: false },
+                    { letter: "D", text: "Duvidou de tudo até concluir que o ato de duvidar exige o pensamento e a existência.", correct: true },
+                    { letter: "E", text: "Teve como função resgatar as teorias escolásticas para validar dogmas.", correct: false }
+                ]
+            },
+            {
+                title: "QUESTÃO 07", context: "Isaac Newton (1643–1727) - Leis mecânicas e gravitação universal",
+                question: "Como que Isaac Newton conseguiu juntar a matemática e as experiências práticas para explicar o funcionamento do universo através da lei da gravidade?",
+                options: [
+                    { letter: "A", text: "Unificou leis matemáticas e provas empíricas, mostrando que a mesma física rege a Terra e o espaço.", correct: true },
+                    { letter: "B", text: "Manteve a separação entre a física terrestre e a celeste, rejeitando a mecânica.", correct: false },
+                    { letter: "C", text: "Dispensou a observação empírica, formulando uma teoria assente em deduções metafísicas.", correct: false },
+                    { letter: "D", text: "Estabeleceu que o cosmos é imprevisível, inviabilizando o método dedutivo.", correct: false },
+                    { letter: "E", text: "Baseou as suas leis na simples compilação de crenças tradicionais sem cálculo.", correct: false }
+                ]
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        window.startQuiz = function() {
+            simulateLoading(() => {
+                currentQuizIndex = 0;
+                quizScore = 0;
+                applyPresenter("Todos");
+                document.getElementById('quiz-presenter-name').textContent = "Todos";
+                renderQuizQuestion();
+                window.switchScreen('quiz-screen');
+            });
+        }
+
+        function renderQuizQuestion() {
+            if (currentQuizIndex >= quizData.length) {
+                showQuizResults();
+                return;
+            }
+
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quiz-progress-text').textContent = `Questão ${currentQuizIndex + 1} de ${quizData.length}`;
+            document.getElementById('quiz-title').textContent = q.title;
+            document.getElementById('quiz-context').textContent = q.context;
+            document.getElementById('quiz-question').textContent = q.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            document.getElementById('btn-next-quiz').style.display = 'none';
+
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'quiz-btn';
+                btn.innerHTML = `<div class="quiz-letter">${opt.letter}</div> <div>${opt.text}</div>`;
+                btn.onclick = () => checkQuizAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkQuizAnswer(selectedIndex, btnElement) {
+            const q = quizData[currentQuizIndex];
+            const isCorrect = q.options[selectedIndex].correct;
+            
+            // Trava todos os botões
+            const allBtns = document.querySelectorAll('.quiz-btn');
+            allBtns.forEach(b => b.classList.add('answered'));
+
+            if (isCorrect) {
+                btnElement.classList.add('correct');
+                quizScore++;
+                
+                // Mostra conquista aleatória de acerto
+                const achBox = document.getElementById('ach-popup');
+                document.getElementById('ach-text').textContent = "[🧠 Conquista: Resposta Exata!]";
+                achBox.classList.add('show');
+                setTimeout(() => { achBox.classList.remove('show'); }, 3000);
+            } else {
+                btnElement.classList.add('wrong');
+                // Destaca a correta
+                const correctIndex = q.options.findIndex(o => o.correct);
+                allBtns[correctIndex].classList.add('correct');
+            }
+
+            document.getElementById('btn-next-quiz').style.display = 'block';
+        }
+
+        window.nextQuizQuestion = function() {
+            currentQuizIndex++;
+            renderQuizQuestion();
+            document.getElementById('quiz-screen').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showQuizResults() {
+            document.getElementById('quiz-title').textContent = "FIM DO JOGO";
+            document.getElementById('quiz-context').textContent = "";
+            document.getElementById('quiz-question').textContent = `A turma acertou ${quizScore} de ${quizData.length} questões!`;
+            document.getElementById('quiz-options').innerHTML = '';
+            
+            const btn = document.getElementById('btn-next-quiz');
+            btn.innerHTML = '<i class="fa-solid fa-house"></i> Voltar ao Início';
+            btn.style.display = 'block';
+            btn.onclick = () => window.switchScreen('home-screen');
         }
 
     </script> <!-- O SCRIPT DEVE TERMINAR AQUI -->
@@ -2309,6 +2514,32 @@
     <div id="post-credits-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center;">
         <video id="post-credits-video" playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
         <button onclick="skipPostCredits()" style="position: absolute; bottom: 30px; right: 30px; background: rgba(255,255,255,0.2); color: #fff; border: 1px solid #fff; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: bold; transition: 0.3s; z-index: 10001;">Pular Cena <i class="fa-solid fa-forward-step"></i></button>
+    </div>
+
+    <!-- =======================================================
+         TELA DE QUIZ INTERATIVO
+         ======================================================= -->
+    <div id="quiz-screen" class="screen">
+        <div class="player-header" style="background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);">
+            <button class="control-btn" onclick="window.switchScreen('series-details-screen')"><i class="fa-solid fa-arrow-left"></i></button>
+            <div style="display:flex; flex-direction: column; margin-left: 10px;">
+                <span style="font-weight: bold;">Guerra Civil: O Quiz</span>
+                <span id="quiz-progress-text" style="color: #aaa; font-size: 0.9rem;">Questão 1 de 7</span>
+            </div>
+            <span style="margin-left: auto; background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">🗣 <span id="quiz-presenter-name">Todos</span></span>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-header-info" id="quiz-title">QUESTÃO 01</div>
+            <div class="quiz-context" id="quiz-context"></div>
+            <h2 class="quiz-question" id="quiz-question">Carregando pergunta...</h2>
+            
+            <div class="quiz-options-grid" id="quiz-options">
+                <!-- Botões gerados via JS -->
+            </div>
+
+            <button id="btn-next-quiz" onclick="nextQuizQuestion()">Próxima Questão <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
     </div>
 
 </body>
