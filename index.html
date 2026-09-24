@@ -1544,6 +1544,7 @@
                 title: "INVOCAÇÃO DO DOGMA", subtitle: "O Julgamento da Escolástica",
                 bg: "invocacao_do_dogma.png", 
                 banner: "binvocacao_do_dogm.jpg", // <--- ADICIONE ESTA LINHA
+                pdf: "https://buguinha0202.github.io/Ifpiflix-projetor/trabalho_grupo1.pdf",
                 match: "92% Relevante", year: "2013", age: "14", duration: "1h 52m",
                 synopsis: "Investigadores do pensamento tentam exorcizar dogmas medievais de uma universidade assombrada por monges aristotélicos. Baseado em fatos reais da Escolástica.",
                 cast: "Vera Formata, Patrick Windows", genres: "Terror Acadêmico, História", tags: "Idade Média, Fé vs Razão", isMain: false
@@ -1721,7 +1722,16 @@
                         window.closeTitleModal(null, true);
                         window.startCinematicMovie(); 
                     };
-                } else if (data.trailer) {
+                } 
+                // 👇 NOVA REGRA PARA ABRIR PDF 👇
+                else if (data.pdf) {
+                    playBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
+                    playBtn.onclick = function() {
+                        window.open(data.pdf, '_blank'); // Abre o PDF em uma nova aba
+                    };
+                } 
+                // 👆 FIM DA NOVA REGRA 👆
+                else if (data.trailer) {
                     playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Trailer';
                     
                     playBtn.onclick = function() {
