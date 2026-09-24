@@ -388,8 +388,12 @@
 
         /* Ativação das cenas por data-step */
         #cinematic-stage[data-step="0"] #cine-renaissance, 
+        #cinematic-stage[data-step="0_1"] #cine-renaissance,
+        #cinematic-stage[data-step="0_2"] #cine-renaissance,
         #cinematic-stage[data-step="1"] #cine-renaissance { opacity: 1; pointer-events: auto; }
         #cinematic-stage[data-step="0"] .cine-txt-0 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="0_1"] .cine-txt-0_1 { opacity: 1; transform: translateY(0); }
+        #cinematic-stage[data-step="0_2"] .cine-txt-0_2 { opacity: 1; transform: translateY(0); }
         #cinematic-stage[data-step="1"] .cine-txt-1 { opacity: 1; transform: translateY(0); }
 
         #cinematic-stage[data-step="2"] #cine-library, 
@@ -439,7 +443,9 @@
         .cine-map-grid { position: absolute; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(212, 175, 55, 0.08) 80px, rgba(212, 175, 55, 0.08) 82px), repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(212, 175, 55, 0.08) 80px, rgba(212, 175, 55, 0.08) 82px); animation: panMapBg 40s linear infinite; }
         .cine-ship { font-size: 14rem; color: rgba(212, 175, 55, 0.85); filter: drop-shadow(0 15px 30px rgba(0,0,0,0.9)); }
         .cine-txt-0 { left: 10vw; text-align: left; }
-        .cine-txt-1 { right: 10vw; text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
+        .cine-txt-0_1 { right: 10vw; text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
+        .cine-txt-0_2 { left: 10vw; top: 60%; text-align: left; }
+        .cine-txt-1 { right: 10vw; top: 60%; text-align: right; border-left: none; border-right: 4px solid var(--netflix-red); border-radius: 8px 0 0 8px;}
 
         #cine-library { background: #080808; perspective: 1000px; }
         .cine-stained-glass { position: absolute; width: 100vw; height: 100vh; background: conic-gradient(from 0deg at 50% 50%, #2a0845, #6441a5, #2a0845); opacity: 0.18; animation: glassSpin 20s linear infinite; }
@@ -1019,22 +1025,44 @@
             <div class="slide" id="slide-0">
                 <div class="slide-grid">
                     <div class="text-col">
-                        <h2>01. O RENASCIMENTO</h2>
-                        <div class="ticker-box" id="ticker-0">A Europa acordando de uma soneca de 1000 anos...</div>
-                        <h3 class="highlight">O Fim da Escol&aacute;stica</h3><p>A Modernidade surge como um novo cen&aacute;rio. O mundo medieval entra em colapso e as antigas verdades começam a ser questionadas.</p>
+                        <h2>01. A ESCOLÁSTICA E A AUTORIDADE</h2>
+                        <div class="ticker-box" id="ticker-0">Dogmas religiosos possuíam peso inquestionável.</div>
+                        <p>Entre os séculos XVI e XVII, a Europa viveu uma transição marcante. Durante a Idade Média, o conhecimento sobre a natureza era dominado pela Escolástica, corrente que unia a fé cristã à filosofia aristotélica. Nesse modelo medieval, as verdades cosmológicas não dependiam de testes práticos ou experiências, mas sim do princípio de autoridade, onde dogmas religiosos e textos clássicos possuíam um peso inquestionável.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Mapa-M&uacute;ndi</div><div class="sim-screen"><div class="map-pan"></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-book-skull"></i> Regras Bloqueadas</div><div class="sim-screen"><i class="fa-solid fa-book" style="font-size:5rem; color:#aaa;"></i><h3 style="margin-top:30px; color:#E50914;">Status: Dogmatismo</h3></div></div>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-0_1">
+                <div class="slide-grid">
+                    <div class="text-col">
+                        <h2>02. A TRANSIÇÃO RENASCENTISTA</h2>
+                        <div class="ticker-box" id="ticker-0_1">A física aristotélica era insuficiente para as novas necessidades.</div>
+                        <p>A chegada do Renascimento promoveu o resgate dos valores humanistas, colocando o ser humano e a razão no centro das investigações. Impulsionada por transformações socioeconômicas, pela expansão das rotas marítimas e pelo desenvolvimento da imprensa, a sociedade percebeu que a visão teocêntrica e a física aristotélica eram insuficientes para responder às novas necessidades práticas da época.</p>
+                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Exploração</div><div class="sim-screen"><div class="map-pan"></div><i class="fa-solid fa-sailboat" style="font-size:4rem; color:var(--rpg-gold); z-index:2; filter: drop-shadow(0 5px 10px #000);"></i></div></div>
+                </div>
+            </div>
+
+            <div class="slide" id="slide-0_2">
+                <div class="slide-grid">
+                    <div class="text-col">
+                        <h2>03. A RUPTURA COM A TRADIÇÃO</h2>
+                        <div class="ticker-box" id="ticker-0_2">A natureza como realidade observável.</div>
+                        <p>A crise do pensamento escolástico abriu caminho para o questionamento direto das certezas da Igreja e da Tradição. A natureza deixou de ser vista como um cosmos sagrado governado por causas metafísicas ou vontades divinas e passou a ser encarada como uma realidade observável, totalmente aberta ao estudo, à reflexão crítica e à investigação direta do ser humano.</p>
+                    </div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-eye"></i> Investigação Ativa</div><div class="sim-screen"><div class="lantern-container"><i class="fa-solid fa-eye"></i><i class="fa-solid fa-atom"></i><i class="fa-solid fa-microscope"></i><div class="lantern-mask"></div></div></div></div>
                 </div>
             </div>
 
             <div class="slide" id="slide-1">
                 <div class="slide-grid">
                     <div class="text-col">
-                        <h2>01. O RENASCIMENTO</h2>
-                        <div class="ticker-box" id="ticker-1">Galera começou a ler os gregos sem censura.</div>
-                        <h3 class="highlight">Nova Perspectiva</h3><p>A transforma&ccedil;&atilde;o cultural abriu espa&ccedil;o para o surgimento de novas formas de pensar a ci&ecirc;ncia e o mundo.</p>
+                        <h2>04. O TERRENO FÉRTIL</h2>
+                        <div class="ticker-box" id="ticker-1">Dúvida, observação e busca por métodos autônomos.</div>
+                        <p>Essa transição histórica foi fundamental para o surgimento do pensamento científico moderno. Ao romper com o dogmatismo e com as amarras da tradição medieval, os pensadores da época estabeleceram uma nova atitude diante do saber: uma postura pautada na dúvida, na observação e na busca por métodos autônomos para compreender o universo.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-map"></i> Exploração</div><div class="sim-screen"><div class="map-pan"></div><i class="fa-solid fa-unlock-keyhole" style="font-size:4rem; color:var(--rpg-gold); z-index:2;"></i></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-seedling"></i> A Semente da Ciência</div><div class="sim-screen"><i class="fa-solid fa-lightbulb" style="font-size:6rem; color:#f59e0b; animation: pulseLock 2s infinite alternate;"></i></div></div>
                 </div>
             </div>
 
@@ -1238,18 +1266,29 @@
             <span style="margin-left: auto; background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; z-index: 1000;">🗣 <span id="cine-presenter-name">Davi</span></span>
         </div>
 
-        <!-- 0 & 1: RENASCIMENTO -->
+        <!-- TÓPICO 1: O RENASCIMENTO (EXPANDIDO) -->
         <div id="cine-renaissance" class="cine-scene">
             <div class="cine-map-grid"></div>
             <i class="fa-solid fa-sailboat cine-ship"></i>
+            
             <div class="cine-text-box cine-txt-0">
-                <h2 class="cine-title">01. O RENASCIMENTO</h2>
-                <div class="cine-ticker" id="cine-ticker-0">A Europa acordando de uma soneca de 1000 anos...</div>
-                <p class="cine-desc">A Modernidade surge como um novo cenário. O mundo medieval entra em colapso e as antigas verdades começam a ser questionadas.</p>
+                <h2 class="cine-title">01. A ESCOLÁSTICA</h2>
+                <p class="cine-desc">O conhecimento sobre a natureza era dominado pela Escolástica. As verdades não dependiam de testes práticos, mas sim do princípio de autoridade, onde dogmas e textos clássicos possuíam um peso inquestionável.</p>
             </div>
+            
+            <div class="cine-text-box cine-txt-0_1">
+                <h2 class="cine-title">02. A TRANSIÇÃO</h2>
+                <p class="cine-desc">O Renascimento promoveu o resgate humanista. Impulsionada por transformações e navegações, a sociedade percebeu que a visão teocêntrica e a física aristotélica eram insuficientes.</p>
+            </div>
+            
+            <div class="cine-text-box cine-txt-0_2">
+                <h2 class="cine-title">03. A RUPTURA</h2>
+                <p class="cine-desc">A crise abriu caminho para o questionamento direto. A natureza deixou de ser vista como um cosmos sagrado governado por causas metafísicas e passou a ser encarada como uma realidade observável.</p>
+            </div>
+
             <div class="cine-text-box cine-txt-1">
-                <div class="cine-ticker" id="cine-ticker-1">Galera começou a ler os gregos sem censura.</div>
-                <p class="cine-desc">A transformação cultural abriu espaço para o surgimento de novas formas de pensar a ciência e o mundo.</p>
+                <h2 class="cine-title">04. O TERRENO FÉRTIL</h2>
+                <p class="cine-desc">Ao romper com as amarras da tradição medieval, os pensadores estabeleceram uma nova atitude diante do saber: uma postura pautada na dúvida e na busca por métodos autônomos.</p>
             </div>
         </div>
 
@@ -1495,8 +1534,10 @@
            ========================================================= */
         const script = [ 
             // ... (mantenha o id 0 e 1 como estão)
-{ id: 0, title: "Cap 1: O Renascimento (Crise)", presenter: "Davi", ach: "[🌍 Conquista: O Mundo Expandiu]", tickers: ["A Europa acordando de uma soneca de 1000 anos...", "O feudalismo caiu, a ciência subiu.", "Navegações bombando, dogmas caindo."] }, 
-{ id: 1, title: "Cap 1: O Renascimento (Mudança)", presenter: "Davi", ach: "", tickers: ["Galera começou a ler os gregos sem censura.", "O centro do universo não somos nós? Chocante."] }, 
+{ id: 0, title: "1. A Escolástica", presenter: "Davi", ach: "[🔒 Bloqueado: Dogmatismo]", tickers: ["Dogmas religiosos e textos clássicos possuíam um peso inquestionável."] }, 
+            { id: "0_1", title: "2. A Transição", presenter: "Davi", ach: "[🌍 Conquista: O Mundo Expandiu]", tickers: ["A física aristotélica era insuficiente para as novas necessidades."] }, 
+            { id: "0_2", title: "3. A Ruptura", presenter: "Davi", ach: "[🔍 Conquista: Realidade Observável]", tickers: ["A crise escolástica abriu caminho para o questionamento direto."] }, 
+            { id: 1, title: "4. O Terreno Fértil", presenter: "Davi", ach: "[💡 Nível Up: A Semente da Ciência]", tickers: ["Dúvida, observação e busca por métodos autônomos."] }, 
 
 // 👇 NOVO TÓPICO 2 (4 Partes) 👇
 { id: "2", title: "Cap 2: Antes da Rev. Científica", presenter: "Maria Helena", ach: "[🔒 Bloqueado: Pensar fora da caixa]", tickers: ["A tradição ditava as regras."] }, 
@@ -1979,7 +2020,7 @@
             }
 
             const screenId = isMovie ? 'cinematic-stage' : 'player-screen';
-            if (idx === 4 || idx === 8 || idx === 12) { triggerScreenShake(screenId); }
+            if (data.id == 4 || data.id == 6 || data.id == 10) { triggerScreenShake(screenId); }
         }
 
         /* PLAYER CLÁSSICO */
