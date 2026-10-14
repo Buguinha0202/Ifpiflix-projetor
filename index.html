@@ -595,56 +595,139 @@
         .cine-ticker { background: rgba(229, 9, 20, 0.15); border-left: 3px solid #E50914; padding: 10px 15px; margin: 15px 0 15px 0; font-style: italic; color: #bbb; font-size: 1.1rem; border-radius: 4px; min-height: 40px; display: flex; align-items: center; }
 
         /* Ativação das cenas por data-step */
-        #cinematic-stage[data-step="0"] #cine-renaissance, 
-        #cinematic-stage[data-step="0_1"] #cine-renaissance,
-        #cinematic-stage[data-step="0_2"] #cine-renaissance,
-        #cinematic-stage[data-step="1"] #cine-renaissance { opacity: 1; pointer-events: auto; }
-        #cinematic-stage[data-step="0"] .cine-txt-0 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="0_1"] .cine-txt-0_1 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="0_2"] .cine-txt-0_2 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="1"] .cine-txt-1 { opacity: 1; transform: translateY(0); }
+        /* =========================================================
+   TRANSIÇÕES CINEMÁTICAS ENTRE OS CAPÍTULOS (CÂMERA MASTER)
+   ========================================================= */
 
-        #cinematic-stage[data-step="2"] #cine-library, 
-        #cinematic-stage[data-step="2_1"] #cine-library, 
-        #cinematic-stage[data-step="3"] #cine-library, 
-        #cinematic-stage[data-step="3_1"] #cine-library { opacity: 1; pointer-events: auto; }
+/* Transição base de movimento super suave para todos os cenários */
+.cine-scene {
+    opacity: 0; pointer-events: none;
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1.5s cubic-bezier(0.65, 0, 0.35, 1),
+                filter 1s ease;
+    filter: blur(10px);
+}
 
-        #cinematic-stage[data-step="2"] .cine-txt-2 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="2_1"] .cine-txt-2_1 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="3"] .cine-txt-3 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="3_1"] .cine-txt-3_1 { opacity: 1; transform: translateY(0); }
+.cine-scene.active {
+    opacity: 1;
+    pointer-events: auto;
+    filter: blur(0);
+}
 
-        #cinematic-stage[data-step="4"] #cine-rupture { opacity: 1; pointer-events: auto; }
-        #cinematic-stage[data-step="4"] .cine-txt-4 { opacity: 1; transform: translate(-50%, 0); }
+/* ---------------------------------------------------
+   1. RENASCIMENTO (CAP 1)
+   --------------------------------------------------- */
+/* Posição de espera (Acima da tela com scale) */
+#cine-renaissance {
+    transform: translateY(-100vh) scale(0.8);
+    filter: blur(10px);
+}
 
-        #cinematic-stage[data-step="5"] #cine-space, 
-        #cinematic-stage[data-step="6"] #cine-space,
-        #cinematic-stage[data-step="6_1"] #cine-space { opacity: 1; pointer-events: auto; clip-path: circle(150% at 50% 50%); }
+/* Ativo (No centro com cinematic fade) */
+#cinematic-stage[data-step="0"] #cine-renaissance,
+#cinematic-stage[data-step="0_1"] #cine-renaissance,
+#cinematic-stage[data-step="0_2"] #cine-renaissance,
+#cinematic-stage[data-step="1"] #cine-renaissance {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
 
-        #cinematic-stage[data-step="5"] .cine-txt-5 { opacity: 1; transform: translateY(-50%); }
-        #cinematic-stage[data-step="6"] .cine-txt-6 { opacity: 1; transform: translateY(-50%); }
-        #cinematic-stage[data-step="6_1"] .cine-txt-6_1 { opacity: 1; transform: translateY(-50%); }
+/* ---------------------------------------------------
+   2. BIBLIOTECA MEDIEVAL (CAP 2)
+   --------------------------------------------------- */
+/* Posição de espera (Abaixo da tela com scale) */
+#cine-library {
+    transform: translateY(100vh) scale(0.8);
+    filter: blur(10px);
+}
 
-        #cinematic-stage[data-step="7"] #cine-choice { opacity: 1; pointer-events: auto; }
+/* Ativo (No centro) */
+#cinematic-stage[data-step="2"] #cine-library,
+#cinematic-stage[data-step="2_1"] #cine-library,
+#cinematic-stage[data-step="3"] #cine-library,
+#cinematic-stage[data-step="3_1"] #cine-library {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
 
-        #cinematic-stage[data-step="8"] #cine-desk, 
-        #cinematic-stage[data-step="9"] #cine-desk, 
-        #cinematic-stage[data-step="10"] #cine-desk, 
-        #cinematic-stage[data-step="11"] #cine-desk { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        
-        #cinematic-stage[data-step="8"] .cine-txt-8 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="9"] .cine-txt-9 { opacity: 1; transform: translateY(0); }
-        
-        #cinematic-stage[data-step="10"] .cine-pan, 
-        #cinematic-stage[data-step="11"] .cine-pan { transform: translateX(-100vw); }
-        #cinematic-stage[data-step="10"] .cine-txt-10 { opacity: 1; transform: translateY(0); }
-        #cinematic-stage[data-step="11"] .cine-txt-11 { opacity: 1; transform: translateY(0); }
+/* Quando avança para a Ruptura (Cap 3), a câmera ATRAVESSA a biblioteca (Zoom agressivo) */
+#cinematic-stage[data-step="4"] #cine-library,
+#cinematic-stage[data-step="5"] #cine-library {
+    transform: scale(2) translateZ(300px); opacity: 0;
+}
 
-        #cinematic-stage[data-step="12"] #cine-desk { opacity: 0.25; transform: translateY(0) scale(0.9); filter: blur(10px); }
-        #cinematic-stage[data-step="12"] #cine-apple { opacity: 1; pointer-events: auto; }
-        #cinematic-stage[data-step="12"] .cine-txt-12 { opacity: 1; transform: scale(1); }
+/* ---------------------------------------------------
+   3. A RUPTURA (CAP 3)
+   --------------------------------------------------- */
+/* Posição de espera (Lá no fundo com blur) */
+#cine-rupture {
+    transform: scale(0.5);
+    filter: blur(15px);
+}
 
-        #cinematic-stage[data-step="13"] #cine-ad { opacity: 1; pointer-events: auto; }
+/* Ativo (No centro) */
+#cinematic-stage[data-step="4"] #cine-rupture {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    filter: blur(0);
+}
+
+/* Quando avança para o Espaço (Cap 4), o personagem "cai" para baixo */
+#cinematic-stage[data-step="5"] #cine-rupture,
+#cinematic-stage[data-step="6"] #cine-rupture {
+    transform: translateY(100vh); opacity: 0;
+}
+
+/* ---------------------------------------------------
+   4. ESPAÇO / COSMOLOGIA (CAP 4)
+   --------------------------------------------------- */
+/* Posição de espera (Acima da tela com scale) */
+#cine-space {
+    transform: translateY(-100vh) scale(0.8);
+    filter: blur(10px);
+}
+
+/* Ativo (No centro) */
+#cinematic-stage[data-step="5"] #cine-space,
+#cinematic-stage[data-step="6"] #cine-space,
+#cinematic-stage[data-step="6_1"] #cine-space {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+
+/* Quando avança para a Mesa (Cap 5 e 6), o Espaço sobe, a câmera desce para a Terra */
+#cinematic-stage[data-step="8"] #cine-space,
+#cinematic-stage[data-step="9"] #cine-space,
+#cinematic-stage[data-step="10"] #cine-space {
+    transform: translateY(-100vh) scale(0.8); opacity: 0;
+}
+
+/* ---------------------------------------------------
+   5 E 6. A MESA DE TRABALHO (BACON E DESCARTES)
+   --------------------------------------------------- */
+/* Posição de espera (Abaixo da tela com scale) */
+#cine-desk {
+    transform: translateY(100vh) scale(0.8);
+    filter: blur(10px);
+}
+
+/* Ativo (No centro) */
+#cinematic-stage[data-step="8"] #cine-desk,
+#cinematic-stage[data-step="9"] #cine-desk,
+#cinematic-stage[data-step="10"] #cine-desk,
+#cinematic-stage[data-step="11"] #cine-desk {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
 
         /* Cenários 3D */
         #cine-renaissance { background: radial-gradient(circle at center, #222 0%, #000 100%); }
@@ -665,190 +748,378 @@
         #cine-rupture { background: #000; }
         .cine-txt-4 { left: 50%; transform: translate(-50%, 40px); text-align: center; border-left: none; border-bottom: 4px solid var(--netflix-red); border-radius: 8px;}
 
-/* =========================================================
-   CENÁRIO ESPACIAL COM ÓRBITAS HELIOCÊNTRICAS (CAP 4)
+        /* =========================================================
+   VFX MODO FILME: ESCOLÁSTICA, GEOCENTRISMO E RENASCIMENTO
    ========================================================= */
-#cine-space { 
-    background: radial-gradient(ellipse at 30% 50%, #0d1124 0%, #020205 75%); 
-    clip-path: circle(0% at 50% 50%); 
-    transition: clip-path 2s cubic-bezier(0.7, 0, 0.3, 1); 
-    z-index: 61;
+
+/* Barras Cinemáticas Opressoras (Letterboxing) */
+.cine-letterbox {
+    position: absolute; left: 0; width: 100vw; height: 12vh; background: #000; z-index: 800;
+    transition: height 2s cubic-bezier(0.7, 0, 0.3, 1); pointer-events: none;
+}
+.cine-letterbox.top { top: 0; }
+.cine-letterbox.bottom { bottom: 0; }
+
+/* As barras recuam quando a mente se liberta (Renascimento e Ruptura) */
+#cinematic-stage[data-step="0_2"] .cine-letterbox,
+#cinematic-stage[data-step="1"] .cine-letterbox,
+#cinematic-stage[data-step="4"] .cine-letterbox,
+#cinematic-stage[data-step="5"] .cine-letterbox,
+#cinematic-stage[data-step="6"] .cine-letterbox,
+#cinematic-stage[data-step="6_1"] .cine-letterbox,
+#cinematic-stage[data-step="8"] .cine-letterbox,
+#cinematic-stage[data-step="9"] .cine-letterbox,
+#cinematic-stage[data-step="10"] .cine-letterbox,
+#cinematic-stage[data-step="11"] .cine-letterbox { 
+    height: 0vh; 
 }
 
-.cine-stars { 
-    position: absolute; 
-    width: 200vw; 
-    height: 200vh; 
-    background: radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)), 
-                radial-gradient(2px 2px at 90px 40px, #aaa, rgba(0,0,0,0)); 
-    background-size: 150px 150px; 
-    animation: spacePan 40s linear infinite;
+/* Cena 0: Atmosfera Escolástica */
+.cine-candle-light {
+    position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+    animation: candleFlicker 0.2s infinite alternate; pointer-events: none; z-index: 1;
+}
+@keyframes candleFlicker { 0% { opacity: 0.7; } 100% { opacity: 1; transform: scale(1.02); } }
+
+/* A Ruptura Luminosa (Raios Renascentistas) */
+.cine-god-rays {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+    width: 150vw; height: 150vh;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255,255,255,0.15) 20deg, transparent 40deg, rgba(255,255,255,0.15) 60deg, transparent 80deg);
+    opacity: 0; mix-blend-mode: overlay; transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: spinRays 60s linear infinite; z-index: 2; pointer-events: none;
+}
+@keyframes spinRays { 100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); } }
+
+#cinematic-stage[data-step="0_2"] .cine-god-rays,
+#cinematic-stage[data-step="1"] .cine-god-rays { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+
+/* Cena 2 e 3: Esferas de Cristal do Geocentrismo */
+.cine-crystal-sphere {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px) brightness(1.2);
+    box-shadow: inset 0 0 30px rgba(255,255,255,0.05), 0 0 40px rgba(100,150,255,0.1);
+    animation: spinSphere linear infinite; pointer-events: none; z-index: 5;
+}
+.sphere-1 { width: 350px; height: 350px; animation-duration: 25s; }
+.sphere-2 { width: 550px; height: 550px; animation-duration: 40s; animation-direction: reverse; border: 2px dashed rgba(255,255,255,0.1);}
+.sphere-3 { width: 800px; height: 800px; animation-duration: 60s; }
+@keyframes spinSphere { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* Efeito de Impacto Pesado nos Textos da Escolástica */
+#cinematic-stage[data-step="0"] .cine-txt-0,
+#cinematic-stage[data-step="2"] .cine-txt-2,
+#cinematic-stage[data-step="3"] .cine-txt-3 {
+    animation: heavyDrop 0.8s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+@keyframes heavyDrop {
+    0% { transform: translateY(-80px); opacity: 0; filter: blur(5px); }
+    100% { transform: translateY(0); opacity: 1; filter: blur(0); }
 }
 
-/* PALCO DO SISTEMA SOLAR */
-.cine-solar-system {
-    position: absolute;
-    top: 50%;
-    left: 24vw;
-    transform: translate(-50%, -50%);
-    width: 620px;
-    height: 620px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 15;
+/* Base da Câmera 3D (Controlada via JS) */
+.cine-scene {
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
-/* O SOL */
-.cine-sun { 
-    position: absolute; 
-    width: 130px; 
-    height: 130px; 
-    background: radial-gradient(circle, #fff 0%, #fcd34d 25%, #f59e0b 60%, #b45309 100%); 
-    border-radius: 50%; 
-    box-shadow: 0 0 50px rgba(245, 158, 11, 0.9), 0 0 100px rgba(245, 158, 11, 0.4); 
-    z-index: 25; 
+/* =========================================================
+   VFX MODO FILME: COSMOLOGIA, EMPIRISMO E RACIONALISMO
+   ========================================================= */
+
+/* --- CENA 6: O Brilho da Luneta de Galileu --- */
+.cine-lens-flare {
+    position: absolute; top: 50%; left: 35%; transform: translate(-50%, -50%);
+    width: 200vw; height: 200vh;
+    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15) 0%, rgba(255, 255, 255, 0.05) 10%, transparent 40%);
+    mix-blend-mode: screen; opacity: 0; pointer-events: none; z-index: 40;
+    transition: opacity 2s ease, transform 3s ease;
+}
+#cinematic-stage[data-step="6"] .cine-lens-flare,
+#cinematic-stage[data-step="6_1"] .cine-lens-flare { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+
+/* --- CENA 6_1: A Distorção de Kepler --- */
+/* Preparamos a órbita da Terra para ser mutável */
+.orbit-earth { transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Quando entra Kepler, o círculo perfeito vira uma elipse descentralizada */
+#cinematic-stage[data-step="6_1"] .orbit-earth {
+    width: 580px; 
+    height: 320px; 
+    border-radius: 50% / 50%; 
+    border-color: rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+    margin-left: 80px; /* Desloca para o Sol virar um dos focos da elipse */
 }
 
-/* ANÉIS DE ÓRBITA */
-.cine-orbit {
-    position: absolute;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* --- CENAS 8 a 11: A MESA DE TRABALHO (PANORÂMICA 200vw) --- */
+.cine-pan { 
+            position: absolute; top: 0; left: 0; width: 200vw; height: 100vh; 
+            display: flex; transition: transform 2s cubic-bezier(0.6, 0.05, 0.15, 0.95); 
+            z-index: 10; /* <-- Z-INDEX 10: Garante que fica na frente do chão */
+        }
+.cine-side {
+    width: 100vw; height: 100vh; position: relative; overflow: hidden;
+    transform-style: preserve-3d; display: flex; align-items: center;
 }
 
-/* Animação genérica de órbita */
-@keyframes orbitSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
+/* O Chão 3D acompanha o movimento */
+.cine-surface { 
+            position: absolute; bottom: -20vh; left: 0; width: 100vw; height: 50vh; 
+            background: linear-gradient(to top, #111, #000); 
+            transform: perspective(500px) rotateX(60deg); 
+            box-shadow: 0 -20px 50px rgba(0,0,0,0.9); 
+            z-index: 1; /* <-- Z-INDEX 1: Garante que fica atrás de tudo */
+        }
 
-/* 1. ÓRBITA INTERNA */
-.orbit-inner {
-    width: 240px;
-    height: 240px;
-    border: 1px dashed rgba(245, 158, 11, 0.28);
-    animation: orbitSpin 10s linear infinite;
-    z-index: 20;
+/* --- Lado Esquerdo: O Caos Empírico (Bacon) --- */
+.cine-empiricism-bg {
+    position: absolute; width: 100%; height: 100%;
+    background: radial-gradient(circle at 30% 60%, rgba(245, 158, 11, 0.1) 0%, transparent 60%);
 }
-.planet-inner {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 18px;
-    height: 18px;
-    background: radial-gradient(circle at 35% 35%, #fed7aa, #ea580c);
-    border-radius: 50%;
-    box-shadow: 0 0 12px rgba(234, 88, 12, 0.8);
+.cine-smoke-cloud {
+    position: absolute; border-radius: 50%; filter: blur(40px); mix-blend-mode: screen;
+    animation: smokeDrift 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
 }
+.smoke-1 { bottom: 10vh; left: 10vw; width: 400px; height: 400px; background: rgba(16, 185, 129, 0.15); animation-delay: 0s; }
+.smoke-2 { bottom: 20vh; left: 25vw; width: 500px; height: 300px; background: rgba(245, 158, 11, 0.1); animation-delay: -5s; }
+@keyframes smokeDrift { 100% { transform: translate(50px, -30px) scale(1.1); } }
 
-/* 2. ÓRBITA DA TERRA */
-.orbit-earth {
-    width: 420px;
-    height: 420px;
-    border: 1px dashed rgba(59, 130, 246, 0.35);
-    animation: orbitSpin 24s linear infinite;
-    z-index: 22;
+/* --- Lado Direito: A Ordem Racional (Descartes) --- */
+.cine-rationalism-bg {
+    position: absolute; width: 100%; height: 100%;
+    background: radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
 }
-.cine-earth { 
-    position: absolute; 
-    top: 0; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
-    width: 46px; 
-    height: 46px; 
-    background: radial-gradient(circle at 35% 35%, #60a5fa, #1d4ed8 70%, #0f172a); 
-    border-radius: 50%; 
-    box-shadow: 0 0 25px rgba(59, 130, 246, 0.85); 
+.cine-math-grid {
+    position: absolute; width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(59, 130, 246, 0.05) 40px, rgba(59, 130, 246, 0.05) 41px),
+                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(59, 130, 246, 0.05) 40px, rgba(59, 130, 246, 0.05) 41px);
+    opacity: 0.5;
 }
+.cine-gear-system {
+    position: absolute; top: 15vh; right: 10vw; width: 500px; height: 500px;
+}
+.cine-gear { position: absolute; color: rgba(59, 130, 246, 0.15); animation: spin linear infinite; }
+.gear-main { font-size: 25rem; top: 0; right: 0; animation-duration: 40s; }
+.gear-sub { font-size: 15rem; top: 220px; right: 280px; animation-duration: 24s; animation-direction: reverse; color: rgba(255,255,255,0.05);}
 
-/* Lua orbitando a Terra */
-.cine-moon-orbit {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 78px;
-    height: 78px;
-    border-radius: 50%;
-    animation: orbitSpin 4s linear infinite;
-}
-.cine-moon {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    background: #e2e8f0;
-    border-radius: 50%;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-}
+/* =========================================================
+           CENÁRIOS CINEMATOGRÁFICOS - CAPÍTULO 4 (COSMOLOGIA)
+           ========================================================= */
+        #cine-space { 
+            background: #020205; 
+            clip-path: circle(0% at 50% 50%); 
+            transition: clip-path 2s cubic-bezier(0.7, 0, 0.3, 1); 
+            z-index: 61;
+        }
+        #cinematic-stage[data-step="5"] #cine-space, 
+        #cinematic-stage[data-step="6"] #cine-space,
+        #cinematic-stage[data-step="6_1"] #cine-space { 
+            opacity: 1; pointer-events: auto; clip-path: circle(150% at 50% 50%); 
+        }
 
-/* 3. ÓRBITA EXTERNA (MARTE) */
-.orbit-outer {
-    width: 600px;
-    height: 600px;
-    border: 1px dashed rgba(239, 68, 68, 0.22);
-    animation: orbitSpin 40s linear infinite;
-    z-index: 18;
-}
-.planet-outer {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 26px;
-    height: 26px;
-    background: radial-gradient(circle at 35% 35%, #fca5a5, #dc2626 70%, #450a0a);
-    border-radius: 50%;
-    box-shadow: 0 0 16px rgba(220, 38, 38, 0.7);
-}
+        .cosmos-bg {
+            position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
+            background: 
+                radial-gradient(2px 2px at 40px 70px, #fff, transparent), 
+                radial-gradient(2px 2px at 150px 200px, rgba(147, 197, 253, 0.6), transparent),
+                radial-gradient(3px 3px at 90px 40px, rgba(255, 255, 255, 0.3), transparent);
+            background-size: 250px 250px;
+            animation: panCosmos 100s linear infinite; opacity: 0.7;
+        }
+        @keyframes panCosmos { 100% { transform: rotate(360deg); } }
 
-/* CAIXAS DE TEXTO (LADO DIREITO COM LEITURA PROTEGIDA) */
-.cine-txt-5, .cine-txt-6, .cine-txt-6_1 { 
-    position: absolute;
-    left: 54vw; 
-    right: auto;
-    top: 50%; 
-    width: min(530px, 40vw);
-    transform: translateY(-50%) translateY(30px); 
-    text-align: left;
-    border-left: 4px solid var(--netflix-red);
-    border-right: none;
-    border-radius: 0 8px 8px 0;
-    background: rgba(8, 8, 12, 0.85);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
-    z-index: 50; 
-}
+        .solar-system-container { position: absolute; top: 50%; left: 30vw; transform: translate(-50%, -50%); width: 800px; height: 800px; }
 
-        @keyframes spacePan { from { transform: translate(0,0); } to { transform: translate(-150px, -150px); } }
+        .the-sun {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 120px; height: 120px; border-radius: 50%; z-index: 25;
+            background: radial-gradient(circle, #fff 0%, #fcd34d 20%, #f59e0b 60%, #b45309 100%);
+            box-shadow: 0 0 60px rgba(245, 158, 11, 0.8), 0 0 120px rgba(245, 158, 11, 0.4);
+            transition: margin-left 2s ease-in-out;
+        }
+        .sun-flare {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%); animation: pulseFlare 4s infinite alternate; pointer-events: none;
+        }
+        @keyframes pulseFlare { 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; } }
 
+        .orbit-path {
+            position: absolute; top: 50%; left: 50%; border-radius: 50%; border: 1px dashed rgba(255, 255, 255, 0.3);
+            transition: width 2s ease-in-out, height 2s ease-in-out, margin-left 2s ease-in-out;
+        }
 
-        #cine-desk { background: #111; transform: translateY(100vh); transition: transform 1.5s ease-in-out; z-index: 62;}
-        .cine-surface { position: absolute; bottom: -20vh; left: 0; width: 200vw; height: 50vh; background: #222; transform: perspective(500px) rotateX(45deg); box-shadow: 0 -20px 50px rgba(0,0,0,0.9); z-index: 10;}
-        .cine-pan { position: absolute; top: 0; left: 0; width: 200vw; height: 100vh; display: flex; transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .earth-orbit { width: 400px; height: 400px; animation: spinOrbit 15s linear infinite; z-index: 22; }
+        .planet-earth {
+            position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 40px; height: 40px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #60a5fa, #1d4ed8 70%, #020617); box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+        }
+        .moon-orbit { position: absolute; top: 50%; left: 50%; width: 70px; height: 70px; border-radius: 50%; animation: spinOrbit 3s linear infinite; }
+        .the-moon { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 10px; height: 10px; background: #e2e8f0; border-radius: 50%; box-shadow: 0 0 10px #fff; }
+
+        .mars-orbit { width: 600px; height: 600px; animation: spinOrbit 25s linear infinite; z-index: 18; border-color: rgba(239, 68, 68, 0.3); }
+        .planet-mars {
+            position: absolute; top: -12.5px; left: 50%; transform: translateX(-50%); width: 25px; height: 25px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fca5a5, #dc2626 70%, #450a0a); box-shadow: 0 0 15px rgba(220, 38, 38, 0.8);
+        }
+
+        @keyframes spinOrbit { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        /* O EFEITO KEPLER (A Descoberta do Foco) */
+        #cinematic-stage[data-step="6_1"] .the-sun { margin-left: 60px; transform: translate(-50%, -50%) scale(0.85); box-shadow: 0 0 80px rgba(245, 158, 11, 0.9), 0 0 150px rgba(245, 158, 11, 0.6); }
+        #cinematic-stage[data-step="6_1"] .earth-orbit { margin-left: -30px; border-color: rgba(59, 130, 246, 0.5); box-shadow: inset 0 0 40px rgba(59, 130, 246, 0.1); }
+        #cinematic-stage[data-step="6_1"] .mars-orbit { margin-left: -50px; border-color: rgba(239, 68, 68, 0.4); box-shadow: inset 0 0 40px rgba(239, 68, 68, 0.1); }
+
+        .inquisition-stamp {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(5) rotate(-15deg);
+            color: #E50914; font-family: 'Bebas Neue', cursive; font-size: 5rem; line-height: 1; text-align: center;
+            border: 8px solid #E50914; padding: 15px 30px; border-radius: 15px; opacity: 0; pointer-events: none; z-index: 200;
+            text-shadow: 0 0 15px rgba(229,9,20,0.8); box-shadow: inset 0 0 15px rgba(229,9,20,0.5), 0 0 30px rgba(229,9,20,0.5);
+        }
+        #cinematic-stage[data-step="6"] .inquisition-stamp { animation: stampHit 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.5s forwards; }
+        @keyframes stampHit { 0% { transform: translate(-50%, -50%) scale(5) rotate(-15deg); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1) rotate(-15deg); opacity: 0.85; } }
+
+        .cine-txt-5, .cine-txt-6, .cine-txt-6_1 { 
+            position: absolute; left: 55vw !important; right: auto !important; top: 50% !important; transform: translateY(-50%) !important; 
+            width: min(500px, 40vw) !important; text-align: left !important; border-left: 4px solid var(--netflix-red) !important; 
+            border-right: none !important; border-bottom: none !important; border-radius: 0 8px 8px 0 !important; 
+            background: rgba(8, 8, 12, 0.85) !important; backdrop-filter: blur(12px) !important; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85) !important; z-index: 100 !important; 
+        }
+
+        /* =========================================================
+           CENÁRIOS CINEMATOGRÁFICOS - CAP 5 E 6 (A BANCADA)
+           ========================================================= */
+        /* Configuração base da Mesa (Escondida por padrão) */
+        #cine-desk { 
+            background: #080a0b; 
+            z-index: 62; 
+            opacity: 0; 
+            pointer-events: none; 
+            transform: translateY(100vh); /* Fica escondida debaixo da tela */
+            transition: transform 1.5s ease-in-out, opacity 1.5s ease;
+        }
+
+        /* A Mesa SÓ sobe e aparece nos slides 8, 9, 10 e 11 */
+        #cinematic-stage[data-step="8"] #cine-desk,
+        #cinematic-stage[data-step="9"] #cine-desk,
+        #cinematic-stage[data-step="10"] #cine-desk,
+        #cinematic-stage[data-step="11"] #cine-desk {
+            opacity: 1; 
+            pointer-events: auto; 
+            transform: translateY(0); /* Sobe para o centro da tela */
+        }
+
+        
+        .cine-surface { 
+            position: absolute; bottom: -20vh; left: 0; width: 100vw; height: 50vh; 
+            background: linear-gradient(to top, #111, #000); transform: perspective(500px) rotateX(60deg); 
+            box-shadow: 0 -20px 50px rgba(0,0,0,0.9); z-index: 5;
+        }
+
+        .cine-pan { position: absolute; top: 0; left: 0; width: 200vw; height: 100vh; display: flex; transition: transform 2s cubic-bezier(0.6, 0.05, 0.15, 0.95); }
         .cine-side { width: 100vw; height: 100vh; position: relative; }
-        .cine-smoke { position: absolute; bottom: 30vh; left: 10vw; width: 600px; height: 600px; background: radial-gradient(circle, rgba(16,185,129,0.3) 0%, transparent 60%); filter: blur(30px); z-index: 100; animation: lanternMove 5s infinite alternate;}
-        .cine-cauldron { position: absolute; bottom: 20vh; left: 15vw; font-size: 15rem; color: #333; z-index: 110; filter: drop-shadow(0 20px 20px #000); }
-        .cine-gears { position: absolute; top: 20vh; right: 15vw; font-size: 15rem; color: rgba(255,255,255,0.05); animation: spin 20s linear infinite; z-index: 10;}
-        .cine-txt-8, .cine-txt-9 { left: 40vw; top: 25vh; }
-        .cine-txt-10, .cine-txt-11 { left: 15vw; top: 30vh; }
+        
+        #cinematic-stage[data-step="10"] .cine-pan, 
+        #cinematic-stage[data-step="11"] .cine-pan { transform: translateX(-100vw); }
 
-        #cine-apple { background: transparent; z-index: 63; }
-        .cine-txt-12 { transform: scale(0.6); text-align: center; display: flex; flex-direction: column; align-items: center; border-left: none; border-radius: 8px;}
+        .cine-vis-layer { position: absolute; width: 100%; height: 100%; opacity: 0; visibility: hidden; transition: opacity 1s ease; pointer-events: none; }
+        
+        #cinematic-stage[data-step="8"] .vis-8-idols,
+        #cinematic-stage[data-step="9"] .vis-9-lab,
+        #cinematic-stage[data-step="10"] .vis-10-doubt,
+        #cinematic-stage[data-step="11"] .vis-11-cogito { opacity: 1; visibility: visible; }
+
+        /* VIS 8: EMPIRISMO */
+        .heavy-fog { position: absolute; top: 0; left: 0; width: 60vw; height: 100%; background: radial-gradient(circle at 30% 50%, rgba(100,100,100,0.4) 0%, transparent 60%); filter: blur(40px); z-index: 15; transition: opacity 2s ease; }
+        .stone-idol-container { position: absolute; top: 50%; left: 30vw; transform: translate(-50%, -50%); width: 300px; height: 300px; z-index: 10; }
+        .idol-half { position: absolute; top: 0; font-size: 18rem; color: #222; text-shadow: 0 20px 30px #000; transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 1s; }
+        .mask-left { left: 0; clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%); }
+        .mask-right { right: 0; clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%); }
+        .idol-crack-light { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scaleY(0); width: 15px; height: 250px; background: #fff; box-shadow: 0 0 50px #fff, 0 0 100px #E50914; opacity: 0; z-index: 5; }
+
+        #cinematic-stage[data-step="8"] .mask-left { transform: translateX(-40px) rotate(-10deg); filter: brightness(0.4); }
+        #cinematic-stage[data-step="8"] .mask-right { transform: translateX(40px) rotate(10deg); filter: brightness(0.4); }
+        #cinematic-stage[data-step="8"] .idol-crack-light { animation: idolFlash 1.5s forwards 0.3s; }
+        @keyframes idolFlash { 0% { transform: translate(-50%, -50%) scaleY(0); opacity: 0; } 50% { transform: translate(-50%, -50%) scaleY(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scaleY(1); opacity: 0.3; } }
+
+        /* VIS 9: LABORATÓRIO */
+        .neon-flask-container { position: absolute; top: 50%; left: 30vw; transform: translate(-50%, -50%); width: 150px; height: 200px; z-index: 20; }
+        .flask-glass { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 15rem; color: #111; filter: drop-shadow(0 30px 20px #000); z-index: 22; transition: color 1s; }
+        .flask-glow { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 120px; height: 120px; border-radius: 50%; background: rgba(16, 185, 129, 0); box-shadow: 0 0 0 rgba(16,185,129,0); transition: background 1s, box-shadow 1s; z-index: 21; }
+        .flask-bubbles { position: absolute; bottom: 100px; left: 0; width: 100%; height: 200px; z-index: 23; overflow: hidden; pointer-events: none; }
+        .fbubble { position: absolute; bottom: 0; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #10b981; opacity: 0; }
+
+        #cinematic-stage[data-step="9"] .heavy-fog { opacity: 0.1; } 
+        #cinematic-stage[data-step="9"] .flask-glass { color: rgba(255,255,255,0.1); }
+        #cinematic-stage[data-step="9"] .flask-glow { background: rgba(16, 185, 129, 0.8); box-shadow: 0 0 80px rgba(16, 185, 129, 0.8), 0 0 150px rgba(16, 185, 129, 0.4); }
+        #cinematic-stage[data-step="9"] .fbubble { animation: boilBubbles 2s infinite ease-in; }
+        .fb1 { left: 30%; width: 15px; height: 15px; animation-delay: 0s !important; } .fb2 { left: 60%; width: 10px; height: 10px; animation-delay: 0.4s !important; } .fb3 { left: 45%; width: 20px; height: 20px; animation-delay: 0.8s !important; } .fb4 { left: 20%; width: 12px; height: 12px; animation-delay: 1.2s !important; } .fb5 { left: 70%; width: 18px; height: 18px; animation-delay: 1.6s !important; }
+        @keyframes boilBubbles { 0% { transform: translateY(0) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-150px) scale(1.5); opacity: 0; } }
+
+        /* VIS 10 E 11: RACIONALISMO */
+        .matrix-grid { position: absolute; width: 100%; height: 100%; background: linear-gradient(rgba(59, 130, 246, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px); background-size: 40px 40px; transform: perspective(500px) rotateX(60deg) translateY(-100px); animation: gridMove 5s linear infinite; }
+        .glitch-container { position: absolute; top: 50%; left: 30vw; transform: translate(-50%, -50%); z-index: 10; text-align: center; }
+        .logic-cube { font-size: 10rem; color: #fff; text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+        .system-error { margin-top: 20px; font-family: 'Share Tech Mono', monospace; font-size: 3rem; color: #E50914; text-shadow: 0 0 20px #E50914; font-weight: bold; opacity: 0; }
+
+        #cinematic-stage[data-step="10"] .logic-cube { animation: cubeGlitch 2s infinite; }
+        #cinematic-stage[data-step="10"] .system-error { animation: flashError 3s infinite; }
+        @keyframes gridMove { 100% { transform: perspective(500px) rotateX(60deg) translateY(0px); } }
+        @keyframes cubeGlitch { 0%, 90% { transform: translate(0, 0) skew(0deg); color: #fff; text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); } 92% { transform: translate(-10px, 5px) skew(20deg); color: #E50914; text-shadow: -5px 0 0 #fff; } 94% { transform: translate(10px, -5px) skew(-20deg); color: #3b82f6; text-shadow: 5px 0 0 #fff; } 96% { transform: translate(0, 0) skew(0deg); color: #fff; } }
+        @keyframes flashError { 0%, 90% { opacity: 0; } 92%, 96% { opacity: 1; } 100% { opacity: 0; } }
+
+        .glowing-brain { position: absolute; top: 50%; left: 30vw; transform: translate(-50%, -50%); font-size: 12rem; color: #3b82f6; text-shadow: 0 0 50px rgba(59, 130, 246, 0.8), 0 0 100px rgba(59, 130, 246, 0.4); z-index: 20; }
+        .gear-bg { position: absolute; font-size: 18rem; color: rgba(255, 255, 255, 0.05); z-index: 10; }
+        .gear-1 { left: 10vw; top: 20vh; animation: spinGear 15s linear infinite; }
+        .gear-2 { left: 40vw; bottom: 20vh; font-size: 14rem; animation: spinGear 10s linear infinite reverse; }
+        .math-formulas { position: absolute; top: 20%; width: 100%; text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 2rem; color: rgba(255, 255, 255, 0.2); letter-spacing: 5px; z-index: 5; }
+
+        #cinematic-stage[data-step="11"] .glowing-brain { animation: throbBrain 2s infinite alternate ease-in-out; }
+        @keyframes spinGear { 100% { transform: rotate(360deg); } }
+        @keyframes throbBrain { 0% { filter: brightness(1); } 100% { filter: brightness(1.6); } }
+
+        .cine-txt-8, .cine-txt-9, .cine-txt-10, .cine-txt-11 {
+            left: 55vw !important; right: auto !important; top: 50% !important; bottom: auto !important; transform: translateY(-50%) !important;
+            width: min(500px, 40vw) !important; text-align: left !important; border-bottom: none !important; border-left: 4px solid var(--netflix-red) !important;
+            border-radius: 0 8px 8px 0 !important; background: rgba(8, 8, 12, 0.85) !important; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85) !important;
+        }
+
+        /* =========================================================
+           CENÁRIO FINAL (NEWTON) E AD
+           ========================================================= */
+        #cine-apple { 
+            background: radial-gradient(circle at 50% 50%, #1a0505 0%, #000 80%); 
+            z-index: 63; 
+        }
+        
+        .cine-txt-12 { 
+            position: absolute;
+            left: 50% !important; 
+            right: auto !important; 
+            top: 50% !important; 
+            transform: translate(-50%, -50%) !important; 
+            width: min(700px, 80vw) !important;
+            text-align: center !important; 
+            display: flex; flex-direction: column; align-items: center; 
+            border: none !important; 
+            background: rgba(5, 5, 5, 0.9) !important;
+            padding: 40px !important;
+            border-radius: 15px !important;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9) !important;
+            z-index: 50;
+        }
+
+        /* Ativa a cena do Newton limpamente */
+        #cinematic-stage[data-step="12"] #cine-apple { opacity: 1; pointer-events: auto; }
+
         .cine-giant-apple { font-size: 12rem; color: #E50914; animation: giantAppleDrop 4s infinite ease-in; text-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 10; position: relative;}
         .cine-math-wave { position: absolute; top: 100px; font-family: 'Share Tech Mono'; font-size: 6rem; color: #3b82f6; opacity: 0; animation: giantMathShock 4s infinite ease-out; white-space: nowrap; font-weight: bold;}
+        
         @keyframes giantAppleDrop { 0% { transform: translateY(-400px); } 40% { transform: translateY(0) scale(1); } 45% { transform: translateY(0) scaleY(0.7) scaleX(1.3); } 50% { transform: translateY(-40px) scale(1); } 55% { transform: translateY(0); } 100% { transform: translateY(0); } }
         @keyframes giantMathShock { 0%, 40% { transform: scale(0.5); opacity: 0; filter: blur(10px); } 45% { transform: scale(1.2); opacity: 1; filter: blur(0); text-shadow: 0 0 50px #3b82f6;} 100% { transform: scale(3); opacity: 0; filter: blur(20px); } }
-
-        #cine-ad { background: #000; z-index: 70; }
-
+        
         /* =========================================================
            MODAL DE DETALHES DO FILME (ESTILO NETFLIX)
            ========================================================= */
@@ -956,6 +1227,17 @@
         /* OVERLAYS DE EVENTOS */
         #idle-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
         .btn-idle { background: #fff; color: #000; border: none; padding: 15px 40px; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 30px; transition: 0.2s;}
+
+        .lis-container { display: flex; width: 100%; height: 320px; gap: 15px; margin-top: 20px; }
+        .lis-choice { flex: 1; border: 2px solid #444; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; padding: 20px; text-align: center;}
+        .lis-choice.empirismo { background: linear-gradient(135deg, #0f2027 0%, #203a43 100%); }
+        .lis-choice.racionalismo { background: linear-gradient(135deg, #141e30 0%, #243b55 100%); }
+        .lis-choice:hover { border-color: #3b82f6; filter: brightness(1.2); transform: scale(1.02); }
+        .lis-choice i { font-size: 3rem; margin-bottom: 15px; color: #fff; }
+        #lis-notification { position: absolute; top: 30px; left: 40px; font-size: 1.5rem; color: #fff; z-index: 10000; opacity: 0; transition: opacity 0.5s; text-shadow: 2px 2px 5px #000; pointer-events: none;}
+        .butterfly-pulse { animation: pulseB 2s infinite; display: inline-block; margin-right: 10px; color: #00f0ff;}
+        @keyframes pulseB { 0%, 100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 10px #00f0ff); } 50% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 20px #00f0ff); } }
+        #lis-dark-overlay { position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.8); z-index: 9998; display: none; }
 
         #credits-screen { justify-content: center; align-items: center; background: #000; text-align: center; padding: 30px; }
 
@@ -1136,6 +1418,7 @@
             100% { opacity: 0; transform: scale(1.2); } /* Removido o blur, apenas aumenta e some */
         }
 
+        
         /* =========================================================
            FEATURE 4: HOLOFOTE (TEATRO DAS SOMBRAS)
            ========================================================= */
@@ -1160,19 +1443,624 @@
         }
 
         /* =========================================================
-           OPTION 2: MAÇÃS FÍSICAS (NEWTON)
-           ========================================================= */
-        .physics-apple {
-            position: fixed;
-            color: #E50914;
-            font-size: 2rem;
-            pointer-events: none; /* Não bloqueia cliques */
-            z-index: 99998; /* Logo abaixo do holofote */
-            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            /* O transform será manipulado pelo JS */
-        }
+   EPISTEMOLOGIA VISUAL: ARCO 1 (MEDIEVAL VS RENASCIMENTO)
+   ========================================================= */
 
-        #skip-intro-btn {
+/* 1. A ESCOLÁSTICA (A Claustrofobia do Dogma) */
+.dogma-vault {
+    position: relative;
+    background: #050505;
+    box-shadow: inset 0 0 120px rgba(0,0,0,0.95);
+    overflow: hidden;
+}
+.divine-light {
+    position: absolute;
+    top: -20%; left: 50%;
+    width: 140px; height: 140%;
+    background: linear-gradient(to bottom, rgba(212, 175, 55, 0.15) 0%, transparent 100%);
+    transform: translateX(-50%) rotate(15deg);
+    pointer-events: none;
+    mix-blend-mode: screen;
+    z-index: 1;
+}
+.dust-particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fallDust linear infinite; /* Movimento estritamente linear, sem vida */
+}
+@keyframes fallDust {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(450px) rotate(360deg); opacity: 0; }
+}
+
+/* 2. GEOCENTRISMO (O Universo Finito e Teleológico) */
+.geo-system {
+    position: relative;
+    width: 300px; height: 300px;
+    display: flex; align-items: center; justify-content: center;
+    border: none; /* Sobrescreve o tracejado anterior */
+}
+/* A Corrupção Sublunar (Terra) */
+.geo-earth {
+    font-size: 4.5rem; color: #3b82f6; z-index: 10;
+    animation: sublunarCorruption 0.4s steps(2, end) infinite; /* Trepidação caótica */
+}
+/* A Perfeição Supralunar (Esferas) */
+.supralunar-sphere {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%; /* O círculo perfeito aristotélico */
+    backdrop-filter: blur(3px); /* A barreira de cristal */
+    animation: celestialSpin linear infinite; /* Sem aceleração, eterno */
+    pointer-events: none;
+}
+.sphere-1 { width: 140px; height: 140px; animation-duration: 8s; }
+.sphere-2 { width: 210px; height: 210px; animation-duration: 15s; border-color: rgba(212, 175, 55, 0.3); }
+.sphere-3 { width: 280px; height: 280px; animation-duration: 24s; }
+
+@keyframes sublunarCorruption {
+    0% { transform: translate(0, 0); filter: grayscale(0.2); }
+    50% { transform: translate(1px, -1px); filter: grayscale(0); }
+    100% { transform: translate(-1px, 1px); filter: grayscale(0.2); }
+}
+@keyframes celestialSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* 3. PRINCÍPIO DE AUTORIDADE (A Letra Morta) */
+.authority-repel {
+    /* A transição é seca (linear) para mostrar resistência, não fluidez */
+    transition: transform 0.1s linear; 
+    will-change: transform;
+    display: flex; flex-direction: column; align-items: center;
+    z-index: 10;
+}
+.authority-repel i {
+    filter: drop-shadow(0 10px 20px rgba(229,9,20,0.4));
+}
+
+/* 4. O DESPERTAR RENASCENTISTA (Humanismo e Observação) */
+.humanism-stage {
+    position: relative;
+    width: 100%; height: 100%;
+    background: #080808;
+    overflow: hidden;
+    cursor: crosshair; /* Sugere precisão/investigação */
+}
+.humanism-bg {
+    position: absolute; top: -10%; left: -10%; width: 120%; height: 120%;
+    /* Padrão geométrico renascentista sutil */
+    background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+    /* Fluidez orgânica contrastando com a rigidez medieval */
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+}
+.humanism-mask {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    /* O raio de luz humano (atualizado via JS) */
+    clip-path: circle(0px at 50% 50%); 
+    transition: clip-path 0.1s cubic-bezier(0.25, 1, 0.5, 1); /* Suavidade humana */
+    pointer-events: none;
+    z-index: 5;
+}
+.humanism-content {
+    position: relative; z-index: 2;
+    display: flex; gap: 40px; font-size: 3.5rem; color: var(--rpg-gold);
+    align-items: center; justify-content: center; height: 100%;
+}
+
+/* =========================================================
+   ANIMAÇÕES DO EMPIRISMO (O LABORATÓRIO DE BACON)
+   ========================================================= */
+
+/* Fogo da Forja / Laboratório (Pisca agressivamente) */
+.cine-forge-light {
+    position: absolute; bottom: 0; left: 5vw; width: 40vw; height: 50vh;
+    background: radial-gradient(circle at bottom, rgba(255, 69, 0, 0.25) 0%, rgba(245, 158, 11, 0.1) 40%, transparent 70%);
+    animation: forgeFlicker 0.15s infinite alternate;
+    mix-blend-mode: screen; z-index: 1; pointer-events: none;
+}
+@keyframes forgeFlicker {
+    0% { opacity: 0.6; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Bolhas Químicas subindo do Frasco */
+.cine-chemical-bubble {
+    position: absolute; bottom: 35vh; left: 17vw;
+    border-radius: 50%; background: rgba(16, 185, 129, 0.7);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.9), inset 0 0 10px #fff;
+    animation: boilRise 2.5s infinite ease-in; opacity: 0; z-index: 5;
+}
+.cine-bubble-1 { width: 25px; height: 25px; left: 16vw; animation-delay: 0s; }
+.cine-bubble-2 { width: 40px; height: 40px; left: 19vw; animation-delay: 0.8s; animation-duration: 3s; }
+.cine-bubble-3 { width: 15px; height: 15px; left: 17.5vw; animation-delay: 1.5s; animation-duration: 2s; }
+
+@keyframes boilRise {
+    0% { transform: translateY(0) scale(0.5); opacity: 1; }
+    100% { transform: translateY(-40vh) scale(1.5); opacity: 0; }
+}
+
+/* O Frasco Tremendo (Instabilidade da Matéria) */
+.cine-cauldron-shake {
+    animation: boilingShake 0.4s infinite alternate ease-in-out;
+}
+@keyframes boilingShake {
+    0% { transform: translateZ(80px) rotate(-3deg) scale(0.98); filter: drop-shadow(0 20px 10px rgba(16, 185, 129, 0.3)); }
+    100% { transform: translateZ(80px) rotate(3deg) scale(1.02); filter: drop-shadow(0 20px 30px rgba(16, 185, 129, 0.8)); }
+}
+
+/* =========================================================
+   OBJETOS DINÂMICOS (PROPS) - ANIMAÇÕES CINEMÁTICAS REAIS
+   ========================================================= */
+
+.cine-prop {
+    position: absolute; top: 50%; left: 25%; /* Objetos travados na ESQUERDA */
+    transform: translate(-50%, -50%) scale(0) translateZ(-500px);
+    opacity: 0; visibility: hidden;
+    /* Saída super rápida para evitar que um objeto fique por cima do outro */
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    pointer-events: none;
+}
+
+.cine-prop i { font-size: 14rem; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.9)); }
+.cine-prop .sub-icon { font-size: 6rem; position: absolute; bottom: -20px; right: -20px; color: var(--netflix-red); }
+
+/* ==========================================
+   AS ANIMAÇÕES TEMÁTICAS (ENTRADAS) - ENHANCED
+   ========================================== */
+
+/* 1. O Peso do Dogma (Cai como uma bigorna com impacto) */
+@keyframes slamDown {
+    0% {
+        transform: translate(-50%, -200%) scale(2.5) translateZ(300px);
+        opacity: 0;
+        filter: blur(15px);
+    }
+    60% {
+        transform: translate(-50%, -55%) scale(0.85) translateZ(80px);
+        opacity: 1;
+        filter: blur(0);
+    }
+    75% {
+        transform: translate(-50%, -45%) scale(1.05) translateZ(80px);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) translateZ(80px);
+        opacity: 1;
+    }
+}
+
+/* 2. O Barco (Desliza navegando com ondas) */
+@keyframes sailIn {
+    0% {
+        transform: translate(-200%, -40%) rotate(-20deg) translateZ(80px);
+        opacity: 0;
+        filter: blur(8px);
+    }
+    40% {
+        transform: translate(-60%, -55%) rotate(8deg) translateZ(80px);
+        opacity: 0.8;
+    }
+    70% {
+        transform: translate(-52%, -48%) rotate(-3deg) translateZ(80px);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg) translateZ(80px);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* 3. A Lâmpada e o Olho (Foco repentino / Flash cinematográfico) */
+@keyframes flashPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        filter: blur(20px);
+    }
+    40% {
+        transform: translate(-50%, -50%) scale(1.6);
+        opacity: 1;
+        filter: brightness(3) blur(5px);
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(0.9);
+        filter: brightness(1.5) blur(0);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) translateZ(80px);
+        opacity: 1;
+        filter: brightness(1) blur(0);
+    }
+}
+
+/* 4. Tradição / Pilares (Erguem-se do chão com tremor) */
+@keyframes riseUp {
+    0% {
+        transform: translate(-50%, 150%) translateZ(80px);
+        opacity: 0;
+        filter: blur(10px);
+    }
+    50% {
+        transform: translate(-50%, -30%) translateZ(80px);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translate(-50%, -55%) translateZ(80px);
+    }
+    100% {
+        transform: translate(-50%, -50%) translateZ(80px);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* 5. A Ruptura / Martelo (Giro agressivo com impacto) */
+@keyframes aggressiveSpin {
+    0% {
+        transform: translate(-50%, -50%) rotate(-270deg) scale(0);
+        opacity: 0;
+        filter: blur(15px);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(-90deg) scale(1.2);
+        opacity: 0.9;
+    }
+    80% {
+        transform: translate(-50%, -50%) rotate(20deg) scale(0.95);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1) translateZ(80px);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* 6. A Dúvida de Descartes (Glitch Matrix intensificado) */
+@keyframes glitchIn {
+    0% {
+        transform: translate(-50%, -50%) skewX(45deg) scale(0.3);
+        opacity: 0;
+        filter: hue-rotate(180deg) blur(15px);
+    }
+    15% {
+        transform: translate(-70%, -50%) skewX(-45deg) scale(1.4);
+        opacity: 1;
+        filter: hue-rotate(-180deg) blur(5px);
+    }
+    30% {
+        transform: translate(-30%, -50%) skewX(30deg) scale(0.7);
+        opacity: 0.6;
+        filter: hue-rotate(90deg) blur(8px);
+    }
+    50% {
+        transform: translate(-60%, -50%) skewX(-20deg) scale(1.1);
+        opacity: 0.9;
+        filter: hue-rotate(-90deg) blur(3px);
+    }
+    70% {
+        transform: translate(-40%, -50%) skewX(10deg) scale(0.9);
+        filter: hue-rotate(45deg) blur(1px);
+    }
+    100% {
+        transform: translate(-50%, -50%) skewX(0deg) scale(1) translateZ(80px);
+        opacity: 1;
+        filter: hue-rotate(0deg) blur(0);
+    }
+}
+
+/* 7. As Engrenagens (Encaixe mecânico perfeito com impacto) */
+@keyframes mechanicalLock {
+    0% {
+        transform: translate(-50%, -50%) scale(2.5) rotate(180deg) translateZ(300px);
+        opacity: 0;
+        filter: blur(12px);
+    }
+    40% {
+        transform: translate(-50%, -50%) scale(1.3) rotate(90deg) translateZ(150px);
+        opacity: 0.8;
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(0.9) rotate(20deg) translateZ(80px);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg) translateZ(80px);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+
+/* ==========================================
+   APLICANDO AS ANIMAÇÕES NAS CENAS
+   ========================================== */
+
+/* CAP 1 - Animações de entrada (removidas - nova abordagem) */
+
+/* CAP 2 - Animações de entrada */
+#cinematic-stage[data-step="2"] .prop-tradition { animation: riseUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+#cinematic-stage[data-step="2_1"] .prop-geocenter { animation: slamDown 0.8s forwards; }
+#cinematic-stage[data-step="3"] .prop-authority { animation: aggressiveSpin 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+#cinematic-stage[data-step="3_1"] .prop-change { animation: flashPop 0.6s forwards; }
+
+/* CAP 3 - Animação de entrada */
+#cinematic-stage[data-step="4"] .prop-action { animation: sailIn 0.8s forwards; }
+
+/* CAP 4 (Espaço) - Animações de entrada */
+#cinematic-stage[data-step="5"] .prop-solar,
+#cinematic-stage[data-step="6"] .prop-solar,
+#cinematic-stage[data-step="6_1"] .prop-solar { animation: flashPop 1.5s ease-out forwards; }
+#cinematic-stage[data-step="6"] .prop-telescope { animation: riseUp 1s forwards; }
+
+/* CAP 5 e 6 (Mesa de Trabalho) - Animações de entrada */
+#cinematic-stage[data-step="8"] .prop-idols { animation: slamDown 0.8s forwards; }
+#cinematic-stage[data-step="9"] .prop-flask { animation: riseUp 1s forwards; }
+#cinematic-stage[data-step="10"] .prop-doubt { animation: glitchIn 0.6s forwards; }
+#cinematic-stage[data-step="11"] .prop-gears { animation: mechanicalLock 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+/* =========================================================
+   CENÁRIOS INTERLIGADOS (AURAS E PALCOS 3D)
+   ========================================================= */
+
+/* A Aura fica exatamente atrás do objeto (left: 25%) */
+.cine-aura {
+    position: absolute; top: 50%; left: 25%;
+    width: 150vw; height: 150vh;
+    transform: translate(-50%, -50%);
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Props ficam invisíveis por padrão, aparecem apenas no step correto */
+.cine-prop {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* CAPÍTULO 1: Nova abordagem - sem props antigos */
+
+/* CAPÍTULO 2: Mostra apenas o prop correspondente ao step */
+#cinematic-stage[data-step="2"] .prop-tradition,
+#cinematic-stage[data-step="2_1"] .prop-geocenter,
+#cinematic-stage[data-step="3"] .prop-authority,
+#cinematic-stage[data-step="3_1"] .prop-change {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* CAPÍTULO 3: Ruptura */
+#cinematic-stage[data-step="4"] .prop-action {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* CAPÍTULO 4: Espaço */
+#cinematic-stage[data-step="5"] .prop-solar,
+#cinematic-stage[data-step="6"] .prop-solar,
+#cinematic-stage[data-step="6_1"] .prop-solar {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+#cinematic-stage[data-step="6"] .prop-telescope {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* CAPÍTULO 5 e 6: Mesa de Trabalho */
+#cinematic-stage[data-step="8"] .prop-idols,
+#cinematic-stage[data-step="9"] .prop-flask,
+#cinematic-stage[data-step="10"] .prop-doubt,
+#cinematic-stage[data-step="11"] .prop-gears {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* CAPÍTULO 12: Newton (Síntese) */
+#cinematic-stage[data-step="12"] .prop-apple {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Auras antigas do Capítulo 1 removidas - nova abordagem */
+
+/* 5. TRADIÇÃO (Pilares): Chão de mármore refletindo a estrutura */
+.aura-tradition {
+    top: 70%; height: 100vh;
+    background: repeating-linear-gradient(90deg, #111 0%, #222 10%, #111 20%);
+    transform: translate(-50%, 0) rotateX(75deg);
+}
+#cinematic-stage[data-step="2"] .aura-tradition {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* 6. GEOCENTRISMO: As esferas de cristal agora envolvem a Terra */
+.aura-geocenter { width: 800px; height: 800px; }
+#cinematic-stage[data-step="2_1"] .aura-geocenter {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* 7. AUTORIDADE (Martelo): Onda de choque vermelha quando o martelo bate */
+.aura-authority {
+    background: radial-gradient(circle at 50% 50%, rgba(229,9,20,0.3) 0%, transparent 60%);
+}
+#cinematic-stage[data-step="3"] .aura-authority {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: redShockwave 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes redShockwave { 0%, 80% { opacity: 0; transform: translate(-50%, -50%) scale(0); filter: blur(0px); } 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(20px); } }
+
+/* 8. MUDANÇA (Microscópio): Grade neon tecnológica */
+.aura-change {
+    top: 70%; height: 100vh;
+    background: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(16,185,129,0.2) 40px, rgba(16,185,129,0.2) 41px),
+                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(16,185,129,0.2) 40px, rgba(16,185,129,0.2) 41px);
+    transform: translate(-50%, 0) rotateX(75deg);
+}
+#cinematic-stage[data-step="3_1"] .aura-change {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: oceanPan 10s linear infinite;
+}
+
+/* =========================================================
+   AJUSTES FINAIS: TELESCÓPIO E RUPTURA
+   ========================================================= */
+
+/* A Aura de Energia do Capítulo 3 (O Homem Correndo) */
+.aura-action {
+    background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.2) 0%, transparent 50%);
+    box-shadow: inset 0 0 100px #000;
+}
+#cinematic-stage[data-step="4"] .aura-action {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: pulseEnergy 1s infinite alternate;
+}
+@keyframes pulseEnergy { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } 100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } }
+
+/* Animação exclusiva do Telescópio (Espiando do canto inferior esquerdo) */
+@keyframes peekTelescope {
+    0% { transform: translate(-50%, 150%) rotate(-30deg) translateZ(150px); opacity: 0; }
+    100% { transform: translate(-50%, -50%) rotate(-30deg) translateZ(150px); opacity: 1; }
+}
+#cinematic-stage[data-step="6"] .prop-telescope {
+    animation: peekTelescope 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* =========================================================
+   RESTAURAÇÃO DE VISIBILIDADE (TEXTOS)
+   ========================================================= */
+
+/* 1. Garante que todas as caixas fiquem invisíveis por padrão */
+.cine-text-box {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease;
+}
+
+/* 2. Acende EXATAMENTE a caixa correspondente à cena atual */
+#cinematic-stage[data-step="0"] .cine-txt-0,
+#cinematic-stage[data-step="0_1"] .cine-txt-0_1,
+#cinematic-stage[data-step="0_2"] .cine-txt-0_2,
+#cinematic-stage[data-step="1"] .cine-txt-1,
+
+#cinematic-stage[data-step="2"] .cine-txt-2,
+#cinematic-stage[data-step="2_1"] .cine-txt-2_1,
+#cinematic-stage[data-step="3"] .cine-txt-3,
+#cinematic-stage[data-step="3_1"] .cine-txt-3_1,
+
+#cinematic-stage[data-step="4"] .cine-txt-4,
+
+#cinematic-stage[data-step="5"] .cine-txt-5,
+#cinematic-stage[data-step="6"] .cine-txt-6,
+#cinematic-stage[data-step="6_1"] .cine-txt-6_1,
+
+#cinematic-stage[data-step="8"] .cine-txt-8,
+#cinematic-stage[data-step="9"] .cine-txt-9,
+#cinematic-stage[data-step="10"] .cine-txt-10,
+#cinematic-stage[data-step="11"] .cine-txt-11 {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* =========================================================
+   RESTAURAÇÃO DAS CENAS FINAIS E DESLIZAMENTO (CAP 6, 7, 12 e 13)
+   ========================================================= */
+
+/* 1. O Deslizamento da Mesa para ver Descartes (Capítulo 6) */
+#cinematic-stage[data-step="10"] .cine-pan,
+#cinematic-stage[data-step="11"] .cine-pan {
+    transform: translateX(-100vw);
+}
+
+/* 2. A Cena de Escolha (A Encruzilhada) */
+#cine-choice { 
+    transform: scale(1.2); opacity: 0; pointer-events: none; transition: all 0.8s ease; 
+}
+#cinematic-stage[data-step="7"] #cine-choice { 
+    opacity: 1; pointer-events: auto; transform: scale(1); 
+}
+
+/* 3. Prevenção de erro no Capítulo 4 (Espaço) */
+/* Garante que o espaço não fique cortado ou invisível por códigos antigos */
+#cine-space { clip-path: circle(150% at 50% 50%) !important; }
+
+/* 4. A Maçã de Newton (Síntese) */
+#cine-apple { 
+    transform: translateY(-100vh); opacity: 0; pointer-events: none; transition: all 1s ease; z-index: 80;
+}
+#cinematic-stage[data-step="12"] #cine-apple { 
+    opacity: 1; pointer-events: auto; transform: translateY(0); 
+}
+#cinematic-stage[data-step="12"] .cine-txt-12 { 
+    opacity: 1 !important; visibility: visible !important; 
+}
+
+
+
+/* 5. A Propaganda Final (Assine o IFPIFLIX) */
+#cine-ad { 
+    opacity: 0; pointer-events: none; transition: opacity 1s ease; z-index: 90;
+}
+#cinematic-stage[data-step="13"] #cine-ad { 
+    opacity: 1; pointer-events: auto; 
+}
+
+/* =========================================================
+   O CLÍMAX: A ESCOLHA (7) E A SÍNTESE DE NEWTON (12)
+   ========================================================= */
+
+/* Quando entra a Escolha (7), a Mesa vai para o fundo e embaça */
+#cinematic-stage[data-step="7"] #cine-desk {
+    opacity: 0.3; filter: blur(15px); transform: scale(0.9); pointer-events: none;
+}
+
+/* Centralização perfeita da Tela de Escolha */
+#cine-choice {
+    position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.6); z-index: 100;
+}
+
+/* A Aura da Maçã (Explosão de Gravidade) */
+.aura-gravity {
+    background: radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.2) 0%, transparent 60%);
+    box-shadow: inset 0 0 100px #000;
+}
+#cinematic-stage[data-step="12"] .aura-gravity {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: gravityShock 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes gravityShock { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0); filter: blur(20px); } 100% { opacity: 1; transform: translate(-50%, -50%) scale(1.5); filter: blur(0px); } }
+
+/* A Maçã caindo (Animação de Objeto) */
+@keyframes appleDrop3D {
+    0% { transform: translate(-50%, -300%) scale(2) rotate(45deg); opacity: 0; filter: blur(10px); }
+    60% { transform: translate(-50%, -40%) scale(0.9) rotate(-10deg); opacity: 1; filter: blur(0); }
+    100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+}
+#cinematic-stage[data-step="12"] .prop-apple {
+    animation: appleDrop3D 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+#skip-intro-btn {
             position: absolute; bottom: 40px; right: 40px;
             background: rgba(255,255,255,0.15); color: #fff;
             border: 1px solid rgba(255,255,255,0.4); padding: 12px 25px;
@@ -1183,43 +2071,1148 @@
         #skip-intro-btn:hover { background: #fff; color: #000; }
         #skip-intro-btn.show { opacity: 1; pointer-events: auto; }
 
-        /* CARIMBO DA INQUISIÇÃO (GALILEU) */
-        .inquisition-stamp {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(5) rotate(-15deg);
-            color: #E50914; font-family: 'Bebas Neue', cursive;
-            font-size: 5rem; line-height: 1; text-align: center;
-            border: 8px solid #E50914; padding: 15px 30px; border-radius: 15px;
-            opacity: 0; pointer-events: none; z-index: 200;
-            text-shadow: 0 0 15px rgba(229,9,20,0.8);
-            box-shadow: inset 0 0 15px rgba(229,9,20,0.5), 0 0 30px rgba(229,9,20,0.5);
-        }
-        
-        /* Dispara a animação apenas quando o slide 6 (Clássico) ou a cena 6 (Cine) estiverem ativos */
-        .slide.active .inquisition-stamp,
-        #cinematic-stage[data-step="6"] .inquisition-stamp {
-            animation: stampHit 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.5s forwards;
+        /* =========================================================
+           HUD EPISTEMOLÓGICO FLUTUANTE (Feature Principal)
+           ========================================================= */
+        #epistemic-hud {
+            position: absolute;
+            top: 80px;
+            right: 4%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px 25px;
+            z-index: 950;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(50px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
         }
 
-        @keyframes stampHit {
-            0% { transform: translate(-50%, -50%) scale(5) rotate(-15deg); opacity: 0; }
+        #epistemic-hud.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .hud-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hud-header i {
+            color: var(--rpg-gold);
+            font-size: 1.3rem;
+            animation: hudPulse 2s infinite ease-in-out;
+        }
+
+        .hud-epoch-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+        }
+
+        .hud-epoch-value {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.4rem;
+            color: var(--rpg-gold);
+            transition: color 0.5s ease;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        @keyframes hudPulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Responsividade do HUD */
+        @media (max-width: 768px) {
+            #epistemic-hud {
+                top: auto;
+                bottom: 100px;
+                right: 20px;
+                left: 20px;
+                transform: translateY(50px);
+            }
+            #epistemic-hud.active {
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           ENHANCED 3D TRANSITIONS - EFEITOS CINEMATOGRÁFICOS
+           ========================================================= */
+
+        /* Efeito Glitch para cenas de Ruptura/Dúvida */
+        .glitch-effect {
+            animation: glitchScreen 0.3s steps(5) infinite;
+        }
+
+        @keyframes glitchScreen {
+            0% { transform: translate(0); filter: hue-rotate(0deg); }
+            20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
+            40% { transform: translate(2px, -2px); filter: hue-rotate(-90deg); }
+            60% { transform: translate(-2px, -2px); filter: hue-rotate(180deg); }
+            80% { transform: translate(2px, 2px); filter: hue-rotate(-180deg); }
+            100% { transform: translate(0); filter: hue-rotate(0deg); }
+        }
+
+        /* Aplica glitch em cenas específicas */
+        #cinematic-stage[data-step="4"] .cine-scene.active,
+        #cinematic-stage[data-step="10"] .cine-scene.active {
+            animation: glitchScreen 0.15s steps(3) 3;
+        }
+
+        /* Cinematic Fade In com escala */
+        .cine-scene.active {
+            animation: cinematicFadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes cinematicFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+                filter: blur(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        /* Efeito de luz dinâmica seguindo o cursor */
+        .dynamic-light {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle 300px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                                        rgba(255, 255, 255, 0.03) 0%,
+                                        transparent 70%);
+            z-index: 5;
+            transition: background 0.1s ease;
+        }
+
+        /* Partículas flutuantes para cenas de espaço */
+        .space-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 4;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Ativa partículas apenas no espaço */
+        #cinematic-stage[data-step="5"] .space-particles,
+        #cinematic-stage[data-step="6"] .space-particles,
+        #cinematic-stage[data-step="6_1"] .space-particles {
+            opacity: 1;
+        }
+
+        /* Parallax Effect nas cenas */
+        .parallax-layer {
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        /* Efeito de shake sutil para cenas de impacto */
+        .shake-impact {
+            animation: impactShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+
+        @keyframes impactShake {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-3px, -3px); }
+            20% { transform: translate(3px, 3px); }
+            30% { transform: translate(-3px, 3px); }
+            40% { transform: translate(3px, -3px); }
+            50% { transform: translate(-2px, 2px); }
+            60% { transform: translate(2px, -2px); }
+            70% { transform: translate(-1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            90% { transform: translate(-0.5px, 0.5px); }
+        }
+
+        /* Aplica shake em cenas de impacto */
+        #cinematic-stage[data-step="0"] .cine-scene.active,
+        #cinematic-stage[data-step="4"] .cine-scene.active,
+        #cinematic-stage[data-step="8"] .cine-scene.active {
+            animation: impactShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+
+        /* Texto com efeito de revelação cinemática */
+        .cine-text-box {
+            overflow: hidden;
+        }
+
+        .cine-text-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: textReveal 1s ease-out forwards;
+        }
+
+        @keyframes textReveal {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Glow pulsante em objetos importantes */
+        .cine-prop {
+            transition: filter 0.3s ease;
+        }
+
+        .cine-prop:hover {
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8));
+        }
+
+        /* Transição suave entre paradigmas (mudança de cor) */
+        .cine-scene {
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1.5s cubic-bezier(0.65, 0, 0.35, 1),
+                filter 1s ease,
+                background 1.5s ease;
+        }
+
+        /* =========================================================
+           CAPÍTULO 1: RENASCIMENTO - NOVAS CENAS
+           ========================================================= */
+
+        /* Cenas visuais ficam invisíveis por padrão */
+        .visual-scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        /* Ativa apenas a cena do step atual */
+        #cinematic-stage[data-step="0"] .scene-scholastic,
+        #cinematic-stage[data-step="0_1"] .scene-transition,
+        #cinematic-stage[data-step="0_2"] .scene-rupture,
+        #cinematic-stage[data-step="1"] .scene-humanism {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------------------------------------------------
+           CENA 0: BIBLIOTECA MEDIEVAL ESCURA
+           --------------------------------------------------- */
+        .scene-scholastic {
+            background: linear-gradient(to bottom, #0a0a0a 0%, #1a0f0a 100%);
+            perspective: 1000px;
+        }
+
+        .bookshelf {
+            position: absolute;
+            background: linear-gradient(135deg, #2a1a0a 0%, #1a0a05 100%);
+            border: 2px solid #3a2a1a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .bookshelf-left {
+            left: 10%;
+            top: 10%;
+            width: 150px;
+            height: 80%;
+            transform: rotateY(20deg) translateZ(-50px);
+        }
+
+        .bookshelf-right {
+            right: 10%;
+            top: 10%;
+            width: 150px;
+            height: 80%;
+            transform: rotateY(-20deg) translateZ(-50px);
+        }
+
+        .bookshelf-back {
+            left: 30%;
+            top: 15%;
+            width: 40%;
+            height: 70%;
+            transform: translateZ(-200px);
+            opacity: 0.5;
+        }
+
+        /* Livros flutuando */
+        .floating-book {
+            position: absolute;
+            width: 30px;
+            height: 45px;
+            background: linear-gradient(135deg, #4a3a2a 0%, #2a1a0a 100%);
+            border: 1px solid #5a4a3a;
+            animation: floatBook 4s ease-in-out infinite;
+        }
+
+        .book-1 { left: 35%; top: 30%; animation-delay: 0s; }
+        .book-2 { left: 45%; top: 40%; animation-delay: 1s; }
+        .book-3 { left: 55%; top: 35%; animation-delay: 2s; }
+
+        @keyframes floatBook {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Velas tremeluzindo */
+        .candle {
+            position: absolute;
+            width: 8px;
+            height: 40px;
+            background: linear-gradient(to top, #d4a574 0%, #a07050 100%);
+            border-radius: 2px;
+        }
+
+        .candle-1 { left: 20%; bottom: 20%; }
+        .candle-2 { right: 20%; bottom: 25%; }
+
+        .candle-flame {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 20px;
+            background: radial-gradient(ellipse at bottom, #ffaa00 0%, #ff6600 50%, transparent 70%);
+            border-radius: 50% 50% 50% 50%;
+            animation: candleFlicker 0.3s infinite alternate;
+            box-shadow: 0 0 20px #ffaa00, 0 0 40px #ff6600;
+        }
+
+        @keyframes candleFlicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; }
+        }
+
+        /* Partículas de poeira */
+        .dust-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.3), transparent),
+                              radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.2), transparent),
+                              radial-gradient(1px 1px at 50px 160px, rgba(255,255,255,0.3), transparent),
+                              radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.2), transparent),
+                              radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.3), transparent);
+            background-size: 200px 200px;
+            animation: dustFloat 20s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes dustFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50px); }
+        }
+
+        /* ---------------------------------------------------
+           CENA 0_1: MAPA ANTIGO SE ILUMINANDO
+           --------------------------------------------------- */
+        .scene-transition {
+            background: #1a1005;
+            overflow: hidden;
+        }
+
+        .ancient-map {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(135deg, #d4a574 0%, #a07050 50%, #8a6040 100%);
+            border: 4px solid #5a4030;
+            border-radius: 5px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+        }
+
+        .map-illumination {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.3) 0%, transparent 60%);
+            animation: mapGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes mapGlow {
+            0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1) rotate(-15deg); opacity: 0.85; }
+        }
+
+        .map-routes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .route {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff6600, transparent);
+            border-radius: 2px;
+            animation: routeTrace 2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .route-1 {
+            top: 30%;
+            left: 10%;
+            width: 40%;
+            transform: rotate(-10deg);
+            animation-delay: 0.5s;
+        }
+
+        .route-2 {
+            top: 50%;
+            left: 30%;
+            width: 50%;
+            transform: rotate(5deg);
+            animation-delay: 1s;
+        }
+
+        .route-3 {
+            top: 60%;
+            left: 20%;
+            width: 35%;
+            transform: rotate(-5deg);
+            animation-delay: 1.5s;
+        }
+
+        @keyframes routeTrace {
+            0% { width: 0; opacity: 0; }
+            50% { opacity: 1; }
+            100% { width: 100%; opacity: 0.7; }
+        }
+
+        .map-compass {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 60px;
+            height: 60px;
+            border: 3px solid #3a2a1a;
+            border-radius: 50%;
+            animation: compassSpin 10s linear infinite;
+        }
+
+        .map-compass::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 50%;
+            background: #ff6600;
+        }
+
+        @keyframes compassSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ---------------------------------------------------
+           CENA 0_2: RAIO DE LUZ RASGANDO CORTINA
+           --------------------------------------------------- */
+        .scene-rupture {
+            background: #000;
+            overflow: hidden;
+        }
+
+        .dark-curtain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 2;
+        }
+
+        .light-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            width: 4px;
+            height: 200vh;
+            background: linear-gradient(to bottom, transparent, #fff, transparent);
+            animation: rayExpand 2s ease-out forwards;
+            z-index: 3;
+            box-shadow: 0 0 50px #fff, 0 0 100px #ffaa00;
+        }
+
+        @keyframes rayExpand {
+            0% { width: 0; opacity: 0; }
+            50% { width: 4px; opacity: 1; }
+            100% { width: 100px; opacity: 0.8; }
+        }
+
+        .stars-reveal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                        radial-gradient(2px 2px at 40px 70px, #fff, transparent),
+                        radial-gradient(2px 2px at 50px 160px, #fff, transparent),
+                        radial-gradient(2px 2px at 90px 40px, #fff, transparent),
+                        radial-gradient(2px 2px at 130px 80px, #fff, transparent);
+            background-size: 150px 150px;
+            opacity: 0;
+            animation: starsFadeIn 2s ease-out 1s forwards;
+            z-index: 1;
+        }
+
+        @keyframes starsFadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* ---------------------------------------------------
+           CENA 1: PARTÍCULAS DOURADAS (HUMANISMO)
+           --------------------------------------------------- */
+        .scene-humanism {
+            background: linear-gradient(135deg, #1a1005 0%, #2a1a0a 100%);
+            overflow: hidden;
+        }
+
+        .golden-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ffd700 0%, #ffaa00 50%, transparent 70%);
+            border-radius: 50%;
+            animation: particleRise 3s ease-in-out infinite;
+            box-shadow: 0 0 10px #ffd700;
+        }
+
+        .p-1 { left: 20%; bottom: 10%; animation-delay: 0s; }
+        .p-2 { left: 30%; bottom: 20%; animation-delay: 0.3s; }
+        .p-3 { left: 40%; bottom: 15%; animation-delay: 0.6s; }
+        .p-4 { left: 50%; bottom: 25%; animation-delay: 0.9s; }
+        .p-5 { left: 60%; bottom: 10%; animation-delay: 1.2s; }
+        .p-6 { left: 70%; bottom: 20%; animation-delay: 1.5s; }
+        .p-7 { left: 25%; bottom: 30%; animation-delay: 1.8s; }
+        .p-8 { left: 45%; bottom: 35%; animation-delay: 2.1s; }
+        .p-9 { left: 55%; bottom: 15%; animation-delay: 2.4s; }
+        .p-10 { left: 75%; bottom: 25%; animation-delay: 2.7s; }
+
+        @keyframes particleRise {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-400px) scale(0.5); opacity: 0; }
+        }
+
+       /* =========================================================
+           CENÁRIOS CINEMATOGRÁFICOS - CAPÍTULO 1 (RENASCIMENTO)
+           ========================================================= */
+        #cine-renaissance { background: #050505; }
+        
+        .cine-visual-area {
+            position: absolute; top: 0; left: 0;
+            width: 55vw; height: 100vh;
+            perspective: 1200px;
+            z-index: 10;
+        }
+
+        .cine-vis-layer {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 2s ease-out;
+            transform: scale(1.1) translateZ(-50px);
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+
+        #cinematic-stage[data-step="0"] .vis-0-library,
+        #cinematic-stage[data-step="0_1"] .vis-0_1-map,
+        #cinematic-stage[data-step="0_2"] .vis-0_2-rupture,
+        #cinematic-stage[data-step="1"] .vis-1-fertile {
+            opacity: 1; visibility: visible;
+            transform: scale(1) translateZ(0);
+        }
+
+        /* ---------------------------------------------------
+           VIS 0: A ESCOLÁSTICA (Biblioteca Claustrofóbica)
+           --------------------------------------------------- */
+        .vis-0-library { background: radial-gradient(circle at 40% 50%, #2a160d 0%, #050302 70%); }
+        .candle-glow { position: absolute; bottom: -20vh; left: 40%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%); filter: blur(30px); animation: flicker 3s infinite alternate; }
+        .floating-book { position: absolute; font-size: 8rem; color: #1a0f0a; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.9)); text-shadow: 0 0 20px rgba(245,158,11,0.2); }
+        .b1 { left: 20%; top: 30%; animation: float3D 8s infinite alternate ease-in-out; }
+        .b2 { left: 60%; top: 60%; font-size: 10rem; animation: float3D 12s infinite alternate-reverse ease-in-out; }
+        .b3 { left: 40%; top: 15%; font-size: 6rem; animation: float3D 10s infinite alternate ease-in-out; }
+        /* A poeira roda infinitamente */
+        .dust-particles { position: absolute; top:-50%; left:-50%; width: 200%; height: 200%; background: radial-gradient(2px 2px at 40px 70px, rgba(245,158,11,0.3), transparent), radial-gradient(2px 2px at 90px 40px, rgba(255,255,255,0.1), transparent); background-size: 150px 150px; animation: rotateInfinite 60s linear infinite; opacity: 0.5; mix-blend-mode: screen; }
+
+        @keyframes flicker { 0% { opacity: 0.8; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.05); } }
+        @keyframes float3D { 0% { transform: translateY(0) rotateX(10deg) rotateY(-20deg); } 100% { transform: translateY(-40px) rotateX(-10deg) rotateY(20deg); } }
+        @keyframes rotateInfinite { 100% { transform: rotate(360deg); } }
+
+        /* ---------------------------------------------------
+           VIS 0_1: A TRANSIÇÃO (Mapa e Oceano em Loop - CORRIGIDO)
+           --------------------------------------------------- */
+        .vis-0_1-map { background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); }
+        /* O Grid (Oceano) corre infinitamente para dar noção de movimento */
+        .map-grid-golden { position: absolute; width: 200%; height: 200%; background: repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(212, 175, 55, 0.15) 60px, rgba(212, 175, 55, 0.15) 62px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(212, 175, 55, 0.15) 60px, rgba(212, 175, 55, 0.15) 62px); opacity: 0.6; animation: panOcean 15s linear infinite; }
+        
+        .map-route { position: absolute; width: 80%; height: 80%; z-index: 5; filter: drop-shadow(0 0 10px var(--rpg-gold)); }
+        .map-ship { position: absolute; font-size: 5rem; color: #fff; filter: drop-shadow(0 10px 20px #000); opacity: 0; z-index: 10; }
+        
+        /* A linha se desenha e depois DESAPARECE como tinta se dissolvendo */
+        #cinematic-stage[data-step="0_1"] .map-route path { animation: drawAndFadeRoute 6s ease-out forwards 0.5s; }
+        
+        /* O barco não para mais. Ele atravessa a tela navegando suavemente e repete o ciclo */
+        #cinematic-stage[data-step="0_1"] .map-ship { animation: endlessSailing 14s ease-in-out infinite 0.5s; }
+        
+        @keyframes panOcean { 
+            0% { transform: perspective(800px) rotateX(45deg) translateY(-120px); } 
+            100% { transform: perspective(800px) rotateX(45deg) translateY(0px); } 
         }
         
-        /* FUMAÇA DA ILUSÃO (BACON) */
-        .bacon-smoke-cloud {
-            position: absolute; bottom: -20px; left: 50%;
-            transform: translateX(-50%); width: 250px; height: 250px;
-            background: radial-gradient(circle, rgba(120, 120, 120, 0.5) 0%, transparent 65%);
-            filter: blur(20px); opacity: 0; pointer-events: none; z-index: 5;
+        @keyframes drawAndFadeRoute { 
+            0% { stroke-dashoffset: 1000; opacity: 1; } 
+            40% { stroke-dashoffset: 0; opacity: 1; } /* Termina de desenhar */
+            70% { stroke-dashoffset: 0; opacity: 1; } /* Fica na tela por uns segundos */
+            100% { stroke-dashoffset: 0; opacity: 0; } /* Desaparece para limpar a tela */
         }
-        .slide.active .bacon-smoke-cloud {
-            animation: riseSmoke 5s infinite alternate ease-in-out;
+        
+        @keyframes endlessSailing { 
+            0% { opacity: 0; transform: translate(-250px, 250px) rotate(-15deg); } 
+            20% { opacity: 1; transform: translate(-20px, 20px) rotate(5deg); } /* Entra na tela */
+            50% { opacity: 1; transform: translate(30px, -20px) rotate(8deg); } /* Balança nas ondas no centro */
+            80% { opacity: 1; transform: translate(80px, -60px) rotate(3deg); } /* Vai se afastando */
+            100% { opacity: 0; transform: translate(250px, -200px) rotate(15deg); } /* Some no horizonte e repete */
         }
-        @keyframes riseSmoke {
-            0% { transform: translateX(-50%) translateY(20px) scale(0.8); opacity: 0.3; }
-            100% { transform: translateX(-60%) translateY(-60px) scale(1.4); opacity: 0.9; }
+
+        /* ---------------------------------------------------
+           VIS 0_2: A RUPTURA (Corte limpo + Estrelas em Loop)
+           --------------------------------------------------- */
+        .vis-0_2-rupture { background: #000; }
+        /* Cortinas pretas opressoras */
+        .dark-curtain { position: absolute; top: 0; width: 50%; height: 100%; background: #080808; z-index: 20; box-shadow: 0 0 50px rgba(0,0,0,0.9); }
+        .curtain-left { left: 0; border-right: 1px solid #222; }
+        .curtain-right { right: 0; border-left: 1px solid #222; }
+        
+        /* O Feixe de luz afiado (Ocorre apenas 1 vez) */
+        .rupture-light { position: absolute; top: 50%; left: 50%; width: 200%; height: 2px; background: #fff; transform: translate(-50%, -50%) rotate(-35deg) scaleX(0); box-shadow: 0 0 20px #fff, 0 0 50px #3b82f6; z-index: 25; opacity: 0; pointer-events: none; }
+        
+        /* Estrelas (Continuam rodando para sempre após a abertura) */
+        .rupture-stars { position: absolute; top:-50%; left:-50%; width: 200%; height: 200%; background: radial-gradient(2px 2px at 30% 40%, #fff, transparent), radial-gradient(3px 3px at 70% 60%, #93c5fd, transparent); background-size: 200px 200px; opacity: 0; z-index: 10; }
+
+        #cinematic-stage[data-step="0_2"] .rupture-light { animation: sharpSlash 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s; }
+        #cinematic-stage[data-step="0_2"] .curtain-left { animation: tearLeft 2s cubic-bezier(0.7, 0, 0.3, 1) forwards 1s; }
+        #cinematic-stage[data-step="0_2"] .curtain-right { animation: tearRight 2s cubic-bezier(0.7, 0, 0.3, 1) forwards 1s; }
+        /* Revela as estrelas e deixa elas rodando no loop */
+        #cinematic-stage[data-step="0_2"] .rupture-stars { animation: revealAndPanStars 60s linear forwards infinite; }
+
+        @keyframes sharpSlash { 
+            0% { transform: translate(-50%, -50%) rotate(-35deg) scaleX(0); opacity: 1; height: 2px; } 
+            25% { transform: translate(-50%, -50%) rotate(-35deg) scaleX(1); opacity: 1; height: 10px; box-shadow: 0 0 100px #fff, 0 0 200px #3b82f6; } 
+            50% { transform: translate(-50%, -50%) rotate(-35deg) scaleX(1.5); opacity: 1; height: 150vh; } 
+            100% { transform: translate(-50%, -50%) rotate(-35deg) scaleX(2); opacity: 0; height: 200vh; } 
+        }
+        @keyframes tearLeft { 100% { transform: translateX(-100%); opacity: 0; } }
+        @keyframes tearRight { 100% { transform: translateX(100%); opacity: 0; } }
+        @keyframes revealAndPanStars { 0% { opacity: 0; transform: rotate(0deg); } 5% { opacity: 1; transform: rotate(2deg); } 100% { opacity: 1; transform: rotate(30deg) scale(1.5); } }
+
+        /* ---------------------------------------------------
+           VIS 1: O TERRENO FÉRTIL (Partículas Ascendentes Infinitas)
+           --------------------------------------------------- */
+        .vis-1-fertile { background: radial-gradient(circle at 50% 50%, #1a1500 0%, #050505 80%); }
+        /* Semente travada no centro geométrico perfeito */
+        .fertile-core { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 7rem; color: #f59e0b; filter: drop-shadow(0 0 40px #d97706); animation: pulseLock 3s infinite alternate; }
+        .fertile-sparks { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
+        /* Partículas nascem exatamente do centro */
+        .spark { position: absolute; top: 50%; width: 6px; height: 6px; background: #fcd34d; border-radius: 50%; box-shadow: 0 0 15px #f59e0b; opacity: 0; }
+        
+        #cinematic-stage[data-step="1"] .spark { animation: riseParticle linear infinite; }
+        .s1 { left: 20%; animation-duration: 4s !important; animation-delay: 0.2s !important; }
+        .s2 { left: 35%; animation-duration: 6s !important; animation-delay: 1s !important; width: 10px; height: 10px; }
+        .s3 { left: 50%; animation-duration: 3.5s !important; animation-delay: 0s !important; }
+        .s4 { left: 65%; animation-duration: 5s !important; animation-delay: 1.5s !important; }
+        .s5 { left: 80%; animation-duration: 4.5s !important; animation-delay: 0.5s !important; width: 8px; height: 8px; }
+        .s6 { left: 25%; animation-duration: 7s !important; animation-delay: 2s !important; }
+        .s7 { left: 45%; animation-duration: 5.5s !important; animation-delay: 0.8s !important; }
+        .s8 { left: 70%; animation-duration: 4.2s !important; animation-delay: 1.2s !important; }
+        .s9 { left: 55%; animation-duration: 6.5s !important; animation-delay: 0.4s !important; width: 12px; height: 12px; }
+
+        @keyframes riseParticle {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            /* Sobe do centro para cima (sem cair da tela por baixo) */
+            100% { transform: translateY(-400px) scale(1.5); opacity: 0; }
+        }
+
+        /* ---------------------------------------------------
+           FORÇANDO TEXTOS PARA O CENTRO-DIREITA (ALINHAMENTO FIXO)
+           --------------------------------------------------- */
+        .cine-txt-0, .cine-txt-0_1, .cine-txt-0_2, .cine-txt-1 {
+            left: 55vw !important;
+            right: auto !important;
+            /* Trava matemática no eixo Y (Meio exato da tela) */
+            top: 50% !important;
+            bottom: auto !important;
+            transform: translateY(-50%) !important;
+            width: min(500px, 40vw) !important;
+            text-align: left !important;
+            border-right: none !important;
+            border-left: 4px solid var(--netflix-red) !important;
+            border-radius: 0 8px 8px 0 !important;
+            background: rgba(5, 5, 5, 0.85) !important;
+            box-shadow: -20px 0 50px rgba(0,0,0,0.8) !important;
+        }
+
+        /* =========================================================
+           CENÁRIOS CINEMATOGRÁFICOS - CAPÍTULO 2 (PRÉ-REVOLUÇÃO)
+           ========================================================= */
+        #cine-library { background: #080808; perspective: 1200px; }
+
+        #cinematic-stage[data-step="2"] .vis-2-tradition,
+        #cinematic-stage[data-step="2_1"] .vis-2_1-geocentrism,
+        #cinematic-stage[data-step="3"] .vis-3-authority,
+        #cinematic-stage[data-step="3_1"] .vis-3_1-change {
+            opacity: 1; visibility: visible;
+            transform: scale(1) translateZ(0);
+        }
+
+        /* ---------------------------------------------------
+           VIS 2: A TRADIÇÃO (Opressão Monolítica)
+           --------------------------------------------------- */
+        .vis-2-tradition { background: radial-gradient(circle at 50% 40%, #1a1c1d 0%, #000 80%); }
+        /* Ilusão de um piso de mármore se movendo infinitamente devagar em 3D */
+        .marble-hall { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(200, 200, 200, 0.03) 80px, rgba(200, 200, 200, 0.03) 85px); transform: perspective(600px) rotateX(60deg); animation: panHall 20s linear infinite; }
+        
+        /* Templo fixo e monumental no centro */
+        .giant-monument { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 15rem; color: #111; filter: drop-shadow(0 20px 40px #000); text-shadow: 0 -2px 10px rgba(255,255,255,0.1); }
+        
+        /* Poeira estagnada */
+        .stagnant-dust { position: absolute; width: 100%; height: 100%; background: radial-gradient(2px 2px at 20% 30%, #555, transparent), radial-gradient(2px 2px at 60% 70%, #444, transparent); background-size: 100px 100px; opacity: 0.3; animation: stagnantDrift 30s infinite alternate; }
+
+        @keyframes panHall { 0% { transform: perspective(600px) rotateX(60deg) translateY(-85px); } 100% { transform: perspective(600px) rotateX(60deg) translateY(0px); } }
+        @keyframes stagnantDrift { 100% { transform: translateY(-50px) rotate(5deg); } }
+
+        /* ---------------------------------------------------
+           VIS 2_1: GEOCENTRISMO (Esferas de Cristal Perfeitas)
+           --------------------------------------------------- */
+        .vis-2_1-geocentrism { background: radial-gradient(circle at 50% 50%, #050a14 0%, #000 70%); }
+        .geo-universe-bg { position: absolute; width: 100%; height: 100%; border-radius: 50%; box-shadow: inset 0 0 100px rgba(59, 130, 246, 0.1); }
+        .geo-center-earth { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 6rem; color: #3b82f6; text-shadow: 0 0 30px rgba(59,130,246,0.6); z-index: 10; }
+        .geo-lock-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5); font-size: 4rem; color: #E50914; opacity: 0; z-index: 11; }
+        
+        .crystal-sphere { position: absolute; top: 50%; left: 50%; border-radius: 50%; border: 2px solid rgba(255,255,255,0.05); box-shadow: inset 0 0 20px rgba(255,255,255,0.02), 0 0 20px rgba(255,255,255,0.02); }
+        .sphere-1 { width: 220px; height: 220px; margin: -110px 0 0 -110px; animation: spinCrystal 8s linear infinite; }
+        .sphere-2 { width: 380px; height: 380px; margin: -190px 0 0 -190px; animation: spinCrystal 15s linear infinite reverse; }
+        .sphere-3 { width: 550px; height: 550px; margin: -275px 0 0 -275px; border-style: dashed; animation: spinCrystal 30s linear infinite; }
+
+        .orbit-moon { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 2rem; color: #ccc; text-shadow: 0 0 15px #fff; }
+        .orbit-sun { position: absolute; top: 50%; left: -25px; transform: translateY(-50%); font-size: 3.5rem; color: #f59e0b; text-shadow: 0 0 30px #fcd34d; }
+        
+        #cinematic-stage[data-step="2_1"] .geo-lock-icon { animation: lockSlam 2s ease-out forwards 0.5s; }
+        
+        @keyframes spinCrystal { 100% { transform: rotate(360deg); } }
+        @keyframes lockSlam { 0% { transform: translate(-50%, -50%) scale(3); opacity: 0; } 30% { transform: translate(-50%, -50%) scale(0.9); opacity: 1; text-shadow: 0 0 50px #E50914; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; text-shadow: 0 0 15px #E50914; } }
+
+        /* ---------------------------------------------------
+           VIS 3: PRINCÍPIO DE AUTORIDADE (Veredicto Violento)
+           --------------------------------------------------- */
+        .vis-3-authority { background: #0a0202; }
+        .authority-bg { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.1) 0%, transparent 60%); }
+        .giant-gavel { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(5) rotate(-30deg); font-size: 10rem; color: #111; opacity: 0; z-index: 10; text-shadow: 0 -10px 0 #222; }
+        
+        /* Carimbo de Texto e Faíscas */
+        .dogma-seal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(3); font-family: 'Bebas Neue', cursive; font-size: 5rem; line-height: 0.9; text-align: center; color: #E50914; opacity: 0; z-index: 5; border: 8px solid #E50914; padding: 10px 30px; border-radius: 10px; }
+        
+        .impact-sparks { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; }
+        .ispark { position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background: #E50914; border-radius: 50%; box-shadow: 0 0 20px #ff5555; opacity: 0; }
+
+        /* Animação em Loop do Martelo e do Carimbo */
+        #cinematic-stage[data-step="3"] .giant-gavel { animation: gavelSmash 4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite; }
+        #cinematic-stage[data-step="3"] .dogma-seal { animation: stampSlam 4s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite; }
+        #cinematic-stage[data-step="3"] .ispark { animation: explodeSparks 4s ease-out infinite; }
+        
+        .i1 { transform: rotate(0deg); } .i2 { transform: rotate(60deg); } .i3 { transform: rotate(120deg); }
+        .i4 { transform: rotate(180deg); } .i5 { transform: rotate(240deg); } .i6 { transform: rotate(300deg); }
+
+        @keyframes gavelSmash { 
+            0%, 50% { transform: translate(-50%, -100%) scale(1.5) rotate(-45deg); opacity: 0; } 
+            55% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 30px 20px #000); } 
+            80% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0; }
+        }
+        @keyframes stampSlam { 
+            0%, 50% { opacity: 0; transform: translate(-50%, -50%) scale(3) rotate(10deg); } 
+            55% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-5deg); text-shadow: 0 0 50px #E50914; box-shadow: 0 0 50px #E50914; } 
+            80% { opacity: 0.8; transform: translate(-50%, -50%) scale(1) rotate(-5deg); } 
+            100% { opacity: 0; } 
+        }
+        @keyframes explodeSparks {
+            0%, 54% { opacity: 0; margin-top: 0; }
+            55% { opacity: 1; margin-top: 0; }
+            70% { opacity: 0; margin-top: -200px; }
+            100% { opacity: 0; }
+        }
+
+        /* ---------------------------------------------------
+           VIS 3_1: A MUDANÇA (Microscópio e Células Vivas)
+           --------------------------------------------------- */
+        .vis-3_1-change { background: radial-gradient(circle at 50% 50%, #021a14 0%, #000 80%); }
+        .giant-microscope { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); font-size: 10rem; color: #10b981; filter: drop-shadow(0 0 30px rgba(16,185,129,0.3)); z-index: 10; }
+        
+        /* CONE DE LUZ CORRIGIDO: Sai exatamente debaixo da lente */
+        .lens-beam { 
+            position: absolute; top: 45%; left: 50%; 
+            width: 300px; height: 60vh; 
+            background: linear-gradient(to bottom, rgba(16,185,129,0.7), transparent); 
+            transform-origin: top center; 
+            transform: translateX(-50%);
+            /* O clip-path corta o quadrado e transforma num formato de cone perfeito */
+            clip-path: polygon(45% 0, 55% 0, 100% 100%, 0% 100%);
+            z-index: 5; animation: sweepCone 6s infinite alternate ease-in-out; 
+        }
+        
+        .bio-particles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 15; }
+        .cell { position: absolute; border-radius: 50%; border: 2px solid #34d399; box-shadow: 0 0 20px #10b981, inset 0 0 10px #10b981; opacity: 0; background: rgba(16,185,129,0.1); }
+        
+        #cinematic-stage[data-step="3_1"] .cell { animation: floatCell infinite linear; }
+        .c1 { width: 30px; height: 30px; left: 20%; animation-duration: 8s !important; animation-delay: 0s !important; }
+        .c2 { width: 50px; height: 50px; left: 70%; animation-duration: 12s !important; animation-delay: 2s !important; }
+        .c3 { width: 20px; height: 20px; left: 40%; animation-duration: 6s !important; animation-delay: 1s !important; }
+        .c4 { width: 40px; height: 40px; left: 60%; animation-duration: 10s !important; animation-delay: 3s !important; }
+        .c5 { width: 25px; height: 25px; left: 30%; animation-duration: 7s !important; animation-delay: 0.5s !important; }
+        .c6 { width: 60px; height: 60px; left: 50%; animation-duration: 15s !important; animation-delay: 1.5s !important; }
+
+        @keyframes sweepCone { 0% { transform: translateX(-50%) rotate(-15deg); } 100% { transform: translateX(-50%) rotate(15deg); } }
+        @keyframes floatCell { 0% { bottom: -10%; transform: translateX(0) scale(0.5); opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { bottom: 110%; transform: translateX(100px) scale(1.2); opacity: 0; } }
+
+        /* ---------------------------------------------------
+           VIS 3_1: A MUDANÇA (Microscópio e Células Vivas)
+           --------------------------------------------------- */
+        .vis-3_1-change { background: radial-gradient(circle at 50% 50%, #021a14 0%, #000 80%); }
+        .giant-microscope { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); font-size: 10rem; color: #10b981; filter: drop-shadow(0 0 30px rgba(16,185,129,0.3)); z-index: 10; animation: hoverMicro 4s infinite alternate ease-in-out; }
+        /* Feixe de luz de investigação varrendo a tela */
+        .lens-beam { position: absolute; top: 40%; left: 50%; width: 200px; height: 150vh; background: linear-gradient(to bottom, rgba(16,185,129,0.5), transparent); transform-origin: top center; z-index: 5; animation: sweepBeam 6s infinite alternate ease-in-out; }
+        
+        .bio-particles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 15; }
+        .cell { position: absolute; border-radius: 50%; border: 2px solid #34d399; box-shadow: 0 0 20px #10b981, inset 0 0 10px #10b981; opacity: 0; }
+        
+        #cinematic-stage[data-step="3_1"] .cell { animation: floatCell infinite linear; }
+        .c1 { width: 30px; height: 30px; left: 20%; animation-duration: 8s !important; animation-delay: 0s !important; }
+        .c2 { width: 50px; height: 50px; left: 70%; animation-duration: 12s !important; animation-delay: 2s !important; }
+        .c3 { width: 20px; height: 20px; left: 40%; animation-duration: 6s !important; animation-delay: 1s !important; }
+        .c4 { width: 40px; height: 40px; left: 60%; animation-duration: 10s !important; animation-delay: 3s !important; }
+        .c5 { width: 25px; height: 25px; left: 30%; animation-duration: 7s !important; animation-delay: 0.5s !important; }
+        .c6 { width: 60px; height: 60px; left: 50%; animation-duration: 15s !important; animation-delay: 1.5s !important; }
+
+        @keyframes hoverMicro { 100% { transform: translate(-50%, -55%); filter: drop-shadow(0 20px 40px rgba(16,185,129,0.6)); } }
+        @keyframes sweepBeam { 0% { transform: translateX(-50%) rotate(-25deg); } 100% { transform: translateX(-50%) rotate(25deg); } }
+        @keyframes floatCell { 0% { bottom: -10%; transform: translateX(0) scale(0.5); opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { bottom: 110%; transform: translateX(100px) scale(1.2); opacity: 0; } }
+
+        /* ---------------------------------------------------
+           FORÇANDO TEXTOS PARA A DIREITA (Compatibilidade com Cap 1)
+           --------------------------------------------------- */
+        .cine-txt-2, .cine-txt-2_1, .cine-txt-3, .cine-txt-3_1 {
+            left: 55vw !important;
+            right: auto !important;
+            top: 50% !important;
+            bottom: auto !important;
+            transform: translateY(-50%) !important;
+            width: min(500px, 40vw) !important;
+            text-align: left !important;
+            border-right: none !important;
+            border-left: 4px solid var(--netflix-red) !important;
+            border-radius: 0 8px 8px 0 !important;
+            background: rgba(5, 5, 5, 0.85) !important;
+            box-shadow: -20px 0 50px rgba(0,0,0,0.8) !important;
+        }
+
+        /* =========================================================
+           CENÁRIOS CINEMATOGRÁFICOS - CAPÍTULO 3 (A GRANDE RUPTURA)
+           ========================================================= */
+        #cine-rupture { background: #050505; }
+
+        /* Contêiner que domina a tela inteira */
+        .vis-4-full-screen {
+            position: absolute; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 10; overflow: hidden;
+        }
+
+        /* ---------------------------------------------------
+           ESTADO 1: A PASSIVIDADE (O Espectador)
+           --------------------------------------------------- */
+        .rupture-passive {
+            position: absolute; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .passive-giant-eye { font-size: 12rem; color: #333; text-shadow: 0 0 30px #000; }
+        .passive-dust { position: absolute; width: 100%; height: 100%; background: radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.05), transparent); background-size: 150px 150px; }
+
+        /* Animação: O olho treme e entra em pânico antes da ruptura */
+        #cinematic-stage[data-step="4"] .passive-giant-eye {
+            animation: passiveBreathe 1.5s ease-in-out, eyePanic 1s cubic-bezier(0.7, 0, 0.3, 1) forwards 1.5s;
+        }
+        
+        @keyframes passiveBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes eyePanic { 
+            0% { transform: scale(1) translateX(0); filter: blur(0); opacity: 1; } 
+            20%, 40%, 60%, 80% { transform: scale(1.2) translateX(10px); }
+            30%, 50%, 70%, 90% { transform: scale(1.2) translateX(-10px); }
+            100% { transform: scale(3); filter: blur(20px); opacity: 0; } 
+        }
+
+        /* ---------------------------------------------------
+           ESTADO 2: A INVESTIGAÇÃO ATIVA (A Máquina da Ciência)
+           --------------------------------------------------- */
+        .rupture-active {
+            position: absolute; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #2b0000 0%, #000 100%);
+            /* Inicia invisível como um ponto no meio da tela */
+            clip-path: circle(0% at 50% 50%);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* A explosão que revela a nova era */
+        #cinematic-stage[data-step="4"] .rupture-active {
+            animation: expandNewWorld 2s cubic-bezier(0.7, 0, 0.3, 1) forwards 2.3s;
+        }
+        @keyframes expandNewWorld { 100% { clip-path: circle(150% at 50% 50%); } }
+
+        /* O Clarão ofuscante da virada */
+        .rupture-flash {
+            position: absolute; width: 100%; height: 100%; background: #fff;
+            opacity: 0; pointer-events: none; z-index: 100; mix-blend-mode: screen;
+        }
+        #cinematic-stage[data-step="4"] .rupture-flash { animation: theBigBang 1s ease-out forwards 2.3s; }
+        @keyframes theBigBang { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
+
+        /* --- Elementos do Mundo Ativo (Looping Infinito) --- */
+        
+        /* Grid de medição / Cartografia em movimento */
+        .active-blueprint-grid {
+            position: absolute; width: 200%; height: 200%;
+            background: 
+                linear-gradient(rgba(229, 9, 20, 0.15) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(229, 9, 20, 0.15) 2px, transparent 2px);
+            background-size: 80px 80px;
+            transform: perspective(1000px) rotateX(60deg) translateY(-100px);
+            animation: panActiveBlueprint 10s linear infinite;
+        }
+        @keyframes panActiveBlueprint { 100% { transform: perspective(1000px) rotateX(60deg) translateY(0px); } }
+
+        /* Engrenagens Gigantes da nova mecânica */
+        .instrument-gear-bg { position: absolute; font-size: 40rem; color: rgba(229, 9, 20, 0.05); transform: translate(-300px, 0); animation: spinMachine 40s linear infinite; }
+        .instrument-gear-sm { position: absolute; font-size: 20rem; color: rgba(255, 255, 255, 0.03); transform: translate(300px, -200px); animation: spinMachine 20s linear infinite reverse; }
+        @keyframes spinMachine { 100% { transform: rotate(360deg); } }
+
+        /* A Ferramenta Central (Compasso medindo a realidade) */
+        .active-centerpiece { position: absolute; top: 35%; display: flex; flex-direction: column; align-items: center; }
+        .main-compass { font-size: 8rem; color: #fff; filter: drop-shadow(0 0 20px #E50914); animation: measureWorld 4s infinite alternate ease-in-out; z-index: 20; }
+        .scanning-laser { width: 400px; height: 300px; background: linear-gradient(to bottom, rgba(229,9,20,0.4), transparent); clip-path: polygon(48% 0, 52% 0, 100% 100%, 0% 100%); transform-origin: top center; animation: scanWorld 3s infinite alternate ease-in-out; margin-top: -20px; }
+
+        @keyframes measureWorld { 0% { transform: scale(1) rotate(-10deg); } 100% { transform: scale(1.1) rotate(10deg); } }
+        @keyframes scanWorld { 0% { transform: rotate(-30deg); opacity: 0.5; } 100% { transform: rotate(30deg); opacity: 1; } }
+
+        /* ---------------------------------------------------
+           A CAIXA DE TEXTO (CENTRALIZADA EMBAIXO)
+           --------------------------------------------------- */
+        .cine-txt-4 {
+            /* Remove os alinhamentos da direita dos capítulos anteriores */
+            left: 50% !important;
+            right: auto !important;
+            top: auto !important;
+            bottom: 6% !important; /* Fixada no rodapé da tela */
+            transform: translateX(-50%) !important;
+            
+            width: min(800px, 90vw) !important;
+            text-align: center !important;
+            
+            /* Design agressivo e moderno */
+            border-left: none !important;
+            border-bottom: 4px solid var(--netflix-red) !important;
+            border-radius: 8px !important;
+            background: rgba(5, 5, 5, 0.9) !important;
+            box-shadow: 0 -10px 50px rgba(0,0,0,0.8) !important;
+            padding: 30px !important;
+            z-index: 50 !important; /* Fica acima da animação de tela cheia */
+        }
+
+        /* Centraliza o Ticker (Caixa de aviso) */
+        #cine-ticker-4 {
+            justify-content: center; text-align: center; border-left: none; border-bottom: 2px solid #E50914;
+        }
+
+        /* ---------------------------------------------------
+           VIS 10 E 11: RACIONALISMO (Descartes / Lado Direito)
+           A Câmera desliza para a direita (translateX -100vw)
+           --------------------------------------------------- */
+        
+        /* Apenas garante que os elementos de Descartes também usem o data-step */
+        #cinematic-stage[data-step="10"] .vis-10-doubt,
+        #cinematic-stage[data-step="11"] .vis-11-cogito {
+            opacity: 1; visibility: visible;
+        }
+
+        /* --- VIS 10: A DÚVIDA METÓDICA (Desconstruindo Certezas) --- */
+        .vis-10-doubt { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s; display: flex; align-items: center; justify-content: center; }
+        
+        .matrix-grid { position: absolute; width: 100%; height: 100%; background: linear-gradient(rgba(59, 130, 246, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.2) 1px, transparent 1px); background-size: 40px 40px; transform: perspective(500px) rotateX(60deg) translateY(-100px); animation: gridMove 5s linear infinite; }
+        
+        .glitch-container { position: relative; z-index: 10; text-align: center; }
+        .logic-cube { font-size: 10rem; color: #fff; text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+        .system-error { margin-top: 20px; font-family: 'Share Tech Mono', monospace; font-size: 3rem; color: #E50914; text-shadow: 0 0 20px #E50914; font-weight: bold; opacity: 0; }
+
+        /* Animação: O cubo perfeito sofre um Glitch e "Duvida" de si mesmo */
+        #cinematic-stage[data-step="10"] .logic-cube { animation: cubeGlitch 2s infinite; }
+        #cinematic-stage[data-step="10"] .system-error { animation: flashError 3s infinite; }
+
+        @keyframes gridMove { 100% { transform: perspective(500px) rotateX(60deg) translateY(0px); } }
+        @keyframes cubeGlitch {
+            0%, 90% { transform: translate(0, 0) skew(0deg); color: #fff; text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+            92% { transform: translate(-10px, 5px) skew(20deg); color: #E50914; text-shadow: -5px 0 0 #fff; }
+            94% { transform: translate(10px, -5px) skew(-20deg); color: #3b82f6; text-shadow: 5px 0 0 #fff; }
+            96% { transform: translate(0, 0) skew(0deg); color: #fff; }
+        }
+        @keyframes flashError { 0%, 90% { opacity: 0; } 92%, 96% { opacity: 1; } 100% { opacity: 0; } }
+
+        /* --- VIS 11: PENSO LOGO EXISTO (A Construção da Mente) --- */
+        .vis-11-cogito { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 1s; display: flex; align-items: center; justify-content: center; }
+        
+        /* O Cérebro Brilhante */
+        .glowing-brain { font-size: 12rem; color: #3b82f6; text-shadow: 0 0 50px rgba(59, 130, 246, 0.8), 0 0 100px rgba(59, 130, 246, 0.4); z-index: 20; }
+        
+        /* Engrenagens de Lógica rodando atrás do cérebro */
+        .gear-bg { position: absolute; font-size: 18rem; color: rgba(255, 255, 255, 0.05); z-index: 10; }
+        .gear-1 { left: 10vw; top: 20vh; animation: spinGear 15s linear infinite; }
+        .gear-2 { right: 40vw; bottom: 20vh; font-size: 14rem; animation: spinGear 10s linear infinite reverse; }
+        
+        /* Fórmulas pairando na tela */
+        .math-formulas { position: absolute; top: 20%; width: 100%; text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 2rem; color: rgba(255, 255, 255, 0.2); letter-spacing: 5px; z-index: 5; }
+
+        /* Animação: O Cérebro pulsa como um coração de lógica */
+        #cinematic-stage[data-step="11"] .glowing-brain { animation: throbBrain 2s infinite alternate ease-in-out; }
+        
+        @keyframes spinGear { 100% { transform: rotate(360deg); } }
+        @keyframes throbBrain { 0% { transform: scale(1); filter: brightness(1); } 100% { transform: scale(1.05); filter: brightness(1.5); } }
+
+        /* ATIVAÇÃO DAS CENAS DO EMPIRISMO */
+        #cinematic-stage[data-step="8"] .vis-8-idols,
+        #cinematic-stage[data-step="9"] .vis-9-lab {
+            opacity: 1; visibility: visible;
+        }
+
+
+/* =========================================================
+           MARRETA DEFINITIVA: REMOVER EMBAÇAMENTO E LIXO DO FUNDO
+           ========================================================= */
+        
+        /* 1. Mata a mesa de trabalho (desaparece e remove o blur) a partir do slide 12 */
+        #cinematic-stage[data-step="12"] #cine-desk,
+        #cinematic-stage[data-step="13"] #cine-desk {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            filter: none !important;
+            display: none !important;
+        }
+
+        /* 2. Força o fundo do Newton a ser preto e bloqueia transparências */
+        #cine-apple {
+            background: #050000 !important;
+            filter: none !important;
+        }
+        #cinematic-stage[data-step="12"] #cine-apple {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            filter: none !important;
+        }
+
+        /* 3. Força o fundo da Assinatura (Ad) a ser preto sólido e nítido */
+        #cine-ad {
+            background: #000000 !important;
+            filter: none !important;
+        }
+        #cinematic-stage[data-step="13"] #cine-ad {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            filter: none !important;
+        }
+
+        /* 4. Corrige qualquer distorção de texto no Newton */
+        .cine-txt-12 {
+            left: 50% !important; 
+            right: auto !important; 
+            top: 50% !important; 
+            transform: translate(-50%, -50%) scale(1) !important; 
+            width: min(700px, 80vw) !important;
+            text-align: center !important; 
+            background: rgba(5, 5, 5, 0.95) !important;
+            padding: 40px !important;
+            border-radius: 15px !important;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9) !important;
+            filter: none !important;
+            z-index: 999 !important;
         }
 
     </style>
@@ -1585,7 +3578,7 @@
                         <div class="ticker-box" id="ticker-6">Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.</div>
                         <h3 class="highlight">Galileu Galilei</h3><p>Utilizando o telesc&oacute;pio para comprovar a teoria, ele afirmou: <em>"A natureza est&aacute; escrita em caracteres matem&aacute;ticos"</em>.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-binoculars"></i> Visão Aprimorada</div><div class="sim-screen"><div class="inquisition-stamp">CENSURADO<br>PELA INQUISIÇÃO</div><div class="sky-bg"></div><div class="telescope-lens"><i class="fa-solid fa-star" style="font-size:2rem; color:#fff;"></i></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-binoculars"></i> Visão Aprimorada</div><div class="sim-screen"><div class="sky-bg"></div><div class="telescope-lens"><i class="fa-solid fa-star" style="font-size:2rem; color:#fff;"></i></div></div></div>
                 </div>
             </div>
 
@@ -1609,7 +3602,7 @@
                         <div class="ticker-box" id="ticker-8">Ídolo da Caverna = viver na própria bolha.</div>
                         <h3 class="highlight">A Queda dos Ídolos</h3><p>Francis Bacon criticou os "Ídolos": falsos preconceitos que cegam a mente. É preciso limpar a mente antes de investigar.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-hammer"></i> Quebrando Ilusões</div><div class="sim-screen"><div class="idol-container"><div class="bacon-smoke-cloud"></div><i class="fa-solid fa-user-shield idol-half idol-left"></i><i class="fa-solid fa-user-shield idol-half idol-right"></i><div class="idol-glow"></div></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-hammer"></i> Quebrando Ilusões</div><div class="sim-screen"><div class="idol-container"><i class="fa-solid fa-user-shield idol-half idol-left"></i><i class="fa-solid fa-user-shield idol-half idol-right"></i><div class="idol-glow"></div></div></div></div>
                 </div>
             </div>
 
@@ -1646,14 +3639,13 @@
                 </div>
             </div>
 
-        
+
             <div class="slide" id="slide-12">
                 <div class="slide-grid">
                     <div class="text-col">
                         <h2>07. A S&Iacute;NTESE NEWTONIANA</h2>
                         <div class="ticker-box" id="ticker-12">Uma maçã caiu, e o cara inventou o cálculo.</div>
                         <h3 class="highlight">O Método Científico</h3><p>Newton consolida a revolução. Racionalismo e Empirismo se unem para formar o <strong>Método Hipotético-Dedutivo</strong>.</p>
-                        
                     </div>
                     <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-trophy"></i> Fim da Campanha</div><div class="sim-screen"><div class="newton-scene"><i class="fa-solid fa-apple-whole newton-apple"></i><div class="math-wave">F = G(m1m2)/r²</div></div></div></div>
                 </div>
@@ -1686,6 +3678,12 @@
          PLAYER 2: MODO CINEMATOGRÁFICO 3D
          ======================================================= -->
     <div id="cinematic-stage" class="screen">
+        <!-- Luz Dinâmica Seguindo Cursor -->
+        <div class="dynamic-light" id="dynamic-light"></div>
+
+        <!-- Partículas de Espaço -->
+        <div class="space-particles" id="space-particles"></div>
+
         <div class="stage-header">
             <button class="control-btn" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; z-index: 1000;" onclick="window.switchScreen('home-screen')"><i class="fa-solid fa-arrow-left"></i></button>
             <div style="display:flex; flex-direction: column; margin-left: 10px;">
@@ -1695,11 +3693,69 @@
             <span style="margin-left: auto; background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; z-index: 1000;">🗣 <span id="cine-presenter-name">Davi</span></span>
         </div>
 
-        <!-- TÓPICO 1: O RENASCIMENTO (EXPANDIDO) -->
+        <!-- HUD EPISTEMOLÓGICO FLUTUANTE -->
+        <div id="epistemic-hud">
+            <div class="hud-header">
+                <i class="fa-solid fa-brain"></i>
+                <div>
+                    <div class="hud-epoch-label">Paradigma Atual</div>
+                    <div class="hud-epoch-value" id="hud-epoch-value">INICIALIZANDO...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BARRAS CINEMÁTICAS (Ficam soltas dentro do #cinematic-stage) -->
+<div class="cine-letterbox top"></div>
+<div class="cine-letterbox bottom"></div>
+
+<!-- ==========================================
+     CAPÍTULO 1: O RENASCIMENTO (NOVO DESIGN)
+     ========================================== -->
+<!-- TÓPICO 1: O RENASCIMENTO (EXPANDIDO E CINEMATOGRÁFICO) -->
         <div id="cine-renaissance" class="cine-scene">
-            <div class="cine-map-grid"></div>
-            <i class="fa-solid fa-sailboat cine-ship"></i>
             
+            <!-- CONTÊINER VISUAL (METADE ESQUERDA) -->
+            <div class="cine-visual-area">
+                
+                <!-- Vis 0: A Escolástica (Biblioteca Obscura) -->
+                <div class="cine-vis-layer vis-0-library">
+                    <div class="dust-particles"></div>
+                    <i class="fa-solid fa-book-skull floating-book b1"></i>
+                    <i class="fa-solid fa-book-quran floating-book b2"></i>
+                    <i class="fa-solid fa-book-journal-whills floating-book b3"></i>
+                    <div class="candle-glow"></div>
+                </div>
+
+                <!-- Vis 0_1: A Transição (Mapa Iluminado) -->
+                <div class="cine-vis-layer vis-0_1-map">
+                    <div class="map-grid-golden"></div>
+                    <svg class="map-route" viewBox="0 0 500 500">
+                        <path d="M50,450 Q200,200 450,50" fill="transparent" stroke="var(--rpg-gold)" stroke-width="4" stroke-dasharray="1000" stroke-dashoffset="1000" stroke-linecap="round"/>
+                    </svg>
+                    <i class="fa-solid fa-sailboat map-ship"></i>
+                </div>
+
+                <!-- Vis 0_2: A Ruptura (Cortina se Rasgando) -->
+                <div class="cine-vis-layer vis-0_2-rupture">
+                    <div class="rupture-stars"></div>
+                    <div class="rupture-light"></div>
+                    <div class="dark-curtain curtain-left"></div>
+                    <div class="dark-curtain curtain-right"></div>
+                </div>
+
+                <!-- Vis 1: O Terreno Fértil (Partículas Humanistas) -->
+                <div class="cine-vis-layer vis-1-fertile">
+                    <i class="fa-solid fa-seedling fertile-core"></i>
+                    <div class="fertile-sparks">
+                        <div class="spark s1"></div><div class="spark s2"></div><div class="spark s3"></div>
+                        <div class="spark s4"></div><div class="spark s5"></div><div class="spark s6"></div>
+                        <div class="spark s7"></div><div class="spark s8"></div><div class="spark s9"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CAIXAS DE TEXTO (ALINHADAS À DIREITA) -->
             <div class="cine-text-box cine-txt-0">
                 <h2 class="cine-title">01. A ESCOLÁSTICA</h2>
                 <p class="cine-desc">O conhecimento sobre a natureza era dominado pela Escolástica. As verdades não dependiam de testes práticos, mas sim do princípio de autoridade, onde dogmas e textos clássicos possuíam um peso inquestionável.</p>
@@ -1721,152 +3777,292 @@
             </div>
         </div>
 
-        <!-- 2 & 3: BIBLIOTECA MEDIEVAL -->
-        <!-- 2, 2_1, 3, 3_1: BIBLIOTECA MEDIEVAL -->
-<div id="cine-library" class="cine-scene">
-    <div class="cine-stained-glass"></div>
-    <div class="cine-altar">
-        <i class="fa-solid fa-book-journal-whills"></i>
-        <i class="fa-solid fa-link" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--netflix-red); font-size: 8rem; opacity: 0.8;"></i>
-    </div>
-    
-    <div class="cine-text-box cine-txt-2">
-        <h2 class="cine-title">02. ANTES DA REVOLUÇÃO</h2>
-        <p class="cine-desc">As pessoas aprendiam sobre a natureza principalmente por meio da tradição e das ideias de pessoas consideradas importantes, como Aristóteles e autoridades da Igreja.</p>
-    </div>
-    
-    <div class="cine-text-box cine-txt-2_1">
-        <h2 class="cine-title">02. GEOCENTRISMO</h2>
-        <p class="cine-desc">Acreditava que a Terra estava parada no centro do Universo e que o Sol, a Lua e outros astros giravam ao redor da Terra.</p>
-    </div>
 
-    <div class="cine-text-box cine-txt-3">
-        <h2 class="cine-title">02. PRINCÍPIO DE AUTORIDADE</h2>
-        <p class="cine-desc">Uma ideia era considerada verdadeira porque uma pessoa importante dizia que era verdade. Não era necessário testar ou comprovar na prática.</p>
-    </div>
+<!-- TÓPICO 2: ANTES DA REVOLUÇÃO (BIBLIOTECA & DOGMA) -->
+        <div id="cine-library" class="cine-scene">
+            
+            <div class="cine-visual-area">
+                
+                <!-- Vis 2: A Tradição (Corredor de Mármore e Estagnação) -->
+                <div class="cine-vis-layer vis-2-tradition">
+                    <div class="marble-hall"></div>
+                    <i class="fa-solid fa-landmark giant-monument"></i>
+                    <div class="stagnant-dust"></div>
+                </div>
 
-    <div class="cine-text-box cine-txt-3_1">
-        <h2 class="cine-title">02. A MUDANÇA</h2>
-        <p class="cine-desc">A Revolução Científica mudou essa maneira de pensar. Os estudiosos começaram a valorizar mais a observação, a investigação e a experimentação.</p>
-    </div>
-</div>
+                <!-- Vis 2_1: Geocentrismo (Esferas de Cristal) - MANTIDO -->
+                <div class="cine-vis-layer vis-2_1-geocentrism">
+                    <div class="geo-universe-bg"></div>
+                    <i class="fa-solid fa-earth-europe geo-center-earth"></i>
+                    <i class="fa-solid fa-lock geo-lock-icon"></i>
+                    <div class="crystal-sphere sphere-1"><i class="fa-solid fa-moon orbit-moon"></i></div>
+                    <div class="crystal-sphere sphere-2"><i class="fa-solid fa-sun orbit-sun"></i></div>
+                    <div class="crystal-sphere sphere-3"><div class="orbit-stars"></div></div>
+                </div>
 
-        <!-- 4: A RUPTURA -->
-        <div id="cine-rupture" class="cine-scene">
-            <div class="lantern-container"><div class="lantern-mask"></div></div>
-            <div class="cine-text-box cine-txt-4">
-                <h2 class="cine-title" style="border:none;">03. A GRANDE RUPTURA</h2>
-                <div class="cine-ticker" id="cine-ticker-4">O homem moderno: 'E se a gente testasse essa parada?'</div>
-                <p class="cine-desc">O ser humano parou de apenas "admirar" o mundo de forma passiva e passou a investigar ativamente como as coisas funcionam.</p>
+                <!-- Vis 3: Princípio de Autoridade (O Veredicto Violento) -->
+                <div class="cine-vis-layer vis-3-authority">
+                    <div class="authority-bg"></div>
+                    <div class="impact-sparks">
+                        <div class="ispark i1"></div><div class="ispark i2"></div><div class="ispark i3"></div>
+                        <div class="ispark i4"></div><div class="ispark i5"></div><div class="ispark i6"></div>
+                    </div>
+                    <i class="fa-solid fa-gavel giant-gavel"></i>
+                    <div class="dogma-seal">A PALAVRA<br>FINAL</div>
+                </div>
+
+                <!-- Vis 3_1: A Mudança (O Microscópio e a Vida) -->
+                <div class="cine-vis-layer vis-3_1-change">
+                    <div class="change-bg"></div>
+                    <i class="fa-solid fa-microscope giant-microscope"></i>
+                    <!-- Cone de luz corrigido -->
+                    <div class="lens-beam"></div>
+                    
+                    <div class="bio-particles">
+                        <div class="cell c1"></div><div class="cell c2"></div><div class="cell c3"></div>
+                        <div class="cell c4"></div><div class="cell c5"></div><div class="cell c6"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CAIXAS DE TEXTO -->
+            <div class="cine-text-box cine-txt-2">
+                <h2 class="cine-title">02. ANTES DA REVOLUÇÃO</h2>
+                <p class="cine-desc">As pessoas aprendiam sobre a natureza principalmente por meio da tradição e das ideias de pessoas consideradas importantes, como Aristóteles e autoridades da Igreja.</p>
+            </div>
+            <div class="cine-text-box cine-txt-2_1">
+                <h2 class="cine-title">02. GEOCENTRISMO</h2>
+                <p class="cine-desc">Acreditava que a Terra estava parada no centro do Universo e que o Sol, a Lua e outros astros giravam ao redor da Terra.</p>
+            </div>
+            <div class="cine-text-box cine-txt-3">
+                <h2 class="cine-title">02. PRINCÍPIO DE AUTORIDADE</h2>
+                <p class="cine-desc">Uma ideia era considerada verdadeira porque uma pessoa importante dizia que era verdade. Não era necessário testar ou comprovar na prática.</p>
+            </div>
+            <div class="cine-text-box cine-txt-3_1">
+                <h2 class="cine-title">02. A MUDANÇA</h2>
+                <p class="cine-desc">A Revolução Científica mudou essa maneira de pensar. Os estudiosos começaram a valorizar mais a observação, a investigação e a experimentação.</p>
             </div>
         </div>
 
-        <!-- 5 & 6: ESPAÇO -->
-        <!-- 5 & 6: ESPAÇO -->
-        <div id="cine-space" class="cine-scene">
-            <div class="cine-stars"></div>
-
-            <!-- SISTEMA SOLAR EM ÓRBITA -->
-            <div class="cine-solar-system">
-                <!-- O Sol central -->
-                <div class="cine-sun"></div>
-
-                <!-- Órbita 1: Planeta interno -->
-                <div class="cine-orbit orbit-inner">
-                    <div class="cine-planet planet-inner"></div>
+<!-- TÓPICO 3: A GRANDE RUPTURA (TELA CHEIA) -->
+        <div id="cine-rupture" class="cine-scene">
+            
+            <!-- CONTÊINER VISUAL (100% DA TELA) -->
+            <div class="vis-4-full-screen">
+                
+                <!-- ESTADO 1: A Contemplação Passiva -->
+                <div class="rupture-passive">
+                    <i class="fa-solid fa-eye passive-giant-eye"></i>
+                    <div class="passive-dust"></div>
                 </div>
 
-                <!-- Órbita 2: A Terra e a Lua -->
-                <div class="cine-orbit orbit-earth">
-                    <div class="cine-earth">
-                        <div class="cine-moon-orbit">
-                            <div class="cine-moon"></div>
+                <!-- ESTADO 2: A Investigação Ativa (O Método) -->
+                <div class="rupture-active">
+                    <!-- O chão de cartografia/medição -->
+                    <div class="active-blueprint-grid"></div>
+                    
+                    <!-- Os novos instrumentos (Gears, Relógios, Bússolas) -->
+                    <i class="fa-solid fa-gear instrument-gear-bg"></i>
+                    <i class="fa-solid fa-gear instrument-gear-sm"></i>
+                    
+                    <!-- Ferramenta de interrogatório central -->
+                    <div class="active-centerpiece">
+                        <i class="fa-solid fa-compass main-compass"></i>
+                        <div class="scanning-laser"></div>
+                    </div>
+                </div>
+
+                <!-- O Clarão de Transição -->
+                <div class="rupture-flash"></div>
+            </div>
+
+            <!-- CAIXA DE TEXTO (CENTRALIZADA NA PARTE INFERIOR) -->
+            <div class="cine-text-box cine-txt-4">
+                <h2 class="cine-title">03. A GRANDE RUPTURA</h2>
+                <div class="cine-ticker" id="cine-ticker-4">O homem moderno: 'E se a gente testasse essa parada?'</div>
+                <p class="cine-desc">O ser humano parou de apenas "admirar" o mundo de forma passiva e passou a investigar ativamente como as coisas funcionam.</p>
+            </div>
+            
+        </div>
+
+<!-- TÓPICO 4: REVOLUÇÃO COSMOLÓGICA (TELA CHEIA FLUIDA) -->
+        <div id="cine-space" class="cine-scene">
+            
+            <!-- Vazio do Espaço Profundo -->
+            <div class="cosmos-bg"></div>
+
+            <!-- O SISTEMA SOLAR DINÂMICO -->
+            <div class="solar-system-container">
+                <!-- O Sol -->
+                <div class="the-sun">
+                    <div class="sun-flare"></div>
+                </div>
+
+                <!-- Órbita da Terra -->
+                <div class="orbit-path earth-orbit">
+                    <div class="planet-earth">
+                        <!-- Órbita da Lua ao redor da Terra -->
+                        <div class="moon-orbit">
+                            <div class="the-moon"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Órbita 3: Planeta externo -->
-                <div class="cine-orbit orbit-outer">
-                    <div class="cine-planet planet-outer"></div>
+                <!-- Órbita de Marte -->
+                <div class="orbit-path mars-orbit">
+                    <div class="planet-mars"></div>
                 </div>
+                
+                <!-- Carimbo da Inquisição (Easter Egg do Slide 6) -->
+                <div class="inquisition-stamp">CENSURADO<br>PELA INQUISIÇÃO</div>
             </div>
 
+            <!-- CAIXAS DE TEXTO (ALINHADAS À DIREITA) -->
             <div class="cine-text-box cine-txt-5">
-                <h2 class="cine-title">04. REV. COSMOL&Oacute;GICA</h2>
+                <h2 class="cine-title">04. REV. COSMOLÓGICA</h2>
                 <div class="cine-ticker" id="cine-ticker-5">Copérnico: 'Galera, o Sol tá no meio, não a gente'.</div>
                 <p class="cine-desc">Copérnico muda o centro do tabuleiro! O Sol assume o centro do sistema e a Terra gira em volta dele.</p>
             </div>
+            
             <div class="cine-text-box cine-txt-6">
-                <h2 class="cine-title">04. REV. COSMOL&Oacute;GICA</h2>
+                <h2 class="cine-title">04. REV. COSMOLÓGICA</h2>
                 <div class="cine-ticker" id="cine-ticker-6">Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.</div>
                 <p class="cine-desc">Utilizando o telescópio para comprovar a teoria, Galileu afirmou: "A natureza está escrita em caracteres matemáticos".</p>
-                <div class="inquisition-stamp">CENSURADO<br>PELA INQUISIÇÃO</div>   
             </div>
 
             <div class="cine-text-box cine-txt-6_1">
-        <h2 class="cine-title">04. REV. COSMOLÓGICA</h2>
-        <div class="cine-ticker" id="cine-ticker-6_1">Kepler: “Círculo perfeito? Não exatamente.”</div>
-        <p class="cine-desc">Ao analisar o movimento dos planetas, Kepler descobriu que suas órbitas ao redor do Sol são elípticas, aperfeiçoando o modelo heliocêntrico.</p>
-    </div>
+                <h2 class="cine-title">04. REV. COSMOLÓGICA</h2>
+                <div class="cine-ticker" id="cine-ticker-6_1">Kepler: “Círculo perfeito? Não exatamente.”</div>
+                <p class="cine-desc">Ao analisar o movimento dos planetas, Kepler descobriu que suas órbitas ao redor do Sol são elípticas, aperfeiçoando o modelo heliocêntrico.</p>
+            </div>
         </div>
 
-        
-
-        <!-- 8, 9, 10, 11: A MESA (BACON & DESCARTES) -->
+<!-- TÓPICO 5 E 6: A BANCADA DOS MÉTODOS (PLANO SEQUÊNCIA) -->
         <div id="cine-desk" class="cine-scene">
+            
+            <!-- O Chão da Bancada em Perspectiva 3D -->
             <div class="cine-surface"></div>
+            
+            <!-- O Trilho da Câmera (Desliza para a direita no Cap 6) -->
             <div class="cine-pan">
-                <div class="cine-side">
-                    <i class="fa-solid fa-flask cine-cauldron"></i><div class="cine-smoke"></div>
+                
+                <!-- ==========================================
+                     LADO ESQUERDO: EMPIRISMO (BACON)
+                     ========================================== -->
+                <div class="cine-side empiricism-side">
+                    
+                    <!-- Vis 8: A Queda dos Ídolos -->
+                    <div class="cine-vis-layer vis-8-idols">
+                        <div class="heavy-fog"></div>
+                        <div class="stone-idol-container">
+                            <i class="fa-solid fa-mask idol-half mask-left"></i>
+                            <i class="fa-solid fa-mask idol-half mask-right"></i>
+                            <div class="idol-crack-light"></div>
+                        </div>
+                    </div>
+
+                    <!-- Vis 9: O Laboratório Indutivo -->
+                    <div class="cine-vis-layer vis-9-lab">
+                        <div class="neon-flask-container">
+                            <i class="fa-solid fa-flask flask-glass"></i>
+                            <div class="flask-glow"></div>
+                            <div class="flask-bubbles">
+                                <div class="fbubble fb1"></div><div class="fbubble fb2"></div><div class="fbubble fb3"></div>
+                                <div class="fbubble fb4"></div><div class="fbubble fb5"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Textos Empirismo -->
                     <div class="cine-text-box cine-txt-8">
                         <h2 class="cine-title">05. O EMPIRISMO</h2>
                         <div class="cine-ticker" id="cine-ticker-8">Ídolo da Caverna = viver na própria bolha.</div>
-                        <p class="cine-desc">Bacon criticou os "Ídolos": falsos preconceitos que cegam a mente. É preciso limpar a mente antes de investigar.</p>
+                        <p class="cine-desc">Bacon criticou os "Ídolos": falsos preconceitos que cegam a mente. É preciso limpar a mente antes de investigar a verdade material.</p>
                     </div>
                     <div class="cine-text-box cine-txt-9">
+                        <h2 class="cine-title">05. MÉTODO INDUTIVO</h2>
                         <div class="cine-ticker" id="cine-ticker-9">Se não testou na prática, meu anjo, é só fanfic.</div>
-                        <p class="cine-desc">A ciência deve partir da observação e de experimentos repetidos. Não basta achar, é preciso testar na prática!</p>
+                        <p class="cine-desc">A ciência deve partir da observação e de experimentos repetidos. Não basta deduzir as coisas na teoria, é preciso testar na prática!</p>
                     </div>
                 </div>
-                <div class="cine-side">
-                    <i class="fa-solid fa-gears cine-gears"></i>
+
+                <!-- ==========================================
+                     LADO DIREITO: RACIONALISMO (DESCARTES)
+                     ========================================== -->
+                <div class="cine-side rationalism-side">
+                    
+                    <!-- Vis 10: Dúvida Metódica (O Glitch na Matrix) -->
+                    <div class="cine-vis-layer vis-10-doubt">
+                        <div class="matrix-grid"></div>
+                        <div class="glitch-container">
+                            <i class="fa-solid fa-cube logic-cube"></i>
+                            <div class="system-error">DÚVIDA METÓDICA</div>
+                        </div>
+                    </div>
+
+                    <!-- Vis 11: Penso, Logo Existo (O Cérebro) -->
+                    <div class="cine-vis-layer vis-11-cogito">
+                        <!-- Fórmulas flutuando no fundo -->
+                        <div class="math-formulas">y = mx + b &nbsp;&nbsp; f(x) = x² &nbsp;&nbsp; a² + b² = c²</div>
+                        <i class="fa-solid fa-gear gear-bg gear-1"></i>
+                        <i class="fa-solid fa-gear gear-bg gear-2"></i>
+                        <i class="fa-solid fa-brain glowing-brain"></i>
+                    </div>
+                    
+                    <!-- Textos Racionalismo -->
                     <div class="cine-text-box cine-txt-10">
                         <h2 class="cine-title">06. O RACIONALISMO</h2>
                         <div class="cine-ticker" id="cine-ticker-10">Descartes ficou dias trancado num quarto.</div>
-                        <p class="cine-desc">Descartes utiliza a Dúvida Metódica para duvidar de tudo que não for absolutamente claro e evidente.</p>
+                        <p class="cine-desc">Descartes utiliza a Dúvida Metódica para duvidar de tudo que os sentidos mostram, aceitando apenas o que for absolutamente lógico.</p>
                     </div>
                     <div class="cine-text-box cine-txt-11">
+                        <h2 class="cine-title">06. PENSO, LOGO EXISTO</h2>
                         <div class="cine-ticker" id="cine-ticker-11">A única certeza: eu existo porque penso.</div>
-                        <p class="cine-desc">A razão lógica e a matemática se tornam a base inquebrável para o pensamento. "Penso, logo existo".</p>
+                        <p class="cine-desc">A razão lógica e a matemática formam a base inquebrável para o pensamento. O corpo engana, mas a mente deduz a verdade.</p>
                     </div>
                 </div>
+
             </div>
         </div>
 
 
-        <!-- 12: A SÍNTESE -->
-        <div id="cine-apple" class="cine-scene">
-            <div class="cine-text-box cine-txt-12">
-                <div style="position:relative; display:flex; justify-content:center; align-items:center; height: 300px; width: 100%;">
-                    <i class="fa-solid fa-apple-whole cine-giant-apple"></i>
-                    <div class="cine-math-wave">F = G(m1m2)/r²</div>
-                </div>
-                <h2 class="cine-title" style="border:none; text-shadow:0 0 30px #E50914; margin-top:20px;">07. A S&Iacute;NTESE NEWTONIANA</h2>
-                <div class="cine-ticker" id="cine-ticker-12" style="border:none; justify-content:center; background:none;">Uma maçã caiu, e o cara inventou o cálculo.</div>
-                <p class="cine-desc">Newton consolida a revolução. Racionalismo e Empirismo se unem para formar o Método Hipotético-Dedutivo.</p>
-            </div>
+<!-- ==========================================
+     CAPÍTULO 12: A SÍNTESE (A MAÇÃ)
+     ========================================== -->
+<div id="cine-apple" class="cine-scene">
+    <div class="cine-camera" style="width: 100%; height: 100%;">
+        
+        <!-- AURA E OBJETO -->
+        <div class="cine-aura aura-gravity"></div>
+        <div class="cine-prop prop-apple" style="left: 25%;">
+            <!-- A Onda Matemática explodindo atrás da Maçã -->
+            <div class="cine-math-wave" style="font-size: 8rem; position: absolute; z-index: 1;">F = G(m1m2)/r²</div>
+            <i class="fa-solid fa-apple-whole" style="font-size: 16rem; color: #E50914; filter: drop-shadow(0 20px 30px #000); position: relative; z-index: 5;"></i>
         </div>
 
-        <!-- 13: FIM -->
-        <div id="cine-ad" class="cine-scene">
-            <div style="max-width: 800px; text-align: center;">
-                <h1 style="font-family:'Bebas Neue'; font-size:7rem; color:var(--netflix-red); text-shadow: 0 0 40px rgba(229,9,20,0.8); margin-bottom:0;">ASSINE O IFPIFLIX</h1>
-                <p style="font-size:2rem; color:#fff; margin-bottom: 30px;">Acesso ilimitado &agrave; sabedoria universal.</p>
-                <div style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 50px; border-radius: 8px; font-size: 3rem; font-weight: bold; box-shadow: 0 10px 30px rgba(229,9,20,0.5); display: inline-block;">
-                    R$ 67,90 <span style="font-size: 1.5rem; font-weight: normal;">/ m&ecirc;s</span>
-                </div>
-            </div>
+        <!-- TEXTO (Na Direita) -->
+        <div class="cine-text-box cine-txt-12" style="left: 55vw; top: 50%; transform: translateY(-50%) translateZ(100px);">
+            <h2 class="cine-title" style="color: #E50914;">07. A SÍNTESE NEWTONIANA</h2>
+            <div class="cine-ticker" id="cine-ticker-12" style="border-color: #E50914; background: rgba(229,9,20,0.1);">Uma maçã caiu, e o cara inventou o cálculo.</div>
+            <p class="cine-desc">Newton consolida a revolução. O Racionalismo (Matemática) e o Empirismo (Observação Física) se unem para formar o <strong>Método Hipotético-Dedutivo</strong>.</p>
         </div>
+        
+    </div>
+</div>
+
+<!-- ==========================================
+     CAPÍTULO 13: PROPAGANDA FINAL
+     ========================================== -->
+<div id="cine-ad" class="cine-scene">
+    <div class="cine-camera" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; background: #000;">
+        <h1 style="font-family:'Bebas Neue'; font-size:8rem; color:var(--netflix-red); text-shadow: 0 0 50px rgba(229,9,20,0.8); margin-bottom:10px;">ASSINE O IFPIFLIX</h1>
+        <p style="font-size:2.5rem; color:#fff; margin-bottom: 40px;">Acesso ilimitado à sabedoria universal.</p>
+        <div style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 60px; border-radius: 8px; font-size: 3.5rem; font-weight: bold; box-shadow: 0 10px 40px rgba(229,9,20,0.6);">
+            R$ 67,90 <span style="font-size: 1.8rem; font-weight: normal;">/ mês</span>
+        </div>
+    </div>
+</div>
 
         <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.2); z-index: 900;"><div id="cine-progress" style="height: 100%; background: var(--netflix-red); width: 0%; transition: width 0.3s ease-out;"></div></div>
     </div>
@@ -1876,6 +4072,7 @@
         <h2 style="font-size: 2.5rem; color: #fff; font-weight: normal;">Tem algu&eacute;m assistindo?</h2>
         <button class="btn-idle" id="btn-resume-idle">Continuar Assistindo</button>
     </div>
+
 
     <div id="credits-screen" class="screen">
         <div style="max-width: 600px; text-align: center;">
@@ -2388,16 +4585,26 @@
             return (idle && idle.style.display === 'flex') || (lis && lis.style.display === 'block');
         }
 
-        window.switchScreen = function(id) { 
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
+        window.switchScreen = function(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(id);
             if (target) target.classList.add('active');
-            
+
+            // Gerencia o HUD Epistemológico
+            const hud = document.getElementById('epistemic-hud');
+            if (hud) {
+                if (id === 'cinematic-stage') {
+                    // HUD será ativado pela updateCineCamera
+                } else {
+                    hud.classList.remove('active');
+                }
+            }
+
             if (id !== 'player-screen' && id !== 'cinematic-stage') {
                 const idle = document.getElementById('idle-overlay');
                 if (idle) idle.style.display = 'none';
                 isLisActive = false;
-                
+
                 // CORREÇÃO: Limpa os intervalos para não travar a memória
                 clearInterval(tickerIntervalC);
                 clearInterval(tickerIntervalM);
@@ -2501,7 +4708,11 @@
         /* PLAYER CLÁSSICO */
         function renderSlide(idx) {
             if(idx < 0) return;
-            if(idx >= script.length) { window.switchScreen('credits-screen'); return; }
+            if(idx >= script.length) { 
+    if(!hasPlayedFinalCredits) { playFinalCredits(); } 
+    else { window.switchScreen('credits-screen'); }
+    return; 
+}
             
             clearInterval(tickerIntervalC);
             currentSlide = idx; 
@@ -2536,7 +4747,11 @@
         /* MODO CINEMATOGRÁFICO 3D */
         function updateCineCamera(idx) {
             if(idx < 0) return;
-            if(idx >= script.length) { window.switchScreen('credits-screen'); return; }
+            if(idx >= script.length) { 
+    if(!hasPlayedFinalCredits) { playFinalCredits(); } 
+    else { window.switchScreen('credits-screen'); }
+    return; 
+}
 
             clearInterval(tickerIntervalM);
             const data = script[idx];
@@ -2548,62 +4763,169 @@
             document.getElementById('cine-progress').style.width = `${((idx + 1) / script.length) * 100}%`;
             document.getElementById('cinematic-stage').setAttribute('data-step', data.id);
 
+            // Atualiza o HUD Epistemológico
+            updateEpistemicHUD(data.id);
+
             const tickerEl = document.getElementById(`cine-ticker-${data.id}`);
             if(tickerEl && data.tickers && data.tickers.length > 0) {
-                let tIdx = 0; 
-                tickerEl.textContent = data.tickers[0]; 
+                let tIdx = 0;
+                tickerEl.textContent = data.tickers[0];
                 tickerEl.style.opacity = 1;
                 tickerIntervalM = setInterval(() => {
                     tIdx = (tIdx + 1) % data.tickers.length;
                     tickerEl.style.opacity = 0;
-                    setTimeout(() => { 
-                        if (currentCineIdx === idx) { 
-                            tickerEl.textContent = data.tickers[tIdx]; 
-                            tickerEl.style.opacity = 1; 
-                        } 
+                    setTimeout(() => {
+                        if (currentCineIdx === idx) {
+                            tickerEl.textContent = data.tickers[tIdx];
+                            tickerEl.style.opacity = 1;
+                        }
                     }, 400);
                 }, 20000);
             }
             triggerAchievementsAndEvents(idx, true);
         }
 
-        /* ESCOLHA COMPARTILHADA */
-        window.triggerLisChoice = function(targetIdx) {
-            if (isLisActive) return;
-            isLisActive = true;
-            
-            // Procura na lista qual é a posição exata do slide com ID 8 (Empirismo)
-            const nextIdx = script.findIndex(s => s.id == 12);
+        /* =========================================================
+           HUD EPISTEMOLÓGICO - Atualização Dinâmica
+           ========================================================= */
+        function updateEpistemicHUD(stepId) {
+            const hud = document.getElementById('epistemic-hud');
+            if (!hud) return;
 
-            document.getElementById('lis-dark-overlay').style.display = 'block';
-            document.getElementById('lis-notification').style.opacity = '1';
-            
-            setTimeout(() => {
-                document.getElementById('lis-notification').style.opacity = '0';
-                document.getElementById('lis-dark-overlay').style.display = 'none';
-                
-                const isMovie = document.getElementById('cinematic-stage').classList.contains('active');
-                if (script[nextIdx] && script[nextIdx].presenter) { 
-                    applyPresenter(script[nextIdx].presenter, true); 
-                }
-                
-                if (isMovie) { 
-                    updateCineCamera(nextIdx); 
-                } else { 
-                    renderSlide(nextIdx); 
-                }
-                isLisActive = false;
-            }, 3000);
+            // Ativa o HUD quando estiver no modo cinematográfico
+            hud.classList.add('active');
+
+            // Obtém o paradigma atual
+            const epochData = getEpochFromStep(stepId);
+
+            // Atualiza o nome do paradigma
+            const epochEl = document.getElementById('hud-epoch-value');
+            if (epochEl) {
+                epochEl.textContent = epochData.name;
+                epochEl.style.color = epochData.color;
+            }
         }
 
-        document.getElementById('btn-next-slide').addEventListener('click', () => { 
-            if (isModalOpen() || isPlayingPostCredits) return; 
-            if (script[currentSlide].id == 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
-            renderSlide(currentSlide + 1); 
+        function getEpochFromStep(stepId) {
+            // Define o paradigma baseado na cena
+            const epochData = {
+                name: '',
+                color: '#d4af37'
+            };
+
+            // CAPÍTULO 1: RENASCIMENTO
+            if (['0', '0_1', '0_2', '1'].includes(stepId)) {
+                epochData.name = stepId === '0' ? 'ESCOLÁSTICA' : stepId === '0_1' ? 'TRANSIÇÃO' : stepId === '0_2' ? 'RUPTURA' : 'HUMANISMO';
+                epochData.color = stepId === '0' ? '#666' : stepId === '0_1' ? '#f59e0b' : stepId === '0_2' ? '#E50914' : '#10b981';
+            }
+
+            // CAPÍTULO 2: BIBLIOTECA MEDIEVAL
+            else if (['2', '2_1', '3', '3_1'].includes(stepId)) {
+                epochData.name = stepId === '2' ? 'TRADIÇÃO' : stepId === '2_1' ? 'GEOCENTRISMO' : stepId === '3' ? 'AUTORIDADE' : 'MUDANÇA';
+                epochData.color = stepId === '2' ? '#888' : stepId === '2_1' ? '#3b82f6' : stepId === '3' ? '#E50914' : '#10b981';
+            }
+
+            // CAPÍTULO 3: A RUPTURA
+            else if (stepId === '4') {
+                epochData.name = 'REVOLUÇÃO';
+                epochData.color = '#E50914';
+            }
+
+            // CAPÍTULO 4: ESPAÇO/COSMOLOGIA
+            else if (['5', '6', '6_1'].includes(stepId)) {
+                epochData.name = stepId === '5' ? 'HELIOCENTRISMO' : stepId === '6' ? 'OBSERVAÇÃO' : 'KEPLER';
+                epochData.color = stepId === '5' ? '#f59e0b' : stepId === '6' ? '#3b82f6' : '#10b981';
+            }
+
+            // CAPÍTULO 5: MESA DE TRABALHO - BACON
+            else if (['8', '9'].includes(stepId)) {
+                epochData.name = stepId === '8' ? 'ÍDOLOS' : 'EXPERIMENTAÇÃO';
+                epochData.color = stepId === '8' ? '#E50914' : '#10b981';
+            }
+
+            // CAPÍTULO 6: MESA DE TRABALHO - DESCARTES
+            else if (['10', '11'].includes(stepId)) {
+                epochData.name = stepId === '10' ? 'DÚVIDA' : 'RACIONALISMO';
+                epochData.color = stepId === '10' ? '#f59e0b' : '#3b82f6';
+            }
+
+            // CAPÍTULO 7: ESCOLHA
+            else if (stepId === '7') {
+                epochData.name = 'ENCRUZILHADA';
+                epochData.color = '#ec4899';
+            }
+
+            // CAPÍTULO 12: NEWTON
+            else if (stepId === '12') {
+                epochData.name = 'SÍNTESE';
+                epochData.color = '#10b981';
+            }
+
+            return epochData;
+        }
+
+        /* =========================================================
+           ENHANCED 3D ANIMATIONS - EFEITOS CINEMATOGRÁFICOS
+           ========================================================= */
+
+        // Rastreamento do mouse para luz dinâmica
+        document.addEventListener('mousemove', (e) => {
+            const cinematicStage = document.getElementById('cinematic-stage');
+            if (!cinematicStage || !cinematicStage.classList.contains('active')) return;
+
+            const dynamicLight = document.getElementById('dynamic-light');
+            if (dynamicLight) {
+                const rect = cinematicStage.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                dynamicLight.style.setProperty('--mouse-x', `${x}%`);
+                dynamicLight.style.setProperty('--mouse-y', `${y}%`);
+            }
+
+            // Efeito parallax sutil nas cenas
+            const activeScene = document.querySelector('.cine-scene.active');
+            if (activeScene) {
+                const moveX = (e.clientX - window.innerWidth / 2) / 50;
+                const moveY = (e.clientY - window.innerHeight / 2) / 50;
+                activeScene.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
         });
+
+        // Gera partículas para o espaço
+        function generateSpaceParticles() {
+            const container = document.getElementById('space-particles');
+            if (!container) return;
+
+            // Limpa partículas existentes
+            container.innerHTML = '';
+
+            // Cria 50 partículas
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(particle);
+            }
+        }
+
+        // Inicializa partículas quando entra no modo cinematográfico
+        const originalSwitchScreen = window.switchScreen;
+        window.switchScreen = function(id) {
+            originalSwitchScreen(id);
+
+            if (id === 'cinematic-stage') {
+                setTimeout(() => generateSpaceParticles(), 500);
+            }
+        };
+
+        
+
         
         document.getElementById('btn-prev-slide').addEventListener('click', () => { 
-            if (isModalOpen()) return; 
+            if (isLisActive || isModalOpen()) return; 
             renderSlide(currentSlide - 1); 
         });
 
@@ -2621,7 +4943,7 @@
         /* =========================================================
            SISTEMA DE INTRODUÇÃO (TUDUM) ANTES DOS FILMES
            ========================================================= */
-        let introTimeout;
+      let introTimeout;
         window.currentIntroCallback = null;
 
         function playTudumAndThen(callback) {
@@ -2633,13 +4955,13 @@
             void logo.offsetWidth; 
             logo.classList.add('play-tudum');
             
-            skipBtn.classList.add('show');
+            if (skipBtn) skipBtn.classList.add('show');
             window.currentIntroCallback = callback;
             
             clearTimeout(introTimeout);
             introTimeout = setTimeout(() => {
                 if (window.currentIntroCallback) {
-                    skipBtn.classList.remove('show');
+                    if (skipBtn) skipBtn.classList.remove('show');
                     window.currentIntroCallback();
                     window.currentIntroCallback = null;
                 }
@@ -2649,7 +4971,8 @@
         window.forceSkipIntro = function() {
             if (window.currentIntroCallback) {
                 clearTimeout(introTimeout);
-                document.getElementById('skip-intro-btn').classList.remove('show');
+                const skipBtn = document.getElementById('skip-intro-btn');
+                if (skipBtn) skipBtn.classList.remove('show');
                 window.currentIntroCallback();
                 window.currentIntroCallback = null;
             }
@@ -2739,6 +5062,147 @@
         }
 
         /* =========================================================
+   MOTOR EPISTEMOLÓGICO: LÓGICA DE INTERAÇÃO DOS SLIDES
+   ========================================================= */
+
+function initEpistemologicalPhysics() {
+    // 1. INJETAR A FÍSICA DA ESCOLÁSTICA (Dogma)
+    const dogmaSlides = [document.querySelector('#slide-0 .visual-col'), document.querySelector('#slide-3 .visual-col')];
+    dogmaSlides.forEach(col => {
+        if(!col) return;
+        col.classList.add('dogma-vault');
+        
+        // Adiciona a Luz Divina
+        if(!col.querySelector('.divine-light')){
+            const light = document.createElement('div');
+            light.className = 'divine-light';
+            col.appendChild(light);
+        }
+
+        // Adiciona a poeira estagnada
+        if(!col.querySelector('.dust-particle')){
+            for(let i = 0; i < 15; i++) {
+                const dust = document.createElement('div');
+                dust.className = 'dust-particle';
+                const size = Math.random() * 3 + 1;
+                dust.style.width = `${size}px`;
+                dust.style.height = `${size}px`;
+                dust.style.left = `${Math.random() * 100}%`;
+                dust.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                dust.style.animationDelay = `${Math.random() * 5}s`;
+                col.appendChild(dust);
+            }
+        }
+    });
+
+    // 2. INJETAR O GEOCENTRISMO (Esferas Perfeitas vs Sublunar Caótico)
+    const geoSystems = document.querySelectorAll('.geo-system');
+    geoSystems.forEach(sys => {
+        if(sys.querySelector('.supralunar-sphere')) return; // Evita duplicar
+        
+        // Cria as esferas de cristal
+        for(let i = 1; i <= 3; i++) {
+            const sphere = document.createElement('div');
+            sphere.className = `supralunar-sphere sphere-${i}`;
+            sys.appendChild(sphere);
+        }
+    });
+
+    // 3. O PRINCÍPIO DA AUTORIDADE (Repulsão do Cursor)
+    const authoritySlide = document.getElementById('slide-3');
+    if (authoritySlide) {
+        const visualCol = authoritySlide.querySelector('.sim-screen');
+        const icon = visualCol.querySelector('.fa-book');
+        
+        // Envolve o ícone em um container repulsivo
+        if (icon && !icon.parentElement.classList.contains('authority-repel')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'authority-repel';
+            icon.parentNode.insertBefore(wrapper, icon);
+            wrapper.appendChild(icon);
+            
+            const statusText = visualCol.querySelector('h3');
+            if(statusText) wrapper.appendChild(statusText);
+
+            // Lógica de repulsão dogmática
+            authoritySlide.addEventListener('mousemove', (e) => {
+                if(!authoritySlide.classList.contains('active')) return;
+                
+                const rect = wrapper.getBoundingClientRect();
+                const iconX = rect.left + rect.width / 2;
+                const iconY = rect.top + rect.height / 2;
+                
+                const distX = e.clientX - iconX;
+                const distY = e.clientY - iconY;
+                const distance = Math.sqrt(distX * distX + distY * distY);
+                
+                const threshold = 150; // Raio de intocabilidade
+                
+                if (distance < threshold) {
+                    // Empurra o elemento na direção oposta ao mouse
+                    const repelStrength = (threshold - distance) * 0.5;
+                    const angle = Math.atan2(distY, distX);
+                    const moveX = -Math.cos(angle) * repelStrength;
+                    const moveY = -Math.sin(angle) * repelStrength;
+                    wrapper.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                } else {
+                    wrapper.style.transform = `translate(0px, 0px)`;
+                }
+            });
+        }
+    }
+
+    // 4. O DESPERTAR RENASCENTISTA (A Lanterna da Razão)
+    const ruptureSlide = document.getElementById('slide-4');
+    if (ruptureSlide) {
+        const simScreen = ruptureSlide.querySelector('.sim-screen');
+        simScreen.innerHTML = ''; // Limpa a animação antiga
+        simScreen.className = 'sim-screen humanism-stage';
+        
+        const bg = document.createElement('div'); bg.className = 'humanism-bg';
+        const mask = document.createElement('div'); mask.className = 'humanism-mask';
+        const content = document.createElement('div'); content.className = 'humanism-content';
+        
+        content.innerHTML = '<i class="fa-solid fa-eye"></i><i class="fa-solid fa-compass"></i><i class="fa-solid fa-flask"></i>';
+        
+        simScreen.appendChild(bg);
+        simScreen.appendChild(content);
+        simScreen.appendChild(mask);
+
+        // Agência Humana: O cursor ilumina a escuridão e move o fundo (Parallax)
+        ruptureSlide.addEventListener('mousemove', (e) => {
+            if(!ruptureSlide.classList.contains('active')) return;
+            
+            const rect = simScreen.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Verifica se o mouse está dentro da área visual
+            if(x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                // Abre o raio de luz
+                mask.style.clipPath = `circle(120px at ${x}px ${y}px)`;
+                
+                // Parallax sutil no background para dar sensação de espaço navegável
+                const moveX = (x / rect.width - 0.5) * 20;
+                const moveY = (y / rect.height - 0.5) * 20;
+                bg.style.transform = `translate(${-moveX}px, ${-moveY}px)`;
+            } else {
+                mask.style.clipPath = `circle(0px at 50% 50%)`;
+            }
+        });
+        
+        // Esconde a luz quando o mouse sai
+        ruptureSlide.addEventListener('mouseleave', () => {
+            mask.style.clipPath = `circle(0px at 50% 50%)`;
+            bg.style.transform = `translate(0px, 0px)`;
+        });
+    }
+}
+
+// Inicializa a física assim que o DOM carregar
+window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
+
+        /* =========================================================
            SISTEMA DE ARRASTAR PARA OS LADOS (DRAG-TO-SCROLL & WHEEL)
            ========================================================= */
        function initDragToScroll() {
@@ -2826,23 +5290,25 @@
         }, {passive: true});
 
        function handleSwipe() {
-            if (isModalOpen() || isPlayingPostCredits) return;
+            if (isModalOpen() || isLisActive || isPlayingPostCredits) return;
 
             const diffX = touchStartX - touchEndX;
             const diffY = Math.abs(touchStartY - touchEndY);
 
-            if (diffY > Math.abs(diffX)) return; // Ignora se arrastou pra cima/baixo
+            if (diffY > Math.abs(diffX)) return;
 
-            if (diffX > 50) { // Swipe para Esquerda (Avançar)
+            if (diffX > 50) {
                 if (document.getElementById('player-screen').classList.contains('active')) {
+                    if (script[currentSlide].id == 7) { triggerScreenShake('player-screen'); return; }
                     if (script[currentSlide].id == 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
                     document.getElementById('btn-next-slide').click();
                 } else if (document.getElementById('cinematic-stage').classList.contains('active')) {
+                    if (script[currentCineIdx].id == 7) { triggerScreenShake('cinematic-stage'); return; }
                     if (script[currentCineIdx].id == 12 && !hasPlayedPostCredits) { playPostCredits(); return; }
                     updateCineCamera(currentCineIdx + 1);
                 }
             } 
-            else if (diffX < -50) { // Swipe para Direita (Voltar)
+            else if (diffX < -50) {
                 if (document.getElementById('player-screen').classList.contains('active')) {
                     document.getElementById('btn-prev-slide').click();
                 } else if (document.getElementById('cinematic-stage').classList.contains('active')) {
@@ -2850,6 +5316,7 @@
                 }
             }
         }
+
         // Inicia o sistema de arraste assim que a página carregar
         window.addEventListener('DOMContentLoaded', initDragToScroll);
 
@@ -3358,161 +5825,42 @@
         });
 
         /* =========================================================
-           OPTION 2: FÍSICA DA MAÇÃ (NEWTON)
+           CENA PÓS-CRÉDITOS FINAL (APÓS A ASSINATURA)
            ========================================================= */
-        const apples = [];
-        let physicsAnimationId = null;
+        let hasPlayedFinalCredits = false;
 
-        function updatePhysics() {
-            const ground = window.innerHeight;
-            let activeApples = false;
+        function playFinalCredits() {
+            const overlay = document.getElementById('final-post-credits-overlay');
+            const video = document.getElementById('final-post-credits-video');
+            
+            overlay.style.display = 'flex';
+            
+            // INSIRA O NOME DO SEU SEGUNDO VÍDEO AQUI:
+            video.src = 'https://buguinha0202.github.io/Ifpiflix-projetor/trailer2.mp4';
+            
+            video.play().catch(e => {
+                skipFinalCredits();
+            });
 
-            for (let i = 0; i < apples.length; i++) {
-                let a = apples[i];
-                if (a.stopped) continue;
-
-                activeApples = true;
-                a.vy += a.gravity; // Aplica gravidade
-                a.y += a.vy;       // Atualiza posição vertical
-                a.x += a.vx;       // Atualiza posição horizontal
-                a.rotation += a.vx * 2; // Gira baseado na velocidade horizontal
-
-                // Quique no chão
-                if (a.y + 30 >= ground) { // 30 é aproximadamente metade do tamanho do ícone
-                    a.y = ground - 30;
-                    a.vy *= -a.bounce; // Inverte a velocidade e amortece
-                    a.vx *= 0.98;      // Atrito horizontal
-
-                    // Para a maçã se a velocidade for muito baixa
-                    if (Math.abs(a.vy) < 1.5) {
-                        a.vy = 0;
-                        a.stopped = true;
-                    }
-                }
-
-                // Quique nas paredes laterais
-                if (a.x <= 0 || a.x >= window.innerWidth - 30) {
-                    a.vx *= -1;
-                }
-
-                // Aplica as transformações no DOM
-                a.el.style.transform = `translate(${a.x}px, ${a.y}px) rotate(${a.rotation}deg)`;
-            }
-
-            if (activeApples) {
-                physicsAnimationId = requestAnimationFrame(updatePhysics);
-            } else {
-                physicsAnimationId = null;
-            }
-        }
-
-        document.addEventListener('click', (e) => {
-            // Verifica se estamos no slide de Newton (Slide 12 no Clássico ou Cena 12 no 3D)
-            const isClassicNewton = document.getElementById('player-screen').classList.contains('active') && script[currentSlide]?.id == 12;
-            const isCineNewton = document.getElementById('cinematic-stage').classList.contains('active') && script[currentCineIdx]?.id == 12;
-
-            if (isClassicNewton || isCineNewton) {
-                // Ignora cliques em botões para não gerar maçãs ao tentar avançar o slide
-                if (e.target.closest('button') || e.target.closest('.control-btn')) return;
-
-                createApple(e.clientX, e.clientY);
-            }
-        });
-
-        function createApple(x, y) {
-            const appleEl = document.createElement('i');
-            appleEl.className = 'fa-solid fa-apple-whole physics-apple';
-            document.body.appendChild(appleEl);
-
-            const appleObj = {
-                el: appleEl,
-                x: x - 15, // Centraliza horizontalmente no clique
-                y: y - 15, // Centraliza verticalmente no clique
-                vx: (Math.random() - 0.5) * 10, // Velocidade horizontal aleatória (-5 a 5)
-                vy: 0,
-                gravity: 0.8,
-                bounce: 0.6, // Coeficiente de restituição (quique)
-                rotation: Math.random() * 360,
-                stopped: false
+            video.onended = () => {
+                skipFinalCredits();
             };
-
-            // Transformação inicial
-            appleEl.style.transform = `translate(${appleObj.x}px, ${appleObj.y}px) rotate(${appleObj.rotation}deg)`;
-
-            apples.push(appleObj);
-
-            if (!physicsAnimationId) {
-                physicsAnimationId = requestAnimationFrame(updatePhysics);
-            }
-            
-            // Remove a maçã do DOM após 10 segundos para evitar travamentos se clicarem muito
-            setTimeout(() => {
-                appleEl.remove();
-                const index = apples.indexOf(appleObj);
-                if (index > -1) apples.splice(index, 1);
-            }, 10000);
         }
 
-        /* =========================================================
-           EASTER EGG: CHUVA DE MAÇÃS (TECLA 'M')
-           ========================================================= */
-        window.triggerAppleRain = function() {
-            let appleCount = 0;
-            const maxApples = 80; // Quantidade de maçãs
+        window.skipFinalCredits = function() {
+            const overlay = document.getElementById('final-post-credits-overlay');
+            const video = document.getElementById('final-post-credits-video');
             
-            const rainInterval = setInterval(() => {
-                if(appleCount >= maxApples) {
-                    clearInterval(rainInterval);
-                    return;
-                }
-                const randomX = Math.random() * window.innerWidth;
-                const startY = -50 - (Math.random() * 100); // Nascem acima do teto
-                createApple(randomX, startY);
-                appleCount++;
-            }, 40);
+            video.pause();
+            video.removeAttribute('src');
+            overlay.style.display = 'none';
+            hasPlayedFinalCredits = true;
+            
+            // Redireciona para a tela estática de fim de apresentação
+            window.switchScreen('credits-screen');
         }
 
-        document.addEventListener('keydown', (e) => {
-            // Ignora se estiver digitando na barra de pesquisa
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-            // Pressionou a tecla 'M'
-            if (e.key.toLowerCase() === 'm') {
-                // Verifica se está na cena/slide de Newton (ID 12)
-                const isClassicNewton = document.getElementById('player-screen').classList.contains('active') && script[currentSlide]?.id == 12;
-                const isCineNewton = document.getElementById('cinematic-stage').classList.contains('active') && script[currentCineIdx]?.id == 12;
-
-                if (isClassicNewton || isCineNewton) {
-                    window.triggerAppleRain();
-                }
-            }
-        });
-        
-        window.triggerAppleRain = function(e) {
-            e.stopPropagation(); // Evita que o clique do botão gere uma maçã extra no mouse
-            
-            let appleCount = 0;
-            const maxApples = 80; // Quantidade de maçãs na chuva
-            
-            // Cria um loop que gera uma maçã a cada 40 milissegundos (Efeito cascata)
-            const rainInterval = setInterval(() => {
-                if(appleCount >= maxApples) {
-                    clearInterval(rainInterval);
-                    return;
-                }
-                
-                // Posição X aleatória espalhada pela tela toda
-                const randomX = Math.random() * window.innerWidth;
-                
-                // Posição Y negativa (faz elas nascerem acima do teto e caírem)
-                const startY = -50 - (Math.random() * 100); 
-                
-                createApple(randomX, startY);
-                appleCount++;
-            }, 40);
-        }
-
-    </script>
+    </script> <!-- O SCRIPT DEVE TERMINAR AQUI -->
 
     <!-- O HTML DO PLAYER DEVE FICAR FORA DO SCRIPT -->
     <div id="custom-video-player" class="video-overlay">
@@ -3528,6 +5876,12 @@
     <div id="post-credits-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center;">
         <video id="post-credits-video" playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
         <button onclick="skipPostCredits()" style="position: absolute; bottom: 30px; right: 30px; background: rgba(255,255,255,0.2); color: #fff; border: 1px solid #fff; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: bold; transition: 0.3s; z-index: 10001;">Pular Cena <i class="fa-solid fa-forward-step"></i></button>
+    </div>
+
+    <!-- SEGUNDA CENA PÓS-CRÉDITOS (FIM DA APRESENTAÇÃO) -->
+    <div id="final-post-credits-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center;">
+        <video id="final-post-credits-video" playsinline style="width: 100%; height: 100%; object-fit: contain;"></video>
+        <button onclick="skipFinalCredits()" style="position: absolute; bottom: 30px; right: 30px; background: rgba(255,255,255,0.2); color: #fff; border: 1px solid #fff; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-family: 'Inter', sans-serif; font-weight: bold; transition: 0.3s; z-index: 10001;">Pular Cena <i class="fa-solid fa-forward-step"></i></button>
     </div>
 
     <!-- =======================================================
