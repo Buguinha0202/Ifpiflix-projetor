@@ -5005,10 +5005,16 @@
             window.startCinematicMovieAt(0); 
         }
 
+        /* =========================================================
+           ABRIR PLAYER DE VÍDEO / TRAILERS (CORRIGIDO)
+           ========================================================= */
         window.openVideoPlayer = function(videoSrc) {
             window.closeTitleModal(null, true);
             simulateLoading(() => {
                 playTudumAndThen(() => {
+                    // Manda a tela do Tudum embora antes do vídeo começar
+                    window.switchScreen('home-screen'); 
+                    
                     const overlay = document.getElementById('custom-video-player');
                     const video = document.getElementById('main-video-element');
                     video.src = videoSrc;
