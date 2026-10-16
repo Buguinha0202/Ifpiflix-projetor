@@ -333,8 +333,355 @@
         .profile-card:focus-visible span { color: #fff; }
 
         /* LOBBY / HOME */
-        .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
-        .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; }
+        .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
+        .nav-left-group { display: flex; align-items: center; gap: 35px; }
+        .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; flex-shrink: 0; }
+
+        /* Menu de Categorias no Topo (Estilo Netflix) */
+        .nav-categories {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-cat-item {
+            font-size: 0.95rem;
+            color: #b3b3b3;
+            cursor: pointer;
+            transition: color 0.25s ease, transform 0.2s ease;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .nav-cat-item:hover {
+            color: #fff;
+        }
+        .nav-cat-item.active {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Botão Enviar Trabalho (Exclusivo Professor) */
+        .btn-professor-upload {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            white-space: nowrap;
+        }
+        .btn-professor-upload:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: scale(1.05);
+            border-color: #fff;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+        }
+        .dropdown-item.teacher-only {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+        .dropdown-item.teacher-only:hover {
+            background: rgba(37, 99, 235, 0.15);
+            color: #93c5fd;
+        }
+
+        /* =========================================================
+           TOP 5 NO IFPI HOJE (ESTILO NETFLIX COM NÚMEROS GIGANTES)
+           ========================================================= */
+        .top10-badge {
+            background: var(--netflix-red);
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .top10-container {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            touch-action: pan-y;
+            padding: 10px 0 30px 10px;
+            align-items: flex-end;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            user-select: none;
+        }
+        .top10-container.active-drag {
+            cursor: grabbing;
+        }
+        .top10-container::-webkit-scrollbar { display: none; }
+        .top10-item {
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+            padding-right: 15px;
+        }
+        .top10-item:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        /* Número gigante desenhado ao lado do pôster, idêntico ao da imagem */
+        .top10-rank {
+            font-family: 'Bebas Neue', 'Impact', sans-serif;
+            font-size: 14rem;
+            font-weight: 900;
+            line-height: 0.82;
+            height: 185px;
+            overflow: hidden;
+            color: #000;
+            -webkit-text-stroke: 4.5px #595959;
+            -webkit-text-fill-color: #0a0a0a;
+            user-select: none;
+            pointer-events: none;
+            margin-right: -32px;
+            z-index: 1;
+            position: relative;
+            letter-spacing: -10px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.9));
+            transition: all 0.3s ease;
+        }
+        .top10-item:hover .top10-rank {
+            -webkit-text-stroke: 4.5px #fff;
+            -webkit-text-fill-color: #141414;
+            transform: translateY(-2px);
+        }
+        .top10-item .card-portrait {
+            position: relative;
+            z-index: 2;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .teacher-badge {
+            background: #2563eb;
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* =========================================================
+           LEITOR DE APRESENTAÇÃO / PDF IN-SITE
+           ========================================================= */
+        .pdf-viewer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0d0d0d;
+            z-index: 10005;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .pdf-viewer-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .pdf-viewer-header {
+            height: 65px;
+            background: #141414;
+            border-bottom: 1px solid #282828;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 2;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+        .pdf-back-btn {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            padding: 7px 16px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        .pdf-back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #fff;
+            transform: scale(1.04);
+        }
+        .catalog-section, #top5-section, #filosofia-row, #ti-row, #trabalhos-row, #minha-lista-container, #teacher-works-container {
+            scroll-margin-top: 85px;
+        }
+        .pdf-viewer-title-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pdf-badge {
+            background: var(--netflix-red);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 0.8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pdf-viewer-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+        .pdf-viewer-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .pdf-action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .pdf-action-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #fff;
+            transform: scale(1.08);
+        }
+        .pdf-viewer-body {
+            flex: 1;
+            width: 100%;
+            height: calc(100vh - 65px);
+            background: #181818;
+        }
+        .pdf-viewer-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #181818;
+        }
+
+        /* =========================================================
+           MODAL DE ENVIO DE TRABALHO (EXCLUSIVO PROFESSOR)
+           ========================================================= */
+        .submit-work-box {
+            max-width: 650px;
+            width: 92%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            background: #141414;
+            border: 1px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.85);
+            position: relative;
+        }
+        .submit-work-header {
+            margin-bottom: 20px;
+        }
+        .submit-work-header h2 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-top: 5px;
+        }
+        .prof-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(37, 99, 235, 0.2);
+            border: 1px solid #3b82f6;
+            color: #60a5fa;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            font-size: 0.85rem;
+            color: #ccc;
+            font-weight: 600;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+        }
+        .cover-input-row {
+            display: flex;
+            gap: 10px;
+        }
+        .cover-input-row input {
+            flex: 2;
+        }
+        .cover-input-row select {
+            flex: 1;
+        }
 
         /* =========================================================
            MENU SUSPENSO DO PERFIL (DROPDOWN)

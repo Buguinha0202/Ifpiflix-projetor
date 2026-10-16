@@ -417,7 +417,7 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
             // TÍTULO COM 2 BOTÕES: Apresentação da Turma + Trailer da Paródia
             playBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
             playBtn.onclick = function() {
-                window.open(data.pdf, '_blank', 'noopener');
+                window.openPdfViewer(data.pdf, data.title);
             };
             if (secBtn) {
                 secBtn.innerHTML = '<i class="fa-solid fa-clapperboard"></i> Assistir Trailer';
@@ -427,7 +427,7 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
         } else if (data.pdf) {
             playBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
             playBtn.onclick = function() {
-                window.open(data.pdf, '_blank', 'noopener');
+                window.openPdfViewer(data.pdf, data.title);
             };
             if (secBtn) secBtn.style.display = 'none';
         } else if (data.trailer || data.ytTrailer) {
@@ -784,6 +784,16 @@ document.addEventListener('keydown', (e) => {
         pokeYtControls();
     } else if (e.key === 'Escape') {
         if (!document.fullscreenElement) {
+            const pdfViewer = document.getElementById('custom-pdf-viewer');
+            if (pdfViewer && pdfViewer.classList.contains('show')) {
+                window.closePdfViewer();
+                return;
+            }
+            const submitModal = document.getElementById('submit-work-modal');
+            if (submitModal && submitModal.classList.contains('show')) {
+                window.closeSubmitWorkModal(null, true);
+                return;
+            }
             window.closeVideoPlayer();
         }
     }
@@ -1015,6 +1025,7 @@ window.closeVideoPlayer = function() {
             document.getElementById('nav-profile-name').textContent = name; 
             window.switchScreen('home-screen');
             renderContinueWatching();
+            updateTeacherUi(name);
             if (pendingMovieParam && filmesDB[pendingMovieParam]) {
                 const target = pendingMovieParam;
                 pendingMovieParam = null;
@@ -1023,6 +1034,222 @@ window.closeVideoPlayer = function() {
                 }, 300);
             }
         };
+
+        /* =========================================================
+           FEATURE 4: MENU DE CATEGORIAS NO TOPO (ESTILO NETFLIX)
+           ========================================================= */
+        window.filterNavCategory = function(cat) {
+            const items = document.querySelectorAll('.nav-cat-item');
+            items.forEach(it => it.classList.toggle('active', it.dataset.cat === cat));
+            
+            const homeScreen = document.getElementById('home-screen');
+            if (!homeScreen) return;
+            
+            if (cat === 'inicio') {
+                homeScreen.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (cat === 'top5') {
+                const el = document.getElementById('top5-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (cat === 'filosofia') {
+                const el = document.getElementById('filosofia-row');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (cat === 'ti') {
+                const el = document.getElementById('ti-row');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (cat === 'trabalhos') {
+                const el = document.getElementById('trabalhos-row');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (cat === 'minha-lista') {
+                const el = document.getElementById('minha-lista-container');
+                if (el && el.style.display !== 'none') {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    window.showToastNotification('Sua lista está vazia! Adicione filmes com o botão (+)');
+                }
+            }
+        };
+
+        /* =========================================================
+           FEATURE 2: LEITOR DE APRESENTAÇÃO / PDF IN-SITE
+           ========================================================= */
+        window.openPdfViewer = function(pdfUrl, title = 'Apresentação da Turma') {
+            window.closeTitleModal(null, true);
+            const viewer = document.getElementById('custom-pdf-viewer');
+            const iframe = document.getElementById('main-pdf-iframe');
+            const titleEl = document.getElementById('pdf-viewer-title');
+            const extLink = document.getElementById('pdf-external-link');
+            if (!viewer || !iframe) return;
+            
+            if (titleEl) titleEl.textContent = title;
+            if (extLink) extLink.href = pdfUrl;
+            iframe.src = pdfUrl;
+            viewer.classList.add('show');
+        };
+
+        window.closePdfViewer = function() {
+            const viewer = document.getElementById('custom-pdf-viewer');
+            const iframe = document.getElementById('main-pdf-iframe');
+            if (iframe) iframe.src = 'about:blank';
+            if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+            if (viewer) viewer.classList.remove('show');
+            if (currentModalMovieId) {
+                setTimeout(() => {
+                    window.openTitleModal(currentModalMovieId);
+                }, 150);
+            }
+        };
+
+        window.togglePdfFullscreen = function() {
+            const viewer = document.getElementById('custom-pdf-viewer');
+            if (!viewer) return;
+            if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+            else if (viewer.requestFullscreen) viewer.requestFullscreen().catch(() => {});
+        };
+
+        /* =========================================================
+           FEATURE 5: PAINEL E ENVIO DE TRABALHO (EXCLUSIVO PROFESSOR)
+           ========================================================= */
+        function updateTeacherUi(name) {
+            const isProf = (name || '').toLowerCase().includes('prof');
+            const uploadBtn = document.getElementById('btn-professor-upload');
+            const uploadDropdown = document.getElementById('dropdown-upload-item');
+            if (uploadBtn) uploadBtn.style.display = isProf ? 'inline-flex' : 'none';
+            if (uploadDropdown) uploadDropdown.style.display = isProf ? 'flex' : 'none';
+        }
+
+        window.openSubmitWorkModal = function() {
+            const modal = document.getElementById('submit-work-modal');
+            if (modal) {
+                modal.classList.add('show');
+                const firstInput = document.getElementById('sw-title');
+                if (firstInput) setTimeout(() => firstInput.focus(), 150);
+            }
+        };
+
+        window.closeSubmitWorkModal = function(e, force = false) {
+            if (force || (e && e.target.id === 'submit-work-modal')) {
+                const modal = document.getElementById('submit-work-modal');
+                if (modal) modal.classList.remove('show');
+            }
+        };
+
+        window.onWorkThemeChange = function() {
+            const sel = document.getElementById('sw-cover-theme');
+            const inp = document.getElementById('sw-cover');
+            if (sel && sel.value && inp) {
+                inp.placeholder = `Estilo visual selecionado: ${sel.options[sel.selectedIndex].text}`;
+            }
+        };
+
+        function getSavedTeacherWorks() {
+            try {
+                const raw = localStorage.getItem('ifpiflix_teacher_works');
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveTeacherWorksToStorage(works) {
+            try {
+                localStorage.setItem('ifpiflix_teacher_works', JSON.stringify(works));
+            } catch (e) {}
+        }
+
+        window.saveNewWork = function(e) {
+            if (e) e.preventDefault();
+            const title = (document.getElementById('sw-title').value || '').trim();
+            const category = document.getElementById('sw-category').value || 'Filosofia';
+            const authors = (document.getElementById('sw-authors').value || '').trim();
+            const year = (document.getElementById('sw-year').value || '2026').trim();
+            const synopsis = (document.getElementById('sw-synopsis').value || '').trim();
+            const pdfUrl = (document.getElementById('sw-pdf').value || '').trim();
+            let trailerUrl = (document.getElementById('sw-trailer').value || '').trim();
+            const coverUrl = (document.getElementById('sw-cover').value || '').trim();
+            const coverTheme = document.getElementById('sw-cover-theme').value || 'p-tema1';
+
+            if (!title || !authors || !synopsis) {
+                window.showToastNotification('Por favor, preencha os campos obrigatórios (*).');
+                return;
+            }
+
+            // Extrai ID do YouTube caso seja link completo
+            let ytId = trailerUrl;
+            if (trailerUrl.includes('youtu.be/')) {
+                ytId = trailerUrl.split('youtu.be/')[1].split('?')[0];
+            } else if (trailerUrl.includes('watch?v=')) {
+                ytId = trailerUrl.split('watch?v=')[1].split('&')[0];
+            }
+
+            const workId = 'trabalho-' + Date.now();
+            const newWork = {
+                id: workId,
+                title: title,
+                subtitle: category.toUpperCase(),
+                bg: coverUrl || 'banner.png',
+                banner: coverUrl || 'banner.png',
+                pdf: pdfUrl || '',
+                ytTrailer: ytId || '',
+                match: "99% Relevante",
+                year: year || "2026",
+                age: "Livre",
+                duration: "Apresentação",
+                synopsis: synopsis,
+                cast: authors,
+                genres: category,
+                tags: `Trabalho Acadêmico, ${category}`,
+                isMain: false,
+                coverTheme: coverTheme,
+                customCover: coverUrl,
+                dateAdded: new Date().toISOString()
+            };
+
+            // Adiciona ao catálogo em memória
+            filmesDB[workId] = newWork;
+
+            // Salva no localStorage
+            const saved = getSavedTeacherWorks();
+            saved.unshift(newWork);
+            saveTeacherWorksToStorage(saved);
+
+            // Atualiza UI
+            renderTeacherWorks();
+            window.closeSubmitWorkModal(null, true);
+            const form = document.getElementById('form-submit-work');
+            if (form) form.reset();
+            window.showToastNotification(`Trabalho "${title}" cadastrado com sucesso!`);
+        };
+
+        function renderTeacherWorks() {
+            const container = document.getElementById('teacher-works-container');
+            const grid = document.getElementById('teacher-works-grid');
+            if (!container || !grid) return;
+            
+            const works = getSavedTeacherWorks();
+            if (!works.length) {
+                container.style.display = 'none';
+                return;
+            }
+
+            // Registra todos no filmesDB
+            works.forEach(w => {
+                filmesDB[w.id] = w;
+            });
+
+            container.style.display = 'block';
+            grid.innerHTML = works.map(w => {
+                const bgStyle = w.customCover ? `background-image: url('${w.customCover}'); background-size: cover;` : '';
+                const themeClass = w.coverTheme || 'p-tema1';
+                return `
+                    <div class="card-portrait ${themeClass}" style="${bgStyle}" data-movie="${w.id}" role="button" tabindex="0" aria-label="${w.title}">
+                        <div class="card-portrait-content">
+                            <span style="font-size: 0.65rem; color: #60a5fa; font-weight: bold; margin-bottom: 4px;">${w.genres || 'ACERVO'}</span>
+                            <h4>${w.title}</h4>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         /* =========================================================
            BOTÃO SURPREENDA-ME (ROLETA DE FILMES)
@@ -1954,11 +2181,12 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
            SISTEMA DE ARRASTAR PARA OS LADOS (DRAG-TO-SCROLL & WHEEL)
            ========================================================= */
        function initDragToScroll() {
-            const sliders = document.querySelectorAll('.posters-container, .landscape-row');
+            const sliders = document.querySelectorAll('.posters-container, .landscape-row, .top10-container');
             
             sliders.forEach(slider => {
                 let isDown = false;
                 let startX;
+                let startY;
                 let scrollLeft;
                 let hasMoved = false;
 
@@ -1986,22 +2214,28 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 slider.addEventListener('touchstart', (e) => {
                     isDown = true; hasMoved = false;
                     startX = e.touches[0].pageX - slider.offsetLeft;
+                    startY = e.touches[0].pageY;
                     scrollLeft = slider.scrollLeft;
                 }, {passive: true});
                 slider.addEventListener('touchend', () => { isDown = false; });
                 slider.addEventListener('touchmove', (e) => {
                     if (!isDown) return;
-                    const x = e.touches[0].pageX - slider.offsetLeft;
-                    const walk = (x - startX);
+                    const currentY = e.touches[0].pageY;
+                    const currentX = e.touches[0].pageX - slider.offsetLeft;
+                    const walkX = (currentX - startX);
+                    const walkY = Math.abs(currentY - startY);
                     
-                    if (Math.abs(walk) > 5) {
+                    // Se o movimento for predominantemente vertical, não interfere no scroll da página
+                    if (walkY > Math.abs(walkX)) return;
+                    
+                    if (Math.abs(walkX) > 5) {
                         hasMoved = true;
                     }
-                    slider.scrollLeft = scrollLeft - (walk * 1.8);
+                    slider.scrollLeft = scrollLeft - (walkX * 1.8);
                 }, {passive: true});
 
                 // Evita disparar cliques nos cards se o usuário estava arrastando
-                slider.querySelectorAll('.card-portrait, .card-landscape').forEach(card => {
+                slider.querySelectorAll('.card-portrait, .card-landscape, .top10-item').forEach(card => {
                     card.addEventListener('click', (e) => {
                         if (hasMoved) { e.stopImmediatePropagation(); hasMoved = false; }
                     }, true);
@@ -2535,7 +2769,7 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 if(data.isMain) window.startCinematicMovie();
                 else if(data.ytTrailer) window.openVideoPlayer(data.ytTrailer, true);
                 else if(data.trailer) window.openVideoPlayer(mediaUrl(data.trailer), false);
-                else if(data.pdf) window.open(data.pdf, '_blank', 'noopener');
+                else if(data.pdf) window.openPdfViewer(data.pdf, data.title);
             };
             
             // Botão de Minha Lista na Mini Tela
@@ -2671,6 +2905,7 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             if (typeof initAvatarPicker === 'function') initAvatarPicker();
             renderMinhaLista();
             renderContinueWatching();
+            renderTeacherWorks();
 
             // 2. Delegação de cliques em elementos com data-movie, data-profile ou episódios
             document.body.addEventListener('click', (e) => {

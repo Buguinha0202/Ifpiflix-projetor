@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css?v=1.3">
+    <link rel="stylesheet" href="css/style.css?v=1.5">
 </head>
 <body>
 
@@ -106,6 +106,85 @@
         </div>
     </div>
 
+    <!-- MODAL DE ENVIAR TRABALHO DA TURMA (EXCLUSIVO PROFESSOR) -->
+    <div id="submit-work-modal" class="add-profile-modal-overlay" onclick="window.closeSubmitWorkModal(event)">
+        <div class="add-profile-box submit-work-box" onclick="event.stopPropagation()">
+            <button type="button" class="modal-close-btn" aria-label="Fechar" onclick="window.closeSubmitWorkModal(event, true)"><i class="fa-solid fa-xmark"></i></button>
+            <div class="submit-work-header">
+                <span class="prof-tag"><i class="fa-solid fa-chalkboard-user"></i> Painel do Professor</span>
+                <h2>Cadastrar Trabalho no Catálogo</h2>
+                <p class="add-profile-sub">Adicione as apresentações e paródias dos seus alunos para o acervo do IFPIFLIX.</p>
+            </div>
+            
+            <form id="form-submit-work" onsubmit="window.saveNewWork(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="sw-title">Título do Trabalho / Paródia *</label>
+                        <input type="text" id="sw-title" placeholder="Ex: O Exterminador de Bugs" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="sw-category">Matéria / Categoria *</label>
+                        <select id="sw-category" required>
+                            <option value="Filosofia">Filosofia</option>
+                            <option value="T.I. & Redes">T.I. & Redes</option>
+                            <option value="Trabalhos Antigos">Trabalhos Antigos</option>
+                            <option value="Programação Web">Programação Web</option>
+                            <option value="Sistemas Operacionais">Sistemas Operacionais</option>
+                            <option value="Outra Disciplina">Outra Disciplina</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="sw-authors">Alunos / Integrantes do Grupo *</label>
+                        <input type="text" id="sw-authors" placeholder="Ex: Lucas, Camila, Rafael, João..." required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="sw-year">Ano / Semestre</label>
+                        <input type="text" id="sw-year" placeholder="Ex: 2026.1" value="2026" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sw-synopsis">Sinopse / Resumo do Trabalho *</label>
+                    <textarea id="sw-synopsis" rows="2" placeholder="Breve resumo da pesquisa ou paródia apresentada..." required></textarea>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="sw-pdf">Link da Apresentação / PDF (Canva, Drive, Link)</label>
+                        <input type="url" id="sw-pdf" placeholder="https://exemplo.com/arquivo.pdf" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="sw-trailer">Link do Trailer (YouTube URL ou Código)</label>
+                        <input type="text" id="sw-trailer" placeholder="Ex: https://youtube.com/watch?v=... ou ID" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sw-cover">Imagem de Capa (URL personalizada ou Estilo Temático)</label>
+                    <div class="cover-input-row">
+                        <input type="url" id="sw-cover" placeholder="URL da imagem (opcional)" autocomplete="off">
+                        <select id="sw-cover-theme" onchange="window.onWorkThemeChange()">
+                            <option value="">Capa padrão</option>
+                            <option value="p-tema1">Tema Filosofia Clássica</option>
+                            <option value="p-stranger">Tema Ficção / Stranger</option>
+                            <option value="p-opensource">Tema Código / Open Source</option>
+                            <option value="p-dragon">Tema Inteligência Artificial</option>
+                            <option value="p-firewall">Tema Segurança / Redes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="add-profile-actions">
+                    <button type="submit" class="btn-save-profile"><i class="fa-solid fa-cloud-arrow-up"></i> Publicar no IFPIFLIX</button>
+                    <button type="button" class="btn-cancel-profile" onclick="window.closeSubmitWorkModal(event, true)">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- TOAST DE TURNO -->
     <div id="turn-toast">
         <i class="fa-solid fa-microphone-lines" style="font-size: 2rem; color: var(--netflix-red);"></i>
@@ -118,9 +197,27 @@
     <!-- TELA INICIAL IFPIFLIX -->
     <div id="home-screen" class="screen">
         <nav class="home-nav">
-            <div class="nav-logo" onclick="window.switchScreen('home-screen')">IFPIFLIX</div>
+            <div class="nav-left-group">
+                <div class="nav-logo" onclick="window.switchScreen('home-screen')">IFPIFLIX</div>
+                
+                <!-- Menu de Categorias no Topo (Estilo Netflix) -->
+                <ul class="nav-categories" id="nav-categories">
+                    <li class="nav-cat-item active" data-cat="inicio" onclick="window.filterNavCategory('inicio')">Início</li>
+                    <li class="nav-cat-item" data-cat="top5" onclick="window.filterNavCategory('top5')">Em Alta</li>
+                    <li class="nav-cat-item" data-cat="filosofia" onclick="window.filterNavCategory('filosofia')">Filosofia</li>
+                    <li class="nav-cat-item" data-cat="ti" onclick="window.filterNavCategory('ti')">Séries de T.I.</li>
+                    <li class="nav-cat-item" data-cat="trabalhos" onclick="window.filterNavCategory('trabalhos')">Trabalhos Antigos</li>
+                    <li class="nav-cat-item" data-cat="minha-lista" onclick="window.filterNavCategory('minha-lista')">Minha Lista</li>
+                </ul>
+            </div>
             
             <div class="nav-right">
+                <!-- Botão Enviar Trabalho (EXCLUSIVO PROFESSOR) -->
+                <button type="button" class="btn-professor-upload" id="btn-professor-upload" style="display: none;" onclick="window.openSubmitWorkModal()" title="Cadastrar / Enviar Trabalho da Turma (Exclusivo Professor)">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span class="btn-upload-text">Enviar Trabalho</span>
+                </button>
+
                 <!-- Lupa de Pesquisa -->
                 <div class="search-box" id="search-box">
                     <button type="button" class="search-icon" id="search-icon-btn" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -144,6 +241,9 @@
                     <div class="profile-dropdown">
                         <div class="dropdown-item" onclick="window.switchScreen('profile-screen')">
                             <i class="fa-solid fa-users"></i> Trocar de Perfil
+                        </div>
+                        <div class="dropdown-item teacher-only" id="dropdown-upload-item" style="display: none;" onclick="window.openSubmitWorkModal()">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Trabalho da Turma
                         </div>
                         <div class="dropdown-item" onclick="window.openInfoModal('conta')">
                             <i class="fa-regular fa-user"></i> Conta
@@ -194,8 +294,53 @@
                 </div>
             </div>
 
+            <!-- LINHA: TRABALHOS CADASTRADOS PELO PROFESSOR (Injetados via JS) -->
+            <div id="teacher-works-container" style="display: none; margin-bottom: 30px;">
+                <h2 class="row-title"><span class="teacher-badge"><i class="fa-solid fa-chalkboard-user"></i> Acervo</span> Trabalhos Cadastrados pelo(a) Professor(a)</h2>
+                <div class="posters-container" id="teacher-works-grid">
+                    <!-- Cards injetados via JS -->
+                </div>
+            </div>
+
+            <!-- LINHA: TOP 5 NO IFPI HOJE (Estilo Netflix com números gigantes lado a lado) -->
+            <div id="top5-section" class="catalog-section" style="margin-bottom: 30px;">
+                <h2 class="row-title"><span class="top10-badge">TOP 5</span> de hoje no IFPI</h2>
+                <div class="top10-container" id="top10-container">
+                    <div class="top10-item" onclick="window.openTitleModal('guerra-civil')">
+                        <div class="top10-rank">1</div>
+                        <div class="card-portrait p-tema2" data-movie="guerra-civil" role="button" tabindex="0" aria-label="Guerra Civil">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TOP 1</span><h4>Guerra Civil</h4></div>
+                        </div>
+                    </div>
+                    <div class="top10-item" onclick="window.openTitleModal('tema-1')">
+                        <div class="top10-rank">2</div>
+                        <div class="card-portrait p-tema1" data-movie="tema-1" role="button" tabindex="0" aria-label="Invocação do Dogma">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TOP 2</span><h4>Invocação do Dogma</h4></div>
+                        </div>
+                    </div>
+                    <div class="top10-item" onclick="window.openTitleModal('tema-4')">
+                        <div class="top10-rank">3</div>
+                        <div class="card-portrait p-tema4" data-movie="tema-4" role="button" tabindex="0" aria-label="Obsessão: Falsificabilidade">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TOP 3</span><h4>Obsessão: Falsificabilidade</h4></div>
+                        </div>
+                    </div>
+                    <div class="top10-item" onclick="window.openTitleModal('tema-3')">
+                        <div class="top10-rank">4</div>
+                        <div class="card-portrait p-tema3" data-movie="tema-3" role="button" tabindex="0" aria-label="Devoradores de Espaço-Tempo">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span><h4>Devoradores de Espaço-Tempo</h4></div>
+                        </div>
+                    </div>
+                    <div class="top10-item" onclick="window.openTitleModal('tema-5')">
+                        <div class="top10-rank">5</div>
+                        <div class="card-portrait p-tema5" data-movie="tema-5" role="button" tabindex="0" aria-label="Não Olhe para a Ética">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span><h4>Não Olhe para a Ética</h4></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- LINHA: MINHA LISTA (Injetada via JS) -->
-            <div id="minha-lista-container" style="display: none;">
+            <div id="minha-lista-container" style="display: none; margin-bottom: 30px;">
                 <h2 class="row-title">Minha Lista</h2>
                 <div class="posters-container" id="minha-lista-grid">
                     <!-- Cards injetados via JS -->
@@ -203,46 +348,52 @@
             </div>
             
             <!-- LINHA 1: LANÇAMENTOS DOS 5 TEMAS -->
-            <h2 class="row-title">Lançamentos da Turma • Os 5 Temas de Filosofia</h2>
-            <div class="posters-container">
-                <div class="card-portrait p-tema1" data-movie="tema-1" role="button" tabindex="0" aria-label="Invocação do Dogma">
-                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TEMA 01</span><h4>Invocação do Dogma</h4></div>
-                </div>
-                <div class="card-portrait p-tema2" style="border-color: var(--netflix-red); box-shadow: 0 0 15px rgba(229,9,20,0.5);" data-movie="guerra-civil" role="button" tabindex="0" aria-label="Guerra Civil">
-                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 02 </span><h4>Guerra Civil</h4></div>
-                </div>
-                <div class="card-portrait p-tema3" data-movie="tema-3" role="button" tabindex="0" aria-label="Devoradores de Espaço-Tempo">
-                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span><h4>Devoradores de Espaço-Tempo</h4></div>
-                </div>
-                <div class="card-portrait p-tema4" data-movie="tema-4" role="button" tabindex="0" aria-label="Obsessão: Falsificabilidade">
-                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TEMA 04</span><h4>Obsessão: Falsificabilidade</h4></div>
-                </div>
-                <div class="card-portrait p-tema5" data-movie="tema-5" role="button" tabindex="0" aria-label="Não Olhe para a Ética">
-                    <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span><h4>Não Olhe para a Ética</h4></div>
+            <div id="filosofia-row" class="catalog-section" style="margin-bottom: 30px;">
+                <h2 class="row-title">Lançamentos da Turma • Os 5 Temas de Filosofia</h2>
+                <div class="posters-container">
+                    <div class="card-portrait p-tema1" data-movie="tema-1" role="button" tabindex="0" aria-label="Invocação do Dogma">
+                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TEMA 01</span><h4>Invocação do Dogma</h4></div>
+                    </div>
+                    <div class="card-portrait p-tema2" style="border-color: var(--netflix-red); box-shadow: 0 0 15px rgba(229,9,20,0.5);" data-movie="guerra-civil" role="button" tabindex="0" aria-label="Guerra Civil">
+                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 02 </span><h4>Guerra Civil</h4></div>
+                    </div>
+                    <div class="card-portrait p-tema3" data-movie="tema-3" role="button" tabindex="0" aria-label="Devoradores de Espaço-Tempo">
+                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span><h4>Devoradores de Espaço-Tempo</h4></div>
+                    </div>
+                    <div class="card-portrait p-tema4" data-movie="tema-4" role="button" tabindex="0" aria-label="Obsessão: Falsificabilidade">
+                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TEMA 04</span><h4>Obsessão: Falsificabilidade</h4></div>
+                    </div>
+                    <div class="card-portrait p-tema5" data-movie="tema-5" role="button" tabindex="0" aria-label="Não Olhe para a Ética">
+                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span><h4>Não Olhe para a Ética</h4></div>
+                    </div>
                 </div>
             </div>
 
             <!-- LINHA 2: SÉRIES E CURTAS DE T.I. -->
-            <h2 class="row-title">Séries e Curtas de T.I.</h2>
-            <div class="posters-container">
-                <div class="card-portrait p-stranger" data-movie="stranger-pings" role="button" tabindex="0" aria-label="Stranger Pings"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
-                <div class="card-portrait p-dragon" data-movie="treinar-ia" role="button" tabindex="0" aria-label="Como Treinar a sua I.A."><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
-                <div class="card-portrait p-pix" data-movie="deepfake-pix" role="button" tabindex="0" aria-label="Deepfake: O Preço do Pix"><div class="card-portrait-content"><h4>Deepfake: O Preço do Pix</h4></div></div>
-                <div class="card-portrait p-opensource" data-movie="open-source" role="button" tabindex="0" aria-label="Open Source"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
-                <div class="card-portrait p-kpop" data-movie="kpop" role="button" tabindex="0" aria-label="Guerreiras do Pop 3"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
-                <div class="card-portrait p-procurando" data-movie="procurando-ip" role="button" tabindex="0" aria-label="Procurando IP"><div class="card-portrait-content"><h4>Procurando IP</h4></div></div>
-                <div class="card-portrait p-nicolas" data-movie="nicolas" role="button" tabindex="0" aria-label="Nicolas O Grande"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
-                <div class="card-portrait p-lalalan" data-movie="lalalan" role="button" tabindex="0" aria-label="La La LAN"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
+            <div id="ti-row" class="catalog-section" style="margin-bottom: 30px;">
+                <h2 class="row-title">Séries e Curtas de T.I.</h2>
+                <div class="posters-container">
+                    <div class="card-portrait p-stranger" data-movie="stranger-pings" role="button" tabindex="0" aria-label="Stranger Pings"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
+                    <div class="card-portrait p-dragon" data-movie="treinar-ia" role="button" tabindex="0" aria-label="Como Treinar a sua I.A."><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
+                    <div class="card-portrait p-pix" data-movie="deepfake-pix" role="button" tabindex="0" aria-label="Deepfake: O Preço do Pix"><div class="card-portrait-content"><h4>Deepfake: O Preço do Pix</h4></div></div>
+                    <div class="card-portrait p-opensource" data-movie="open-source" role="button" tabindex="0" aria-label="Open Source"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
+                    <div class="card-portrait p-kpop" data-movie="kpop" role="button" tabindex="0" aria-label="Guerreiras do Pop 3"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
+                    <div class="card-portrait p-procurando" data-movie="procurando-ip" role="button" tabindex="0" aria-label="Procurando IP"><div class="card-portrait-content"><h4>Procurando IP</h4></div></div>
+                    <div class="card-portrait p-nicolas" data-movie="nicolas" role="button" tabindex="0" aria-label="Nicolas O Grande"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
+                    <div class="card-portrait p-lalalan" data-movie="lalalan" role="button" tabindex="0" aria-label="La La LAN"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
+                </div>
             </div>
 
             <!-- LINHA 3: TRABALHOS ANTIGOS -->
-            <h2 class="row-title">Trabalhos Antigos</h2>
-            <div class="landscape-row">
-                <div class="card-landscape p-mitm" data-movie="mitm" role="button" tabindex="0" aria-label="O Homem no Meio"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
-                <div class="card-landscape p-firewall" data-movie="firewall" role="button" tabindex="0" aria-label="A Muralha de Fogo"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
-                <div class="card-landscape p-metaverso" data-movie="metaverso" role="button" tabindex="0" aria-label="Fuga do Metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
-                <div class="card-landscape p-iot" data-movie="iot" role="button" tabindex="0" aria-label="Rebelião das Torradeiras"><div class="card-landscape-content"><h4>Rebelião das Torradeiras</h4></div></div>
-                <div class="card-landscape p-honeypot" data-movie="honeypot" role="button" tabindex="0" aria-label="O Pote de Mel"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
+            <div id="trabalhos-row" class="catalog-section" style="margin-bottom: 30px;">
+                <h2 class="row-title">Trabalhos Antigos</h2>
+                <div class="landscape-row">
+                    <div class="card-landscape p-mitm" data-movie="mitm" role="button" tabindex="0" aria-label="O Homem no Meio"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
+                    <div class="card-landscape p-firewall" data-movie="firewall" role="button" tabindex="0" aria-label="A Muralha de Fogo"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
+                    <div class="card-landscape p-metaverso" data-movie="metaverso" role="button" tabindex="0" aria-label="Fuga do Metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
+                    <div class="card-landscape p-iot" data-movie="iot" role="button" tabindex="0" aria-label="Rebelião das Torradeiras"><div class="card-landscape-content"><h4>Rebelião das Torradeiras</h4></div></div>
+                    <div class="card-landscape p-honeypot" data-movie="honeypot" role="button" tabindex="0" aria-label="O Pote de Mel"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
+                </div>
             </div>
 
         </div>
@@ -1041,7 +1192,7 @@
         </div>
     </div>
 
-    <script src="js/script.js?v=1.3"></script>
+    <script src="js/script.js?v=1.5"></script>
 
     <!-- O HTML DO PLAYER DEVE FICAR FORA DO SCRIPT -->
     <div id="custom-video-player" class="video-overlay">
@@ -1066,6 +1217,32 @@
                     <button type="button" class="ytc-btn" id="ytc-fs" aria-label="Tela cheia" onclick="window.ytMainFullscreen(event)"><i class="fa-solid fa-expand"></i></button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- =======================================================
+         VIEWER DE APRESENTAÇÃO / SLIDES IN-SITE
+         ======================================================= -->
+    <div id="custom-pdf-viewer" class="pdf-viewer-overlay">
+        <div class="pdf-viewer-header">
+            <button class="pdf-back-btn" onclick="window.closePdfViewer()">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Catálogo
+            </button>
+            <div class="pdf-viewer-title-box">
+                <span class="pdf-badge"><i class="fa-solid fa-file-pdf"></i> APRESENTAÇÃO</span>
+                <span id="pdf-viewer-title" class="pdf-viewer-title">Nome do Trabalho</span>
+            </div>
+            <div class="pdf-viewer-actions">
+                <a id="pdf-external-link" href="#" target="_blank" rel="noopener" class="pdf-action-btn" title="Abrir em nova aba">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+                <button type="button" class="pdf-action-btn" onclick="window.togglePdfFullscreen()" title="Tela Cheia">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+            </div>
+        </div>
+        <div class="pdf-viewer-body">
+            <iframe id="main-pdf-iframe" src="" allowfullscreen></iframe>
         </div>
     </div>
 
