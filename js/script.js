@@ -242,13 +242,23 @@ function renderEpisodios() {
             <div class="ep-number"><i class="fa-solid fa-gamepad"></i></div>
             <div class="ep-img" style="${thumb}"><i class="fa-solid fa-play"></i></div>
             <div class="ep-details"><h4>Episódio Interativo: O Quiz</h4><p>Teste os conhecimentos da turma com 7 questões sobre a Revolução Científica.</p></div>
+        </div>
+        <div class="episode-item special-ep resumo-ep" role="button" tabindex="0" data-ep-action="resumo">
+            <div class="ep-number"><i class="fa-solid fa-book-open"></i></div>
+            <div class="ep-img" style="background-image: url('${imgUrl('guerra_civil.png', 200)}')"><i class="fa-solid fa-book-bookmark"></i></div>
+            <div class="ep-details"><h4>Guia de Estudos (Resumo da Matéria)</h4><p>Síntese completa em 1 página com os 7 temas da Revolução Científica e tabela comparativa.</p></div>
         </div>`;
     return html;
 }
 
 function runEpisodeAction(el) {
-    window.closeTitleModal(null, true);
     const action = el.dataset.epAction;
+    if (action === 'resumo') {
+        window.closeTitleModal(null, true);
+        window.openResumoModal(true);
+        return;
+    }
+    window.closeTitleModal(null, true);
     if (action === 'cine') window.startCinematicMovieAt(el.dataset.epArg);
     else if (action === 'classic') window.startPresentationAt(0);
     else if (action === 'quiz') window.startQuiz();
@@ -445,12 +455,17 @@ window.closeVideoPlayer = function() {
                 clearInterval(tickerIntervalM);
                 clearTimeout(toastTimeout);
             }
+
+            if (id === 'home-screen') {
+                renderContinueWatching();
+            }
         }
         
         window.selectProfile = function(name) {
             activeProfile = name; 
             document.getElementById('nav-profile-name').textContent = name; 
             window.switchScreen('home-screen');
+            renderContinueWatching();
         }
 
         /* =========================================================
@@ -493,17 +508,200 @@ window.closeVideoPlayer = function() {
             document.getElementById('nav-profile-name').textContent = "Davi";
             window.switchScreen('profile-screen');
         }
+
+        /* =========================================================
+           CONTINUAR ASSISTINDO (Estilo Netflix)
+           ========================================================= */
+        function saveWatchProgress(mode, idx) {
+            if (!activeProfile || idx < 0 || idx >= script.length) return;
+            // Se chegou ao último slide (slide 13 / fim), limpa o progresso pois já terminou
+            if (idx >= script.length - 1) {
+                try {
+                    localStorage.removeItem('ifpiflix_progress_' + activeProfile);
+                } catch(e) {}
+                renderContinueWatching();
+                return;
+            }
+            const data = {
+                mode: mode, // 'cine' | 'classic'
+                idx: idx,
+                stepId: script[idx].id,
+                title: script[idx].title,
+                presenter: script[idx].presenter,
+                percent: Math.min(100, Math.max(8, Math.round(((idx + 1) / script.length) * 100))),
+                timestamp: Date.now()
+            };
+            try {
+                localStorage.setItem('ifpiflix_progress_' + activeProfile, JSON.stringify(data));
+            } catch(e) {}
+            renderContinueWatching();
+        }
+
+        function renderContinueWatching() {
+            const container = document.getElementById('continue-watching-container');
+            const grid = document.getElementById('continue-watching-grid');
+            const titleEl = document.getElementById('continue-watching-title');
+            if (!container || !grid) return;
+
+            let saved = null;
+            try {
+                const raw = localStorage.getItem('ifpiflix_progress_' + activeProfile);
+                if (raw) saved = JSON.parse(raw);
+            } catch(e) {}
+
+            if (!saved || typeof saved.idx !== 'number' || saved.idx >= script.length - 1) {
+                container.style.display = 'none';
+                grid.innerHTML = '';
+                return;
+            }
+
+            if (titleEl) {
+                titleEl.textContent = `Continuar assistindo como ${activeProfile}`;
+            }
+
+            const isCine = saved.mode === 'cine';
+            const modoTexto = isCine ? 'Filme 3D' : 'Apresentação Clássica';
+            const thumbUrl = imgUrl('banner.png', 400);
+
+            grid.innerHTML = `
+                <div class="continue-watching-card" role="button" tabindex="0" onclick="window.resumeWatchProgress()" aria-label="Continuar assistindo ${saved.title}">
+                    <div class="cw-thumb" style="background-image: url('${thumbUrl}')">
+                        <div class="cw-play-badge"><i class="fa-solid fa-play"></i></div>
+                        <button type="button" class="cw-dismiss-btn" onclick="window.dismissContinueWatching(event)" aria-label="Remover de continuar assistindo" title="Remover"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="cw-progress-bar">
+                        <div class="cw-progress-fill" style="width: ${saved.percent}%;"></div>
+                    </div>
+                    <div class="cw-info">
+                        <div class="cw-title">Guerra Civil: ${modoTexto}</div>
+                        <div class="cw-subtitle">
+                            <span>${saved.title}</span>
+                            <span>${saved.percent}%</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.style.display = 'block';
+        }
+
+        window.resumeWatchProgress = function() {
+            try {
+                const raw = localStorage.getItem('ifpiflix_progress_' + activeProfile);
+                if (!raw) return;
+                const saved = JSON.parse(raw);
+                if (saved.mode === 'cine') {
+                    window.startCinematicMovieAt(saved.stepId);
+                } else {
+                    window.startPresentationAt(saved.stepId);
+                }
+            } catch(e) {}
+        }
+
+        window.dismissContinueWatching = function(e) {
+            if (e) e.stopPropagation();
+            try {
+                localStorage.removeItem('ifpiflix_progress_' + activeProfile);
+            } catch(err) {}
+            renderContinueWatching();
+        }
+
+        /* =========================================================
+           GAVETA DE CENAS / CAPÍTULOS NO PLAYER
+           ========================================================= */
+        window.toggleScenesDrawer = function(show) {
+            const overlay = document.getElementById('scenes-drawer-overlay');
+            if (!overlay) return;
+            const willShow = (show !== undefined) ? show : !overlay.classList.contains('show');
+            if (willShow) {
+                const currentIdx = document.getElementById('player-screen').classList.contains('active') 
+                    ? currentSlide 
+                    : currentCineIdx;
+                const list = document.getElementById('scenes-drawer-list');
+                if (list) {
+                    list.innerHTML = script.map((s, i) => `
+                        <div class="scene-item-card ${i === currentIdx ? 'current' : ''}" role="button" tabindex="0" onclick="window.jumpToScene(${i})">
+                            <div class="scene-item-num">${String(i + 1).padStart(2, '0')}</div>
+                            <div class="scene-item-info">
+                                <h4>${s.title}</h4>
+                                <p>${s.tickers && s.tickers[0] ? s.tickers[0] : 'Cena do filme'}</p>
+                            </div>
+                            <span class="scene-item-presenter">🗣 ${s.presenter}</span>
+                        </div>
+                    `).join('');
+                }
+                overlay.classList.add('show');
+            } else {
+                overlay.classList.remove('show');
+            }
+        }
+
+        window.jumpToScene = function(idx) {
+            window.toggleScenesDrawer(false);
+            if (idx < 0 || idx >= script.length) return;
+            if (document.getElementById('cinematic-stage').classList.contains('active')) {
+                updateCineCamera(idx);
+            } else if (document.getElementById('player-screen').classList.contains('active')) {
+                renderSlide(idx);
+            } else {
+                window.startCinematicMovieAt(script[idx].id);
+            }
+        }
+
+        /* =========================================================
+           GUIA DE ESTUDOS (RESUMO EM 1 PÁGINA)
+           ========================================================= */
+        let openedResumoFromEpisodes = false;
+
+        window.openResumoModal = function(fromEpisodes = false) {
+            if (fromEpisodes) {
+                openedResumoFromEpisodes = true;
+            }
+            const overlay = document.getElementById('resumo-modal-overlay');
+            if (overlay) overlay.classList.add('show');
+        }
+
+        window.closeResumoModal = function(e, force) {
+            if (force || (e && e.target.id === 'resumo-modal-overlay')) {
+                const overlay = document.getElementById('resumo-modal-overlay');
+                if (overlay) overlay.classList.remove('show');
+                if (openedResumoFromEpisodes) {
+                    openedResumoFromEpisodes = false;
+                    setTimeout(() => {
+                        if (typeof window.openTitleModal === 'function') {
+                            window.openTitleModal('guerra-civil');
+                        }
+                    }, 180);
+                }
+            }
+        }
+
+        /* =========================================================
+           SAÍDA DO QUIZ (RETORNA AOS EPISÓDIOS DE GUERRA CIVIL)
+           ========================================================= */
+        window.exitQuiz = function() {
+            window.switchScreen('home-screen');
+            setTimeout(() => {
+                if (typeof window.openTitleModal === 'function') {
+                    window.openTitleModal('guerra-civil');
+                }
+            }, 180);
+        }
         
+        let currentPresenter = "";
+
         function applyPresenter(name, toast = false) {
             if (!name || name === "Todos") return;
-            if (activeProfile !== name) {
-                activeProfile = name;
+            if (currentPresenter !== name) {
+                currentPresenter = name;
                 if (toast) {
                     clearTimeout(toastTimeout);
                     const toastEl = document.getElementById('turn-toast');
-                    document.getElementById('toast-presenter-name').textContent = name;
-                    toastEl.classList.add('show');
-                    toastTimeout = setTimeout(() => { toastEl.classList.remove('show'); }, 3000);
+                    if (toastEl) {
+                        const toastNameEl = document.getElementById('toast-presenter-name');
+                        if (toastNameEl) toastNameEl.textContent = name;
+                        toastEl.classList.add('show');
+                        toastTimeout = setTimeout(() => { toastEl.classList.remove('show'); }, 3000);
+                    }
                 }
             }
             const curEl = document.getElementById('current-presenter-name');
@@ -539,6 +737,7 @@ window.closeVideoPlayer = function() {
             
             clearInterval(tickerIntervalC);
             currentSlide = idx; 
+            saveWatchProgress('classic', idx);
             const data = script[idx];
             document.getElementById('player-ep-title').textContent = data.title; 
             document.getElementById('progress-bar').style.width = `${((idx + 1) / script.length) * 100}%`;
@@ -579,6 +778,7 @@ window.closeVideoPlayer = function() {
             clearInterval(tickerIntervalM);
             const data = script[idx];
             currentCineIdx = idx;
+            saveWatchProgress('cine', idx);
 
             applyPresenter(data.presenter, true);
 
@@ -744,11 +944,17 @@ window.closeVideoPlayer = function() {
             }
         };
 
-        
+        document.getElementById('btn-next-slide').addEventListener('click', () => { 
+            if (isLisActive || isModalOpen() || isPlayingPostCredits) return; 
+            if (script[currentSlide] && script[currentSlide].id == 12 && !hasPlayedPostCredits) { 
+                playPostCredits(); 
+                return; 
+            }
+            renderSlide(currentSlide + 1); 
+        });
 
-        
         document.getElementById('btn-prev-slide').addEventListener('click', () => { 
-            if (isLisActive || isModalOpen()) return; 
+            if (isLisActive || isModalOpen() || isPlayingPostCredits) return; 
             renderSlide(currentSlide - 1); 
         });
 
@@ -1354,9 +1560,9 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             document.getElementById('quiz-options').innerHTML = '';
             
             const btn = document.getElementById('btn-next-quiz');
-            btn.innerHTML = '<i class="fa-solid fa-house"></i> Voltar ao Início';
+            btn.innerHTML = '<i class="fa-solid fa-list"></i> Voltar aos Episódios';
             btn.style.display = 'block';
-            btn.onclick = () => window.switchScreen('home-screen');
+            btn.onclick = () => window.exitQuiz();
         }
 
 
@@ -1723,8 +1929,9 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
            DELEGAÇÃO DE EVENTOS CENTRALIZADA (ACESSÍVEL / MOBILE / TOUCH)
            ========================================================= */
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Carrega Minha Lista salva previamente
+            // 1. Carrega Minha Lista e Continuar Assistindo salvos previamente
             renderMinhaLista();
+            renderContinueWatching();
 
             // 2. Delegação de cliques em elementos com data-movie, data-profile ou episódios
             document.body.addEventListener('click', (e) => {
@@ -1755,11 +1962,15 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                     return;
                 }
 
-                // Links do rodapé com data-action
+                // Links do rodapé ou menu com data-action
                 const footerAction = e.target.closest('[data-action]');
                 if (footerAction) {
                     e.preventDefault();
                     const action = footerAction.dataset.action;
+                    if (action === 'resumo' && typeof window.openResumoModal === 'function') {
+                        window.openResumoModal();
+                        return;
+                    }
                     if (action && typeof window.openInfoModal === 'function') {
                         window.openInfoModal(action);
                         return;

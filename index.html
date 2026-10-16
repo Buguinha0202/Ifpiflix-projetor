@@ -101,6 +101,9 @@
                         <div class="dropdown-item" onclick="window.openInfoModal('ajuda')">
                             <i class="fa-regular fa-circle-question"></i> Central de Ajuda
                         </div>
+                        <div class="dropdown-item" onclick="window.openResumoModal()">
+                            <i class="fa-solid fa-book-open"></i> Guia de Estudos (Resumo)
+                        </div>
                         <div class="dropdown-divider"></div>
                         <div class="dropdown-item sair" onclick="window.logoutIfpiflix()">
                             <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair da IFPIFLIX
@@ -133,6 +136,14 @@
         <!-- CATÁLOGO GERAL REORGANIZADO -->
         <div class="catalog-container">
             
+            <!-- LINHA: CONTINUAR ASSISTINDO (Estilo Netflix) -->
+            <div id="continue-watching-container" style="display: none; margin-bottom: 25px;">
+                <h2 class="row-title" id="continue-watching-title">Continuar assistindo</h2>
+                <div class="continue-watching-grid" id="continue-watching-grid">
+                    <!-- Cards de progresso injetados via JS -->
+                </div>
+            </div>
+
             <!-- LINHA: MINHA LISTA (Injetada via JS) -->
             <div id="minha-lista-container" style="display: none;">
                 <h2 class="row-title">Minha Lista</h2>
@@ -199,6 +210,7 @@
              ========================================================= -->
         <footer class="ifpiflix-footer">
             <div class="footer-links">
+                <a href="#" role="button" data-action="resumo">Guia de Estudos (Resumo)</a>
                 <a href="#" role="button" data-action="ajuda">Central de Ajuda</a>
                 <a href="#" role="button" data-action="conta">Conta</a>
             </div>
@@ -447,7 +459,10 @@
             <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
             <div class="nav-buttons">
                 <button type="button" class="control-btn" id="btn-prev-slide" aria-label="Slide anterior"><i class="fa-solid fa-backward-step"></i></button>
-                <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer;" onclick="window.switchScreen('profile-screen')">🗣 <span id="current-presenter-name">Davi</span></span>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer;" onclick="window.switchScreen('profile-screen')">🗣 <span id="current-presenter-name">Davi</span></span>
+                    <button type="button" class="player-scenes-btn" onclick="window.toggleScenesDrawer(true)" aria-label="Ver lista de cenas"><i class="fa-solid fa-layer-group"></i> Cenas</button>
+                </div>
                 <button type="button" class="control-btn" id="btn-next-slide" aria-label="Próximo slide"><i class="fa-solid fa-forward-step"></i></button>
             </div>
         </div>
@@ -469,7 +484,10 @@
                 <span style="font-weight: bold;">Guerra Civil: O Filme 3D</span>
                 <span id="cine-ep-title" style="color: #aaa; font-size: 0.9rem;">Cena 1</span>
             </div>
-            <span style="margin-left: auto; background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; z-index: 1000;">🗣 <span id="cine-presenter-name">Davi</span></span>
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 8px; z-index: 1000;">
+                <button type="button" class="player-scenes-btn" onclick="window.toggleScenesDrawer(true)" aria-label="Ver lista de cenas"><i class="fa-solid fa-layer-group"></i> Cenas</button>
+                <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;">🗣 <span id="cine-presenter-name">Davi</span></span>
+            </div>
         </div>
 
         <!-- HUD EPISTEMOLÓGICO FLUTUANTE -->
@@ -964,7 +982,7 @@
          ======================================================= -->
     <div id="quiz-screen" class="screen">
         <div class="player-header" style="background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);">
-            <button type="button" class="control-btn" aria-label="Voltar" onclick="window.switchScreen('series-details-screen')"><i class="fa-solid fa-arrow-left"></i></button>
+            <button type="button" class="control-btn" aria-label="Voltar" onclick="window.exitQuiz()"><i class="fa-solid fa-arrow-left"></i></button>
             <div style="display:flex; flex-direction: column; margin-left: 10px;">
                 <span style="font-weight: bold;">Guerra Civil: O Quiz</span>
                 <span id="quiz-progress-text" style="color: #aaa; font-size: 0.9rem;">Questão 1 de 7</span>
@@ -993,6 +1011,182 @@
             <button type="button" class="info-modal-close" aria-label="Fechar" onclick="window.closeInfoModal(event, true)"><i class="fa-solid fa-xmark"></i></button>
             <h2 id="info-modal-title">Título</h2>
             <div id="info-modal-body">Conteúdo</div>
+        </div>
+    </div>
+
+    <!-- =======================================================
+         GAVETA DE CENAS / CAPÍTULOS
+         ======================================================= -->
+    <div id="scenes-drawer-overlay" class="scenes-drawer-overlay" onclick="window.toggleScenesDrawer(false)">
+        <div class="scenes-drawer-box" onclick="event.stopPropagation()">
+            <div class="scenes-drawer-header">
+                <div class="scenes-drawer-title">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Capítulos &amp; Cenas</span>
+                </div>
+                <button type="button" class="drawer-close-btn" onclick="window.toggleScenesDrawer(false)" aria-label="Fechar gaveta"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="scenes-drawer-list" id="scenes-drawer-list">
+                <!-- Cenas renderizadas via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- =======================================================
+         MODAL DE RESUMO DE ESTUDOS (GUIA DA REVOLUÇÃO CIENTÍFICA)
+         ======================================================= -->
+    <div id="resumo-modal-overlay" class="resumo-modal-overlay" onclick="window.closeResumoModal(event)">
+        <div class="resumo-modal-box" onclick="event.stopPropagation()">
+            <div class="resumo-modal-header">
+                <div class="resumo-badges">
+                    <span class="badge-tag"><i class="fa-solid fa-graduation-cap"></i> Filosofia Moderna</span>
+                    <span class="badge-tag sub"><i class="fa-solid fa-book-bookmark"></i> Grupo 6 &bull; IFPI</span>
+                </div>
+                <button type="button" class="resumo-close-btn" onclick="window.closeResumoModal(event, true)" aria-label="Fechar resumo"><i class="fa-solid fa-xmark"></i></button>
+                <h2>A Revolução Científica Moderna</h2>
+                <p class="resumo-sub">Guia rápido de estudos: da Escolástica Medieval à Síntese Newtoniana (Séculos XVI–XVII)</p>
+            </div>
+
+            <div class="resumo-content-body">
+                
+                <section class="resumo-section">
+                    <div class="resumo-topic-num">01</div>
+                    <div class="resumo-topic-text">
+                        <h3>A Escolástica e o Princípio de Autoridade</h3>
+                        <p><strong>Contexto:</strong> Durante a Idade Média, o saber sobre o cosmos era dominado pela <em>Escolástica</em> — a fusão da teologia católica com a física aristotélica.</p>
+                        <ul>
+                            <li><strong>Princípio de Autoridade (<em>Magister Dixit</em>):</strong> A verdade de uma afirmação dependia de <em>quem</em> a proferia (a Bíblia, os teólogos ou Aristóteles), e não de experimentos empíricos ou testes práticos.</li>
+                            <li><strong>Cosmovisão Fechada:</strong> A Terra era vista como um lugar corruptível cercado por esferas celestes perfeitas e imutáveis, governadas por causas metafísicas e teológicas.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="resumo-section">
+                    <div class="resumo-topic-num">02</div>
+                    <div class="resumo-topic-text">
+                        <h3>O Renascimento e a Crise do Geocentrismo</h3>
+                        <p><strong>A Virada Humanista:</strong> O Renascimento recolocou o ser humano e a razão no centro da investigação (Humanismo e Antropocentrismo).</p>
+                        <ul>
+                            <li><strong>O Modelo Ptolomaico (Geocentrismo):</strong> Defendia a Terra fixa e imóvel no centro do Universo, com o Sol, a Lua e os outros astros girando ao seu redor.</li>
+                            <li><strong>Novas Necessidades Práticas:</strong> As grandes navegações, o comércio internacional e a imprensa demandavam cálculos astronômicos e mapas que a física medieval não conseguia responder.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="resumo-section">
+                    <div class="resumo-topic-num">03</div>
+                    <div class="resumo-topic-text">
+                        <h3>A Grande Ruptura: Da Contemplação à Ação</h3>
+                        <p>A ciência moderna nasce de uma transformação profunda de postura diante da realidade:</p>
+                        <ul>
+                            <li>O ser humano abandona a contemplação puramente passiva ou mística da natureza.</li>
+                            <li>A natureza passa a ser concebida como uma <strong>realidade observável, mecânica e matemática</strong>, aberta à intervenção, testes práticos e controle técnico.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="resumo-section">
+                    <div class="resumo-topic-num">04</div>
+                    <div class="resumo-topic-text">
+                        <h3>A Revolução Cosmológica</h3>
+                        <p>A reconstrução completa do mapa do cosmos por três grandes astrônomos:</p>
+                        <ul>
+                            <li><strong>Nicolau Copérnico (Heliocentrismo):</strong> Propôs matematicamente que o Sol ocupa o centro do sistema e que a Terra é apenas mais um planeta que orbita ao seu redor.</li>
+                            <li><strong>Johannes Kepler (Órbitas Elípticas):</strong> Quebrou o dogma aristotélico de que os movimentos celestes precisavam ser círculos perfeitos, demonstrando que as órbitas dos planetas são elípticas.</li>
+                            <li><strong>Galileu Galilei (Telescópio e Linguagem Matemática):</strong> Realizou observações empíricas decisivas (montanhas na Lua, luas de Júpiter, manchas solares). Afirmou que <em>"O livro da natureza está escrito em caracteres matemáticos"</em> e defendeu a experimentação prática.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="resumo-section">
+                    <div class="resumo-topic-num">05</div>
+                    <div class="resumo-topic-text">
+                        <h3>O Empirismo Moderno (Francis Bacon)</h3>
+                        <p><strong>Palavra de Ordem:</strong> <em>"Saber é Poder"</em> — a ciência deve produzir utilidade prática e tecnologias para a humanidade.</p>
+                        <ul>
+                            <li><strong>Método Indutivo:</strong> O conhecimento científico deve partir de observações rigorosas e experimentos repetidos particulares para, gradualmente, formular leis universais.</li>
+                            <li><strong>A Teoria dos 4 Ídolos (Preconceitos que cegam a mente):</strong>
+                                <ul>
+                                    <li><em>Ídolos da Tribo:</em> Limitações e ilusões inerentes à própria espécie humana (ex.: projetar desejos na realidade).</li>
+                                    <li><em>Ídolos da Caverna:</em> Preconceitos individuais formados pela educação, criação e experiências pessoais de cada indivíduo.</li>
+                                    <li><em>Ídolos do Foro (Mercado):</em> Confusões e enganos causados pelas ambiguidades da linguagem e das palavras.</li>
+                                    <li><em>Ídolos do Teatro:</em> Crenças cegas em dogmas tradicionais e sistemas filosóficos ultrapassados aceitos como verdades absolutas.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="resumo-section">
+                    <div class="resumo-topic-num">06</div>
+                    <div class="resumo-topic-text">
+                        <h3>O Racionalismo Moderno (René Descartes)</h3>
+                        <p><strong>Palavra de Ordem:</strong> A razão pura e as ideias claras e distintas como base inquestionável do conhecimento.</p>
+                        <ul>
+                            <li><strong>Dúvida Metódica:</strong> Técnica radical de questionamento: duvidar de tudo que venha dos sentidos (que podem enganar), da tradição e até da realidade do mundo físico.</li>
+                            <li><strong>O Cogito (<em>"Cogito, ergo sum"</em>):</strong> Ao duvidar de tudo, percebeu que duvidar é um ato de pensamento. Se penso, existo necessariamente como ser pensante. A dedução lógica e a geometria tornam-se o modelo para o saber seguro.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="resumo-section">
+                    <div class="resumo-topic-num">07</div>
+                    <div class="resumo-topic-text">
+                        <h3>A Síntese Newtoniana (Isaac Newton)</h3>
+                        <p><strong>A Consolidação da Ciência Moderna:</strong> A união definitiva entre o <em>Empirismo</em> e o <em>Racionalismo</em>.</p>
+                        <ul>
+                            <li><strong>Método Hipotético-Dedutivo:</strong> Observação e experimentação empírica (Bacon) aliadas à formulação lógica e cálculo matemático rigoroso (Descartes).</li>
+                            <li><strong>Gravitação Universal:</strong> Newton unificou a física terrestre e astronômica sob as mesmas leis universais: a mesma força que faz a maçã cair é a que mantém os planetas em órbita ao redor do Sol.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <div class="resumo-comparison-table-wrapper">
+                    <h4>Quadro Comparativo: As Quatro Abordagens do Saber</h4>
+                    <table class="resumo-table">
+                        <thead>
+                            <tr>
+                                <th>Abordagem</th>
+                                <th>Origem da Verdade</th>
+                                <th>Método Central</th>
+                                <th>Principal Pensador</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Escolástica</strong></td>
+                                <td>Autoridade e Dogmas Religiosos</td>
+                                <td>Silogismo e Tradição Teológica</td>
+                                <td>Tomás de Aquino / Aristóteles</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Empirismo</strong></td>
+                                <td>Sentidos e Experiência Prática</td>
+                                <td>Indução e Experimentação</td>
+                                <td>Francis Bacon</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Racionalismo</strong></td>
+                                <td>Razão Pura e Lógica Dedutiva</td>
+                                <td>Dúvida Metódica e Dedução</td>
+                                <td>René Descartes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ciência Moderna</strong></td>
+                                <td>Síntese: Fatos + Modelagem Matemática</td>
+                                <td>Método Hipotético-Dedutivo</td>
+                                <td>Isaac Newton / Galileu</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="resumo-footer-actions">
+                <button type="button" class="resumo-btn-secondary" onclick="window.print()"><i class="fa-solid fa-print"></i> Imprimir / Salvar PDF</button>
+                <button type="button" class="resumo-btn-primary" onclick="window.closeResumoModal(event, true)">Fechar Guia</button>
+            </div>
         </div>
     </div>
 
