@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#141414">
-    <meta name="description" content="IFPIFLIX - Projeto acadêmico de Filosofia sobre a Revolução Científica Moderna (Empirismo vs Racionalismo).">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="description" content="IFPIFLIX - Projeto acadêmico de Filosofia sobre a Revolução Científica Moderna (Empirismo vs Racionalismo), catálogo de paródias e acervo da turma.">
+    
+    <!-- Metadados de Compartilhamento Social (Open Graph & Twitter) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="IFPIFLIX — O Streaming da Filosofia & Tecnologia">
+    <meta property="og:description" content="A maior batalha intelectual: Empirismo vs Racionalismo, catálogo de filmes paródias e acervo de trabalhos da turma.">
+    <meta property="og:image" content="https://buguinha0202.github.io/Ifpiflix-projetor/banner.png">
+    <meta property="og:site_name" content="IFPIFLIX">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IFPIFLIX — O Streaming da Filosofia & Tecnologia">
+    <meta name="twitter:description" content="A maior batalha intelectual: Empirismo vs Racionalismo, catálogo de filmes paródias e acervo de trabalhos da turma.">
+    <meta name="twitter:image" content="https://buguinha0202.github.io/Ifpiflix-projetor/banner.png">
+    
+    <!-- Favicon Oficial IFPIFLIX -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23141414'/><path d='M38 20h24v60H38z' fill='%23E50914'/><path d='M30 20h16v60H30z' fill='%23B81D24'/></svg>">
+    
     <title>IFPIFLIX - Filosofia: A Ciência Moderna</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,38 +43,66 @@
 
     <div id="loading-screen" class="screen"><div class="spinner"></div><div class="loading-text" id="loading-perc">0%</div></div>
 
-    <!-- TELA DE PERFIS COM OS 7 INTEGRANTES EM ORDEM -->
+    <!-- TELA DE PERFIS DA TURMA -->
     <div id="profile-screen" class="screen active">
-        <h1>Quem vai iniciar a apresenta&ccedil;&atilde;o?</h1>
-        <div class="profiles-container">
-            <button type="button" class="profile-card" data-profile="Davi">
-                <div class="avatar av-davi"></div>
-                <span>Davi</span>
+        <h1>Quem est&aacute; assistindo?</h1>
+        <div class="profiles-container" id="profiles-container">
+            <button type="button" class="profile-card" data-profile="Admin">
+                <div class="avatar av-admin"><i class="fa-solid fa-user-shield"></i></div>
+                <span>Admin</span>
             </button>
-            <button type="button" class="profile-card" data-profile="Maria Helena">
-                <div class="avatar av-maria"></div>
-                <span>Maria Helena</span>
+            <button type="button" class="profile-card" data-profile="Turma IFPI">
+                <div class="avatar av-turma"><i class="fa-solid fa-graduation-cap"></i></div>
+                <span>Turma IFPI</span>
             </button>
-            <button type="button" class="profile-card" data-profile="Francisco L">
-                <div class="avatar av-francisco"></div>
-                <span>Francisco L</span>
+            <button type="button" class="profile-card" data-profile="Professor(a)">
+                <div class="avatar av-prof"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <span>Professor(a)</span>
             </button>
-            <button type="button" class="profile-card" data-profile="Pedro">
-                <div class="avatar av-pedro"></div>
-                <span>Pedro</span>
+            <button type="button" class="profile-card" data-profile="Visitante">
+                <div class="avatar av-visitante"><i class="fa-solid fa-masks-theater"></i></div>
+                <span>Visitante</span>
             </button>
-            <button type="button" class="profile-card" data-profile="Marcelo">
-                <div class="avatar av-marcelo"></div>
-                <span>Marcelo</span>
+            <button type="button" class="profile-card profile-card-add" id="btn-add-profile" onclick="window.openAddProfileModal()" aria-label="Adicionar Perfil">
+                <div class="avatar av-add"><i class="fa-solid fa-plus"></i></div>
+                <span>Adicionar Perfil</span>
             </button>
-            <button type="button" class="profile-card" data-profile="Samuel">
-                <div class="avatar av-samuel"></div>
-                <span>Samuel</span>
-            </button>
-            <button type="button" class="profile-card" data-profile="JP Santos">
-                <div class="avatar av-jsantos"></div>
-                <span>JP Santos</span>
-            </button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CRIAR PERFIL (ESTILO NETFLIX) -->
+    <div id="add-profile-modal" class="add-profile-modal-overlay" onclick="window.closeAddProfileModal(event)">
+        <div class="add-profile-box" onclick="event.stopPropagation()">
+            <button type="button" class="modal-close-btn" aria-label="Fechar" onclick="window.closeAddProfileModal(event, true)"><i class="fa-solid fa-xmark"></i></button>
+            <h2>Criar Perfil</h2>
+            <p class="add-profile-sub">Crie seu perfil personalizado para salvar seu progresso no IFPIFLIX.</p>
+            
+            <div class="add-profile-form">
+                <div class="avatar-preview-wrapper">
+                    <div class="avatar av-custom-preview" id="profile-preview-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+                
+                <div class="add-profile-inputs">
+                    <label for="new-profile-name">Nome do perfil:</label>
+                    <input type="text" id="new-profile-name" placeholder="Ex: Carlos, Ana..." maxlength="15" autocomplete="off">
+                    
+                    <label>Escolha seu Avatar:</label>
+                    <div class="avatar-color-options" id="avatar-color-options">
+                        <button type="button" class="avatar-opt-btn active" data-color="red" data-icon="fa-solid fa-user" style="background: linear-gradient(135deg, #e50914, #7f0000);"><i class="fa-solid fa-user"></i></button>
+                        <button type="button" class="avatar-opt-btn" data-color="blue" data-icon="fa-solid fa-rocket" style="background: linear-gradient(135deg, #3b82f6, #1e3a8a);"><i class="fa-solid fa-rocket"></i></button>
+                        <button type="button" class="avatar-opt-btn" data-color="green" data-icon="fa-solid fa-laptop-code" style="background: linear-gradient(135deg, #10b981, #064e3b);"><i class="fa-solid fa-laptop-code"></i></button>
+                        <button type="button" class="avatar-opt-btn" data-color="gold" data-icon="fa-solid fa-crown" style="background: linear-gradient(135deg, #f59e0b, #78350f);"><i class="fa-solid fa-crown"></i></button>
+                        <button type="button" class="avatar-opt-btn" data-color="purple" data-icon="fa-solid fa-gamepad" style="background: linear-gradient(135deg, #8b5cf6, #4c1d95);"><i class="fa-solid fa-gamepad"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="add-profile-actions">
+                <button type="button" class="btn-save-profile" onclick="window.saveNewProfile()">Salvar Perfil</button>
+                <button type="button" class="btn-cancel-profile" onclick="window.closeAddProfileModal(event, true)">Cancelar</button>
+            </div>
         </div>
     </div>
 
@@ -83,10 +127,16 @@
                     <input type="search" id="search-input" placeholder="Títulos, gêneros..." aria-label="Pesquisar títulos e gêneros" enterkeyhint="search" autocomplete="off">
                 </div>
 
+                <!-- Botão Surpreenda-me (Roleta) -->
+                <button type="button" class="btn-surprise" id="btn-surprise-me" onclick="window.triggerSurpriseMe()" title="Surpreenda-me (Sorteador de Filmes)">
+                    <i class="fa-solid fa-shuffle"></i>
+                    <span class="btn-surprise-text">Surpreenda-me</span>
+                </button>
+
                 <!-- Dropdown de Perfil -->
                 <div class="nav-profile-wrapper" id="nav-profile-wrapper">
                     <button type="button" class="nav-profile-btn" id="nav-profile-btn" aria-haspopup="true" aria-expanded="false" aria-label="Menu do perfil">
-                        <span id="nav-profile-name" style="font-weight:bold;">Davi</span>
+                        <span id="nav-profile-name" style="font-weight:bold;">Admin</span>
                         <i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i>
                         <i class="fa-solid fa-caret-down"></i>
                     </button>
@@ -890,15 +940,52 @@
             <div class="modal-hero" id="m-hero">
 
                 <video id="m-trailer-video" loop muted playsinline preload="none"></video>
+                <iframe id="m-trailer-iframe" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
 
                 <div class="modal-hero-gradient"></div>
                 <div class="modal-hero-content">
+                    <div id="m-surprise-badge" class="modal-surprise-badge" style="display:none;">
+                        <i class="fa-solid fa-dice"></i> <span>Sorteado pelo Surpreenda-me</span>
+                        <button type="button" class="btn-respin" onclick="window.triggerSurpriseMe()"><i class="fa-solid fa-rotate-right"></i> Sortear Outro</button>
+                    </div>
                     <h1 class="modal-title" id="m-title">Guerra Civil</h1>
                     <div class="modal-controls">
-                        <button class="modal-btn-play" id="m-btn-play"><i class="fa-solid fa-play"></i> Assistir Filme 3D</button>
-                        <button type="button" class="modal-btn-icon" id="m-btn-list" aria-label="Adicionar à Minha Lista" onclick="window.toggleMinhaLista()"><i class="fa-solid fa-plus"></i></button>
-                        
+                        <div class="modal-action-btns" id="m-action-btns">
+                            <button class="modal-btn-play" id="m-btn-play"><i class="fa-solid fa-play"></i> Assistir Filme 3D</button>
+                            <button class="modal-btn-secondary" id="m-btn-secondary" style="display:none;"><i class="fa-solid fa-clapperboard"></i> Assistir Trailer</button>
+                        </div>
+                        <div class="modal-icon-btns">
+                            <button type="button" class="modal-btn-icon" id="m-btn-list" aria-label="Adicionar à Minha Lista" title="Minha Lista" onclick="window.toggleMinhaLista()"><i class="fa-solid fa-plus"></i></button>
+                            
+                            <!-- Botão de Avaliação (Estilo Netflix) -->
+                            <div class="rate-btn-wrapper" id="rate-btn-wrapper">
+                                <button type="button" class="modal-btn-icon" id="m-btn-rate" aria-label="Avaliar título" title="Classificar" onclick="window.toggleRatePopover(event)">
+                                    <i class="fa-regular fa-thumbs-up"></i>
+                                </button>
+                                <div class="rate-popover" id="rate-popover" onclick="event.stopPropagation()">
+                                    <button type="button" class="rate-option" data-rate="dislike" title="Não é para mim" onclick="window.setRating('dislike')"><i class="fa-regular fa-thumbs-down"></i></button>
+                                    <button type="button" class="rate-option" data-rate="like" title="Gostei" onclick="window.setRating('like')"><i class="fa-regular fa-thumbs-up"></i></button>
+                                    <button type="button" class="rate-option" data-rate="love" title="Amei!" onclick="window.setRating('love')"><i class="fa-solid fa-fire"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Botão Compartilhar Título -->
+                            <button type="button" class="modal-btn-icon" id="m-btn-share" aria-label="Compartilhar título" title="Compartilhar" onclick="window.shareCurrentMovie()"><i class="fa-solid fa-share-nodes"></i></button>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Controles Flutuantes do Trailer no Banner -->
+                <div class="modal-trailer-floating-controls" id="m-trailer-controls">
+                    <button type="button" class="trailer-control-btn" id="m-btn-sound" aria-label="Ativar ou desativar áudio" title="Ativar áudio" onclick="window.toggleModalTrailerSound(event)">
+                        <i class="fa-solid fa-volume-xmark"></i>
+                    </button>
+                    <button type="button" class="trailer-control-btn" id="m-btn-expand-trailer" aria-label="Expandir ou recolher trailer" title="Expandir trailer" onclick="window.toggleModalTrailerExpand(event)">
+                        <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                    </button>
+                    <button type="button" class="trailer-control-btn" id="m-btn-toggle-info" aria-label="Ocultar ou exibir textos" title="Ocultar textos na frente" onclick="window.toggleModalTrailerInfo(event)">
+                        <i class="fa-solid fa-eye-slash"></i>
+                    </button>
                 </div>
             </div>
             
@@ -935,6 +1022,7 @@
         <div class="hpc-video-wrapper">
             <img id="hpc-img" src="" alt="">
             <video id="hpc-video" muted loop playsinline></video>
+            <iframe id="hpc-iframe" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
             <div class="hpc-gradient"></div>
             <h4 id="hpc-title">Título</h4>
         </div>
@@ -961,6 +1049,24 @@
             <i class="fa-solid fa-arrow-left"></i> Voltar
         </button>
         <video id="main-video-element" controls playsinline preload="auto"></video>
+        <iframe id="main-iframe-element" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display:none; width: 100%; height: 100%; border: none;"></iframe>
+
+        <!-- Controles Customizados IFPIFLIX para Trailer do YouTube -->
+        <div class="custom-yt-controls-overlay" id="custom-yt-controls">
+            <div class="ytc-progress-bar" id="ytc-progress" onclick="window.ytMainSeek(event)">
+                <div class="ytc-progress-fill" id="ytc-fill"></div>
+            </div>
+            <div class="ytc-buttons-row">
+                <div class="ytc-left">
+                    <button type="button" class="ytc-btn" id="ytc-play" aria-label="Reproduzir ou pausar" onclick="window.ytMainTogglePlay(event)"><i class="fa-solid fa-play"></i></button>
+                    <button type="button" class="ytc-btn" id="ytc-mute" aria-label="Ativar ou desativar áudio" onclick="window.ytMainToggleMute(event)"><i class="fa-solid fa-volume-high"></i></button>
+                    <span class="ytc-time" id="ytc-time">0:00 / 0:00</span>
+                </div>
+                <div class="ytc-right">
+                    <button type="button" class="ytc-btn" id="ytc-fs" aria-label="Tela cheia" onclick="window.ytMainFullscreen(event)"><i class="fa-solid fa-expand"></i></button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- =======================================================
@@ -1188,6 +1294,12 @@
                 <button type="button" class="resumo-btn-primary" onclick="window.closeResumoModal(event, true)">Fechar Guia</button>
             </div>
         </div>
+    </div>
+
+    <!-- TOAST GLOBAL (NOTIFICAÇÕES DA TURMA / COMPARTILHAMENTO) -->
+    <div id="global-toast" class="global-toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="global-toast-msg">Mensagem</span>
     </div>
 
 </body>

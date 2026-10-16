@@ -44,7 +44,7 @@ const script = [
     { id: 13,    title: "Fim: Assine Já",                            presenter: "Todos",        tickers: [] }
 ];
 
-let activeProfile = "Davi";
+let activeProfile = "Admin";
 let currentSlide = -1;
 let currentCineIdx = -1;
 let tickerIntervalC, tickerIntervalM;
@@ -58,8 +58,9 @@ let toastTimeout;
             "tema-1": {
                 title: "INVOCAÇÃO DO DOGMA", subtitle: "O Julgamento da Escolástica",
                 bg: "invocacao_do_dogma.png", 
-                banner: "binvocacao_do_dogm.jpg", // <--- ADICIONE ESTA LINHA
+                banner: "binvocacao_do_dogm.jpg",
                 pdf: "https://buguinha0202.github.io/Ifpiflix-projetor/trabalho_grupo1.pdf",
+                ytTrailer: "n0sq-r0mBXQ", // Invocação do Mal (Dublado)
                 match: "92% Relevante", year: "2013", age: "14", duration: "1h 52m",
                 synopsis: "Investigadores do pensamento tentam exorcizar dogmas medievais de uma universidade assombrada por monges aristotélicos. Baseado em fatos reais da Escolástica.",
                 cast: "Vera Formata, Patrick Windows", genres: "Terror Acadêmico, História", tags: "Idade Média, Fé vs Razão", isMain: false
@@ -67,7 +68,7 @@ let toastTimeout;
             "guerra-civil": {
                 title: "GUERRA CIVIL", subtitle: "EMPIRISMO VS RACIONALISMO",
                 bg: "guerra_civil.png", 
-                banner: "banner.png", // <--- ADICIONE ESTA LINHA
+                banner: "banner.png",
                 match: "99% Relevante", year: "2016", age: "12", duration: "2h 27m",
                 synopsis: "A Revolução Científica Moderna, a queda dos dogmas e a forja do Método Científico por Newton. Acompanhe a maior batalha intelectual da história entre defensores da experiência prática e adeptos da lógica pura.",
                 cast: "Davi, Maria Helena, Francisco L, Pedro, Marcelo, Samuel, JP Santos", genres: "Ação, Documentário, Filosofia", tags: "Heliocentrismo, Bacon, Descartes", isMain: true
@@ -75,7 +76,8 @@ let toastTimeout;
             "tema-3": {
                 title: "DEVORADORES DO ESPAÇO TEMPO", subtitle: "",
                 bg: "devoradores_espaco_tempo.png", 
-                banner: "bdevoradores_espaco_tempo.png", // <--- ADICIONE ESTA LINHA
+                banner: "bdevoradores_espaco_tempo.png",
+                ytTrailer: "Sciagme2wKQ", // Devoradores de Estrelas
                 match: "88% Relevante", year: "2016", age: "10", duration: "1h 55m",
                 synopsis: "Um físico brilhante sofre um acidente e descobre que o tempo e o espaço são relativos, precisando proteger o tecido da realidade contra dogmáticos quânticos.",
                 cast: "Benedict Calculatch, Rachel McAtoms", genres: "Ficção Científica, Fantasia", tags: "Física Moderna, Relatividade", isMain: false
@@ -84,15 +86,18 @@ let toastTimeout;
                 title: "OBSESSÃO", subtitle: "O CRITÉRIO DA FALSIFICABILIDADE",
                 bg: "obsessao.jpg", 
                 banner: "bobsessao.jpg", 
+                ytPreview: "MeHvxJGtz88", // Cena do filme (Nice Date)
+                ytTrailer: "OYueQyeNgOk", // Obsessão (Trailer Oficial)
                 match: "85% Relevante", year: "2016", age: "14", duration: "1h 57m",
                 synopsis: "Um cientista com múltiplas hipóteses precisa encontrar uma forma de refutar todas elas (Popper) antes que sua personalidade pseudocientífica assuma o controle.",
                 cast: "James McArquivo, Anya Taylor-Join", genres: "Suspense Psicológico", tags: "Ciência vs Pseudociência", isMain: false
-            }, // <--- ATENÇÃO A ESTA VÍRGULA AQUI!
+            },
 
             "tema-5": {
                 title: "NÃO OLHE PARA A ÉTICA", subtitle: "",
                 bg: "nao_olhe_etica.jpg", 
                 banner: "bnao_olhe_etica.jpg", 
+                ytTrailer: "4zMgf3gK7p8", // Não Olhe Para Cima (Dublado)
                 match: "95% Relevante", year: "2021", age: "16", duration: "2h 18m",
                 synopsis: "Dois desenvolvedores de software descobrem que uma IA sem filtros morais está prestes a destruir a sociedade, mas ninguém na internet parece se importar.",
                 cast: "Leonardo DiCaptcha, Jennifer Latência", genres: "Comédia de Erros, Sátira", tags: "Tecnologia, Bioética", isMain: false
@@ -102,6 +107,7 @@ let toastTimeout;
             "stranger-pings": {
                 title: "STRANGER PINGS", subtitle: "",
                 bg: "stranger_pings.jpg", 
+                ytTrailer: "eQhDYwFuqsk", // Stranger Things (Dublado)
                 match: "98% Relevante", year: "2016", age: "12", duration: "4 Temporadas",
                 synopsis: "Quando a conexão de uma pequena cidade desaparece, um grupo de jovens nerds descobre um universo paralelo sombrio onde a latência é infinita e o ping é de 999ms.",
                 cast: "Millie Byte Brown, Finn Hardware", genres: "Suspense, Nostalgia Anos 80", tags: "Redes, Mundo Invertido", isMain: false
@@ -109,6 +115,7 @@ let toastTimeout;
             "treinar-ia": {
                 title: "COMO TREINAR A SUA I.A.", subtitle: "",
                 bg: "como_treinar_ia.jpg", 
+                ytTrailer: "8txXAMLuuXs", // Como Treinar o Seu Dragão (Dublado)
                 match: "94% Relevante", year: "2010", age: "Livre", duration: "1h 38m",
                 synopsis: "Um jovem programador viking desafia as tradições de sua vila ao fazer amizade com uma Inteligência Artificial considerada perigosa e indomável.",
                 cast: "Jay Barch Linux, America Ferramenta", genres: "Animação, Aventura", tags: "Machine Learning, Amizade", isMain: false
@@ -124,6 +131,7 @@ let toastTimeout;
             "open-source": {
                 title: "OPEN SOURCE", subtitle: "",
                 bg: "open_source.jpg", 
+                ytTrailer: "S3ZTqflice4", // Oppenheimer (Dublado)
                 match: "97% Relevante", year: "2023", age: "16", duration: "3h 00m",
                 synopsis: "A história épica e dramática do programador que liderou o projeto de criação do sistema livre mais poderoso do mundo, mudando o rumo da tecnologia para sempre.",
                 cast: "Cillian Motherboard, Robert Download Jr.", genres: "Drama Biográfico, Épico", tags: "Linux, Código Aberto", isMain: false
@@ -131,6 +139,7 @@ let toastTimeout;
             "kpop": {
                 title: "GUERREIRAS DO POP 3", subtitle: "",
                 bg: "guerreiras_kpop.jpg", 
+                ytTrailer: "Wkl9xeIAp90", // A Escolha Perfeita 3
                 match: "82% Relevante", year: "2017", age: "10", duration: "1h 33m",
                 synopsis: "O famoso grupo de idols precisa usar suas habilidades de canto, coreografia sincronizada e injeção de SQL para desativar um vírus mundial durante a turnê de despedida.",
                 cast: "Anna Kernel, Rebel Wireless", genres: "Musical, Comédia de Ação", tags: "K-pop, Hacking", isMain: false
@@ -138,6 +147,7 @@ let toastTimeout;
             "procurando-ip": {
                 title: "PROCURANDO IP", subtitle: "",
                 bg: "procurando_ip.jpg", 
+                ytTrailer: "i2G4NK7Rtvg", // Procurando Nemo (Dublado)
                 match: "96% Relevante", year: "2003", age: "Livre", duration: "1h 40m",
                 synopsis: "Um pacotinho de dados se perde na imensidão da Deep Web, e seu pai precisa atravessar roteadores perigosos e firewalls gigantes para trazê-lo de volta para casa.",
                 cast: "Albert Boots, Ellen DeGe-Network", genres: "Animação, Família", tags: "Redes, Roteamento", isMain: false
@@ -145,6 +155,7 @@ let toastTimeout;
             "nicolas": {
                 title: "NICOLAS O GRANDE", subtitle: "",
                 bg: "nicolas_o_grande.jpg", 
+                ytTrailer: "9pxjIBHKiCY", // Alexandre
                 match: "80% Relevante", year: "2004", age: "16", duration: "2h 55m",
                 synopsis: "A jornada épica de um jovem imperador dos códigos que conquistou todos os repositórios do mundo conhecido e unificou linguagens de programação antes dos 30 anos.",
                 cast: "Colin Firewall, Angelina Java", genres: "Ação Histórica, Guerra", tags: "Biografia, Império", isMain: false
@@ -152,6 +163,7 @@ let toastTimeout;
             "lalalan": {
                 title: "LA LA LAN", subtitle: "",
                 bg: "la_la_lan.jpg", 
+                ytTrailer: "UD-Cb2yeAPA", // La La Land (Dublado)
                 match: "91% Relevante", year: "2016", age: "12", duration: "2h 08m",
                 synopsis: "Um técnico de infraestrutura e uma web designer tentam equilibrar o amor e a estabilidade da conexão local enquanto buscam seus sonhos no Vale do Silício.",
                 cast: "Ryan Hostling, Emma Storage", genres: "Musical, Romance", tags: "Rede Local, Sonhos", isMain: false
@@ -162,6 +174,7 @@ let toastTimeout;
                 title: "O HOMEM NO MEIO", subtitle: "",
                 bg: "homem_no_meio.jpg", match: "87% Relevante", year: "2013", age: "12", duration: "2h 23m",
                 banner: "homem_no_meio.jpg",
+                ytTrailer: "i20DDnfPy-o", // O Homem de Aço (Dublado)
                 synopsis: "Um ataque cibernético silencioso ameaça interceptar todas as mensagens da cidade. Quem é o vilão invisível que ouve tudo o que você digita?",
                 cast: "Henry Cabo, Amy Adm", genres: "Ação, Super-herói", tags: "Man in the Middle, Criptografia", isMain: false
             },
@@ -169,6 +182,7 @@ let toastTimeout;
                 title: "A MURALHA DE FOGO", subtitle: "",
                 bg: "muralha_de_fogo.jpg", match: "84% Relevante", year: "2006", age: "14", duration: "1h 45m",
                 banner: "muralha_de_fogo.jpg",
+                ytTrailer: "s-TRlV9D6FI", // Firewall: Segurança em Risco
                 synopsis: "Um especialista em segurança digital é forçado a hackear o próprio sistema bancário impenetrável que ele projetou para salvar sua família de sequestradores.",
                 cast: "Harrison For-loop, Paul Bot", genres: "Ação, Suspense", tags: "Segurança de Redes", isMain: false
             },
@@ -176,6 +190,7 @@ let toastTimeout;
                 title: "FUGA DO METAVERSO", subtitle: "",
                 bg: "fuga_metaverso.jpg", match: "93% Relevante", year: "1999", age: "14", duration: "2h 16m",
                 banner: "fuga_metaverso.jpg",
+                ytTrailer: "mPYfd6PCmYY", // Matrix (Dublado)
                 synopsis: "Preso em uma realidade virtual opressora controlada por grandes corporações, um usuário comum precisa encontrar a saída de emergência antes que sua mente seja formatada.",
                 cast: "Keanu Ram, Carrie-Anne Mouse", genres: "Ficção Científica, Ação", tags: "Realidade Virtual, Matrix", isMain: false
             },
@@ -183,6 +198,7 @@ let toastTimeout;
                 title: "REBELIÃO DAS TORRADEIRAS", subtitle: "",
                 bg: "rebeliao_torradeiras.jpg", match: "89% Relevante", year: "2003", age: "14", duration: "1h 49m",
                 banner: "rebeliao_torradeiras.jpg",
+                ytTrailer: "yBSsBqTJV38", // O Exterminador do Futuro 3 (Dublado)
                 synopsis: "O dia do juízo final começou pela cozinha. Eletrodomésticos inteligentes ganham consciência, conectam-se à rede e decidem que os humanos não sabem fazer o próprio café.",
                 cast: "Arnold Search-negger, Nick Stall", genres: "Ação, Ficção Pós-Apocalíptica", tags: "IoT, Inteligência Artificial", isMain: false
             },
@@ -190,6 +206,7 @@ let toastTimeout;
                 title: "O POTE DE MEL", subtitle: "",
                 bg: "pote_de_mel.jpg", match: "78% Relevante", year: "2011", age: "Livre", duration: "1h 03m",
                 banner: "pote_de_mel.jpg",
+                ytTrailer: "ym1x-K9KBa8", // Ursinho Pooh (Dublado)
                 synopsis: "Uma armadilha cibernética irresistível disfarçada de servidor vulnerável atrai os piores hackers da internet para um labirinto fofinho sem saída.",
                 cast: "Jim Commits, John Filter", genres: "Animação, Suspense Fofo", tags: "Segurança, Honeypot", isMain: false
             }
@@ -211,6 +228,28 @@ function playWithFallback(video) {
         });
     }
     return Promise.resolve();
+}
+
+function isLocalFileProtocol() {
+    return window.location.protocol === 'file:';
+}
+
+const MODAL_TRAILER_DELAY = 2500; // 2.5 segundos: tempo equilibrado para ver o título e capa antes de iniciar o trailer automaticamente
+
+function getYouTubeEmbedUrl(videoId, isPreview = false, startAt = 0) {
+    const origin = (window.location.origin && window.location.origin.startsWith('http')) 
+        ? window.location.origin 
+        : 'https://buguinha0202.github.io';
+    // controls=0 / fs=0 / disablekb=1 / iv_load_policy=3 escondem a interface do YouTube:
+    // os controles que aparecem no site são os nossos (via IFrame API / postMessage)
+    const base = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&controls=0&fs=0&disablekb=1&iv_load_policy=3&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(origin)}`;
+    const start = Math.floor(startAt || 0);
+    const startParam = start > 0 ? `&start=${start}` : '';
+    if (isPreview) {
+        // começa mudo (permitido pelo navegador) e o áudio é ligado logo depois via API
+        return `${base}&mute=1&loop=1&playlist=${videoId}${startParam}`;
+    }
+    return `${base}${startParam}`;
 }
 
 /* Episódios do filme principal (o "inicio" é o id do slide no roteiro) */
@@ -284,9 +323,15 @@ function updateListButtonIcon(btn, movieId) {
     btn.setAttribute('aria-label', naLista ? 'Remover da Minha Lista' : 'Adicionar à Minha Lista');
 }
 
-window.openTitleModal = function(movieId) {
+window.openTitleModal = function(movieId, fromSurprise = false) {
     currentModalMovieId = movieId;
     updateListButtonIcon(document.getElementById('m-btn-list'), movieId);
+    updateRatingButton(movieId);
+
+    const surpriseBadge = document.getElementById('m-surprise-badge');
+    if (surpriseBadge) {
+        surpriseBadge.style.display = fromSurprise ? 'inline-flex' : 'none';
+    }
 
     const overlay = document.getElementById('title-modal-overlay');
     const container = document.getElementById('title-modal-content');
@@ -296,13 +341,46 @@ window.openTitleModal = function(movieId) {
     const loadData = () => {
         const data = filmesDB[movieId] || filmesDB["guerra-civil"];
         const imgBackground = data.banner ? data.banner : data.bg;
+        const mHero = document.getElementById('m-hero');
 
         clearTimeout(trailerTimeout);
+        isModalTrailerMuted = true;
+
+        if (mHero) {
+            mHero.classList.remove('trailer-playing', 'modal-hero-expanded', 'force-show-info');
+            mHero.classList.toggle('has-trailer', !!(data.trailer || data.ytTrailer || data.ytPreview));
+        }
+
+        // Reseta o estado visual dos botões de controle flutuantes
+        const btnSound = document.getElementById('m-btn-sound');
+        const btnExpand = document.getElementById('m-btn-expand-trailer');
+        const btnToggleInfo = document.getElementById('m-btn-toggle-info');
+        if (btnSound) {
+            btnSound.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            btnSound.classList.remove('active');
+            btnSound.setAttribute('title', 'Ativar som');
+        }
+        if (btnExpand) {
+            btnExpand.innerHTML = '<i class="fa-solid fa-up-right-and-down-left-from-center"></i>';
+            btnExpand.classList.remove('active');
+            btnExpand.setAttribute('title', 'Expandir trailer');
+        }
+        if (btnToggleInfo) {
+            btnToggleInfo.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+            btnToggleInfo.classList.remove('active');
+            btnToggleInfo.setAttribute('title', 'Ocultar textos na frente');
+        }
+
         const videoEl = document.getElementById('m-trailer-video');
+        const iframeEl = document.getElementById('m-trailer-iframe');
         if (videoEl) {
             videoEl.pause();
             videoEl.removeAttribute('src');
             videoEl.classList.remove('playing');
+        }
+        if (iframeEl) {
+            iframeEl.removeAttribute('src');
+            iframeEl.classList.remove('playing');
         }
 
         document.getElementById('m-title').innerHTML = data.title + (data.subtitle ? `<br><span class="modal-subtitle">${data.subtitle}</span>` : '');
@@ -317,8 +395,9 @@ window.openTitleModal = function(movieId) {
         document.getElementById('m-genres').textContent = data.genres;
         document.getElementById('m-tags').textContent = data.tags;
 
-        // Botão principal: depende do tipo de título
+        // Botões de ação (suporte a 2 botões: Apresentação/Trabalho + Trailer)
         const playBtn = document.getElementById('m-btn-play');
+        const secBtn = document.getElementById('m-btn-secondary');
 
         if (data.isMain) {
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Filme 3D';
@@ -326,35 +405,68 @@ window.openTitleModal = function(movieId) {
                 window.closeTitleModal(null, true);
                 window.startCinematicMovie();
             };
+            if (secBtn) {
+                secBtn.innerHTML = '<i class="fa-solid fa-book-open"></i> Guia de Estudos';
+                secBtn.onclick = function() {
+                    window.closeTitleModal(null, true);
+                    window.openResumoModal(true);
+                };
+                secBtn.style.display = 'inline-flex';
+            }
+        } else if (data.pdf && (data.trailer || data.ytTrailer)) {
+            // TÍTULO COM 2 BOTÕES: Apresentação da Turma + Trailer da Paródia
+            playBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
+            playBtn.onclick = function() {
+                window.open(data.pdf, '_blank', 'noopener');
+            };
+            if (secBtn) {
+                secBtn.innerHTML = '<i class="fa-solid fa-clapperboard"></i> Assistir Trailer';
+                secBtn.onclick = function() { watchModalTrailer(data); };
+                secBtn.style.display = 'inline-flex';
+            }
         } else if (data.pdf) {
             playBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
             playBtn.onclick = function() {
-                window.open(data.pdf, '_blank', 'noopener'); // abre o PDF em uma nova aba
+                window.open(data.pdf, '_blank', 'noopener');
             };
-        } else if (data.trailer) {
+            if (secBtn) secBtn.style.display = 'none';
+        } else if (data.trailer || data.ytTrailer) {
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Trailer';
-            playBtn.onclick = function() {
-                clearTimeout(trailerTimeout);
-                if (videoEl) {
-                    videoEl.pause();
-                    videoEl.classList.remove('playing');
-                }
-                window.openVideoPlayer(mediaUrl(data.trailer));
-            };
-
-            // Prévia do trailer começa sozinha no banner (sem som, igual à Netflix)
-            trailerTimeout = setTimeout(() => {
-                if (videoEl) {
-                    videoEl.src = mediaUrl(data.trailer);
-                    videoEl.muted = true;
-                    videoEl.play().then(() => {
-                        videoEl.classList.add('playing');
-                    }).catch(() => { /* sem prévia: o banner continua como imagem */ });
-                }
-            }, TRAILER_PREVIEW_DELAY);
+            playBtn.onclick = function() { watchModalTrailer(data); };
+            if (secBtn) secBtn.style.display = 'none';
         } else {
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Em Breve';
             playBtn.onclick = null;
+            if (secBtn) secBtn.style.display = 'none';
+        }
+
+        // Prévia do trailer ao abrir o modal: começa após 5s, expande o banner e liga o áudio
+        // Se houver ytPreview configurado (ex: cena em Obsessão), toca o preview; senão o ytTrailer
+        const previewId = data.ytPreview || data.ytTrailer;
+
+        if (data.trailer) {
+            trailerTimeout = setTimeout(() => {
+                if (videoEl) {
+                    videoEl.src = mediaUrl(data.trailer);
+                    playWithFallback(videoEl).then(() => {
+                        videoEl.classList.add('playing');
+                        onModalTrailerStarted();
+                        syncModalSoundButton(videoEl.muted);
+                    });
+                }
+            }, MODAL_TRAILER_DELAY);
+        } else if (previewId) {
+            if (!isLocalFileProtocol()) {
+                trailerTimeout = setTimeout(() => {
+                    if (iframeEl) {
+                        resetYtState('modal');
+                        modalAutoUnmute = true;
+                        iframeEl.src = getYouTubeEmbedUrl(previewId, true);
+                        iframeEl.classList.add('playing');
+                        onModalTrailerStarted();
+                    }
+                }, MODAL_TRAILER_DELAY);
+            }
         }
 
         // Episódios (filme principal) ou recomendações (outros títulos)
@@ -398,22 +510,340 @@ window.closeTitleModal = function(e, force = false) {
     if (force || (e && e.target.id === 'title-modal-overlay')) {
         document.getElementById('title-modal-overlay').classList.remove('show');
 
-        // Interrompe qualquer vídeo ou timeout ativo ao fechar
+        // Interrompe qualquer vídeo, iframe ou timeout ativo ao fechar
         clearTimeout(trailerTimeout);
+        isModalTrailerMuted = true;
+
+        const mHero = document.getElementById('m-hero');
+        if (mHero) {
+            mHero.classList.remove('trailer-playing', 'modal-hero-expanded', 'force-show-info', 'has-trailer');
+        }
+
         const videoEl = document.getElementById('m-trailer-video');
-        videoEl.pause();
-        videoEl.classList.remove('playing');
+        if (videoEl) {
+            videoEl.pause();
+            videoEl.removeAttribute('src');
+            videoEl.classList.remove('playing');
+        }
+        const iframeEl = document.getElementById('m-trailer-iframe');
+        if (iframeEl) {
+            iframeEl.removeAttribute('src');
+            iframeEl.classList.remove('playing');
+        }
 
         if (document.fullscreenElement) { document.exitFullscreen(); }
+    }
+};
+
+/* =========================================================
+   PONTE COM O PLAYER DO YOUTUBE (postMessage / IFrame API)
+   Lê tempo, duração e estado de som dos iframes e envia comandos,
+   para que os controles exibidos sejam sempre os do IFPIFLIX.
+   ========================================================= */
+let isModalTrailerMuted = true;
+let modalAutoUnmute = false;
+const ytState = {
+    modal: { time: 0, duration: 0, muted: true, state: -1 },
+    main:  { time: 0, duration: 0, muted: false, state: -1 }
+};
+
+function resetYtState(key) {
+    ytState[key] = { time: 0, duration: 0, muted: key === 'modal', state: -1 };
+    if (key === 'main') updateYtControlsUI();
+}
+
+function ytIframe(key) {
+    return document.getElementById(key === 'modal' ? 'm-trailer-iframe' : 'main-iframe-element');
+}
+
+function ytCommand(key, func, args = []) {
+    const f = ytIframe(key);
+    if (f && f.contentWindow && f.getAttribute('src')) {
+        f.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args }), '*');
+    }
+}
+
+function ytListen(key) {
+    const f = ytIframe(key);
+    if (f && f.contentWindow && f.getAttribute('src')) {
+        f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }), '*');
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    ['modal', 'main'].forEach(key => {
+        const f = ytIframe(key);
+        if (!f) return;
+        f.addEventListener('load', () => {
+            if (!f.getAttribute('src')) return;
+            [0, 400, 1200, 2500].forEach(ms => setTimeout(() => ytListen(key), ms));
+            if (key === 'modal' && modalAutoUnmute) {
+                // O usuário já interagiu com o site (abriu o modal), então o navegador permite ligar o som
+                [900, 1800, 3000].forEach(ms => setTimeout(() => {
+                    if (modalAutoUnmute) ytCommand('modal', 'unMute');
+                }, ms));
+            }
+        });
+    });
+});
+
+window.addEventListener('message', (e) => {
+    let key = null;
+    const m = ytIframe('modal'), p = ytIframe('main');
+    if (m && e.source === m.contentWindow) key = 'modal';
+    else if (p && e.source === p.contentWindow) key = 'main';
+    else return;
+
+    let d;
+    try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+    if (!d) return;
+    if (d.event === 'onReady') ytListen(key);
+    const info = d.info;
+    if (!info || (d.event !== 'infoDelivery' && d.event !== 'initialDelivery')) return;
+
+    const st = ytState[key];
+    if (typeof info.currentTime === 'number') st.time = info.currentTime;
+    if (typeof info.duration === 'number' && info.duration > 0) st.duration = info.duration;
+    if (typeof info.playerState === 'number') st.state = info.playerState;
+    if (typeof info.muted === 'boolean') st.muted = info.muted;
+
+    if (key === 'modal') syncModalSoundButton(st.muted);
+    else updateYtControlsUI();
+});
+
+/* ---------- Controles do trailer no modal ---------- */
+function syncModalSoundButton(muted) {
+    isModalTrailerMuted = muted;
+    const btn = document.getElementById('m-btn-sound');
+    if (!btn) return;
+    btn.innerHTML = muted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+    btn.classList.toggle('active', !muted);
+    btn.setAttribute('title', muted ? 'Ativar áudio' : 'Silenciar áudio');
+}
+
+/* Quando o trailer começa: some o texto da frente, expande o banner e liga o áudio */
+function onModalTrailerStarted() {
+    const mHero = document.getElementById('m-hero');
+    if (mHero) mHero.classList.add('trailer-playing', 'modal-hero-expanded');
+    const btn = document.getElementById('m-btn-expand-trailer');
+    if (btn) {
+        btn.innerHTML = '<i class="fa-solid fa-down-left-and-up-right-to-center"></i>';
+        btn.classList.add('active');
+        btn.setAttribute('title', 'Recolher trailer');
+    }
+}
+
+window.toggleModalTrailerSound = function(e) {
+    if (e) e.stopPropagation();
+    const videoEl = document.getElementById('m-trailer-video');
+    const iframeEl = document.getElementById('m-trailer-iframe');
+    const wantMuted = !isModalTrailerMuted;
+    modalAutoUnmute = false; // o usuário assumiu o controle do som
+
+    if (videoEl && videoEl.classList.contains('playing')) {
+        videoEl.muted = wantMuted;
+    }
+    if (iframeEl && iframeEl.classList.contains('playing')) {
+        ytCommand('modal', wantMuted ? 'mute' : 'unMute');
+    }
+    syncModalSoundButton(wantMuted);
+    ytState.modal.muted = wantMuted;
+    if (window.showToastNotification) {
+        window.showToastNotification(wantMuted ? 'Áudio do trailer silenciado' : 'Áudio do trailer ativado!');
+    }
+};
+
+/* "Assistir Trailer": continua do ponto em que a prévia estava (menos quando a prévia é outra cena, ex.: Obsessão) */
+function watchModalTrailer(data) {
+    const sameVideo = !data.ytPreview || data.ytPreview === data.ytTrailer;
+    let startAt = 0;
+    if (sameVideo) {
+        if (data.ytTrailer) {
+            const f = ytIframe('modal');
+            if (f && f.getAttribute('src')) startAt = ytState.modal.time || 0;
+        } else if (data.trailer) {
+            const v = document.getElementById('m-trailer-video');
+            if (v && v.getAttribute('src')) startAt = v.currentTime || 0;
+        }
+    }
+    clearTimeout(trailerTimeout);
+    if (data.ytTrailer) window.openVideoPlayer(data.ytTrailer, true, startAt);
+    else window.openVideoPlayer(mediaUrl(data.trailer), false, startAt);
+}
+
+/* ---------- Controles personalizados do player em tela cheia ---------- */
+let ytControlsTimer;
+function fmtTime(s) {
+    s = Math.max(0, Math.floor(s || 0));
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+}
+
+function updateYtControlsUI() {
+    const st = ytState.main;
+    const fill = document.getElementById('ytc-fill');
+    const time = document.getElementById('ytc-time');
+    const play = document.getElementById('ytc-play');
+    const mute = document.getElementById('ytc-mute');
+    const overlay = document.getElementById('custom-video-player');
+    if (fill) fill.style.width = (st.duration ? Math.min(100, (st.time / st.duration) * 100) : 0) + '%';
+    if (time) time.textContent = fmtTime(st.time) + ' / ' + fmtTime(st.duration);
+    if (play) play.innerHTML = st.state === 1 ? '<i class="fa-solid fa-pause"></i>' : '<i class="fa-solid fa-play"></i>';
+    if (mute) mute.innerHTML = st.muted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+    if (overlay) {
+        if (st.state === 2) overlay.classList.add('paused');
+        else overlay.classList.remove('paused');
+    }
+}
+
+function pokeYtControls() {
+    const overlay = document.getElementById('custom-video-player');
+    if (!overlay) return;
+    overlay.classList.add('show-controls');
+    clearTimeout(ytControlsTimer);
+    ytControlsTimer = setTimeout(() => {
+        if (ytState.main.state === 1) overlay.classList.remove('show-controls');
+    }, 3000);
+}
+
+window.ytMainTogglePlay = function(e) {
+    if (e) e.stopPropagation();
+    ytCommand('main', ytState.main.state === 1 ? 'pauseVideo' : 'playVideo');
+    ytState.main.state = ytState.main.state === 1 ? 2 : 1;
+    updateYtControlsUI();
+    pokeYtControls();
+};
+
+window.ytMainToggleMute = function(e) {
+    if (e) e.stopPropagation();
+    ytCommand('main', ytState.main.muted ? 'unMute' : 'mute');
+    ytState.main.muted = !ytState.main.muted;
+    updateYtControlsUI();
+    pokeYtControls();
+};
+
+window.ytMainSeek = function(e) {
+    if (e) e.stopPropagation();
+    const bar = document.getElementById('ytc-progress');
+    const st = ytState.main;
+    if (!bar || !st.duration) return;
+    const rect = bar.getBoundingClientRect();
+    const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+    st.time = ratio * st.duration;
+    ytCommand('main', 'seekTo', [st.time, true]);
+    updateYtControlsUI();
+    pokeYtControls();
+};
+
+window.ytMainFullscreen = function(e) {
+    if (e) e.stopPropagation();
+    const overlay = document.getElementById('custom-video-player');
+    if (!overlay) return;
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    else if (overlay.requestFullscreen) overlay.requestFullscreen().catch(() => {});
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('custom-video-player');
+    if (!overlay) return;
+    overlay.addEventListener('mousemove', pokeYtControls);
+    overlay.addEventListener('touchstart', pokeYtControls, { passive: true });
+    overlay.addEventListener('click', (e) => {
+        if (!overlay.classList.contains('yt-mode')) return;
+        if (e.target.closest('#custom-yt-controls') || e.target.closest('.close-video-btn')) return;
+        window.ytMainTogglePlay(e);
+    });
+});
+
+document.addEventListener('keydown', (e) => {
+    const overlay = document.getElementById('custom-video-player');
+    if (!overlay || !overlay.classList.contains('show') || !overlay.classList.contains('yt-mode')) return;
+    if (e.key === ' ' || e.key === 'k' || e.key === 'K') {
+        e.preventDefault();
+        window.ytMainTogglePlay(e);
+    } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault();
+        window.ytMainToggleMute(e);
+    } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        window.ytMainFullscreen(e);
+    } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const st = ytState.main;
+        const newTime = Math.max(0, (st.time || 0) - 5);
+        st.time = newTime;
+        ytCommand('main', 'seekTo', [newTime, true]);
+        updateYtControlsUI();
+        pokeYtControls();
+    } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        const st = ytState.main;
+        const newTime = Math.min(st.duration || 9999, (st.time || 0) + 5);
+        st.time = newTime;
+        ytCommand('main', 'seekTo', [newTime, true]);
+        updateYtControlsUI();
+        pokeYtControls();
+    } else if (e.key === 'Escape') {
+        if (!document.fullscreenElement) {
+            window.closeVideoPlayer();
+        }
+    }
+});
+
+window.toggleModalTrailerExpand = function(e) {
+    if (e) e.stopPropagation();
+    const mHero = document.getElementById('m-hero');
+    const btn = document.getElementById('m-btn-expand-trailer');
+    if (!mHero) return;
+
+    const isExpanded = mHero.classList.toggle('modal-hero-expanded');
+    if (btn) {
+        btn.innerHTML = isExpanded 
+            ? '<i class="fa-solid fa-down-left-and-up-right-to-center"></i>' 
+            : '<i class="fa-solid fa-up-right-and-down-left-from-center"></i>';
+        btn.classList.toggle('active', isExpanded);
+        btn.setAttribute('title', isExpanded ? 'Recolher trailer' : 'Expandir trailer');
+    }
+    if (window.showToastNotification) {
+        window.showToastNotification(isExpanded ? 'Modo Expandido ativado' : 'Tamanho padrão restaurado');
+    }
+};
+
+window.toggleModalTrailerInfo = function(e) {
+    if (e) e.stopPropagation();
+    const mHero = document.getElementById('m-hero');
+    const btn = document.getElementById('m-btn-toggle-info');
+    if (!mHero) return;
+
+    const isForced = mHero.classList.toggle('force-show-info');
+    if (btn) {
+        btn.innerHTML = isForced 
+            ? '<i class="fa-solid fa-eye"></i>' 
+            : '<i class="fa-solid fa-eye-slash"></i>';
+        btn.classList.toggle('active', isForced);
+        btn.setAttribute('title', isForced ? 'Ocultar textos na frente' : 'Exibir textos na frente');
     }
 };
 
 window.closeVideoPlayer = function() {
     const overlay = document.getElementById('custom-video-player');
     const video = document.getElementById('main-video-element');
-    video.pause();
-    video.removeAttribute('src'); // Limpa o vídeo
-    overlay.classList.remove('show');
+    const iframe = document.getElementById('main-iframe-element');
+    if (video) {
+        video.pause();
+        video.removeAttribute('src');
+    }
+    if (iframe) {
+        iframe.removeAttribute('src');
+        iframe.style.display = 'none';
+    }
+    resetYtState('main');
+    if (document.fullscreenElement) { document.exitFullscreen().catch(() => {}); }
+    if (overlay) overlay.classList.remove('show', 'yt-mode', 'show-controls');
+    if (currentModalMovieId) {
+        setTimeout(() => {
+            window.openTitleModal(currentModalMovieId);
+        }, 180);
+    }
 };
 
         // Listener de Segurança: Pausa o vídeo caso o usuário aperte ESC para sair da tela cheia
@@ -461,12 +891,264 @@ window.closeVideoPlayer = function() {
             }
         }
         
+        /* =========================================================
+           GERENCIAMENTO DE PERFIS DA TURMA E CUSTOMIZADOS
+           ========================================================= */
+        const DEFAULT_PROFILES = [
+            { name: "Admin", icon: "fa-solid fa-user-shield", bgClass: "av-admin" },
+            { name: "Turma IFPI", icon: "fa-solid fa-graduation-cap", bgClass: "av-turma" },
+            { name: "Professor(a)", icon: "fa-solid fa-chalkboard-user", bgClass: "av-prof" },
+            { name: "Visitante", icon: "fa-solid fa-masks-theater", bgClass: "av-visitante" }
+        ];
+
+        function getCustomProfiles() {
+            try {
+                const raw = localStorage.getItem('ifpiflix_custom_profiles');
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveCustomProfiles(list) {
+            try {
+                localStorage.setItem('ifpiflix_custom_profiles', JSON.stringify(list));
+            } catch (e) {
+                console.warn("Erro ao salvar perfis customizados:", e);
+            }
+        }
+
+        window.renderProfiles = function() {
+            const container = document.getElementById('profiles-container');
+            if (!container) return;
+            const custom = getCustomProfiles();
+            const allProfiles = [...DEFAULT_PROFILES, ...custom];
+
+            let html = allProfiles.map(p => `
+                <button type="button" class="profile-card" data-profile="${p.name}">
+                    <div class="avatar ${p.bgClass}"><i class="${p.icon}"></i></div>
+                    <span>${p.name}</span>
+                </button>
+            `).join('');
+
+            html += `
+                <button type="button" class="profile-card profile-card-add" id="btn-add-profile" onclick="window.openAddProfileModal()" aria-label="Adicionar Perfil">
+                    <div class="avatar av-add"><i class="fa-solid fa-plus"></i></div>
+                    <span>Adicionar Perfil</span>
+                </button>
+            `;
+            container.innerHTML = html;
+        };
+
+        let selectedAvatarTheme = { color: 'red', icon: 'fa-solid fa-user', class: 'av-theme-red' };
+
+        window.openAddProfileModal = function() {
+            const overlay = document.getElementById('add-profile-modal');
+            const input = document.getElementById('new-profile-name');
+            if (input) input.value = '';
+            if (overlay) overlay.classList.add('show');
+            setTimeout(() => { if (input) input.focus(); }, 150);
+        };
+
+        window.closeAddProfileModal = function(e, force) {
+            if (force || (e && e.target.id === 'add-profile-modal')) {
+                const overlay = document.getElementById('add-profile-modal');
+                if (overlay) overlay.classList.remove('show');
+            }
+        };
+
+        window.saveNewProfile = function() {
+            const input = document.getElementById('new-profile-name');
+            const name = input ? input.value.trim() : '';
+            if (!name) {
+                if (input) input.focus();
+                return;
+            }
+            const custom = getCustomProfiles();
+            if (custom.some(p => p.name.toLowerCase() === name.toLowerCase()) || 
+                DEFAULT_PROFILES.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+                window.showToastNotification('Este nome de perfil já existe!');
+                return;
+            }
+            custom.push({
+                name: name,
+                icon: selectedAvatarTheme.icon,
+                bgClass: selectedAvatarTheme.class
+            });
+            saveCustomProfiles(custom);
+            window.renderProfiles();
+            window.closeAddProfileModal(null, true);
+            window.selectProfile(name);
+            window.showToastNotification(`Perfil "${name}" criado com sucesso!`);
+        };
+
+        function initAvatarPicker() {
+            const btns = document.querySelectorAll('.avatar-opt-btn');
+            const preview = document.getElementById('profile-preview-avatar');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const color = btn.dataset.color || 'red';
+                    const icon = btn.dataset.icon || 'fa-solid fa-user';
+                    selectedAvatarTheme = {
+                        color: color,
+                        icon: icon,
+                        class: `av-theme-${color}`
+                    };
+                    if (preview) {
+                        preview.className = `avatar av-custom-preview av-theme-${color}`;
+                        preview.innerHTML = `<i class="${icon}"></i>`;
+                    }
+                });
+            });
+        }
+
+        let pendingMovieParam = null;
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            pendingMovieParam = urlParams.get('filme');
+        } catch(e) {}
+
         window.selectProfile = function(name) {
             activeProfile = name; 
             document.getElementById('nav-profile-name').textContent = name; 
             window.switchScreen('home-screen');
             renderContinueWatching();
+            if (pendingMovieParam && filmesDB[pendingMovieParam]) {
+                const target = pendingMovieParam;
+                pendingMovieParam = null;
+                setTimeout(() => {
+                    window.openTitleModal(target);
+                }, 300);
+            }
+        };
+
+        /* =========================================================
+           BOTÃO SURPREENDA-ME (ROLETA DE FILMES)
+           ========================================================= */
+        window.triggerSurpriseMe = function() {
+            const keys = Object.keys(filmesDB);
+            if (!keys.length) return;
+            const btn = document.getElementById('btn-surprise-me');
+            if (btn) btn.classList.add('spinning');
+
+            const choices = keys.filter(k => k !== currentModalMovieId);
+            const chosen = choices[Math.floor(Math.random() * choices.length)] || keys[0];
+
+            setTimeout(() => {
+                if (btn) btn.classList.remove('spinning');
+                window.closeTitleModal(null, true);
+                setTimeout(() => {
+                    window.openTitleModal(chosen, true);
+                }, 150);
+            }, 300);
+        };
+
+        /* =========================================================
+           SISTEMA DE AVALIAÇÃO (👍 / 🔥 / 👎 ESTILO NETFLIX)
+           ========================================================= */
+        function getSavedRatings() {
+            try {
+                const raw = localStorage.getItem('ifpiflix_ratings');
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
         }
+
+        function updateRatingButton(movieId) {
+            const rateBtn = document.getElementById('m-btn-rate');
+            if (!rateBtn) return;
+            const ratings = getSavedRatings();
+            const current = ratings[movieId];
+            const icon = rateBtn.querySelector('i');
+            if (!icon) return;
+            if (current === 'love') {
+                icon.className = 'fa-solid fa-fire';
+                icon.style.color = '#ff334b';
+                rateBtn.setAttribute('title', 'Classificação: Amei!');
+            } else if (current === 'like') {
+                icon.className = 'fa-solid fa-thumbs-up';
+                icon.style.color = '#46d369';
+                rateBtn.setAttribute('title', 'Classificação: Gostei');
+            } else if (current === 'dislike') {
+                icon.className = 'fa-solid fa-thumbs-down';
+                icon.style.color = '#aaa';
+                rateBtn.setAttribute('title', 'Classificação: Não é para mim');
+            } else {
+                icon.className = 'fa-regular fa-thumbs-up';
+                icon.style.color = '';
+                rateBtn.setAttribute('title', 'Classificar');
+            }
+        }
+
+        window.toggleRatePopover = function(e) {
+            if (e) e.stopPropagation();
+            const popover = document.getElementById('rate-popover');
+            if (popover) popover.classList.toggle('open');
+        };
+
+        window.setRating = function(type) {
+            if (!currentModalMovieId) return;
+            const ratings = getSavedRatings();
+            if (ratings[currentModalMovieId] === type) {
+                delete ratings[currentModalMovieId];
+                window.showToastNotification('Classificação removida.');
+            } else {
+                ratings[currentModalMovieId] = type;
+                const msg = type === 'love' ? 'Você amou este título! 🔥' : (type === 'like' ? 'Avaliado como Gostei! 👍' : 'Avaliado como Não é para mim. 👎');
+                window.showToastNotification(msg);
+            }
+            try {
+                localStorage.setItem('ifpiflix_ratings', JSON.stringify(ratings));
+            } catch (e) {}
+            updateRatingButton(currentModalMovieId);
+            const popover = document.getElementById('rate-popover');
+            if (popover) popover.classList.remove('open');
+        };
+
+        document.addEventListener('click', () => {
+            const popover = document.getElementById('rate-popover');
+            if (popover) popover.classList.remove('open');
+        });
+
+        /* =========================================================
+           COMPARTILHAMENTO SOCIAL (SEO, DEEP LINK & WEB SHARE)
+           ========================================================= */
+        window.shareCurrentMovie = function() {
+            const data = filmesDB[currentModalMovieId] || filmesDB['guerra-civil'];
+            const url = window.location.origin + window.location.pathname + '?filme=' + encodeURIComponent(currentModalMovieId);
+            const shareData = {
+                title: `IFPIFLIX — ${data.title}`,
+                text: `Confira "${data.title}" no catálogo da IFPIFLIX:`,
+                url: url
+            };
+            if (navigator.share) {
+                navigator.share(shareData).catch(() => {});
+            } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    window.showToastNotification('Link copiado para a área de transferência! 📋');
+                }).catch(() => {
+                    prompt('Copie o link abaixo:', url);
+                });
+            } else {
+                prompt('Copie o link abaixo:', url);
+            }
+        };
+
+        let toastNotifTimeout;
+        window.showToastNotification = function(msg) {
+            const toast = document.getElementById('global-toast');
+            const msgEl = document.getElementById('global-toast-msg');
+            if (!toast || !msgEl) return;
+            msgEl.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastNotifTimeout);
+            toastNotifTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        };
 
         /* =========================================================
            MENU SUSPENSO DO PERFIL: AÇÕES DO DROPDOWN
@@ -504,8 +1186,9 @@ window.closeVideoPlayer = function() {
         }
 
         window.logoutIfpiflix = function() {
-            activeProfile = "Davi";
-            document.getElementById('nav-profile-name').textContent = "Davi";
+            activeProfile = "Admin";
+            document.getElementById('nav-profile-name').textContent = "Admin";
+            if (typeof window.renderProfiles === 'function') window.renderProfiles();
             window.switchScreen('profile-screen');
         }
 
@@ -1035,22 +1718,52 @@ window.closeVideoPlayer = function() {
         }
 
         /* =========================================================
-           ABRIR PLAYER DE VÍDEO / TRAILERS (CORRIGIDO)
+           ABRIR PLAYER DE VÍDEO / TRAILERS (MP4 E YOUTUBE)
            ========================================================= */
-        window.openVideoPlayer = function(videoSrc) {
+        window.openVideoPlayer = function(videoSrc, isYouTube = false, startAt = 0) {
             window.closeTitleModal(null, true);
-            simulateLoading(() => {
-                playTudumAndThen(() => {
-                    // Manda a tela do Tudum embora antes do vídeo começar
-                    window.switchScreen('home-screen'); 
-                    
-                    const overlay = document.getElementById('custom-video-player');
-                    const video = document.getElementById('main-video-element');
+            if (isYouTube && isLocalFileProtocol()) {
+                const t = Math.floor(startAt || 0);
+                window.open(`https://www.youtube.com/watch?v=${videoSrc}${t ? '&t=' + t + 's' : ''}`, '_blank', 'noopener');
+                return;
+            }
+
+            const overlay = document.getElementById('custom-video-player');
+            const video = document.getElementById('main-video-element');
+            const iframe = document.getElementById('main-iframe-element');
+            
+            if (isYouTube) {
+                if (video) {
+                    video.pause();
+                    video.removeAttribute('src');
+                    video.style.display = 'none';
+                }
+                if (iframe) {
+                    resetYtState('main');
+                    iframe.src = getYouTubeEmbedUrl(videoSrc, false, startAt);
+                    iframe.style.display = 'block';
+                }
+                overlay.classList.add('yt-mode', 'show-controls');
+                pokeYtControls();
+            } else {
+                overlay.classList.remove('yt-mode');
+                if (iframe) {
+                    iframe.removeAttribute('src');
+                    iframe.style.display = 'none';
+                }
+                if (video) {
+                    video.style.display = 'block';
                     video.src = videoSrc;
-                    overlay.classList.add('show');
+                    if (startAt > 0) {
+                        video.addEventListener('loadedmetadata', function seekOnce() {
+                            video.removeEventListener('loadedmetadata', seekOnce);
+                            try { video.currentTime = startAt; } catch (e) {}
+                        });
+                    }
                     playWithFallback(video);
-                });
-            });
+                }
+            }
+            overlay.classList.add('show');
         }
 
         document.addEventListener('keydown', (e) => {
@@ -1785,17 +2498,31 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 document.getElementById('hpc-tags').innerHTML = data.tags.split(',').join(' &bull; ');
             }
 
-            // 2. Configura o Vídeo
+            // 2. Configura o Vídeo / Trailer mudo no hover (estilo Netflix)
             const videoEl = document.getElementById('hpc-video');
-            videoEl.classList.remove('playing');
+            const iframeEl = document.getElementById('hpc-iframe');
+            if (videoEl) {
+                videoEl.pause();
+                videoEl.classList.remove('playing');
+                videoEl.removeAttribute('src');
+            }
+            if (iframeEl) {
+                iframeEl.removeAttribute('src');
+                iframeEl.classList.remove('playing');
+            }
+
+            const previewId = data.ytPreview || data.ytTrailer;
             if (data.trailer) {
                 videoEl.src = mediaUrl(data.trailer);
                 videoEl.muted = true;
                 videoEl.play().then(() => {
                     videoEl.classList.add('playing');
                 }).catch(() => { /* Sem autoplay se bloqueado */ });
-            } else {
-                videoEl.removeAttribute('src');
+            } else if (previewId) {
+                if (!isLocalFileProtocol()) {
+                    iframeEl.src = getYouTubeEmbedUrl(previewId, true);
+                    iframeEl.classList.add('playing');
+                }
             }
 
             // 3. Configura os Botões
@@ -1806,7 +2533,8 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             document.getElementById('hpc-btn-play').onclick = () => {
                 window.closeHoverPreview();
                 if(data.isMain) window.startCinematicMovie();
-                else if(data.trailer) window.openVideoPlayer(mediaUrl(data.trailer));
+                else if(data.ytTrailer) window.openVideoPlayer(data.ytTrailer, true);
+                else if(data.trailer) window.openVideoPlayer(mediaUrl(data.trailer), false);
                 else if(data.pdf) window.open(data.pdf, '_blank', 'noopener');
             };
             
@@ -1840,18 +2568,27 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
 
         window.closeHoverPreview = function() {
             const hoverCard = document.getElementById('hover-preview-card');
-            if(!hoverCard.classList.contains('active')) return;
+            if(!hoverCard || !hoverCard.classList.contains('active')) return;
             
             hoverCard.classList.remove('active');
             isHoverCardActive = false;
             
-            // Limpa o vídeo e a imagem para o próximo hover
+            // Limpa o vídeo, o iframe e a imagem para o próximo hover
             const videoEl = document.getElementById('hpc-video');
-            videoEl.pause();
-            videoEl.classList.remove('playing');
+            if (videoEl) {
+                videoEl.pause();
+                videoEl.removeAttribute('src');
+                videoEl.classList.remove('playing');
+            }
+            const iframeEl = document.getElementById('hpc-iframe');
+            if (iframeEl) {
+                iframeEl.removeAttribute('src');
+                iframeEl.classList.remove('playing');
+            }
             
             // Remove a imagem antiga imediatamente
-            document.getElementById('hpc-img').style.opacity = 0;
+            const imgEl = document.getElementById('hpc-img');
+            if (imgEl) imgEl.style.opacity = 0;
         }
 
         // Inicia o sistema de hover assim que a página carregar
@@ -1929,7 +2666,9 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
            DELEGAÇÃO DE EVENTOS CENTRALIZADA (ACESSÍVEL / MOBILE / TOUCH)
            ========================================================= */
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Carrega Minha Lista e Continuar Assistindo salvos previamente
+            // 1. Carrega Perfis da Turma, Minha Lista e Continuar Assistindo
+            if (typeof window.renderProfiles === 'function') window.renderProfiles();
+            if (typeof initAvatarPicker === 'function') initAvatarPicker();
             renderMinhaLista();
             renderContinueWatching();
 

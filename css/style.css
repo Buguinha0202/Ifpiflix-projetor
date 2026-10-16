@@ -67,28 +67,160 @@
         }
 
         /* =========================================================
-           PLAYER DE VÍDEO IN-SITE
+           PLAYER DE VÍDEO IN-SITE & TRAILERS
            ========================================================= */
         .video-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; z-index: 10000; display: flex;
             align-items: center; justify-content: center;
             opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            overflow: hidden;
+            user-select: none;
         }
         .video-overlay.show { opacity: 1; pointer-events: auto; }
         
         .close-video-btn {
-            position: absolute; top: 30px; left: 40px; z-index: 10001;
-            background: transparent; color: #fff; border: none;
-            font-size: 1.5rem; font-weight: bold; cursor: pointer; 
-            display: flex; align-items: center; gap: 15px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.9); transition: color 0.2s;
+            position: absolute; top: 25px; left: 35px; z-index: 10003;
+            background: rgba(20, 20, 20, 0.75); color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px; padding: 8px 20px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer; 
+            display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.25s ease;
         }
-        .close-video-btn:hover { color: var(--netflix-red); }
+        .close-video-btn:hover { 
+            background: rgba(255, 255, 255, 0.2); 
+            border-color: #fff;
+            transform: scale(1.05);
+        }
         
         #main-video-element {
             width: 100%; height: 100%; max-height: 100vh; outline: none;
             background: #000;
+        }
+
+        /* YouTube Trailer em tela cheia com estilo nativo IFPIFLIX */
+        #custom-video-player.yt-mode iframe#main-iframe-element {
+            width: 100%;
+            height: 100%;
+            border: none;
+            pointer-events: none; /* Bloqueia cliques diretos nos elementos ou botões nativos do YouTube */
+            transform: scale(1.02);
+        }
+        #custom-video-player.yt-mode {
+            cursor: pointer;
+        }
+        #custom-video-player.yt-mode .close-video-btn {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-5px);
+        }
+        #custom-video-player.yt-mode.show-controls .close-video-btn,
+        #custom-video-player.yt-mode:not(.show-controls):hover .close-video-btn {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* Barra de Controles IFPIFLIX para Trailers */
+        .custom-yt-controls-overlay {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 35px 40px 25px 40px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
+            z-index: 10002;
+            flex-direction: column;
+            gap: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            transform: translateY(5px);
+        }
+        #custom-video-player.yt-mode .custom-yt-controls-overlay {
+            display: flex;
+        }
+        #custom-video-player.yt-mode.show-controls .custom-yt-controls-overlay,
+        #custom-video-player.yt-mode:not(.show-controls):hover .custom-yt-controls-overlay {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .ytc-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: height 0.15s ease;
+        }
+        .ytc-progress-bar:hover {
+            height: 9px;
+        }
+        .ytc-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #e50914;
+            border-radius: 4px;
+            position: relative;
+            pointer-events: none;
+            transition: width 0.1s linear;
+        }
+        .ytc-progress-bar:hover .ytc-progress-fill::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(0,0,0,0.7);
+        }
+
+        .ytc-buttons-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .ytc-left, .ytc-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .ytc-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.35rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border-radius: 50%;
+            transition: transform 0.15s ease, color 0.15s ease;
+        }
+        .ytc-btn:hover {
+            color: #e50914;
+            transform: scale(1.15);
+        }
+        .ytc-time {
+            color: #e5e5e5;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            user-select: none;
         }
 
         /* =========================================
@@ -343,6 +475,7 @@
             width: 100%;
             height: 190px;
             background: #000;
+            overflow: hidden;
         }
         #hpc-img {
             width: 100%;
@@ -352,6 +485,7 @@
             top: 0; left: 0;
             opacity: 0; /* Começa invisível */
             transition: opacity 0.2s ease; /* Transição bem rápida */
+            z-index: 1;
         }
         #hpc-video {
             width: 100%;
@@ -360,9 +494,25 @@
             position: absolute;
             top: 0; left: 0;
             opacity: 0;
-            transition: opacity 1s;
+            transition: opacity 0.8s ease;
+            z-index: 2;
         }
         #hpc-video.playing { opacity: 1; }
+
+        #hpc-iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 130%;
+            height: 130%;
+            transform: translate(-50%, -50%);
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+            z-index: 2;
+        }
+        #hpc-iframe.playing { opacity: 1; }
         
         /* Gradiente para o título não sumir no vídeo claro */
         .hpc-gradient {
@@ -1188,24 +1338,115 @@
         /* Controle do Vídeo no Banner */
         #m-trailer-video {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; pointer-events: none; transition: opacity 1s ease;
+            object-fit: cover; opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
+            z-index: 1;
         }
         #m-trailer-video.playing { opacity: 1; }
+
+        #m-trailer-iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 130%;
+            height: 130%;
+            transform: translate(-50%, -50%);
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+            z-index: 1;
+        }
+        #m-trailer-iframe.playing { opacity: 1; }
         
         /* Garante que o gradiente e os botões fiquem acima do vídeo */
-        .modal-hero-gradient { z-index: 2; pointer-events: none; }
-        .modal-hero-content { z-index: 3; }
+        .modal-hero-gradient { 
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 75%;
+            background: linear-gradient(to top, var(--netflix-bg) 0%, rgba(20,20,20,0.6) 50%, transparent 100%);
+            z-index: 2; pointer-events: none; 
+            transition: opacity 0.4s ease;
+        }
         
         .modal-hero {
             height: 380px; position: relative; background-size: cover;
             background-position: center; background-repeat: no-repeat;
+            overflow: hidden;
+            transition: height 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
         }
-        .modal-hero-gradient {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 70%;
-            background: linear-gradient(to top, var(--netflix-bg) 0%, transparent 100%);
+        /* Expansão da tela do trailer para formato cinema no modal */
+        .modal-hero.modal-hero-expanded {
+            height: 520px;
         }
+
         .modal-hero-content {
             position: absolute; bottom: 20px; left: 40px; right: 40px;
+            z-index: 3;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Auto-hide do título e botões frontais quando o trailer está rodando */
+        .modal-hero.trailer-playing .modal-hero-content {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(15px);
+        }
+        /* Reaparece instantaneamente se o mouse passar sobre o banner */
+        .modal-hero.trailer-playing:hover .modal-hero-content,
+        .modal-hero.force-show-info .modal-hero-content {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: translateY(0) !important;
+        }
+        .modal-hero.trailer-playing .modal-hero-gradient {
+            opacity: 0.6;
+        }
+        .modal-hero.trailer-playing:hover .modal-hero-gradient {
+            opacity: 1;
+        }
+
+        /* Controles Flutuantes do Trailer (Som, Expandir e Info) - No topo direito ao lado do fechar (X), sem cobrir os botões inferiores */
+        .modal-trailer-floating-controls {
+            position: absolute;
+            top: 15px;
+            right: 65px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(-5px);
+        }
+        .modal-hero.has-trailer .modal-trailer-floating-controls {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .trailer-control-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(20, 20, 20, 0.75);
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .trailer-control-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #fff;
+            transform: scale(1.1);
+        }
+        .trailer-control-btn.active {
+            background: var(--netflix-red);
+            border-color: var(--netflix-red);
+            color: #fff;
         }
         .modal-title { font-family: 'Bebas Neue', cursive; font-size: 4rem; line-height: 1; text-shadow: 2px 2px 10px #000; margin-bottom: 15px;}
         
@@ -3810,6 +4051,259 @@
             .resumo-section { flex-direction: column; gap: 8px; }
             .resumo-footer-actions { padding: 12px 18px; }
         }
+
+        /* =========================================================
+           AVATARES DA TURMA & PERFIS CUSTOMIZADOS
+           ========================================================= */
+        .av-admin     { background: linear-gradient(135deg, #e50914 0%, #7f0000 100%) !important; color: #fff; }
+        .av-turma     { background: linear-gradient(135deg, #10b981 0%, #064e3b 100%) !important; color: #fff; }
+        .av-prof      { background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%) !important; color: #fff; }
+        .av-visitante { background: linear-gradient(135deg, #8b5cf6 0%, #4c1d95 100%) !important; color: #fff; }
+
+        /* Temas dos avatares criados pelo usuário */
+        .av-theme-red    { background: linear-gradient(135deg, #e50914, #7f0000) !important; color: #fff; }
+        .av-theme-blue   { background: linear-gradient(135deg, #3b82f6, #1e3a8a) !important; color: #fff; }
+        .av-theme-green  { background: linear-gradient(135deg, #10b981, #064e3b) !important; color: #fff; }
+        .av-theme-gold   { background: linear-gradient(135deg, #f59e0b, #78350f) !important; color: #fff; }
+        .av-theme-purple { background: linear-gradient(135deg, #8b5cf6, #4c1d95) !important; color: #fff; }
+
+        .av-add { 
+            background: transparent !important; 
+            border: 2px dashed rgba(255,255,255,0.4) !important; 
+            color: rgba(255,255,255,0.5); 
+            transition: 0.3s;
+        }
+        .profile-card-add:hover .av-add { 
+            border-color: #fff !important; 
+            color: #fff; 
+            background: rgba(255,255,255,0.1) !important; 
+        }
+
+        /* MODAL DE ADICIONAR PERFIL */
+        .add-profile-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            z-index: 10005; display: none; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .add-profile-modal-overlay.show { display: flex; animation: fadeIn 0.3s ease forwards; }
+        .add-profile-box {
+            background: #181818; border-radius: 12px; padding: 35px 40px; max-width: 480px; width: 100%;
+            border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+            position: relative; color: #fff;
+        }
+        .add-profile-box h2 { font-size: 2rem; margin-bottom: 6px; font-weight: 700; }
+        .add-profile-sub { color: #aaa; font-size: 0.95rem; margin-bottom: 25px; line-height: 1.4; }
+        .add-profile-form { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 30px; }
+        .avatar-preview-wrapper .avatar { width: 95px; height: 95px; font-size: 2.5rem; flex-shrink: 0; }
+        .add-profile-inputs { flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
+        .add-profile-inputs label { font-size: 0.85rem; color: #ccc; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .add-profile-inputs input {
+            background: #2b2b2b; border: 1px solid #444; border-radius: 4px; padding: 10px 14px;
+            color: #fff; font-size: 1rem; outline: none; transition: 0.2s;
+        }
+        .add-profile-inputs input:focus { border-color: #fff; background: #333; }
+        .avatar-color-options { display: flex; gap: 10px; margin-top: 5px; flex-wrap: wrap; }
+        .avatar-opt-btn {
+            width: 38px; height: 38px; border-radius: 50%; border: 2px solid transparent;
+            color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .avatar-opt-btn:hover { transform: scale(1.15); }
+        .avatar-opt-btn.active { border-color: #fff; transform: scale(1.15); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .add-profile-actions { display: flex; gap: 12px; }
+        .btn-save-profile {
+            background: #fff; color: #000; border: none; padding: 10px 22px; font-weight: bold;
+            font-size: 1rem; border-radius: 4px; cursor: pointer; transition: 0.2s;
+        }
+        .btn-save-profile:hover { background: #ccc; }
+        .btn-cancel-profile {
+            background: transparent; color: #aaa; border: 1px solid #555; padding: 10px 20px;
+            font-weight: 600; font-size: 1rem; border-radius: 4px; cursor: pointer; transition: 0.2s;
+        }
+        .btn-cancel-profile:hover { border-color: #fff; color: #fff; }
+
+        /* =========================================================
+           BOTÃO SURPREENDA-ME (ROLETA)
+           ========================================================= */
+        .btn-surprise {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 7px 15px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+            backdrop-filter: blur(5px);
+            margin-right: 5px;
+        }
+        .btn-surprise:hover {
+            background: rgba(229, 9, 20, 0.15);
+            border-color: var(--netflix-red);
+            box-shadow: 0 0 12px rgba(229, 9, 20, 0.35);
+            transform: translateY(-1px);
+        }
+        .btn-surprise i {
+            color: var(--netflix-red);
+            font-size: 0.95rem;
+            transition: transform 0.4s ease;
+        }
+        .btn-surprise.spinning i {
+            transform: rotate(360deg);
+        }
+        @media (max-width: 650px) {
+            .btn-surprise-text { display: none; }
+            .btn-surprise { padding: 8px 11px; border-radius: 50%; }
+        }
+
+        /* =========================================================
+           CONTROLES DO MODAL (2 BOTÕES, AVALIAÇÃO E COMPARTILHAR)
+           ========================================================= */
+        .modal-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+        .modal-action-btns {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .modal-icon-btns {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .modal-btn-secondary {
+            background: rgba(109, 109, 110, 0.7);
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+        }
+        .modal-btn-secondary:hover {
+            background: rgba(109, 109, 110, 0.4);
+        }
+        .modal-surprise-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(229, 9, 20, 0.9);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+        .btn-respin {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            border-radius: 12px;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-respin:hover { background: #fff; color: #000; border-color: #fff; }
+
+        /* POPOVER DE AVALIAÇÃO */
+        .rate-btn-wrapper { position: relative; }
+        .rate-popover {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: #262626;
+            border-radius: 30px;
+            padding: 6px 10px;
+            display: flex;
+            gap: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.18);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+        }
+        .rate-popover.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+        .rate-option {
+            background: transparent;
+            border: none;
+            color: #fff;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s, background 0.15s;
+        }
+        .rate-option:hover {
+            transform: scale(1.22);
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* TOAST GLOBAL */
+        .global-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: rgba(24, 24, 24, 0.95);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100000;
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+        .global-toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        .global-toast i { color: #46d369; font-size: 1.2rem; }
 
 
 
