@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css?v=3.7">
+    <link rel="stylesheet" href="css/style.css?v=3.8">
 </head>
 <body>
 
@@ -1369,7 +1369,7 @@
         </div>
     </div>
 
-    <script src="js/script.js?v=3.7"></script>
+    <script src="js/script.js?v=3.8"></script>
 
     <!-- O HTML DO PLAYER DEVE FICAR FORA DO SCRIPT -->
     <div id="custom-video-player" class="video-overlay">
@@ -1411,6 +1411,9 @@
                 <span id="pdf-slide-counter" class="pdf-slide-counter" style="display: none;">Slide 1 de 1</span>
             </div>
             <div class="pdf-viewer-actions">
+                <button type="button" class="pdf-action-btn" id="pdf-thumbnails-toggle" onclick="window.toggleSlideThumbnailsModal()" title="Ver Todos os Slides em Grade">
+                    <i class="fa-solid fa-table-cells"></i> <span style="font-size: 0.8rem; margin-left: 4px;">Grade de Slides</span>
+                </button>
                 <button type="button" class="pdf-action-btn" id="pdf-mode-toggle" onclick="window.togglePdfViewerMode()" title="Alternar entre Leitor Nativo e PDF">
                     <i class="fa-solid fa-file-lines"></i> <span style="font-size: 0.8rem; margin-left: 4px;">PDF Original</span>
                 </button>
@@ -1448,6 +1451,17 @@
         <!-- FALLBACK IFRAME (SEPARADO) -->
         <div class="pdf-viewer-body" id="pdf-iframe-body" style="display: none;">
             <iframe id="main-pdf-iframe" src="" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- MODAL GRADE DE MINIATURAS (VISÃO GERAL DE SLIDES) -->
+    <div id="slide-thumbnails-overlay" class="slide-thumbnails-overlay" onclick="window.closeSlideThumbnailsModal(event)">
+        <div class="slide-thumbnails-header">
+            <h2><i class="fa-solid fa-table-cells" style="color:var(--netflix-red);"></i> Todos os Slides do Trabalho</h2>
+            <button type="button" class="slide-thumbnails-close-btn" onclick="window.closeSlideThumbnailsModal(event, true)" title="Fechar Grade"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="slide-thumbnails-grid" id="slide-thumbnails-grid">
+            <!-- Miniaturas geradas dinamicamente via JS -->
         </div>
     </div>
 

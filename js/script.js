@@ -28,28 +28,28 @@ const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matc
    ROTEIRO: ordem dos slides e apresentadores
    ========================================================= */
 const script = [
-    { id: 0,     title: "1. A Escolástica",                          presenter: "Davi",         tickers: ["Dogmas religiosos e textos clássicos possuíam um peso inquestionável."] },
-    { id: "0_1", title: "2. A Transição",                            presenter: "Davi",         tickers: ["A física aristotélica era insuficiente para as novas necessidades."] },
-    { id: "0_2", title: "3. A Ruptura",                              presenter: "Davi",         tickers: ["A crise escolástica abriu caminho para o questionamento direto."] },
-    { id: 1,     title: "4. O Terreno Fértil",                       presenter: "Davi",         tickers: ["Dúvida, observação e busca por métodos autônomos."] },
+    { id: 0,     title: "1. A Escolástica",                          presenter: "Davi Costa",         tickers: ["Dogmas religiosos e textos clássicos possuíam um peso inquestionável."] },
+    { id: "0_1", title: "2. A Transição",                            presenter: "Davi Costa",         tickers: ["A física aristotélica era insuficiente para as novas necessidades."] },
+    { id: "0_2", title: "3. A Ruptura",                              presenter: "Davi Costa",         tickers: ["A crise escolástica abriu caminho para o questionamento direto."] },
+    { id: 1,     title: "4. O Terreno Fértil",                       presenter: "Davi Costa",         tickers: ["Dúvida, observação e busca por métodos autônomos."] },
 
-    { id: "2",   title: "Cap 2: Antes da Rev. Científica",           presenter: "Maria Helena", tickers: ["A tradição ditava as regras."] },
-    { id: "2_1", title: "Cap 2: Geocentrismo",                       presenter: "Maria Helena", tickers: ["A Terra no centro de tudo."] },
-    { id: "3",   title: "Cap 2: Princípio de Autoridade",            presenter: "Maria Helena", tickers: ["Aristóteles falou, tá falado."] },
-    { id: "3_1", title: "Cap 2: A Mudança",                          presenter: "Maria Helena", tickers: ["Observar e testar virou a nova moda."] },
+    { id: "2",   title: "Cap 2: Antes da Rev. Científica",           presenter: "Maria Helena",       tickers: ["A tradição ditava as regras."] },
+    { id: "2_1", title: "Cap 2: Geocentrismo",                       presenter: "Maria Helena",       tickers: ["A Terra no centro de tudo."] },
+    { id: "3",   title: "Cap 2: Princípio de Autoridade",            presenter: "Maria Helena",       tickers: ["Aristóteles falou, tá falado."] },
+    { id: "3_1", title: "Cap 2: A Mudança",                          presenter: "Maria Helena",       tickers: ["Observar e testar virou a nova moda."] },
 
-    { id: 4,     title: "Cap 3: A Ruptura",                          presenter: "Francisco L",  tickers: ["O homem moderno: 'E se a gente testasse essa parada?'", "A contemplação passiva saiu do chat.", "Investigação ativa entrou no chat."] },
+    { id: 4,     title: "Cap 3: A Ruptura",                          presenter: "Francisco Lucas",    tickers: ["O homem moderno: 'E se a gente testasse essa parada?'", "A contemplação passiva saiu do chat.", "Investigação ativa entrou no chat."] },
 
-    { id: 5,     title: "Cap 4: Revolução Cosmológica (Copérnico)",  presenter: "Pedro",        tickers: ["Copérnico: 'Galera, o Sol tá no meio, não a gente'.", "Tirar a Terra do centro ofendeu muito o ego humano."] },
-    { id: "6_1", title: "Cap 4: Revolução Cosmológica (Kepler)",     presenter: "Pedro",        tickers: ["Kepler: “Círculo perfeito? Não exatamente.”"] },
-    { id: 6,     title: "Cap 4: Revolução Cosmológica (Galileu)",    presenter: "Pedro",        tickers: ["Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.", "Eppur si muove: o primeiro 'falei, tô leve' da história."] },
+    { id: 5,     title: "Cap 4: Revolução Cosmológica (Copérnico)",  presenter: "Pedro Victor",       tickers: ["Copérnico: 'Galera, o Sol tá no meio, não a gente'.", "Tirar a Terra do centro ofendeu muito o ego humano."] },
+    { id: "6_1", title: "Cap 4: Revolução Cosmológica (Kepler)",     presenter: "Pedro Victor",       tickers: ["Kepler: “Círculo perfeito? Não exatamente.”"] },
+    { id: 6,     title: "Cap 4: Revolução Cosmológica (Galileu)",    presenter: "Pedro Victor",       tickers: ["Galileu: 'Mano, olha no telescópio'. Inquisição: 'Não quero'.", "Eppur si muove: o primeiro 'falei, tô leve' da história."] },
 
-    { id: 8,     title: "Cap 5: Empirismo (Os Ídolos)",              presenter: "Marcelo",      tickers: ["Ídolo da Caverna = viver na própria bolha.", "Bacon: Antes de fazer ciência, limpe sua mente dos fakes."] },
-    { id: 9,     title: "Cap 5: Empirismo (Método Indutivo)",        presenter: "Marcelo",      tickers: ["Bacon morreu de pneumonia tentando congelar uma galinha.", "Se não testou na prática, meu anjo, é só fanfic."] },
-    { id: 10,    title: "Cap 6: Racionalismo (Dúvida Metódica)",     presenter: "Samuel",       tickers: ["Descartes ficou dias trancado num quarto.", "E se tudo for uma simulação?"] },
-    { id: 11,    title: "Cap 6: Racionalismo (Penso, logo existo)",  presenter: "Samuel",       tickers: ["Duvidou tanto de tudo que quase sumiu da existência.", "A única certeza: eu existo porque penso."] },
-    { id: 12,    title: "Cap 7: Síntese Newtoniana",                 presenter: "JP Santos",    tickers: ["Uma maçã caiu, e o cara inventou o cálculo.", "Newton uniu o Racionalismo e o Empirismo na amizade."] },
-    { id: 13,    title: "Fim: Assine Já",                            presenter: "Todos",        tickers: [] }
+    { id: 8,     title: "Cap 5: Empirismo (Os Ídolos)",              presenter: "Marcelo",            tickers: ["Ídolo da Caverna = viver na própria bolha.", "Bacon: Antes de fazer ciência, limpe sua mente dos fakes."] },
+    { id: 9,     title: "Cap 5: Empirismo (Método Indutivo)",        presenter: "Marcelo",            tickers: ["Bacon morreu de pneumonia tentando congelar uma galinha.", "Se não testou na prática, meu anjo, é só fanfic."] },
+    { id: 10,    title: "Cap 6: Racionalismo (Dúvida Metódica)",     presenter: "Samuel Soares",      tickers: ["Descartes ficou dias trancado num quarto.", "E se tudo for uma simulação?"] },
+    { id: 11,    title: "Cap 6: Racionalismo (Penso, logo existo)",  presenter: "Samuel Soares",      tickers: ["Duvidou tanto de tudo que quase sumiu da existência.", "A única certeza: eu existo porque penso."] },
+    { id: 12,    title: "Cap 7: Síntese Newtoniana",                 presenter: "João Pedro Santos",  tickers: ["Uma maçã caiu, e o cara inventou o cálculo.", "Newton uniu o Racionalismo e o Empirismo na amizade."] },
+    { id: 13,    title: "Fim: Assine Já",                            presenter: "Todos",              tickers: [] }
 ];
 
 let activeProfile = "Admin";
@@ -79,7 +79,7 @@ let toastTimeout;
                 banner: "banner.png",
                 match: "99% Relevante", year: "2016", age: "12", duration: "2h 27m",
                 synopsis: "A Revolução Científica Moderna, a queda dos dogmas e a forja do Método Científico por Newton. Acompanhe a maior batalha intelectual da história entre defensores da experiência prática e adeptos da lógica pura.",
-                cast: "Davi, Maria Helena, Francisco L, Pedro, Marcelo, Samuel, JP Santos", genres: "Ação, Documentário, Filosofia", tags: "Heliocentrismo, Bacon, Descartes", isMain: true
+                cast: "Davi Costa, Maria Helena, Francisco Lucas, Pedro Victor, Marcelo, Samuel Soares, João Pedro Santos", genres: "Ação, Documentário, Filosofia", tags: "Heliocentrismo, Bacon, Descartes", isMain: true
             },
             "tema-3": {
                 title: "DEVORADORES DO ESPAÇO TEMPO", subtitle: "",
@@ -157,7 +157,7 @@ let toastTimeout;
                 bg: "procurando_ip.jpg", 
                 ytTrailer: "i2G4NK7Rtvg", // Procurando Nemo (Dublado)
                 match: "96% Relevante", year: "2003", age: "Livre", duration: "1h 40m",
-                synopsis: "Um pacotinho de dados se perde na imensidão da Deep Web, e seu pai precisa atravessar roteadores perigosos e firewalls gigantes para trazê-lo de volta para casa.",
+                synopsis: "Um pacotinho de dados se perde na imensidão da Deep Web, e seu pai precisa atravessar roteadores perigosos e firewalls gigantes para traz-lo de volta para casa.",
                 cast: "Albert Boots, Ellen DeGe-Network", genres: "Animação, Família", tags: "Redes, Roteamento", isMain: false
             },
             "nicolas": {
@@ -227,7 +227,7 @@ let toastTimeout;
                 slideKey: "teorias_politicas",
                 match: "97% Relevante", year: "2025", age: "Livre", duration: "13 Slides • Filosofia Política",
                 synopsis: "A fundação do pensamento político clássico na Grécia Antiga: o ideal da cidade justa e a República de Platão governada pelo Rei-Filósofo versus o realismo pragmático e a pólis em Aristóteles.",
-                cast: "Davi Costa de Lucena, Micaías de Sousa Lima e equipe",
+                cast: "Davi Costa, Samuel Soares, Francisco Lucas, Yasmyn Paiva, Marcos Felipe, Nícolas Marcell, Micaías Lima, João Pedro Santos, Wislla Mariana, João Pedro Silva",
                 genres: "Filosofia Política, Grécia Antiga", tags: "Filosofia, Platão, Aristóteles, Política", isMain: false,
                 materia: "Filosofia", trabalhoGrupo: "Seminário: Filosofia Política na Antiguidade", periodo: "2025 • Acervo da Turma"
             },
@@ -238,7 +238,7 @@ let toastTimeout;
                 slideKey: "guerra_fria",
                 match: "97% Relevante", year: "2025", age: "Livre", duration: "15 Slides • Apresentação",
                 synopsis: "Apresentação acadêmica abrangente sobre a Guerra Fria: o confronto ideológico entre EUA e URSS, a Doutrina Truman, a corrida armamentista e espacial, as crises na Ásia e América Latina e o colapso do bloco soviético.",
-                cast: "Francisco Lucas, Pedro Victor, João Pedro, Rodrigo Rubim, Nícolas Marcell, Micaías Lima, Orlando Júnior",
+                cast: "Francisco Lucas, Pedro Victor, João Pedro Santos, Rodrigo Rubim, Nícolas Marcell, Micaías Lima, Orlando Júnior",
                 genres: "História Geral, Geopolítica", tags: "História, Guerra Fria, Geopolítica", isMain: false,
                 materia: "História", trabalhoGrupo: "Seminário: A Guerra Fria e Relações Internacionais", periodo: "2025 • Acervo da Turma"
             },
@@ -249,7 +249,7 @@ let toastTimeout;
                 slideKey: "padre_amaro",
                 match: "95% Relevante", year: "2025", age: "14", duration: "10 Slides • Análise Literária",
                 synopsis: "Estudo crítico da célebre obra realista de Eça de Queirós, denunciando a corrupção moral do clero e a hipocrisia da sociedade burguesa de Leiria através do drama proibido entre o padre Amaro e Amélia.",
-                cast: "Davi Costa de Lucena, Marcos Felipe Sobral, Micaías de Sousa Lima, Samuel de Araújo Soares (Turma 404-A)",
+                cast: "Davi Costa, Marcos Felipe, Micaías Lima, Samuel Soares",
                 genres: "Língua Portuguesa, Literatura", tags: "Literatura, Realismo, Eça de Queirós", isMain: false,
                 materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Realismo e Obras Clássicas", periodo: "2025 • Acervo da Turma"
             },
@@ -260,7 +260,7 @@ let toastTimeout;
                 slideKey: "sociologia_desenvolvimento",
                 match: "96% Relevante", year: "2025", age: "Livre", duration: "10 Slides • Pesquisa Social",
                 synopsis: "Pesquisa sociológica sobre a produção socializada e a apropriação privada do lucro, as crises cíclicas do capitalismo, o relatório da fome da ONU e os desafios estruturais para o desenvolvimento sustentável.",
-                cast: "Davi Costa, João Pedro Santos, Samuel Soares, Marcos Felipe, Micaías Lima, João Pedro Silva, Yasmyn Paiva",
+                cast: "Davi Costa, João Pedro Santos, Samuel Soares, Marcos Felipe, Micaías Lima, João Pedro Silva, Yasmyn Paiva, Wislla Mariana, Nícolas Marcell, Francisco Lucas",
                 genres: "Sociologia, Economia Política", tags: "Sociologia, Desigualdade, Capitalismo", isMain: false,
                 materia: "Sociologia", trabalhoGrupo: "Seminário: Teorias Sociais e Desenvolvimento Global", periodo: "2025 • Acervo da Turma"
             },
@@ -271,7 +271,7 @@ let toastTimeout;
                 ytTrailer: "M4rHhajry4A",
                 match: "98% Relevante", year: "2025", age: "Livre", duration: "Vídeo / Podcast",
                 synopsis: "Episódio especial gravado em formato podcast pelos alunos da turma, debatendo com profundidade as raízes históricas, os dados estatísticos e os reflexos modernos da desigualdade social e econômica.",
-                cast: "Micaías de Sousa Lima e Alunos do IFPI",
+                cast: "Micaías Lima",
                 genres: "Sociologia, Podcast Acadêmico", tags: "Sociologia, Podcast, Desigualdade Social", isMain: false,
                 materia: "Sociologia", trabalhoGrupo: "Podcasts & Debates: Questões Sociais Brasileiras", periodo: "2025 • Acervo da Turma"
             },
@@ -282,7 +282,7 @@ let toastTimeout;
                 ytTrailer: "AAhPhj00K0g",
                 match: "99% Relevante", year: "2026", age: "Livre", duration: "Vídeo / Telejornal",
                 synopsis: "Edição especial do telejornal acadêmico 'Cyber News' produzida pelos alunos, cobrindo as políticas de segurança da informação (PSI), boas práticas corporativas, senhas fortes e prevenção a vazamentos de dados.",
-                cast: "Micaías de Sousa Lima e Alunos do IFPI",
+                cast: "Micaías Lima",
                 genres: "Segurança da Informação, Telejornalismo", tags: "Cibersegurança, Redes, Políticas de Segurança", isMain: false,
                 materia: "Segurança & Redes", trabalhoGrupo: "Práticas de Segurança da Informação & Defesa Cibernética", periodo: "2026 • 1º Bimestre"
             },
@@ -293,7 +293,7 @@ let toastTimeout;
                 slideKey: "memoria_cache",
                 match: "94% Relevante", year: "2025", age: "Livre", duration: "6 Slides • Apresentação Técnica",
                 synopsis: "Apresentação técnica sobre a organização interna e o fluxo de dados em sistemas computacionais: funcionamento da memória cache (L1, L2, L3), latência, barramentos e dispositivos de armazenamento secundário.",
-                cast: "Micaías de Sousa Lima, Maria Helena",
+                cast: "Micaías Lima, Maria Helena",
                 genres: "Hardware, Arquitetura de Computadores", tags: "Hardware, Memória Cache, Processadores", isMain: false,
                 materia: "Hardware & Arquitetura", trabalhoGrupo: "Seminário: Arquitetura de Computadores e Hierarquia de Memória", periodo: "2025 • Acervo da Turma"
             },
@@ -304,7 +304,7 @@ let toastTimeout;
                 slideKey: "evolucao_computadores",
                 match: "93% Relevante", year: "2025", age: "Livre", duration: "9 Slides • Manutenção",
                 synopsis: "Um panorama histórico da informática: desde a primeira geração com válvulas eletrônicas gigantes (1945), a revolução dos transistores e circuitos integrados até os microprocessadores de alto desempenho.",
-                cast: "Micaías de Sousa Lima",
+                cast: "Micaías Lima",
                 genres: "Manutenção de Computadores, História da T.I.", tags: "Hardware, Evolução dos Computadores", isMain: false,
                 materia: "Hardware & Arquitetura", trabalhoGrupo: "Seminário: História da Computação e Manutenção", periodo: "2025 • Acervo da Turma"
             },
@@ -314,7 +314,7 @@ let toastTimeout;
                 pdf: "https://canva.link/nynn6ibes7h9adb",
                 match: "99% Relevante", year: "2025", age: "14", duration: "Podcast • Canva",
                 synopsis: "Episódio de estreia do podcast 'Clássicos em Série': os alunos analisam a série Round 6 através dos conceitos clássicos da sociologia — a luta de classes e desumanização em Marx, a anomia moral em Durkheim e a ação social racional calculista em Weber.",
-                cast: "Francisco Lucas, João Pedro dos Santos (JP), Pedro Victor",
+                cast: "Francisco Lucas, João Pedro Santos, Pedro Victor",
                 genres: "Sociologia, Podcast Cultural", tags: "Sociologia, Round 6, Marx, Durkheim, Weber", isMain: false,
                 materia: "Sociologia", trabalhoGrupo: "Podcasts & Debates: Questões Sociais Brasileiras", periodo: "2025 • Acervo da Turma"
             },
@@ -325,7 +325,7 @@ let toastTimeout;
                 slideKey: "ia_ingles",
                 match: "96% Relevante", year: "2025", age: "Livre", duration: "11 Slides • Apresentação",
                 synopsis: "Estudo sobre a integração da Inteligência Artificial no ensino e prática de inglês: superação do medo de errar, prática de conversação com chatbots, feedback imediato e ferramentas adaptativas como Duolingo.",
-                cast: "João Pedro dos Santos Silva, Pedro Victor Evangelista Gomes, Francisco Lucas Alves do Prado, Bruno Cardoso Paz",
+                cast: "João Pedro Santos, Pedro Victor, Francisco Lucas, Bruno Cardoso",
                 genres: "Língua Inglesa, Inteligência Artificial", tags: "Inglês, IA, Educação, Chatbots", isMain: false,
                 materia: "Língua Inglesa", trabalhoGrupo: "Seminário: Inteligência Artificial no Ensino de Idiomas", periodo: "2025 • Acervo da Turma"
             },
@@ -336,7 +336,7 @@ let toastTimeout;
                 slideKey: "padre_amaro_jogo",
                 match: "96% Relevante", year: "2025", age: "14", duration: "6 Slides • Gamificação Literária",
                 synopsis: "Adaptação criativa da narrativa do clássico realista de Eça de Queirós em formato de regras e dinâmicas de jogo de tabuleiro: a chegada de Amaro a Leiria, as intrigas de João Eduardo, a quebra de votos e o sacrilégio moral.",
-                cast: "João Pedro dos Santos Silva, Pedro Victor Evangelista Gomes, Francisco Lucas Alves do Prado",
+                cast: "João Pedro Santos, Pedro Victor, Francisco Lucas",
                 genres: "Língua Portuguesa, Gamificação", tags: "Literatura, Eça de Queirós, Jogo de Tabuleiro", isMain: false,
                 materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Realismo e Obras Clássicas", periodo: "2025 • Acervo da Turma"
             },
@@ -347,7 +347,7 @@ let toastTimeout;
                 slideKey: "jogo_transito",
                 match: "95% Relevante", year: "2025", age: "Livre", duration: "3 Slides • Projeto de Software",
                 synopsis: "Proposta de desenvolvimento de um jogo mobile educativo com minigames interativos ensinando regras do Código de Trânsito Brasileiro, programado em React Native, arte em pixel art (Aseprite) e trilha sonora via Beepbox.",
-                cast: "João Pedro dos Santos Silva, Francisco Lucas Alves do Prado, Pedro Victor Evangelista Gomes, Rodrigo de Oliveira Rubim Sousa",
+                cast: "João Pedro Santos, Francisco Lucas, Pedro Victor, Rodrigo Rubim",
                 genres: "Programação & T.I., Desenvolvimento de Jogos", tags: "React Native, Games, Código de Trânsito", isMain: false,
                 materia: "Programação & T.I.", trabalhoGrupo: "Projeto Integrador: Desenvolvimento de Software e Games", periodo: "2025 • Acervo da Turma"
             },
@@ -358,7 +358,7 @@ let toastTimeout;
                 slideKey: "sargento_milicias",
                 match: "94% Relevante", year: "2025", age: "Livre", duration: "6 Slides • Análise Literária",
                 synopsis: "Estudo crítico sobre a célebre obra de Manuel Antônio de Almeida: a representação das camadas populares do Rio de Janeiro colonial, as aventuras e malandragens de Leonardo e a transição do Romantismo para o Realismo.",
-                cast: "João Pedro dos Santos Silva, Pedro Victor Evangelista Gomes, Francisco Lucas Alves do Prado",
+                cast: "João Pedro Santos, Pedro Victor, Francisco Lucas",
                 genres: "Língua Portuguesa, Literatura Brasileira", tags: "Romantismo Urbano, Malandragem, Literatura", isMain: false,
                 materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Romantismo Urbano e Transição ao Realismo", periodo: "2025 • Acervo da Turma"
             },
@@ -369,7 +369,7 @@ let toastTimeout;
                 slideKey: "prosa_1930",
                 match: "97% Relevante", year: "2025", age: "12", duration: "11 Slides • Segunda Geração Modernista",
                 synopsis: "Análise aprofundada da Prosa Regionalista de 30 com foco em Jorge Amado: o impacto social da Crise de 1929 e da Era Vargas, a denúncia das desigualdades no Nordeste e o homem determinado pelo seu meio sociocultural.",
-                cast: "João Pedro dos Santos Silva, Pedro Victor Evangelista Gomes, Francisco Lucas Alves do Prado, João Pedro Silva Santos, Nicolas Marcell da Fonseca Sousa",
+                cast: "João Pedro Santos, Pedro Victor, Francisco Lucas, João Pedro Silva, Nícolas Marcell, José Nildo",
                 genres: "Língua Portuguesa, Modernismo", tags: "Jorge Amado, Prosa de 30, Modernismo, Bahia", isMain: false,
                 materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Segunda Geração Modernista (A Prosa de 30)", periodo: "2025 • Acervo da Turma"
             }
@@ -1099,6 +1099,12 @@ window.closeVideoPlayer = function() {
                 clearTimeout(toastTimeout);
             }
 
+            if (id === 'acervo-screen') {
+                if (typeof window.resumeAcervoHeroTimer === 'function') window.resumeAcervoHeroTimer();
+            } else {
+                if (typeof window.pauseAcervoHeroTimer === 'function') window.pauseAcervoHeroTimer();
+            }
+
             if (id === 'home-screen') {
                 renderContinueWatching();
             }
@@ -1407,6 +1413,8 @@ window.closeVideoPlayer = function() {
                     toggleBtn.style.display = 'inline-flex';
                     toggleBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> <span style="font-size: 0.8rem; margin-left: 4px;">PDF Original</span>';
                 }
+                const thumbsBtn = document.getElementById('pdf-thumbnails-toggle');
+                if (thumbsBtn) thumbsBtn.style.display = 'inline-flex';
                 updateSlideViewer();
             } else {
                 // Modo PDF clássico (para uploads sem slides pré-renderizados)
@@ -1416,6 +1424,8 @@ window.closeVideoPlayer = function() {
                 if (iframeBody) iframeBody.style.display = 'block';
                 if (slideCounter) slideCounter.style.display = 'none';
                 if (toggleBtn) toggleBtn.style.display = 'none';
+                const thumbsBtn = document.getElementById('pdf-thumbnails-toggle');
+                if (thumbsBtn) thumbsBtn.style.display = 'none';
                 if (iframe) iframe.src = resolvedUrl;
             }
 
@@ -1458,11 +1468,58 @@ window.closeVideoPlayer = function() {
             }
         };
 
+        /* =========================================================
+           FEATURE 7: GRADE DE MINIATURAS (VISÃO GERAL DO SLIDE)
+           ========================================================= */
+        window.toggleSlideThumbnailsModal = function() {
+            const overlay = document.getElementById('slide-thumbnails-overlay');
+            if (!overlay) return;
+            if (overlay.classList.contains('show')) {
+                window.closeSlideThumbnailsModal(null, true);
+                return;
+            }
+
+            if (!currentActiveSlides || !currentActiveSlides.length) {
+                window.showToastNotification('Este trabalho não possui miniaturas nativas de slides.');
+                return;
+            }
+
+            const grid = document.getElementById('slide-thumbnails-grid');
+            if (grid) {
+                grid.innerHTML = currentActiveSlides.map((url, idx) => `
+                    <div class="slide-thumb-card ${idx === currentSlideIndex ? 'active' : ''}" onclick="window.jumpToSlideThumbnail(${idx})" role="button" tabindex="0" aria-label="Slide ${idx + 1}">
+                        <div class="slide-thumb-img-wrapper">
+                            <span class="slide-thumb-number">${String(idx + 1).padStart(2, '0')}</span>
+                            <img src="${url}" alt="Slide ${idx + 1}" loading="lazy">
+                        </div>
+                        <div class="slide-thumb-label">Slide ${idx + 1}</div>
+                    </div>
+                `).join('');
+            }
+            overlay.classList.add('show');
+        };
+
+        window.closeSlideThumbnailsModal = function(e, force = false) {
+            if (force || (e && (e.target.id === 'slide-thumbnails-overlay' || e.target.closest('.slide-thumbnails-close-btn')))) {
+                const overlay = document.getElementById('slide-thumbnails-overlay');
+                if (overlay) overlay.classList.remove('show');
+            }
+        };
+
+        window.jumpToSlideThumbnail = function(idx) {
+            if (idx >= 0 && idx < currentActiveSlides.length) {
+                currentSlideIndex = idx;
+                updateSlideViewer();
+                window.closeSlideThumbnailsModal(null, true);
+            }
+        };
+
         window.togglePdfViewerMode = function() {
             const stage = document.getElementById('netflix-slide-stage');
             const iframeBody = document.getElementById('pdf-iframe-body');
             const iframe = document.getElementById('main-pdf-iframe');
             const toggleBtn = document.getElementById('pdf-mode-toggle');
+            const thumbsBtn = document.getElementById('pdf-thumbnails-toggle');
             const slideCounter = document.getElementById('pdf-slide-counter');
             const extLink = document.getElementById('pdf-external-link');
 
@@ -1472,24 +1529,38 @@ window.closeVideoPlayer = function() {
                 if (iframeBody) iframeBody.style.display = 'none';
                 if (slideCounter) slideCounter.style.display = 'inline-block';
                 if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> <span style="font-size: 0.8rem; margin-left: 4px;">PDF Original</span>';
+                if (thumbsBtn) thumbsBtn.style.display = 'inline-flex';
             } else {
                 if (stage) stage.style.display = 'none';
                 if (iframeBody) iframeBody.style.display = 'block';
                 if (slideCounter) slideCounter.style.display = 'none';
                 if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-file-powerpoint"></i> <span style="font-size: 0.8rem; margin-left: 4px;">Leitor Nativo</span>';
+                if (thumbsBtn) thumbsBtn.style.display = 'none';
                 if (iframe && extLink && (!iframe.src || iframe.src === 'about:blank')) {
                     iframe.src = extLink.href;
                 }
             }
         };
 
-        // Teclado para navegação do Player de Slides (setas esquerda e direita)
+        // Teclado para navegação do Player de Slides (setas esquerda e direita e G para grade)
         document.addEventListener('keydown', (e) => {
             const viewer = document.getElementById('custom-pdf-viewer');
             if (!viewer || !viewer.classList.contains('show')) return;
+
+            const thumbsOverlay = document.getElementById('slide-thumbnails-overlay');
+            if (thumbsOverlay && thumbsOverlay.classList.contains('show')) {
+                if (e.key === 'Escape') {
+                    window.closeSlideThumbnailsModal(null, true);
+                    return;
+                }
+            }
+
             if (!isNativeSlideMode || !currentActiveSlides.length) return;
 
-            if (e.key === 'ArrowRight' || e.key === ' ') {
+            if (e.key === 'g' || e.key === 'G') {
+                e.preventDefault();
+                window.toggleSlideThumbnailsModal();
+            } else if (e.key === 'ArrowRight' || e.key === ' ') {
                 e.preventDefault();
                 window.navSlide(1);
             } else if (e.key === 'ArrowLeft') {
@@ -1501,6 +1572,7 @@ window.closeVideoPlayer = function() {
         });
 
         window.closePdfViewer = function() {
+            window.closeSlideThumbnailsModal(null, true);
             const viewer = document.getElementById('custom-pdf-viewer');
             const iframe = document.getElementById('main-pdf-iframe');
             if (iframe) iframe.src = 'about:blank';
@@ -1709,6 +1781,430 @@ window.closeVideoPlayer = function() {
                 if (popover) popover.classList.remove('open');
             }
         });
+
+        /* =========================================================
+           REGISTRO CANÔNICO DOS ALUNOS DA TURMA (PORTFÓLIOS & ELENCO)
+           ========================================================= */
+        const STUDENTS_REGISTRY = [
+            {
+                id: 'francisco-lucas',
+                name: 'Francisco Lucas',
+                fullName: 'Francisco Lucas Alves do Prado',
+                initials: 'FL',
+                color: '#e50914',
+                aliases: ['Francisco Lucas', 'Francisco L', 'Francisco Lucas Alves do Prado']
+            },
+            {
+                id: 'pedro-victor',
+                name: 'Pedro Victor',
+                fullName: 'Pedro Victor Evangelista Gomes',
+                initials: 'PV',
+                color: '#2563eb',
+                aliases: ['Pedro Victor', 'Pedro', 'Pedro Victor Evangelista Gomes']
+            },
+            {
+                id: 'davi-costa',
+                name: 'Davi Costa',
+                fullName: 'Davi Costa de Lucena',
+                initials: 'DC',
+                color: '#10b981',
+                aliases: ['Davi Costa', 'Davi', 'Davi Costa de Lucena']
+            },
+            {
+                id: 'joao-pedro-santos',
+                name: 'João Pedro Santos',
+                fullName: 'João Pedro dos Santos Silva',
+                initials: 'JS',
+                color: '#f59e0b',
+                aliases: ['João Pedro Santos', 'JP Santos', 'João Pedro dos Santos', 'João Pedro dos Santos (JP)', 'João Pedro dos Santos Silva']
+            },
+            {
+                id: 'joao-pedro-silva',
+                name: 'João Pedro Silva',
+                fullName: 'João Pedro Silva Santos',
+                initials: 'JP',
+                color: '#8b5cf6',
+                aliases: ['João Pedro Silva', 'João Pedro Silva Santos']
+            },
+            {
+                id: 'micaias-lima',
+                name: 'Micaías Lima',
+                fullName: 'Micaías de Sousa Lima',
+                initials: 'ML',
+                color: '#ec4899',
+                aliases: ['Micaías Lima', 'Micaías de Sousa Lima', 'Micaías', 'Micaias']
+            },
+            {
+                id: 'samuel-soares',
+                name: 'Samuel Soares',
+                fullName: 'Samuel de Araújo Soares',
+                initials: 'SS',
+                color: '#06b6d4',
+                aliases: ['Samuel Soares', 'Samuel', 'Samuel de Araújo Soares']
+            },
+            {
+                id: 'marcos-felipe',
+                name: 'Marcos Felipe',
+                fullName: 'Marcos Felipe da Silva Sobral',
+                initials: 'MF',
+                color: '#14b8a6',
+                aliases: ['Marcos Felipe', 'Marcos Felipe Sobral', 'Marcos Felipe da Silva Sobral']
+            },
+            {
+                id: 'nicolas-marcell',
+                name: 'Nícolas Marcell',
+                fullName: 'Nícolas Marcell da Fonseca Sousa',
+                initials: 'NM',
+                color: '#6366f1',
+                aliases: ['Nícolas Marcell', 'Nicolas Marcell', 'Nícolas Marcell da Fonseca Sousa']
+            },
+            {
+                id: 'rodrigo-rubim',
+                name: 'Rodrigo Rubim',
+                fullName: 'Rodrigo de Oliveira Rubim Sousa',
+                initials: 'RR',
+                color: '#d97706',
+                aliases: ['Rodrigo Rubim', 'Rodrigo de Oliveira Rubim Sousa']
+            },
+            {
+                id: 'yasmyn-paiva',
+                name: 'Yasmyn Paiva',
+                fullName: 'Yasmyn Paiva de Sousa Nunes',
+                initials: 'YP',
+                color: '#f43f5e',
+                aliases: ['Yasmyn Paiva', 'Yasmyn', 'Yasmyn Paiva de Sousa Nunes']
+            },
+            {
+                id: 'wislla-mariana',
+                name: 'Wislla Mariana',
+                fullName: 'Wislla Mariana do Nascimento Oliveira',
+                initials: 'WM',
+                color: '#a855f7',
+                aliases: ['Wislla Mariana', 'Wislla', 'Wislla Mariana do Nascimento Oliveira']
+            },
+            {
+                id: 'jose-nildo',
+                name: 'José Nildo',
+                fullName: 'José Nildo Ferreira Oliveira',
+                initials: 'JN',
+                color: '#3b82f6',
+                aliases: ['José Nildo', 'Jose Nildo', 'José Nildo Ferreira Oliveira']
+            },
+            {
+                id: 'orlando-junior',
+                name: 'Orlando Júnior',
+                fullName: 'Orlando da Cruz Júnior',
+                initials: 'OJ',
+                color: '#059669',
+                aliases: ['Orlando Júnior', 'Orlando Junior', 'Orlando', 'Orlando da Cruz Júnior']
+            },
+            {
+                id: 'bruno-cardoso',
+                name: 'Bruno Cardoso',
+                fullName: 'Bruno Cardoso Paz',
+                initials: 'BC',
+                color: '#475569',
+                aliases: ['Bruno Cardoso', 'Bruno', 'Bruno Cardoso Paz']
+            },
+            {
+                id: 'maria-helena',
+                name: 'Maria Helena',
+                fullName: 'Maria Helena',
+                initials: 'MH',
+                color: '#e11d48',
+                aliases: ['Maria Helena']
+            },
+            {
+                id: 'marcelo',
+                name: 'Marcelo',
+                fullName: 'Marcelo',
+                initials: 'MC',
+                color: '#0284c7',
+                aliases: ['Marcelo']
+            }
+        ];
+
+        function workHasStudent(cast, studentKey) {
+            if (!cast || !studentKey) return false;
+            const normKey = studentKey.trim().toLowerCase();
+            const student = STUDENTS_REGISTRY.find(s => 
+                s.name.toLowerCase() === normKey || 
+                s.aliases.some(a => a.toLowerCase() === normKey)
+            );
+            
+            if (!student) {
+                return cast.toLowerCase().includes(normKey);
+            }
+
+            // Distinção cirúrgica entre os dois João Pedros
+            if (student.id === 'joao-pedro-santos') {
+                return /João Pedro Santos|JP Santos|João Pedro dos Santos/i.test(cast);
+            }
+            if (student.id === 'joao-pedro-silva') {
+                return /João Pedro Silva/i.test(cast);
+            }
+
+            return student.aliases.some(alias => cast.toLowerCase().includes(alias.toLowerCase()));
+        }
+
+        /* =========================================================
+           FEATURE 3: HERO BANNER DE DESTAQUE ROTATIVO NO ACERVO
+           ========================================================= */
+        const ACERVO_HERO_ITEMS = [
+            {
+                id: 'guerra-civil',
+                title: 'A GUERRA CIVIL DA FILOSOFIA',
+                subtitle: 'EMPIRISMO VS RACIONALISMO • A REVOLUÇÃO CIENTÍFICA',
+                materia: 'Filosofia',
+                synopsis: 'A Revolução Científica Moderna, a queda dos dogmas escolásticos e a forja do Método Científico por Newton. A maior batalha intelectual da história entre defensores da experiência prática e adeptos da lógica pura.',
+                cast: 'Davi Costa, Maria Helena, Francisco Lucas, Pedro Victor, Marcelo, Samuel Soares, João Pedro Santos',
+                bg: 'banner.png'
+            },
+            {
+                id: 'teorias-politicas-antiguidade',
+                title: 'TEORIAS POLÍTICAS NA ANTIGUIDADE',
+                subtitle: 'PLATÃO, ARISTÓTELES E O NASCIMENTO DA POLÍTICA',
+                materia: 'Filosofia',
+                synopsis: 'A fundação do pensamento político clássico na Grécia Antiga: o ideal da cidade justa e a República de Platão governada pelo Rei-Filósofo versus o realismo pragmático e a pólis em Aristóteles.',
+                cast: 'Davi Costa, Samuel Soares, Francisco Lucas, Yasmyn Paiva, Marcos Felipe, Nícolas Marcell, Micaías Lima, João Pedro Santos, Wislla Mariana, João Pedro Silva',
+                bg: 'midia/capas/capa_teorias_politicas.jpg'
+            },
+            {
+                id: 'guerra-fria',
+                title: 'A GUERRA FRIA & A BIPOLARIZAÇÃO',
+                subtitle: 'EUA VS URSS, CORRIDA ARMAMENTISTA E O MUNDO DIVIDIDO',
+                materia: 'História',
+                synopsis: 'O confronto ideológico e geopolítico entre as superpotências, a Doutrina Truman, a corrida armamentista e espacial, as crises na Ásia e América Latina e o colapso do bloco soviético.',
+                cast: 'Francisco Lucas, Pedro Victor, João Pedro Santos, Rodrigo Rubim, Nícolas Marcell, Micaías Lima, Orlando Júnior',
+                bg: 'midia/capas/capa_guerra_fria.jpg'
+            },
+            {
+                id: 'sociologia-desenvolvimento',
+                title: 'SOCIOLOGIA DO DESENVOLVIMENTO',
+                subtitle: 'CONTRADIÇÕES SOCIAIS, CAPITALISMO E DESIGUALDADE',
+                materia: 'Sociologia',
+                synopsis: 'Pesquisa sociológica sobre a produção socializada e a apropriação privada do lucro, as crises cíclicas do capitalismo, o relatório da fome da ONU e os desafios para o desenvolvimento sustentável.',
+                cast: 'Davi Costa, João Pedro Santos, Samuel Soares, Marcos Felipe, Micaías Lima, João Pedro Silva, Yasmyn Paiva, Wislla Mariana, Nícolas Marcell, Francisco Lucas',
+                bg: 'midia/capas/capa_sociologia_desenvolvimento.jpg'
+            },
+            {
+                id: 'prosa-1930',
+                title: 'A PROSA DE 30: JORGE AMADO',
+                subtitle: 'RETRATOS DA BAHIA E A SEGUNDA GERAÇÃO MODERNISTA',
+                materia: 'Língua Portuguesa',
+                synopsis: 'Análise aprofundada da Prosa Regionalista de 30: o impacto social da Crise de 1929 e da Era Vargas, a denúncia das desigualdades no Nordeste e o homem determinado pelo seu meio sociocultural.',
+                cast: 'João Pedro Santos, Pedro Victor, Francisco Lucas, João Pedro Silva, Nícolas Marcell, José Nildo',
+                bg: 'midia/capas/capa_prosa_1930.jpg'
+            }
+        ];
+
+        let currentAcervoHeroIdx = 0;
+        let acervoHeroTimer = null;
+
+        function renderAcervoHeroBannerHtml() {
+            const cur = ACERVO_HERO_ITEMS[currentAcervoHeroIdx] || ACERVO_HERO_ITEMS[0];
+            const st = getMateriaStyle(cur.materia);
+            const bgUrl = imgUrl(cur.bg, 1200);
+
+            const dots = ACERVO_HERO_ITEMS.map((item, idx) => `
+                <button type="button" class="acervo-hero-dot ${idx === currentAcervoHeroIdx ? 'active' : ''}" 
+                        onclick="window.setAcervoHeroSlide(${idx})" 
+                        aria-label="Ir para destaque ${idx + 1}: ${item.title}">
+                </button>
+            `).join('');
+
+            return `
+                <div class="acervo-hero-banner" id="acervo-hero-banner" onmouseenter="window.pauseAcervoHeroTimer()" onmouseleave="window.resumeAcervoHeroTimer()">
+                    <div class="acervo-hero-bg" id="acervo-hero-bg" style="background-image: url('${bgUrl}');"></div>
+                    <div class="acervo-hero-overlay"></div>
+                    <div class="acervo-hero-content">
+                        <div class="acervo-hero-badge">
+                            <span class="badge-acervo-mat" style="background: ${st.color};"><i class="${st.icon}"></i> ${cur.materia}</span>
+                            <span class="badge-acervo-special"><i class="fa-solid fa-star"></i> DESTAQUE DO ACERVO</span>
+                        </div>
+                        <h1 class="acervo-hero-title" id="acervo-hero-title">${cur.title}</h1>
+                        ${cur.subtitle ? `<div class="acervo-hero-subtitle" id="acervo-hero-subtitle">${cur.subtitle}</div>` : ''}
+                        <p class="acervo-hero-synopsis" id="acervo-hero-synopsis">${cur.synopsis}</p>
+                        <div class="acervo-hero-cast" id="acervo-hero-cast">
+                            <i class="fa-solid fa-user-group"></i> <span>${cur.cast}</span>
+                        </div>
+                        <div class="acervo-hero-actions">
+                            <button type="button" class="acervo-hero-btn-play" onclick="window.openAcademicDirectAction('${cur.id}')">
+                                <i class="fa-solid fa-play"></i> Apresentar Trabalho
+                            </button>
+                            <button type="button" class="acervo-hero-btn-info" onclick="window.openTitleModal('${cur.id}')">
+                                <i class="fa-solid fa-circle-info"></i> Detalhes
+                            </button>
+                        </div>
+                    </div>
+                    <div class="acervo-hero-pagers" id="acervo-hero-pagers">
+                        ${dots}
+                    </div>
+                </div>
+            `;
+        }
+
+        window.setAcervoHeroSlide = function(idx) {
+            if (idx < 0 || idx >= ACERVO_HERO_ITEMS.length) return;
+            currentAcervoHeroIdx = idx;
+            const cur = ACERVO_HERO_ITEMS[idx];
+            const st = getMateriaStyle(cur.materia);
+            const bgUrl = imgUrl(cur.bg, 1200);
+
+            const bgEl = document.getElementById('acervo-hero-bg');
+            const titleEl = document.getElementById('acervo-hero-title');
+            const subEl = document.getElementById('acervo-hero-subtitle');
+            const synEl = document.getElementById('acervo-hero-synopsis');
+            const castEl = document.getElementById('acervo-hero-cast');
+            const pagersEl = document.getElementById('acervo-hero-pagers');
+
+            if (bgEl) {
+                bgEl.style.opacity = '0.3';
+                setTimeout(() => {
+                    bgEl.style.backgroundImage = `url('${bgUrl}')`;
+                    bgEl.style.opacity = '1';
+                }, 200);
+            }
+            if (titleEl) titleEl.textContent = cur.title;
+            if (subEl) subEl.textContent = cur.subtitle || '';
+            if (synEl) synEl.textContent = cur.synopsis;
+            if (castEl) castEl.innerHTML = `<i class="fa-solid fa-user-group"></i> <span>${cur.cast}</span>`;
+
+            const playBtn = document.querySelector('.acervo-hero-btn-play');
+            const infoBtn = document.querySelector('.acervo-hero-btn-info');
+            if (playBtn) playBtn.onclick = () => window.openAcademicDirectAction(cur.id);
+            if (infoBtn) infoBtn.onclick = () => window.openTitleModal(cur.id);
+
+            if (pagersEl) {
+                const dots = pagersEl.querySelectorAll('.acervo-hero-dot');
+                dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+            }
+        };
+
+        window.nextAcervoHeroSlide = function() {
+            const nextIdx = (currentAcervoHeroIdx + 1) % ACERVO_HERO_ITEMS.length;
+            window.setAcervoHeroSlide(nextIdx);
+        };
+
+        window.pauseAcervoHeroTimer = function() {
+            if (acervoHeroTimer) {
+                clearInterval(acervoHeroTimer);
+                acervoHeroTimer = null;
+            }
+        };
+
+        window.resumeAcervoHeroTimer = function() {
+            window.pauseAcervoHeroTimer();
+            const acervoScreen = document.getElementById('acervo-screen');
+            if (acervoScreen && acervoScreen.classList.contains('active')) {
+                acervoHeroTimer = setInterval(window.nextAcervoHeroSlide, 7000);
+            }
+        };
+
+        /* =========================================================
+           FEATURE 1: PORTFÓLIO DO ALUNO ("ELENCO DA TURMA")
+           ========================================================= */
+        function renderStudentsRowHtml(entries) {
+            const studentCards = STUDENTS_REGISTRY.map(student => {
+                const count = entries.filter(e => workHasStudent(e.item.cast, student.name)).length;
+                const isActive = currentAcervoAuthor && (currentAcervoAuthor.toLowerCase() === student.name.toLowerCase() || student.aliases.some(a => a.toLowerCase() === currentAcervoAuthor.toLowerCase()));
+
+                return `
+                    <button type="button" class="student-avatar-card ${isActive ? 'active' : ''}" onclick="window.filterAcervoByAuthor('${student.name.replace(/'/g, "\\'")}')" aria-label="Portfólio de ${student.name}">
+                        <div class="student-avatar-circle" style="background: linear-gradient(135deg, ${student.color}33, #151515); border-color: ${student.color};">
+                            ${student.initials}
+                            <span class="student-avatar-badge">${count}</span>
+                        </div>
+                        <span class="student-avatar-name">${student.name}</span>
+                        <span class="student-avatar-sub">${count} ${count === 1 ? 'trabalho' : 'trabalhos'}</span>
+                    </button>
+                `;
+            }).join('');
+
+            return `
+                <div class="acervo-students-row-container">
+                    <div class="acervo-students-row-header">
+                        <h3><i class="fa-solid fa-graduation-cap" style="color:var(--netflix-red);"></i> Elenco da Turma &bull; Alunos</h3>
+                        <span style="font-size:0.82rem; color:#888;">Clique no aluno para filtrar seus trabalhos</span>
+                    </div>
+                    <div class="acervo-students-slider">
+                        ${studentCards}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderStudentPortfolioBannerHtml(studentName, studentWorks) {
+            const student = STUDENTS_REGISTRY.find(s => 
+                s.name.toLowerCase() === studentName.toLowerCase() || 
+                s.aliases.some(a => a.toLowerCase() === studentName.toLowerCase())
+            ) || {
+                name: studentName,
+                fullName: studentName,
+                initials: studentName.slice(0, 2).toUpperCase(),
+                color: '#e50914'
+            };
+
+            const mats = new Set();
+            studentWorks.forEach(w => mats.add(w.materia));
+            const matList = Array.from(mats).join(', ') || 'Diversas';
+
+            return `
+                <div class="student-portfolio-banner">
+                    <div class="student-portfolio-left">
+                        <div class="student-portfolio-avatar" style="background: linear-gradient(135deg, ${student.color}, #700);">
+                            ${student.initials}
+                        </div>
+                        <div class="student-portfolio-info">
+                            <div style="font-size:0.75rem; font-weight:800; color:var(--netflix-red); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">
+                                <i class="fa-solid fa-graduation-cap"></i> Portfólio do Aluno
+                            </div>
+                            <h2>${student.name}</h2>
+                            <div class="student-portfolio-fullname">${student.fullName}</div>
+                            <div class="student-portfolio-stats">
+                                <span class="student-portfolio-stat-pill"><i class="fa-solid fa-file-powerpoint"></i> ${studentWorks.length} ${studentWorks.length === 1 ? 'trabalho' : 'trabalhos'}</span>
+                                <span class="student-portfolio-stat-pill"><i class="fa-solid fa-shapes"></i> Matérias: ${matList}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="student-portfolio-close-btn" onclick="window.clearAcervoAuthorFilter()">
+                            <i class="fa-solid fa-xmark"></i> Remover Filtro
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* =========================================================
+           FEATURE 6: MODO TURBO DE DESEMPENHO (INTERSECTION OBSERVER)
+           ========================================================= */
+        let turboObserver = null;
+        function initTurboObserver() {
+            if (!('IntersectionObserver' in window)) return;
+            if (turboObserver) turboObserver.disconnect();
+
+            turboObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const el = entry.target;
+                    if (entry.isIntersecting) {
+                        el.classList.remove('is-offscreen');
+                    } else {
+                        el.classList.add('is-offscreen');
+                        const vid = el.querySelector('video');
+                        if (vid && !vid.paused) vid.pause();
+                    }
+                });
+            }, {
+                rootMargin: '250px 0px 250px 0px',
+                threshold: 0.01
+            });
+
+            document.querySelectorAll('.academic-card, .catalog-section, .acervo-hero-banner, .seminario-shelf-card').forEach(el => {
+                el.classList.add('will-pause-offscreen');
+                turboObserver.observe(el);
+            });
+        }
 
         let currentAcervoFormat = 'all';
         let currentAcervoAuthor = null;
@@ -2023,8 +2519,7 @@ window.closeVideoPlayer = function() {
                 if (currentAcervoFormat === 'pdf' && !e.hasPdf) return false;
                 if (currentAcervoFormat === 'video' && !e.hasVideo) return false;
                 if (currentAcervoAuthor) {
-                    const castStr = (e.item.cast || '').toLowerCase();
-                    if (!castStr.includes(currentAcervoAuthor.toLowerCase())) return false;
+                    if (!workHasStudent(e.item.cast, currentAcervoAuthor)) return false;
                 }
                 if (query) {
                     const hay = `${e.item.title} ${e.item.subtitle || ''} ${e.item.cast || ''} ${e.item.synopsis || ''} ${e.materia} ${e.trabalhoGrupo}`.toLowerCase();
@@ -2053,6 +2548,32 @@ window.closeVideoPlayer = function() {
                         ${currentAcervoAuthor ? `<button onclick="window.clearAcervoAuthorFilter()" style="margin-top:14px; background:var(--netflix-red); border:none; color:#fff; padding:8px 18px; border-radius:4px; cursor:pointer; font-weight:bold;">Limpar filtro de aluno</button>` : ''}
                     </div>
                 `;
+                initTurboObserver();
+                return;
+            }
+
+            // MODO 0: Filtrado por Aluno (Portfólio Individual do Aluno)
+            if (currentAcervoAuthor) {
+                const studentCardsHtml = filtered.map(renderAcademicCardHtml).join('');
+                rowsContainer.innerHTML = `
+                    ${disneyBarHtml}
+                    ${renderStudentPortfolioBannerHtml(currentAcervoAuthor, filtered)}
+                    <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="color: #bbb; font-size: 0.95rem; font-weight: 700;">
+                            <i class="fa-solid fa-graduation-cap" style="color:var(--netflix-red); margin-right:6px;"></i>
+                            ${filtered.length} ${filtered.length === 1 ? 'apresentação realizada' : 'apresentações realizadas'}
+                        </span>
+                        <button type="button" class="acervo-clear-filter-btn" onclick="window.clearAcervoAuthorFilter()" style="font-size: 0.82rem; padding: 5px 12px;">
+                            <i class="fa-solid fa-arrow-left"></i> Ver Toda a Turma
+                        </button>
+                    </div>
+                    <div class="seminario-detail-grid">
+                        ${studentCardsHtml}
+                    </div>
+                `;
+                initDragToScroll();
+                initHoverAutoPlay();
+                initTurboObserver();
                 return;
             }
 
@@ -2101,6 +2622,7 @@ window.closeVideoPlayer = function() {
 
                 initDragToScroll();
                 initHoverAutoPlay();
+                initTurboObserver();
                 return;
             }
 
@@ -2122,6 +2644,7 @@ window.closeVideoPlayer = function() {
                 `;
                 initDragToScroll();
                 initHoverAutoPlay();
+                initTurboObserver();
                 return;
             }
 
@@ -2162,6 +2685,7 @@ window.closeVideoPlayer = function() {
                 `;
                 initDragToScroll();
                 initHoverAutoPlay();
+                initTurboObserver();
                 return;
             }
 
@@ -2258,12 +2782,16 @@ window.closeVideoPlayer = function() {
 
             rowsContainer.innerHTML = `
                 ${disneyBarHtml}
+                ${renderAcervoHeroBannerHtml()}
+                ${renderStudentsRowHtml(entries)}
                 <div class="acervo-shelves-container">
                     ${shelvesHtml}
                 </div>
             `;
             initDragToScroll();
             initHoverAutoPlay();
+            initTurboObserver();
+            window.resumeAcervoHeroTimer();
         };
 
         /* =========================================================
