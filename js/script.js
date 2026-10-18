@@ -7,9 +7,17 @@ const ASSET_BASE = 'https://buguinha0202.github.io/Ifpiflix-projetor/';
 
 /* Imagens passam pelo wsrv.nl, que redimensiona e converte para webp (carrega bem mais rápido) */
 function imgUrl(file, width) {
+    if (!file) return '';
+    if (file.startsWith('data:') || file.startsWith('http://') || file.startsWith('https://') || file.startsWith('trabalhos/') || file.startsWith('midia/') || file.startsWith('/midia/') || file.includes('midia/') || file.startsWith('./')) {
+        return file;
+    }
     return 'https://wsrv.nl/?url=' + ASSET_BASE + file + '&w=' + width + '&output=webp';
 }
 function mediaUrl(file) {
+    if (!file) return '';
+    if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('trabalhos/') || file.startsWith('midia/') || file.startsWith('/midia/') || file.includes('midia/') || file.startsWith('./')) {
+        return file;
+    }
     return ASSET_BASE + file;
 }
 
@@ -75,7 +83,7 @@ let toastTimeout;
             },
             "tema-3": {
                 title: "DEVORADORES DO ESPAÇO TEMPO", subtitle: "",
-                bg: "devoradores_espaco_tempo.png", 
+                bg: "devoradores_espaco_tempo.jpg", 
                 banner: "bdevoradores_espaco_tempo.png",
                 ytTrailer: "Sciagme2wKQ", // Devoradores de Estrelas
                 match: "88% Relevante", year: "2016", age: "10", duration: "1h 55m",
@@ -95,7 +103,7 @@ let toastTimeout;
 
             "tema-5": {
                 title: "NÃO OLHE PARA A ÉTICA", subtitle: "",
-                bg: "nao_olhe_etica.jpg", 
+                bg: "nao_olhe_etica.png", 
                 banner: "bnao_olhe_etica.jpg", 
                 ytTrailer: "4zMgf3gK7p8", // Não Olhe Para Cima (Dublado)
                 match: "95% Relevante", year: "2021", age: "16", duration: "2h 18m",
@@ -209,6 +217,161 @@ let toastTimeout;
                 ytTrailer: "ym1x-K9KBa8", // Ursinho Pooh (Dublado)
                 synopsis: "Uma armadilha cibernética irresistível disfarçada de servidor vulnerável atrai os piores hackers da internet para um labirinto fofinho sem saída.",
                 cast: "Jim Commits, John Filter", genres: "Animação, Suspense Fofo", tags: "Segurança, Honeypot", isMain: false
+            },
+
+            // ================= TRABALHOS REAIS DA TURMA (ACERVO) =================
+            "teorias-politicas-antiguidade": {
+                title: "TEORIAS POLÍTICAS NA ANTIGUIDADE", subtitle: "PLATÃO, ARISTÓTELES E O NASCIMENTO DA POLÍTICA",
+                bg: "midia/capas/capa_teorias_politicas.jpg", banner: "midia/capas/capa_teorias_politicas.jpg",
+                pdf: "trabalhos/Teorias Políticas na Antiguidade - Teorias Políticas de Platão e Aristóteles.pdf",
+                slideKey: "teorias_politicas",
+                match: "97% Relevante", year: "2025", age: "Livre", duration: "13 Slides • Filosofia Política",
+                synopsis: "A fundação do pensamento político clássico na Grécia Antiga: o ideal da cidade justa e a República de Platão governada pelo Rei-Filósofo versus o realismo pragmático e a pólis em Aristóteles.",
+                cast: "Davi Costa de Lucena, Micaías de Sousa Lima e equipe",
+                genres: "Filosofia Política, Grécia Antiga", tags: "Filosofia, Platão, Aristóteles, Política", isMain: false,
+                materia: "Filosofia", trabalhoGrupo: "Seminário: Filosofia Política na Antiguidade", periodo: "2025 • Acervo da Turma"
+            },
+            "guerra-fria": {
+                title: "GUERRA FRIA", subtitle: "BIPOLARIDADE, CORRIDA ARMAMENTISTA E O MUNDO DIVIDIDO",
+                bg: "midia/capas/capa_guerra_fria.jpg", banner: "midia/capas/capa_guerra_fria.jpg",
+                pdf: "trabalhos/GUERRA FRIA.pdf",
+                slideKey: "guerra_fria",
+                match: "97% Relevante", year: "2025", age: "Livre", duration: "15 Slides • Apresentação",
+                synopsis: "Apresentação acadêmica abrangente sobre a Guerra Fria: o confronto ideológico entre EUA e URSS, a Doutrina Truman, a corrida armamentista e espacial, as crises na Ásia e América Latina e o colapso do bloco soviético.",
+                cast: "Francisco Lucas, Pedro Victor, João Pedro, Rodrigo Rubim, Nícolas Marcell, Micaías Lima, Orlando Júnior",
+                genres: "História Geral, Geopolítica", tags: "História, Guerra Fria, Geopolítica", isMain: false,
+                materia: "História", trabalhoGrupo: "Seminário: A Guerra Fria e Relações Internacionais", periodo: "2025 • Acervo da Turma"
+            },
+            "padre-amaro": {
+                title: "O CRIME DO PADRE AMARO", subtitle: "REALISMO PORTUGUÊS E CRÍTICA SOCIAL DE EÇA DE QUEIRÓS",
+                bg: "midia/capas/capa_padre_amaro.jpg", banner: "midia/capas/capa_padre_amaro.jpg",
+                pdf: "trabalhos/O Crime do Padre Amaro.pdf",
+                slideKey: "padre_amaro",
+                match: "95% Relevante", year: "2025", age: "14", duration: "10 Slides • Análise Literária",
+                synopsis: "Estudo crítico da célebre obra realista de Eça de Queirós, denunciando a corrupção moral do clero e a hipocrisia da sociedade burguesa de Leiria através do drama proibido entre o padre Amaro e Amélia.",
+                cast: "Davi Costa de Lucena, Marcos Felipe Sobral, Micaías de Sousa Lima, Samuel de Araújo Soares (Turma 404-A)",
+                genres: "Língua Portuguesa, Literatura", tags: "Literatura, Realismo, Eça de Queirós", isMain: false,
+                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Realismo e Obras Clássicas", periodo: "2025 • Acervo da Turma"
+            },
+            "sociologia-desenvolvimento": {
+                title: "SOCIOLOGIA DO DESENVOLVIMENTO", subtitle: "CONTRADIÇÕES SOCIAIS, CAPITALISMO E DESIGUALDADE",
+                bg: "midia/capas/capa_sociologia_desenvolvimento.jpg", banner: "midia/capas/capa_sociologia_desenvolvimento.jpg",
+                pdf: "trabalhos/Sociologia do Desenvolvimento.pptx.pdf",
+                slideKey: "sociologia_desenvolvimento",
+                match: "96% Relevante", year: "2025", age: "Livre", duration: "10 Slides • Pesquisa Social",
+                synopsis: "Pesquisa sociológica sobre a produção socializada e a apropriação privada do lucro, as crises cíclicas do capitalismo, o relatório da fome da ONU e os desafios estruturais para o desenvolvimento sustentável.",
+                cast: "Davi Costa, João Pedro Santos, Samuel Soares, Marcos Felipe, Micaías Lima, João Pedro Silva, Yasmyn Paiva",
+                genres: "Sociologia, Economia Política", tags: "Sociologia, Desigualdade, Capitalismo", isMain: false,
+                materia: "Sociologia", trabalhoGrupo: "Seminário: Teorias Sociais e Desenvolvimento Global", periodo: "2025 • Acervo da Turma"
+            },
+            "podcast-desigualdade": {
+                title: "PODCAST: DESIGUALDADE SOCIAL", subtitle: "DEBATE EM ÁUDIO E VÍDEO • IFPI 2025",
+                bg: "https://img.youtube.com/vi/M4rHhajry4A/hqdefault.jpg", 
+                banner: "https://img.youtube.com/vi/M4rHhajry4A/hqdefault.jpg",
+                ytTrailer: "M4rHhajry4A",
+                match: "98% Relevante", year: "2025", age: "Livre", duration: "Vídeo / Podcast",
+                synopsis: "Episódio especial gravado em formato podcast pelos alunos da turma, debatendo com profundidade as raízes históricas, os dados estatísticos e os reflexos modernos da desigualdade social e econômica.",
+                cast: "Micaías de Sousa Lima e Alunos do IFPI",
+                genres: "Sociologia, Podcast Acadêmico", tags: "Sociologia, Podcast, Desigualdade Social", isMain: false,
+                materia: "Sociologia", trabalhoGrupo: "Podcasts & Debates: Questões Sociais Brasileiras", periodo: "2025 • Acervo da Turma"
+            },
+            "cyber-news": {
+                title: "JORNAL CYBER NEWS", subtitle: "POLÍTICA DE SEGURANÇA DA INFORMAÇÃO • IFPI 2026",
+                bg: "https://img.youtube.com/vi/AAhPhj00K0g/hqdefault.jpg", 
+                banner: "https://img.youtube.com/vi/AAhPhj00K0g/hqdefault.jpg",
+                ytTrailer: "AAhPhj00K0g",
+                match: "99% Relevante", year: "2026", age: "Livre", duration: "Vídeo / Telejornal",
+                synopsis: "Edição especial do telejornal acadêmico 'Cyber News' produzida pelos alunos, cobrindo as políticas de segurança da informação (PSI), boas práticas corporativas, senhas fortes e prevenção a vazamentos de dados.",
+                cast: "Micaías de Sousa Lima e Alunos do IFPI",
+                genres: "Segurança da Informação, Telejornalismo", tags: "Cibersegurança, Redes, Políticas de Segurança", isMain: false,
+                materia: "Segurança & Redes", trabalhoGrupo: "Práticas de Segurança da Informação & Defesa Cibernética", periodo: "2026 • 1º Bimestre"
+            },
+            "memoria-cache": {
+                title: "MEMÓRIA CACHE E ARMAZENAMENTO", subtitle: "HIERARQUIA DE MEMÓRIAS E DISCOS MAGNÉTICOS",
+                bg: "midia/capas/capa_memoria_cache.jpg", banner: "midia/capas/capa_memoria_cache.jpg",
+                pdf: "trabalhos/Blue and Purple Modern Computer Presentation.pdf",
+                slideKey: "memoria_cache",
+                match: "94% Relevante", year: "2025", age: "Livre", duration: "6 Slides • Apresentação Técnica",
+                synopsis: "Apresentação técnica sobre a organização interna e o fluxo de dados em sistemas computacionais: funcionamento da memória cache (L1, L2, L3), latência, barramentos e dispositivos de armazenamento secundário.",
+                cast: "Micaías de Sousa Lima, Maria Helena",
+                genres: "Hardware, Arquitetura de Computadores", tags: "Hardware, Memória Cache, Processadores", isMain: false,
+                materia: "Hardware & Arquitetura", trabalhoGrupo: "Seminário: Arquitetura de Computadores e Hierarquia de Memória", periodo: "2025 • Acervo da Turma"
+            },
+            "evolucao-computadores": {
+                title: "EVOLUÇÃO DOS COMPUTADORES", subtitle: "DA PRIMEIRA GERAÇÃO À COMPUTAÇÃO MODERNA",
+                bg: "midia/capas/capa_evolucao_computadores.jpg", banner: "midia/capas/capa_evolucao_computadores.jpg",
+                pdf: "trabalhos/Digital evolution.pdf",
+                slideKey: "evolucao_computadores",
+                match: "93% Relevante", year: "2025", age: "Livre", duration: "9 Slides • Manutenção",
+                synopsis: "Um panorama histórico da informática: desde a primeira geração com válvulas eletrônicas gigantes (1945), a revolução dos transistores e circuitos integrados até os microprocessadores de alto desempenho.",
+                cast: "Micaías de Sousa Lima",
+                genres: "Manutenção de Computadores, História da T.I.", tags: "Hardware, Evolução dos Computadores", isMain: false,
+                materia: "Hardware & Arquitetura", trabalhoGrupo: "Seminário: História da Computação e Manutenção", periodo: "2025 • Acervo da Turma"
+            },
+            "podcast-round6": {
+                title: "CLÁSSICOS EM SÉRIE", subtitle: "ROUND 6 E AS TEORIAS SOCIOLÓGICAS (MARX, DURKHEIM E WEBER)",
+                bg: "midia/capas/capa_podcast_round6.jpg", banner: "midia/capas/capa_podcast_round6.jpg",
+                pdf: "https://canva.link/nynn6ibes7h9adb",
+                match: "99% Relevante", year: "2025", age: "14", duration: "Podcast • Canva",
+                synopsis: "Episódio de estreia do podcast 'Clássicos em Série': os alunos analisam a série Round 6 através dos conceitos clássicos da sociologia — a luta de classes e desumanização em Marx, a anomia moral em Durkheim e a ação social racional calculista em Weber.",
+                cast: "Francisco Lucas, João Pedro dos Santos (JP), Pedro Victor",
+                genres: "Sociologia, Podcast Cultural", tags: "Sociologia, Round 6, Marx, Durkheim, Weber", isMain: false,
+                materia: "Sociologia", trabalhoGrupo: "Podcasts & Debates: Questões Sociais Brasileiras", periodo: "2025 • Acervo da Turma"
+            },
+            "ia-ingles": {
+                title: "INTELIGÊNCIA ARTIFICIAL NO INGLÊS", subtitle: "COMO A IA PODE AJUDAR NO APRENDIZADO DE IDIOMAS",
+                bg: "midia/capas/capa_ia_ingles.jpg", banner: "midia/capas/capa_ia_ingles.jpg",
+                pdf: "trabalhos/Usam dados para aprender, adaptar e responder. Aplicações em diversas áreas, inclusive na educação..pdf",
+                slideKey: "ia_ingles",
+                match: "96% Relevante", year: "2025", age: "Livre", duration: "11 Slides • Apresentação",
+                synopsis: "Estudo sobre a integração da Inteligência Artificial no ensino e prática de inglês: superação do medo de errar, prática de conversação com chatbots, feedback imediato e ferramentas adaptativas como Duolingo.",
+                cast: "João Pedro dos Santos Silva, Pedro Victor Evangelista Gomes, Francisco Lucas Alves do Prado, Bruno Cardoso Paz",
+                genres: "Língua Inglesa, Inteligência Artificial", tags: "Inglês, IA, Educação, Chatbots", isMain: false,
+                materia: "Língua Inglesa", trabalhoGrupo: "Seminário: Inteligência Artificial no Ensino de Idiomas", periodo: "2025 • Acervo da Turma"
+            },
+            "padre-amaro-jogo": {
+                title: "O CRIME DO PADRE AMARO: TABULEIRO", subtitle: "A NARRATIVA ATRAVÉS DO JOGO DE TABULEIRO",
+                bg: "midia/capas/capa_padre_amaro_jogo.jpg", banner: "midia/capas/capa_padre_amaro_jogo.jpg",
+                pdf: "trabalhos/O Crime do Padre Amaro jp.pdf",
+                slideKey: "padre_amaro_jogo",
+                match: "96% Relevante", year: "2025", age: "14", duration: "6 Slides • Gamificação Literária",
+                synopsis: "Adaptação criativa da narrativa do clássico realista de Eça de Queirós em formato de regras e dinâmicas de jogo de tabuleiro: a chegada de Amaro a Leiria, as intrigas de João Eduardo, a quebra de votos e o sacrilégio moral.",
+                cast: "João Pedro dos Santos Silva, Pedro Victor Evangelista Gomes, Francisco Lucas Alves do Prado",
+                genres: "Língua Portuguesa, Gamificação", tags: "Literatura, Eça de Queirós, Jogo de Tabuleiro", isMain: false,
+                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Realismo e Obras Clássicas", periodo: "2025 • Acervo da Turma"
+            },
+            "jogo-transito": {
+                title: "JOGO EDUCATIVO DE TRÂNSITO", subtitle: "PROJETO INTEGRADOR EM REACT NATIVE E PIXEL ART",
+                bg: "midia/capas/capa_jogo_transito.jpg", banner: "midia/capas/capa_jogo_transito.jpg",
+                pdf: "trabalhos/Trabalho de Tópicos Especiais em desenvolvimento e projeto integrador.pdf",
+                slideKey: "jogo_transito",
+                match: "95% Relevante", year: "2025", age: "Livre", duration: "3 Slides • Projeto de Software",
+                synopsis: "Proposta de desenvolvimento de um jogo mobile educativo com minigames interativos ensinando regras do Código de Trânsito Brasileiro, programado em React Native, arte em pixel art (Aseprite) e trilha sonora via Beepbox.",
+                cast: "João Pedro dos Santos Silva, Francisco Lucas Alves do Prado, Pedro Victor Evangelista Gomes, Rodrigo de Oliveira Rubim Sousa",
+                genres: "Programação & T.I., Desenvolvimento de Jogos", tags: "React Native, Games, Código de Trânsito", isMain: false,
+                materia: "Programação & T.I.", trabalhoGrupo: "Projeto Integrador: Desenvolvimento de Software e Games", periodo: "2025 • Acervo da Turma"
+            },
+            "sargento-milicias": {
+                title: "MEMÓRIAS DE UM SARGENTO DE MILÍCIAS", subtitle: "O ROMANCE URBANO E O ANTI-HERÓI MALANDRO",
+                bg: "midia/capas/capa_sargento_milicias.jpg", banner: "midia/capas/capa_sargento_milicias.jpg",
+                pdf: "trabalhos/Memórias de um sargento de Milícias.pdf",
+                slideKey: "sargento_milicias",
+                match: "94% Relevante", year: "2025", age: "Livre", duration: "6 Slides • Análise Literária",
+                synopsis: "Estudo crítico sobre a célebre obra de Manuel Antônio de Almeida: a representação das camadas populares do Rio de Janeiro colonial, as aventuras e malandragens de Leonardo e a transição do Romantismo para o Realismo.",
+                cast: "João Pedro dos Santos Silva, Pedro Victor Evangelista Gomes, Francisco Lucas Alves do Prado",
+                genres: "Língua Portuguesa, Literatura Brasileira", tags: "Romantismo Urbano, Malandragem, Literatura", isMain: false,
+                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Romantismo Urbano e Transição ao Realismo", periodo: "2025 • Acervo da Turma"
+            },
+            "prosa-1930": {
+                title: "A PROSA DE 1930: JORGE AMADO", subtitle: "RETRATOS DA BAHIA E A SEGUNDA GERAÇÃO MODERNISTA",
+                bg: "midia/capas/capa_prosa_1930.jpg", banner: "midia/capas/capa_prosa_1930.jpg",
+                pdf: "trabalhos/A prosa de 1930 Jorge Amado (Retratos da Bahia).pdf",
+                slideKey: "prosa_1930",
+                match: "97% Relevante", year: "2025", age: "12", duration: "11 Slides • Segunda Geração Modernista",
+                synopsis: "Análise aprofundada da Prosa Regionalista de 30 com foco em Jorge Amado: o impacto social da Crise de 1929 e da Era Vargas, a denúncia das desigualdades no Nordeste e o homem determinado pelo seu meio sociocultural.",
+                cast: "João Pedro dos Santos Silva, Pedro Victor Evangelista Gomes, Francisco Lucas Alves do Prado, João Pedro Silva Santos, Nicolas Marcell da Fonseca Sousa",
+                genres: "Língua Portuguesa, Modernismo", tags: "Jorge Amado, Prosa de 30, Modernismo, Bahia", isMain: false,
+                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Segunda Geração Modernista (A Prosa de 30)", periodo: "2025 • Acervo da Turma"
             }
         };
 
@@ -324,6 +487,10 @@ function updateListButtonIcon(btn, movieId) {
 }
 
 window.openTitleModal = function(movieId, fromSurprise = false) {
+    if (typeof window.closeHoverPreview === 'function') window.closeHoverPreview();
+    if (typeof hoverPreviewTimeout !== 'undefined') clearTimeout(hoverPreviewTimeout);
+    document.body.classList.add('modal-open');
+
     currentModalMovieId = movieId;
     updateListButtonIcon(document.getElementById('m-btn-list'), movieId);
     updateRatingButton(movieId);
@@ -340,7 +507,7 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
     // Carrega os dados do título no modal
     const loadData = () => {
         const data = filmesDB[movieId] || filmesDB["guerra-civil"];
-        const imgBackground = data.banner ? data.banner : data.bg;
+        const imgBackground = data.banner || data.bg || data.customCover || (data.ytTrailer ? `https://img.youtube.com/vi/${data.ytTrailer}/hqdefault.jpg` : generateAutoPosterDataUri(data.title, data.materia || data.genres, data.cast));
         const mHero = document.getElementById('m-hero');
 
         clearTimeout(trailerTimeout);
@@ -391,7 +558,23 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
         document.getElementById('m-age').textContent = data.age;
         document.getElementById('m-duration').textContent = data.duration;
         document.getElementById('m-synopsis').textContent = data.synopsis;
-        document.getElementById('m-cast').textContent = data.cast;
+        
+        // Elenco Clicável estilo Netflix (ao clicar no aluno, filtra seus trabalhos no acervo)
+        const castContainer = document.getElementById('m-cast');
+        if (castContainer) {
+            if (data.cast && (data.materia || data.pdf || data.isMain)) {
+                const authorsList = data.cast.split(/[,•|e]\s*/).map(a => a.trim()).filter(a => a.length > 1 && !a.startsWith('Turma') && !a.startsWith('equipe'));
+                if (authorsList.length > 0) {
+                    castContainer.innerHTML = authorsList.map(author => 
+                        `<span class="cast-clickable-tag" onclick="window.filterAcervoByAuthor('${author.replace(/'/g, "\\'")}')" title="Ver todos os trabalhos de ${author}">${author}</span>`
+                    ).join(', ');
+                } else {
+                    castContainer.textContent = data.cast;
+                }
+            } else {
+                castContainer.textContent = data.cast;
+            }
+        }
         document.getElementById('m-genres').textContent = data.genres;
         document.getElementById('m-tags').textContent = data.tags;
 
@@ -425,13 +608,16 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
                 secBtn.style.display = 'inline-flex';
             }
         } else if (data.pdf) {
-            playBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
+            const isCanva = data.pdf && (data.pdf.includes('canva.') || data.pdf.includes('canva.link'));
+            playBtn.innerHTML = isCanva ? '<i class="fa-solid fa-chalkboard-user"></i> Abrir no Canva' : '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
             playBtn.onclick = function() {
                 window.openPdfViewer(data.pdf, data.title);
             };
             if (secBtn) secBtn.style.display = 'none';
         } else if (data.trailer || data.ytTrailer) {
-            playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Assistir Trailer';
+            const isStudentVideo = !!(data.materia || (data.duration && (data.duration.includes('Vídeo') || data.duration.includes('Podcast'))));
+            const btnLabel = isStudentVideo ? (data.duration && data.duration.includes('Podcast') ? 'Ouvir / Assistir Podcast' : 'Assistir Vídeo') : 'Assistir Trailer';
+            playBtn.innerHTML = `<i class="fa-solid fa-play"></i> ${btnLabel}`;
             playBtn.onclick = function() { watchModalTrailer(data); };
             if (secBtn) secBtn.style.display = 'none';
         } else {
@@ -509,6 +695,7 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
 window.closeTitleModal = function(e, force = false) {
     if (force || (e && e.target.id === 'title-modal-overlay')) {
         document.getElementById('title-modal-overlay').classList.remove('show');
+        document.body.classList.remove('modal-open');
 
         // Interrompe qualquer vídeo, iframe ou timeout ativo ao fechar
         clearTimeout(trailerTimeout);
@@ -870,10 +1057,26 @@ window.closeVideoPlayer = function() {
             return (idle && idle.style.display === 'flex') || (lis && lis.style.display === 'block');
         }
 
-        window.switchScreen = function(id) {
+        window.setActiveNavCategory = function(cat) {
+            document.querySelectorAll('.nav-cat-item').forEach(it => {
+                it.classList.toggle('active', it.dataset.cat === cat);
+            });
+        };
+
+        window.switchScreen = function(id, syncNav = true) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(id);
             if (target) target.classList.add('active');
+
+            if (syncNav) {
+                if (id === 'home-screen') {
+                    window.setActiveNavCategory('inicio');
+                } else if (id === 'acervo-screen') {
+                    window.setActiveNavCategory('trabalhos');
+                } else {
+                    window.setActiveNavCategory('');
+                }
+            }
 
             // Gerencia o HUD Epistemológico
             const hud = document.getElementById('epistemic-hud');
@@ -1015,15 +1218,34 @@ window.closeVideoPlayer = function() {
         }
 
         let pendingMovieParam = null;
+        let pendingScreenParam = null;
+        let pendingMateriaParam = null;
+        let pendingSeminarioParam = null;
+        let pendingViewParam = null;
         try {
             const urlParams = new URLSearchParams(window.location.search);
             pendingMovieParam = urlParams.get('filme');
+            pendingScreenParam = urlParams.get('screen') || urlParams.get('tela');
+            pendingMateriaParam = urlParams.get('materia');
+            pendingSeminarioParam = urlParams.get('seminario');
+            pendingViewParam = urlParams.get('view');
         } catch(e) {}
 
         window.selectProfile = function(name) {
             activeProfile = name; 
             document.getElementById('nav-profile-name').textContent = name; 
-            window.switchScreen('home-screen');
+            if (pendingScreenParam === 'acervo' || pendingScreenParam === 'trabalhos') {
+                pendingScreenParam = null;
+                if (pendingViewParam) currentAcervoViewMode = pendingViewParam;
+                if (pendingSeminarioParam) {
+                    window.openAcervoScreen(pendingMateriaParam || undefined);
+                    window.openSeminarioView(pendingSeminarioParam);
+                } else {
+                    window.openAcervoScreen(pendingMateriaParam || undefined);
+                }
+            } else {
+                window.switchScreen('home-screen');
+            }
             renderContinueWatching();
             updateTeacherUi(name);
             if (pendingMovieParam && filmesDB[pendingMovieParam]) {
@@ -1039,11 +1261,18 @@ window.closeVideoPlayer = function() {
            FEATURE 4: MENU DE CATEGORIAS NO TOPO (ESTILO NETFLIX)
            ========================================================= */
         window.filterNavCategory = function(cat) {
-            const items = document.querySelectorAll('.nav-cat-item');
-            items.forEach(it => it.classList.toggle('active', it.dataset.cat === cat));
+            window.setActiveNavCategory(cat);
             
+            if (cat === 'trabalhos') {
+                window.openAcervoScreen();
+                return;
+            }
+
             const homeScreen = document.getElementById('home-screen');
             if (!homeScreen) return;
+            if (!homeScreen.classList.contains('active')) {
+                window.switchScreen('home-screen', false);
+            }
             
             if (cat === 'inicio') {
                 homeScreen.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1056,9 +1285,6 @@ window.closeVideoPlayer = function() {
             } else if (cat === 'ti') {
                 const el = document.getElementById('ti-row');
                 if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else if (cat === 'trabalhos') {
-                const el = document.getElementById('trabalhos-row');
-                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else if (cat === 'minha-lista') {
                 const el = document.getElementById('minha-lista-container');
                 if (el && el.style.display !== 'none') {
@@ -1070,21 +1296,209 @@ window.closeVideoPlayer = function() {
         };
 
         /* =========================================================
-           FEATURE 2: LEITOR DE APRESENTAÇÃO / PDF IN-SITE
+           FEATURE 2: LEITOR NATIVO DE SLIDES (ESTILO NETFLIX) & PDF IN-SITE
            ========================================================= */
-        window.openPdfViewer = function(pdfUrl, title = 'Apresentação da Turma') {
+        const SLIDES_MANIFEST = {
+            "prosa_1930": [
+                "midia/slides/prosa_1930/slide_01.jpg", "midia/slides/prosa_1930/slide_02.jpg", "midia/slides/prosa_1930/slide_03.jpg",
+                "midia/slides/prosa_1930/slide_04.jpg", "midia/slides/prosa_1930/slide_05.jpg", "midia/slides/prosa_1930/slide_06.jpg",
+                "midia/slides/prosa_1930/slide_07.jpg", "midia/slides/prosa_1930/slide_08.jpg", "midia/slides/prosa_1930/slide_09.jpg",
+                "midia/slides/prosa_1930/slide_10.jpg", "midia/slides/prosa_1930/slide_11.jpg"
+            ],
+            "memoria_cache": [
+                "midia/slides/memoria_cache/slide_01.jpg", "midia/slides/memoria_cache/slide_02.jpg", "midia/slides/memoria_cache/slide_03.jpg",
+                "midia/slides/memoria_cache/slide_04.jpg", "midia/slides/memoria_cache/slide_05.jpg", "midia/slides/memoria_cache/slide_06.jpg"
+            ],
+            "evolucao_computadores": [
+                "midia/slides/evolucao_computadores/slide_01.jpg", "midia/slides/evolucao_computadores/slide_02.jpg", "midia/slides/evolucao_computadores/slide_03.jpg",
+                "midia/slides/evolucao_computadores/slide_04.jpg", "midia/slides/evolucao_computadores/slide_05.jpg", "midia/slides/evolucao_computadores/slide_06.jpg",
+                "midia/slides/evolucao_computadores/slide_07.jpg", "midia/slides/evolucao_computadores/slide_08.jpg", "midia/slides/evolucao_computadores/slide_09.jpg"
+            ],
+            "guerra_fria": [
+                "midia/slides/guerra_fria/slide_01.jpg", "midia/slides/guerra_fria/slide_02.jpg", "midia/slides/guerra_fria/slide_03.jpg",
+                "midia/slides/guerra_fria/slide_04.jpg", "midia/slides/guerra_fria/slide_05.jpg", "midia/slides/guerra_fria/slide_06.jpg",
+                "midia/slides/guerra_fria/slide_07.jpg", "midia/slides/guerra_fria/slide_08.jpg", "midia/slides/guerra_fria/slide_09.jpg",
+                "midia/slides/guerra_fria/slide_10.jpg", "midia/slides/guerra_fria/slide_11.jpg", "midia/slides/guerra_fria/slide_12.jpg",
+                "midia/slides/guerra_fria/slide_13.jpg", "midia/slides/guerra_fria/slide_14.jpg", "midia/slides/guerra_fria/slide_15.jpg"
+            ],
+            "sargento_milicias": [
+                "midia/slides/sargento_milicias/slide_01.jpg", "midia/slides/sargento_milicias/slide_02.jpg", "midia/slides/sargento_milicias/slide_03.jpg",
+                "midia/slides/sargento_milicias/slide_04.jpg", "midia/slides/sargento_milicias/slide_05.jpg", "midia/slides/sargento_milicias/slide_06.jpg"
+            ],
+            "padre_amaro_jogo": [
+                "midia/slides/padre_amaro_jogo/slide_01.jpg", "midia/slides/padre_amaro_jogo/slide_02.jpg", "midia/slides/padre_amaro_jogo/slide_03.jpg",
+                "midia/slides/padre_amaro_jogo/slide_04.jpg", "midia/slides/padre_amaro_jogo/slide_05.jpg", "midia/slides/padre_amaro_jogo/slide_06.jpg"
+            ],
+            "padre_amaro": [
+                "midia/slides/padre_amaro/slide_01.jpg", "midia/slides/padre_amaro/slide_02.jpg", "midia/slides/padre_amaro/slide_03.jpg",
+                "midia/slides/padre_amaro/slide_04.jpg", "midia/slides/padre_amaro/slide_05.jpg", "midia/slides/padre_amaro/slide_06.jpg",
+                "midia/slides/padre_amaro/slide_07.jpg", "midia/slides/padre_amaro/slide_08.jpg", "midia/slides/padre_amaro/slide_09.jpg",
+                "midia/slides/padre_amaro/slide_10.jpg"
+            ],
+            "sociologia_desenvolvimento": [
+                "midia/slides/sociologia_desenvolvimento/slide_01.jpg", "midia/slides/sociologia_desenvolvimento/slide_02.jpg", "midia/slides/sociologia_desenvolvimento/slide_03.jpg",
+                "midia/slides/sociologia_desenvolvimento/slide_04.jpg", "midia/slides/sociologia_desenvolvimento/slide_05.jpg", "midia/slides/sociologia_desenvolvimento/slide_06.jpg",
+                "midia/slides/sociologia_desenvolvimento/slide_07.jpg", "midia/slides/sociologia_desenvolvimento/slide_08.jpg", "midia/slides/sociologia_desenvolvimento/slide_09.jpg",
+                "midia/slides/sociologia_desenvolvimento/slide_10.jpg"
+            ],
+            "teorias_politicas": [
+                "midia/slides/teorias_politicas/slide_01.jpg", "midia/slides/teorias_politicas/slide_02.jpg", "midia/slides/teorias_politicas/slide_03.jpg",
+                "midia/slides/teorias_politicas/slide_04.jpg", "midia/slides/teorias_politicas/slide_05.jpg", "midia/slides/teorias_politicas/slide_06.jpg",
+                "midia/slides/teorias_politicas/slide_07.jpg", "midia/slides/teorias_politicas/slide_08.jpg", "midia/slides/teorias_politicas/slide_09.jpg",
+                "midia/slides/teorias_politicas/slide_10.jpg", "midia/slides/teorias_politicas/slide_11.jpg", "midia/slides/teorias_politicas/slide_12.jpg",
+                "midia/slides/teorias_politicas/slide_13.jpg"
+            ],
+            "jogo_transito": [
+                "midia/slides/jogo_transito/slide_01.jpg", "midia/slides/jogo_transito/slide_02.jpg", "midia/slides/jogo_transito/slide_03.jpg"
+            ],
+            "ia_ingles": [
+                "midia/slides/ia_ingles/slide_01.jpg", "midia/slides/ia_ingles/slide_02.jpg", "midia/slides/ia_ingles/slide_03.jpg",
+                "midia/slides/ia_ingles/slide_04.jpg", "midia/slides/ia_ingles/slide_05.jpg", "midia/slides/ia_ingles/slide_06.jpg",
+                "midia/slides/ia_ingles/slide_07.jpg", "midia/slides/ia_ingles/slide_08.jpg", "midia/slides/ia_ingles/slide_09.jpg",
+                "midia/slides/ia_ingles/slide_10.jpg", "midia/slides/ia_ingles/slide_11.jpg"
+            ]
+        };
+
+        let currentActiveSlides = [];
+        let currentSlideIndex = 0;
+        let isNativeSlideMode = true;
+
+        window.openPdfViewer = function(pdfUrl, title = 'Apresentação da Turma', movieId = null) {
+            if (pdfUrl.includes('canva.') || pdfUrl.includes('canva.link')) {
+                window.open(pdfUrl, '_blank');
+                return;
+            }
             window.closeTitleModal(null, true);
             const viewer = document.getElementById('custom-pdf-viewer');
             const iframe = document.getElementById('main-pdf-iframe');
             const titleEl = document.getElementById('pdf-viewer-title');
             const extLink = document.getElementById('pdf-external-link');
-            if (!viewer || !iframe) return;
+            const stage = document.getElementById('netflix-slide-stage');
+            const iframeBody = document.getElementById('pdf-iframe-body');
+            const slideCounter = document.getElementById('pdf-slide-counter');
+            const toggleBtn = document.getElementById('pdf-mode-toggle');
+            if (!viewer) return;
             
+            const resolvedUrl = mediaUrl(pdfUrl);
             if (titleEl) titleEl.textContent = title;
-            if (extLink) extLink.href = pdfUrl;
-            iframe.src = pdfUrl;
+            if (extLink) extLink.href = resolvedUrl;
+
+            // Encontra se tem slides nativos
+            let slideKey = null;
+            if (movieId && filmesDB[movieId]?.slideKey) {
+                slideKey = filmesDB[movieId].slideKey;
+            } else {
+                for (const k in filmesDB) {
+                    if (filmesDB[k].pdf === pdfUrl && filmesDB[k].slideKey) {
+                        slideKey = filmesDB[k].slideKey;
+                        break;
+                    }
+                }
+            }
+
+            if (slideKey && SLIDES_MANIFEST[slideKey] && SLIDES_MANIFEST[slideKey].length > 0) {
+                currentActiveSlides = SLIDES_MANIFEST[slideKey];
+                currentSlideIndex = 0;
+                isNativeSlideMode = true;
+                if (stage) stage.style.display = 'flex';
+                if (iframeBody) iframeBody.style.display = 'none';
+                if (slideCounter) slideCounter.style.display = 'inline-block';
+                if (toggleBtn) {
+                    toggleBtn.style.display = 'inline-flex';
+                    toggleBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> <span style="font-size: 0.8rem; margin-left: 4px;">PDF Original</span>';
+                }
+                updateSlideViewer();
+            } else {
+                // Modo PDF clássico (para uploads sem slides pré-renderizados)
+                currentActiveSlides = [];
+                isNativeSlideMode = false;
+                if (stage) stage.style.display = 'none';
+                if (iframeBody) iframeBody.style.display = 'block';
+                if (slideCounter) slideCounter.style.display = 'none';
+                if (toggleBtn) toggleBtn.style.display = 'none';
+                if (iframe) iframe.src = resolvedUrl;
+            }
+
             viewer.classList.add('show');
         };
+
+        function updateSlideViewer() {
+            if (!currentActiveSlides.length) return;
+            const imgEl = document.getElementById('netflix-slide-img');
+            const counter = document.getElementById('pdf-slide-counter');
+            const fill = document.getElementById('slide-progress-fill');
+            const prevBtn = document.getElementById('slide-btn-prev');
+            const nextBtn = document.getElementById('slide-btn-next');
+
+            if (imgEl) {
+                imgEl.style.opacity = '0.5';
+                imgEl.onload = () => { imgEl.style.opacity = '1'; };
+                imgEl.src = currentActiveSlides[currentSlideIndex];
+            }
+
+            if (counter) {
+                counter.textContent = `Slide ${currentSlideIndex + 1} de ${currentActiveSlides.length}`;
+            }
+
+            if (fill) {
+                const pct = ((currentSlideIndex + 1) / currentActiveSlides.length) * 100;
+                fill.style.width = `${pct}%`;
+            }
+
+            if (prevBtn) prevBtn.style.opacity = currentSlideIndex === 0 ? '0.3' : '1';
+            if (nextBtn) nextBtn.style.opacity = currentSlideIndex === currentActiveSlides.length - 1 ? '0.3' : '1';
+        }
+
+        window.navSlide = function(delta) {
+            if (!currentActiveSlides.length) return;
+            const target = currentSlideIndex + delta;
+            if (target >= 0 && target < currentActiveSlides.length) {
+                currentSlideIndex = target;
+                updateSlideViewer();
+            }
+        };
+
+        window.togglePdfViewerMode = function() {
+            const stage = document.getElementById('netflix-slide-stage');
+            const iframeBody = document.getElementById('pdf-iframe-body');
+            const iframe = document.getElementById('main-pdf-iframe');
+            const toggleBtn = document.getElementById('pdf-mode-toggle');
+            const slideCounter = document.getElementById('pdf-slide-counter');
+            const extLink = document.getElementById('pdf-external-link');
+
+            isNativeSlideMode = !isNativeSlideMode;
+            if (isNativeSlideMode) {
+                if (stage) stage.style.display = 'flex';
+                if (iframeBody) iframeBody.style.display = 'none';
+                if (slideCounter) slideCounter.style.display = 'inline-block';
+                if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> <span style="font-size: 0.8rem; margin-left: 4px;">PDF Original</span>';
+            } else {
+                if (stage) stage.style.display = 'none';
+                if (iframeBody) iframeBody.style.display = 'block';
+                if (slideCounter) slideCounter.style.display = 'none';
+                if (toggleBtn) toggleBtn.innerHTML = '<i class="fa-solid fa-file-powerpoint"></i> <span style="font-size: 0.8rem; margin-left: 4px;">Leitor Nativo</span>';
+                if (iframe && extLink && (!iframe.src || iframe.src === 'about:blank')) {
+                    iframe.src = extLink.href;
+                }
+            }
+        };
+
+        // Teclado para navegação do Player de Slides (setas esquerda e direita)
+        document.addEventListener('keydown', (e) => {
+            const viewer = document.getElementById('custom-pdf-viewer');
+            if (!viewer || !viewer.classList.contains('show')) return;
+            if (!isNativeSlideMode || !currentActiveSlides.length) return;
+
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                window.navSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                window.navSlide(-1);
+            } else if (e.key === 'Escape') {
+                window.closePdfViewer();
+            }
+        });
 
         window.closePdfViewer = function() {
             const viewer = document.getElementById('custom-pdf-viewer');
@@ -1107,22 +1521,782 @@ window.closeVideoPlayer = function() {
         };
 
         /* =========================================================
-           FEATURE 5: PAINEL E ENVIO DE TRABALHO (EXCLUSIVO PROFESSOR)
+           ACERVO DA TURMA: FILTRO POR MATÉRIA, BARRAS POR TRABALHO & GERADOR AUTOMÁTICO
+           ========================================================= */
+        const MATERIA_STYLES = {
+            'Filosofia': { icon: 'fa-solid fa-book-journal-whills', color: '#e50914', grad1: '#450a0a', grad2: '#0f0f0f' },
+            'História': { icon: 'fa-solid fa-landmark', color: '#f59e0b', grad1: '#451a03', grad2: '#120d07' },
+            'Sociologia': { icon: 'fa-solid fa-users', color: '#ec4899', grad1: '#500724', grad2: '#14070e' },
+            'Língua Portuguesa': { icon: 'fa-solid fa-feather-pointed', color: '#14b8a6', grad1: '#042f2e', grad2: '#071614' },
+            'Língua Inglesa': { icon: 'fa-solid fa-language', color: '#0ea5e9', grad1: '#075985', grad2: '#082f49' },
+            'Hardware & Arquitetura': { icon: 'fa-solid fa-memory', color: '#6366f1', grad1: '#1e1b4b', grad2: '#0b0a19' },
+            'Segurança & Redes': { icon: 'fa-solid fa-shield-halved', color: '#2563eb', grad1: '#0f295c', grad2: '#090d16' },
+            'Programação & T.I.': { icon: 'fa-solid fa-code', color: '#10b981', grad1: '#064e3b', grad2: '#091410' },
+            'Inteligência Artificial & IoT': { icon: 'fa-solid fa-microchip', color: '#8b5cf6', grad1: '#3b0764', grad2: '#0f0a19' },
+            'Sistemas Operacionais': { icon: 'fa-solid fa-terminal', color: '#f59e0b', grad1: '#451a03', grad2: '#120d07' },
+            'Banco de Dados': { icon: 'fa-solid fa-database', color: '#06b6d4', grad1: '#083344', grad2: '#071115' },
+            'História & Sociologia': { icon: 'fa-solid fa-landmark', color: '#d97706', grad1: '#422006', grad2: '#140d06' }
+        };
+
+        function getMateriaStyle(materia) {
+            return MATERIA_STYLES[materia] || { icon: 'fa-solid fa-folder-open', color: '#e50914', grad1: '#31102f', grad2: '#0d0d0d' };
+        }
+
+        // Metadados padrão de Matéria e Barra (Trabalho/Seminário) para os títulos originais do catálogo
+        const DEFAULT_ACERVO_META = {
+            // Filosofia (Trabalhos Atuais do 1º Bimestre)
+            'tema-1':       { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
+            'guerra-civil': { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
+            'tema-3':       { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
+            'tema-4':       { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
+            'tema-5':       { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
+            // Filosofia Política (Antiguidade)
+            'teorias-politicas-antiguidade': { materia: 'Filosofia', trabalhoGrupo: 'Seminário: Filosofia Política na Antiguidade', periodo: '2025 • Acervo da Turma' },
+            // História
+            'guerra-fria':  { materia: 'História', trabalhoGrupo: 'Seminário: A Guerra Fria e Relações Internacionais', periodo: '2025 • Acervo da Turma' },
+            // Língua Portuguesa & Literatura
+            'padre-amaro':  { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Realismo e Obras Clássicas', periodo: '2025 • Acervo da Turma' },
+            'padre-amaro-jogo': { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Realismo e Obras Clássicas', periodo: '2025 • Acervo da Turma' },
+            'sargento-milicias':{ materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Romantismo Urbano e Transição ao Realismo', periodo: '2025 • Acervo da Turma' },
+            'prosa-1930':       { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Segunda Geração Modernista (A Prosa de 30)', periodo: '2025 • Acervo da Turma' },
+            // Língua Inglesa
+            'ia-ingles':        { materia: 'Língua Inglesa', trabalhoGrupo: 'Seminário: Inteligência Artificial no Ensino de Idiomas', periodo: '2025 • Acervo da Turma' },
+            // Sociologia
+            'sociologia-desenvolvimento': { materia: 'Sociologia', trabalhoGrupo: 'Seminário: Teorias Sociais e Desenvolvimento Global', periodo: '2025 • Acervo da Turma' },
+            'podcast-desigualdade': { materia: 'Sociologia', trabalhoGrupo: 'Podcasts & Debates: Questões Sociais Brasileiras', periodo: '2025 • Acervo da Turma' },
+            'podcast-round6':   { materia: 'Sociologia', trabalhoGrupo: 'Podcasts & Debates: Questões Sociais Brasileiras', periodo: '2025 • Acervo da Turma' },
+            // Segurança & Redes
+            'cyber-news':   { materia: 'Segurança & Redes', trabalhoGrupo: 'Práticas de Segurança da Informação & Defesa Cibernética', periodo: '2026 • 1º Bimestre' },
+            // Hardware & Arquitetura
+            'memoria-cache': { materia: 'Hardware & Arquitetura', trabalhoGrupo: 'Seminário: Arquitetura de Computadores e Hierarquia de Memória', periodo: '2025 • Acervo da Turma' },
+            'evolucao-computadores': { materia: 'Hardware & Arquitetura', trabalhoGrupo: 'Seminário: História da Computação e Manutenção', periodo: '2025 • Acervo da Turma' },
+            // Programação & T.I.
+            'jogo-transito':    { materia: 'Programação & T.I.', trabalhoGrupo: 'Projeto Integrador: Desenvolvimento de Software e Games', periodo: '2025 • Acervo da Turma' }
+        };
+
+        // Gera automaticamente um pôster SVG estilo Netflix quando o trabalho não tem imagem própria
+        function generateAutoPosterDataUri(title, materia, authors) {
+            const st = getMateriaStyle(materia);
+            const safeTitle = (title || 'Trabalho').replace(/[<>&"']/g, '');
+            const safeMat = (materia || 'IFPI').toUpperCase().replace(/[<>&"']/g, '');
+            const safeAuth = (authors || 'Turma IFPI').replace(/[<>&"']/g, '').substring(0, 34);
+            const lines = [];
+            const words = safeTitle.split(/\s+/);
+            let current = '';
+            words.forEach(w => {
+                if ((current + ' ' + w).trim().length <= 16 && lines.length < 3) {
+                    current = (current + ' ' + w).trim();
+                } else {
+                    if (current) lines.push(current);
+                    current = w;
+                }
+            });
+            if (current && lines.length < 4) lines.push(current);
+
+            const textSvg = lines.map((line, i) => 
+                `<text x="28" y="${185 + i * 38}" fill="#ffffff" font-family="Impact, sans-serif" font-size="32" font-weight="bold" letter-spacing="1">${line.toUpperCase()}</text>`
+            ).join('');
+
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+                <defs>
+                    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="${st.grad1}"/>
+                        <stop offset="100%" stop-color="${st.grad2}"/>
+                    </linearGradient>
+                </defs>
+                <rect width="400" height="600" fill="url(#g)"/>
+                <circle cx="340" cy="80" r="140" fill="${st.color}" opacity="0.14"/>
+                <circle cx="60" cy="520" r="180" fill="${st.color}" opacity="0.08"/>
+                <rect x="28" y="34" width="12" height="24" rx="3" fill="${st.color}"/>
+                <text x="48" y="52" fill="#e5e5e5" font-family="Arial, sans-serif" font-size="15" font-weight="bold" letter-spacing="2">IFPIFLIX • ACERVO</text>
+                <rect x="28" y="110" width="${Math.min(340, safeMat.length * 11 + 24)}" height="28" rx="6" fill="${st.color}"/>
+                <text x="40" y="129" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold" letter-spacing="1">${safeMat}</text>
+                ${textSvg}
+                <line x1="28" y1="490" x2="372" y2="490" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                <text x="28" y="518" fill="#aaaaaa" font-family="Arial, sans-serif" font-size="13" font-weight="bold">EQUIPE / AUTORES</text>
+                <text x="28" y="542" fill="#ffffff" font-family="Arial, sans-serif" font-size="15">${safeAuth}</text>
+            </svg>`;
+            return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg).replace(/'/g, '%27');
+        }
+
+        function extractYouTubeId(input) {
+            const s = (input || '').trim();
+            if (!s) return '';
+            if (s.includes('youtu.be/')) return s.split('youtu.be/')[1].split(/[?&]/)[0];
+            if (s.includes('watch?v=')) return s.split('watch?v=')[1].split(/[?&]/)[0];
+            if (s.includes('/embed/')) return s.split('/embed/')[1].split(/[?&]/)[0];
+            if (s.includes('/shorts/')) return s.split('/shorts/')[1].split(/[?&]/)[0];
+            if (/^[a-zA-Z0-9_-]{11}$/.test(s)) return s;
+            return '';
+        }
+
+        let currentAcervoMateria = 'all';
+        let currentAcervoSeminario = null;
+
+        function getAllAcervoEntries() {
+            // Garante que trabalhos salvos no localStorage estão registrados no filmesDB
+            const saved = getSavedTeacherWorks();
+            saved.forEach(w => { filmesDB[w.id] = w; });
+
+            // Apenas os trabalhos reais do acervo (atualmente os 5 de Filosofia e quaisquer trabalhos adicionados)
+            const validIds = new Set([
+                ...Object.keys(DEFAULT_ACERVO_META),
+                ...saved.map(w => w.id)
+            ]);
+
+            return Array.from(validIds).filter(id => !!filmesDB[id]).map(id => {
+                const item = filmesDB[id];
+                const def = DEFAULT_ACERVO_META[id] || {};
+                const materia = item.materia || def.materia || 'Filosofia';
+                const trabalhoGrupo = item.trabalhoGrupo || def.trabalhoGrupo || `Trabalhos de ${materia}`;
+                const periodo = item.periodo || def.periodo || (item.year ? `${item.year}` : '2026');
+                const hasPdf = !!(item.pdf || item.isMain);
+                const hasVideo = !!(item.ytTrailer || item.trailer || item.isMain);
+                return {
+                    id,
+                    item,
+                    materia,
+                    trabalhoGrupo,
+                    periodo,
+                    hasPdf,
+                    hasVideo
+                };
+            });
+        }
+
+        window.openAcervoScreen = function(materiaFilter) {
+            if (materiaFilter) currentAcervoMateria = materiaFilter;
+            currentAcervoSeminario = null;
+            window.setActiveNavCategory('trabalhos');
+            window.switchScreen('acervo-screen', false);
+            window.renderAcervoScreen();
+            const sc = document.getElementById('acervo-screen');
+            if (sc) sc.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.openSeminarioView = function(seminarioKey) {
+            currentAcervoSeminario = seminarioKey;
+            window.renderAcervoScreen();
+            const sc = document.getElementById('acervo-screen');
+            if (sc) sc.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.backToSeminarios = function() {
+            currentAcervoSeminario = null;
+            window.renderAcervoScreen();
+            const sc = document.getElementById('acervo-screen');
+            if (sc) sc.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.toggleMateriaDropdown = function(e) {
+            if (e) e.stopPropagation();
+            const popover = document.getElementById('materia-dropdown-menu');
+            if (popover) popover.classList.toggle('open');
+        };
+
+        window.setAcervoMateria = function(mat) {
+            currentAcervoMateria = mat;
+            currentAcervoSeminario = null;
+            const popover = document.getElementById('materia-dropdown-menu');
+            if (popover) popover.classList.remove('open');
+            window.renderAcervoScreen();
+        };
+
+        document.addEventListener('click', (e) => {
+            const wrap = document.querySelector('.netflix-genre-dropdown-wrapper');
+            if (wrap && !wrap.contains(e.target)) {
+                const popover = document.getElementById('materia-dropdown-menu');
+                if (popover) popover.classList.remove('open');
+            }
+        });
+
+        let currentAcervoFormat = 'all';
+        let currentAcervoAuthor = null;
+
+        window.setAcervoFormat = function(fmt) {
+            currentAcervoFormat = fmt;
+            ['all', 'pdf', 'video'].forEach(f => {
+                const btn = document.getElementById(`pill-format-${f}`);
+                if (btn) btn.classList.toggle('active', f === fmt);
+            });
+            window.renderAcervoScreen();
+        };
+
+        window.filterAcervoByAuthor = function(authorName) {
+            window.closeTitleModal(null, true);
+            currentAcervoAuthor = authorName;
+            currentAcervoMateria = 'all';
+            currentAcervoFormat = 'all';
+            currentAcervoSeminario = null;
+            window.switchScreen('acervo-screen');
+            window.renderAcervoScreen();
+            const sc = document.getElementById('acervo-screen');
+            if (sc) sc.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.clearAcervoAuthorFilter = function() {
+            currentAcervoAuthor = null;
+            window.renderAcervoScreen();
+        };
+
+        /* =========================================================
+           DISNEY+ COLLECTIONS ROW NA HOME E NO ACERVO
+           ========================================================= */
+        const DISNEY_HOME_COLLECTIONS = [
+            { id: 'col-filosofia', title: 'FILOSOFIA', materia: 'Filosofia', img: 'midia/colecoes/col_disney_filosofia.jpg' },
+            { id: 'col-sociologia', title: 'SOCIOLOGIA', materia: 'Sociologia', img: 'midia/colecoes/col_disney_sociologia.jpg' },
+            { id: 'col-literatura', title: 'LITERATURA', materia: 'Língua Portuguesa', img: 'midia/colecoes/col_disney_literatura.jpg' },
+            { id: 'col-historia', title: 'HISTÓRIA', materia: 'História', img: 'midia/colecoes/col_disney_historia.jpg' },
+            { id: 'col-hardware', title: 'HARDWARE & T.I.', materia: 'Hardware & Arquitetura', img: 'midia/colecoes/col_disney_hardware.jpg' },
+            { id: 'col-seguranca', title: 'CYBER DEFESA', materia: 'Segurança & Redes', img: 'midia/colecoes/col_disney_seguranca.jpg' },
+            { id: 'col-ingles', title: 'LÍNGUA INGLESA', materia: 'Língua Inglesa', img: 'midia/colecoes/col_disney_ingles.jpg' },
+            { id: 'col-games', title: 'DEV & GAMES', materia: 'Programação & T.I.', img: 'midia/colecoes/col_disney_games.jpg' }
+        ];
+
+        window.renderDisneyCollectionsRow = function() {
+            const container = document.getElementById('disney-collections-grid');
+            if (!container) return;
+
+            container.innerHTML = DISNEY_HOME_COLLECTIONS.map(c => `
+                <div class="disney-col-card" style="background-image: url('${c.img}');" onclick="window.openAcervoScreen('${c.materia.replace(/'/g, "\\'")}')" role="button" tabindex="0" aria-label="Coleção ${c.title}">
+                    <div class="disney-col-card-shine"></div>
+                </div>
+            `).join('');
+        };
+
+        function renderAcervoDisneyTiles(activeMateria) {
+            const isAll = activeMateria === 'all';
+            const allPill = `
+                <div class="acervo-disney-pill acervo-disney-pill-all ${isAll ? 'active' : ''}" onclick="window.setAcervoMateria('all')" role="button" tabindex="0" aria-label="Todas as Matérias">
+                    <i class="fa-solid fa-shapes"></i>
+                    <span>Todas</span>
+                    <div class="acervo-disney-pill-shine"></div>
+                </div>
+            `;
+
+            const tiles = DISNEY_HOME_COLLECTIONS.map(c => {
+                const isActive = activeMateria === c.materia;
+                return `
+                    <div class="acervo-disney-pill ${isActive ? 'active' : ''}" style="background-image: url('${c.img}');" onclick="window.setAcervoMateria('${c.materia.replace(/'/g, "\\'")}')" role="button" tabindex="0" aria-label="Coleção ${c.title}">
+                        <div class="acervo-disney-pill-shine"></div>
+                    </div>
+                `;
+            }).join('');
+
+            return allPill + tiles;
+        }
+
+        let currentAcervoViewMode = 'collections'; // 'collections' ou 'grid'
+
+        window.setAcervoViewMode = function(mode) {
+            currentAcervoViewMode = mode;
+            currentAcervoSeminario = null;
+            const btnCol = document.getElementById('view-toggle-collections');
+            const btnGrid = document.getElementById('view-toggle-grid');
+            if (btnCol) btnCol.classList.toggle('active', mode === 'collections');
+            if (btnGrid) btnGrid.classList.toggle('active', mode === 'grid');
+            window.renderAcervoScreen();
+        };
+
+        window.openAcademicDirectAction = function(id) {
+            const item = filmesDB[id];
+            if (!item) return;
+            if (item.pdf || item.slideKey) {
+                window.openPdfViewer(item.pdf || '', id);
+            } else {
+                window.openTitleModal(id);
+            }
+        };
+
+        function renderAcademicCardHtml(e) {
+            const w = e.item;
+            const st = getMateriaStyle(e.materia);
+            const coverFile = w.banner || w.bg || w.customCover || 
+                (w.ytTrailer ? `https://img.youtube.com/vi/${w.ytTrailer}/hqdefault.jpg` : '');
+            const coverUrl = imgUrl(coverFile, 800);
+            const hasSlides = !!(w.pdf || w.slideKey || e.hasPdf);
+            const hasVideo = !!(w.ytTrailer || w.trailer || e.hasVideo);
+
+            let tagText = 'APRESENTAÇÃO';
+            let actionIcon = 'fa-play';
+            let actionLabel = 'Abrir Slides';
+
+            if (hasSlides && hasVideo) {
+                tagText = '<i class="fa-solid fa-photo-film"></i> SLIDES + VÍDEO';
+                actionIcon = 'fa-play';
+                actionLabel = 'Apresentar';
+            } else if (hasSlides) {
+                tagText = '<i class="fa-solid fa-file-powerpoint"></i> SLIDES';
+                actionIcon = 'fa-file-powerpoint';
+                actionLabel = 'Abrir Slides';
+            } else if (hasVideo) {
+                tagText = '<i class="fa-solid fa-clapperboard"></i> VÍDEO';
+                actionIcon = 'fa-play';
+                actionLabel = 'Assistir Vídeo';
+            }
+
+            const durationText = w.duration || (hasSlides ? 'Apresentação em Slides' : 'Vídeo');
+            const safeTitle = (w.title || '').replace(/"/g, '&quot;');
+            const safeAuthors = (w.cast || 'Turma IFPI').replace(/"/g, '&quot;');
+
+            return `
+                <div class="academic-card" data-movie="${e.id}" role="button" tabindex="0" aria-label="${safeTitle}">
+                    <div class="academic-card-thumb">
+                        <img src="${coverUrl}" alt="${safeTitle}" class="academic-card-img" loading="lazy">
+                        <div class="academic-thumb-overlay">
+                            <div class="academic-play-badge"><i class="fa-solid ${actionIcon}"></i></div>
+                        </div>
+                        <div class="academic-tag-left" style="background: ${st.color};">
+                            <i class="${st.icon}"></i> ${e.materia}
+                        </div>
+                        <div class="academic-tag-right">
+                            ${tagText}
+                        </div>
+                    </div>
+                    <div class="academic-card-content">
+                        <h4 class="academic-card-title">${w.title}</h4>
+                        ${w.subtitle ? `<div class="academic-card-subtitle">${w.subtitle}</div>` : ''}
+                        <div class="academic-card-authors" title="${safeAuthors}">
+                            <i class="fa-solid fa-user-group"></i> <span>${safeAuthors}</span>
+                        </div>
+                        <div class="academic-card-meta-row">
+                            <span class="academic-meta-duration"><i class="fa-regular fa-clock"></i> ${durationText}</span>
+                            <span class="academic-meta-year">${e.periodo}</span>
+                        </div>
+                        <div class="academic-card-actions">
+                            <button type="button" class="academic-btn-primary" onclick="event.stopPropagation(); window.openAcademicDirectAction('${e.id}')">
+                                <i class="fa-solid ${actionIcon}"></i> ${actionLabel}
+                            </button>
+                            <button type="button" class="academic-btn-info" onclick="event.stopPropagation(); window.openTitleModal('${e.id}')" title="Ver Informações Completas">
+                                <i class="fa-solid fa-circle-info"></i> Detalhes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSeminarioShelfCardHtml(grp) {
+            const st = getMateriaStyle(grp.materia);
+            const count = grp.items.length;
+            if (count === 1) {
+                return renderAcademicCardHtml(grp.items[0]);
+            }
+
+            const firstItem = grp.items[0]?.item || {};
+            const firstId = grp.items[0]?.id || '';
+            const hasPdf = grp.items.some(e => e.hasPdf);
+            const hasVideo = grp.items.some(e => e.hasVideo);
+
+            // Badge de formato
+            let formatBadge = `${count} TRABALHOS`;
+            if (grp.trabalhoGrupo.toLowerCase().includes('podcast')) {
+                formatBadge = `${count} PODCASTS`;
+            } else if (hasPdf && hasVideo) {
+                formatBadge = `${count} APRESENTAÇÕES`;
+            }
+
+            // Capa do 1º slide ou banner da coleção
+            const repImg = firstItem.banner || firstItem.bg || firstItem.customCover || 
+                (firstItem.ytTrailer ? `https://img.youtube.com/vi/${firstItem.ytTrailer}/hqdefault.jpg` : (st.colImg || 'midia/colecoes/col_disney_filosofia.jpg'));
+            const repImgUrl = imgUrl(repImg, 800);
+            const safeKey = grp.key.replace(/'/g, "\\'");
+            const safeTitle = (grp.trabalhoGrupo || '').replace(/"/g, '&quot;');
+
+            // Roster consolidado de autores dos trabalhos desse grupo
+            const authorSet = new Set();
+            grp.items.forEach(e => {
+                const c = (e.item.cast || '').split(',');
+                c.forEach(a => { if (a.trim()) authorSet.add(a.trim()); });
+            });
+            const authorsList = Array.from(authorSet).slice(0, 4).join(', ') + (authorSet.size > 4 ? ' e outros' : '');
+            const safeAuthors = (authorsList || firstItem.cast || 'Turma IFPI').replace(/"/g, '&quot;');
+
+            return `
+                <div class="academic-card seminario-shelf-card is-multi" onclick="window.openSeminarioView('${safeKey}')" role="button" tabindex="0" aria-label="${safeTitle}">
+                    <div class="academic-card-thumb">
+                        <img src="${repImgUrl}" alt="${safeTitle}" class="academic-card-img" loading="lazy">
+                        <div class="academic-thumb-overlay">
+                            <div class="academic-play-badge"><i class="fa-solid fa-folder-open"></i></div>
+                        </div>
+                        <div class="academic-tag-left" style="background: ${st.color};">
+                            <i class="${st.icon}"></i> ${grp.materia}
+                        </div>
+                        <div class="academic-tag-right multi-badge">
+                            <i class="fa-solid fa-layer-group"></i> ${formatBadge}
+                        </div>
+                    </div>
+                    <div class="academic-card-content">
+                        <h4 class="academic-card-title">${grp.trabalhoGrupo}</h4>
+                        <div class="academic-card-subtitle" style="color: var(--netflix-red); font-weight: 700;">
+                            <i class="fa-solid fa-shapes"></i> Coleção &bull; ${count} ${count === 1 ? 'trabalho' : 'trabalhos'}
+                        </div>
+                        <div class="academic-card-authors" title="${safeAuthors}">
+                            <i class="fa-solid fa-user-group"></i> <span>${safeAuthors}</span>
+                        </div>
+                        <div class="academic-card-meta-row">
+                            <span class="academic-meta-duration"><i class="fa-solid fa-list-check"></i> ${count} apresentações</span>
+                            <span class="academic-meta-year">${grp.periodo}</span>
+                        </div>
+                        <div class="academic-card-actions">
+                            <button type="button" class="academic-btn-primary" onclick="event.stopPropagation(); window.openSeminarioView('${safeKey}')">
+                                <i class="fa-solid fa-folder-open"></i> Abrir Coleção (${count})
+                            </button>
+                            <button type="button" class="academic-btn-info" onclick="event.stopPropagation(); window.openTitleModal('${firstId}')" title="Ver Informações">
+                                <i class="fa-solid fa-circle-info"></i> Detalhes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.onSeminarioCardClick = function(seminarioKey, firstMovieId, count) {
+            window.openSeminarioView(seminarioKey);
+        };
+
+        window.scrollAcervoShelf = function(rowId, dir) {
+            const row = document.getElementById(rowId);
+            if (!row) return;
+            const amount = row.clientWidth * 0.75 * dir;
+            row.scrollBy({ left: amount, behavior: 'smooth' });
+        };
+
+        window.renderAcervoScreen = function() {
+            const entries = getAllAcervoEntries();
+            const rowsContainer = document.getElementById('acervo-rows-container');
+            const searchInput = document.getElementById('acervo-search-input');
+            const dropdownMenu = document.getElementById('materia-dropdown-menu');
+            const labelEl = document.getElementById('current-materia-label');
+            const authorChip = document.getElementById('acervo-author-chip');
+            const authorNameEl = document.getElementById('acervo-author-name');
+            const btnCol = document.getElementById('view-toggle-collections');
+            const btnGrid = document.getElementById('view-toggle-grid');
+            if (!rowsContainer) return;
+
+            // Sincroniza botões de visualização
+            if (btnCol) btnCol.classList.toggle('active', currentAcervoViewMode === 'collections');
+            if (btnGrid) btnGrid.classList.toggle('active', currentAcervoViewMode === 'grid');
+
+            // Atualiza chip de autor
+            if (authorChip && authorNameEl) {
+                if (currentAcervoAuthor) {
+                    authorChip.style.display = 'flex';
+                    authorNameEl.textContent = currentAcervoAuthor;
+                } else {
+                    authorChip.style.display = 'none';
+                }
+            }
+
+            const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+
+            // 1. Contagem por Matéria
+            const matCounts = {};
+            entries.forEach(e => {
+                matCounts[e.materia] = (matCounts[e.materia] || 0) + 1;
+            });
+
+            // 2. Atualiza Botão e Menu Dropdown estilo Netflix
+            if (labelEl) {
+                labelEl.textContent = currentAcervoMateria === 'all' ? 'Todas as Matérias' : currentAcervoMateria;
+            }
+
+            if (dropdownMenu) {
+                const materiasList = Object.keys(matCounts);
+                dropdownMenu.innerHTML = `
+                    <div class="netflix-genre-item ${currentAcervoMateria === 'all' ? 'active' : ''}" onclick="window.setAcervoMateria('all')">
+                        <span>Todas as Matérias</span>
+                        <span class="genre-count">${entries.length}</span>
+                    </div>
+                    ${materiasList.map(m => `
+                        <div class="netflix-genre-item ${currentAcervoMateria === m ? 'active' : ''}" onclick="window.setAcervoMateria('${m.replace(/'/g, "\\'")}')">
+                            <span>${m}</span>
+                            <span class="genre-count">${matCounts[m]}</span>
+                        </div>
+                    `).join('')}
+                `;
+            }
+
+            // 3. Filtragem (Matéria, Formato, Autor e Busca)
+            const filtered = entries.filter(e => {
+                if (currentAcervoMateria !== 'all' && e.materia !== currentAcervoMateria) return false;
+                if (currentAcervoFormat === 'pdf' && !e.hasPdf) return false;
+                if (currentAcervoFormat === 'video' && !e.hasVideo) return false;
+                if (currentAcervoAuthor) {
+                    const castStr = (e.item.cast || '').toLowerCase();
+                    if (!castStr.includes(currentAcervoAuthor.toLowerCase())) return false;
+                }
+                if (query) {
+                    const hay = `${e.item.title} ${e.item.subtitle || ''} ${e.item.cast || ''} ${e.item.synopsis || ''} ${e.materia} ${e.trabalhoGrupo}`.toLowerCase();
+                    if (!hay.includes(query)) return false;
+                }
+                return true;
+            });
+
+            // Barra Disney+ no topo do Acervo
+            const disneyBarHtml = `
+                <div class="acervo-disney-bar-wrapper">
+                    <div class="acervo-disney-bar-title"><i class="fa-solid fa-shapes" style="color:var(--netflix-red);"></i> Selecione uma Coleção:</div>
+                    <div class="acervo-disney-bar">
+                        ${renderAcervoDisneyTiles(currentAcervoMateria)}
+                    </div>
+                </div>
+            `;
+
+            if (!filtered.length) {
+                rowsContainer.innerHTML = `
+                    ${disneyBarHtml}
+                    <div style="text-align:center; padding: 70px 20px; color: #888;">
+                        <i class="fa-solid fa-folder-open" style="font-size: 3rem; margin-bottom: 16px; color: #444;"></i>
+                        <h3 style="color:#fff; font-size: 1.3rem; margin-bottom: 8px;">Nenhum trabalho encontrado</h3>
+                        <p style="font-size: 0.95rem;">Experimente selecionar "Todas as Matérias", outro formato ou limpar os filtros.</p>
+                        ${currentAcervoAuthor ? `<button onclick="window.clearAcervoAuthorFilter()" style="margin-top:14px; background:var(--netflix-red); border:none; color:#fff; padding:8px 18px; border-radius:4px; cursor:pointer; font-weight:bold;">Limpar filtro de aluno</button>` : ''}
+                    </div>
+                `;
+                return;
+            }
+
+            // 4. Agrupamento por Seminário / Coleção (trabalhoGrupo)
+            const groupsMap = new Map();
+            filtered.forEach(e => {
+                const key = `${e.materia}|||${e.trabalhoGrupo}`;
+                if (!groupsMap.has(key)) {
+                    groupsMap.set(key, {
+                        key: key,
+                        materia: e.materia,
+                        trabalhoGrupo: e.trabalhoGrupo,
+                        periodo: e.periodo,
+                        items: []
+                    });
+                }
+                groupsMap.get(key).items.push(e);
+            });
+
+            // MODO 1: Um seminário específico está em foco (Visão Detalhada com Cards 16:9)
+            if (currentAcervoSeminario && groupsMap.has(currentAcervoSeminario)) {
+                const grp = groupsMap.get(currentAcervoSeminario);
+                const st = getMateriaStyle(grp.materia);
+                const cardsHtml = grp.items.map(renderAcademicCardHtml).join('');
+
+                rowsContainer.innerHTML = `
+                    <div class="seminario-detail-header">
+                        <button type="button" class="seminario-back-btn" onclick="window.backToSeminarios()">
+                            <i class="fa-solid fa-arrow-left"></i> Voltar para todas as coleções
+                        </button>
+                        <div class="seminario-detail-title-group">
+                            <span class="seminario-detail-materia-badge" style="background: ${st.color};">
+                                <i class="${st.icon}"></i> ${grp.materia}
+                            </span>
+                            <h2 class="seminario-detail-title">${grp.trabalhoGrupo}</h2>
+                        </div>
+                        <div class="seminario-detail-subtitle">
+                            <span><i class="fa-regular fa-calendar"></i> ${grp.periodo}</span> &bull; 
+                            <span>${grp.items.length} ${grp.items.length === 1 ? 'apresentação disponível' : 'apresentações disponíveis'}</span>
+                        </div>
+                    </div>
+                    <div class="seminario-detail-grid">
+                        ${cardsHtml}
+                    </div>
+                `;
+
+                initDragToScroll();
+                initHoverAutoPlay();
+                return;
+            }
+
+            // MODO 3: Visão Todos os Slides (Grade direta com todos os trabalhos 16:9)
+            if (currentAcervoViewMode === 'grid') {
+                const allCardsHtml = filtered.map(renderAcademicCardHtml).join('');
+                rowsContainer.innerHTML = `
+                    ${disneyBarHtml}
+                    <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="color: #bbb; font-size: 0.95rem; font-weight: 700;">
+                            <i class="fa-solid fa-layer-group" style="color:var(--netflix-red); margin-right:6px;"></i>
+                            ${filtered.length} ${filtered.length === 1 ? 'apresentação encontrada' : 'apresentações encontradas'}
+                        </span>
+                        <span style="color: #777; font-size: 0.82rem;">Exibição em Slides 16:9</span>
+                    </div>
+                    <div class="seminario-detail-grid">
+                        ${allCardsHtml}
+                    </div>
+                `;
+                initDragToScroll();
+                initHoverAutoPlay();
+                return;
+            }
+
+            // CASO 3: Filtrado por Matéria Específica (ex: Filosofia, Sociologia, etc.)
+            if (currentAcervoMateria !== 'all') {
+                const st = getMateriaStyle(currentAcervoMateria);
+                // Se modo for 'grid', exibe todos os slides individuais; senão, cada trabalho completo ocupa 1 card
+                let matCardsHtml = '';
+                if (currentAcervoViewMode === 'grid') {
+                    matCardsHtml = filtered.map(renderAcademicCardHtml).join('');
+                } else {
+                    matCardsHtml = Array.from(groupsMap.values()).map(renderSeminarioShelfCardHtml).join('');
+                }
+
+                const countSubtitle = groupsMap.size === filtered.length
+                    ? `${filtered.length} ${filtered.length === 1 ? 'trabalho disponível' : 'trabalhos disponíveis'}`
+                    : `${groupsMap.size} ${groupsMap.size === 1 ? 'coleção' : 'coleções'} • ${filtered.length} apresentações`;
+
+                rowsContainer.innerHTML = `
+                    ${disneyBarHtml}
+                    <div class="acervo-focused-materia-header">
+                        <div class="acervo-shelf-title-group">
+                            <span class="acervo-shelf-badge" style="background: ${st.color};">
+                                <i class="${st.icon}"></i>
+                            </span>
+                            <div>
+                                <h2 class="row-title acervo-shelf-title" style="margin: 0;">${currentAcervoMateria}</h2>
+                                <span style="font-size: 0.82rem; color: #888;">${countSubtitle}</span>
+                            </div>
+                        </div>
+                        <button type="button" class="acervo-clear-filter-btn" onclick="window.setAcervoMateria('all')">
+                            <i class="fa-solid fa-arrow-left"></i> Ver Todas as Matérias
+                        </button>
+                    </div>
+                    <div class="seminario-detail-grid">
+                        ${matCardsHtml}
+                    </div>
+                `;
+                initDragToScroll();
+                initHoverAutoPlay();
+                return;
+            }
+
+            // CASO 4: PADRÃO (currentAcervoMateria === 'all')
+            // Separados por matérias, em fileiras que arrastam para os lados, igual à tela inicial!
+            // Cada trabalho completo ocupa apenas UM card (ex: podcasts de sociologia agrupados em 1 card)
+            const materiasMap = new Map();
+            filtered.forEach(e => {
+                if (!materiasMap.has(e.materia)) {
+                    materiasMap.set(e.materia, []);
+                }
+                materiasMap.get(e.materia).push(e);
+            });
+
+            // Ordem recomendada das matérias
+            const materiaOrder = [
+                'Filosofia', 
+                'Sociologia', 
+                'Língua Portuguesa', 
+                'História', 
+                'Hardware & Arquitetura', 
+                'Segurança & Redes',
+                'Programação & T.I.', 
+                'Língua Inglesa'
+            ];
+
+            const sortedMaterias = Array.from(materiasMap.keys()).sort((a, b) => {
+                const idxA = materiaOrder.indexOf(a);
+                const idxB = materiaOrder.indexOf(b);
+                if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+                if (idxA !== -1) return -1;
+                if (idxB !== -1) return 1;
+                return a.localeCompare(b);
+            });
+
+            let shelvesHtml = sortedMaterias.map((matName, idx) => {
+                const items = materiasMap.get(matName);
+                const st = getMateriaStyle(matName);
+                const slug = matName.toLowerCase().replace(/[^a-z0-9]/g, '-');
+                const rowId = `acervo-shelf-row-${slug}-${idx}`;
+                
+                // Agrupa as apresentações daquela matéria pelo seu trabalho/seminário completo
+                const matGroupsMap = new Map();
+                items.forEach(e => {
+                    const key = `${e.materia}|||${e.trabalhoGrupo}`;
+                    if (!matGroupsMap.has(key)) {
+                        matGroupsMap.set(key, {
+                            key: key,
+                            materia: e.materia,
+                            trabalhoGrupo: e.trabalhoGrupo,
+                            periodo: e.periodo,
+                            items: []
+                        });
+                    }
+                    matGroupsMap.get(key).items.push(e);
+                });
+
+                const cardsHtml = Array.from(matGroupsMap.values()).map(renderSeminarioShelfCardHtml).join('');
+                const safeMat = matName.replace(/'/g, "\\'");
+                const groupCount = matGroupsMap.size;
+                const workCount = items.length;
+                const countBadgeText = groupCount === workCount 
+                    ? `${workCount} ${workCount === 1 ? 'trabalho' : 'trabalhos'}`
+                    : `${groupCount} ${groupCount === 1 ? 'coleção' : 'coleções'} • ${workCount} apresentações`;
+
+                return `
+                    <div class="catalog-section acervo-subject-shelf" id="acervo-shelf-${slug}">
+                        <div class="acervo-shelf-header">
+                            <div class="acervo-shelf-title-group">
+                                <span class="acervo-shelf-badge" style="background: ${st.color};">
+                                    <i class="${st.icon}"></i>
+                                </span>
+                                <h2 class="row-title acervo-shelf-title">${matName}</h2>
+                                <span class="acervo-shelf-count">${countBadgeText}</span>
+                            </div>
+                            <button type="button" class="acervo-shelf-filter-btn" onclick="window.setAcervoMateria('${safeMat}')">
+                                Explorar ${matName} <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="acervo-shelf-slider-container">
+                            <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('${rowId}', -1)">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <div class="landscape-row acervo-row-slider" id="${rowId}">
+                                ${cardsHtml}
+                            </div>
+                            <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('${rowId}', 1)">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            rowsContainer.innerHTML = `
+                ${disneyBarHtml}
+                <div class="acervo-shelves-container">
+                    ${shelvesHtml}
+                </div>
+            `;
+            initDragToScroll();
+            initHoverAutoPlay();
+        };
+
+        /* =========================================================
+           FEATURE 5: PAINEL E ENVIO DE TRABALHO (INDIVIDUAL + LOTE)
            ========================================================= */
         function updateTeacherUi(name) {
             const isProf = (name || '').toLowerCase().includes('prof');
             const uploadBtn = document.getElementById('btn-professor-upload');
+            const uploadAcervoBtn = document.getElementById('btn-acervo-upload');
             const uploadDropdown = document.getElementById('dropdown-upload-item');
             if (uploadBtn) uploadBtn.style.display = isProf ? 'inline-flex' : 'none';
+            if (uploadAcervoBtn) uploadAcervoBtn.style.display = isProf ? 'inline-flex' : 'none';
             if (uploadDropdown) uploadDropdown.style.display = isProf ? 'flex' : 'none';
         }
 
-        window.openSubmitWorkModal = function() {
+        window.switchSubmitTab = function(mode) {
+            const singleForm = document.getElementById('form-submit-work');
+            const bulkForm = document.getElementById('form-bulk-work');
+            const btnSingle = document.getElementById('tab-btn-single');
+            const btnBulk = document.getElementById('tab-btn-bulk');
+            if (singleForm) singleForm.style.display = mode === 'single' ? 'block' : 'none';
+            if (bulkForm) bulkForm.style.display = mode === 'bulk' ? 'block' : 'none';
+            if (btnSingle) btnSingle.classList.toggle('active', mode === 'single');
+            if (btnBulk) btnBulk.classList.toggle('active', mode === 'bulk');
+        };
+
+        window.openSubmitWorkModal = function(defaultMode) {
             const modal = document.getElementById('submit-work-modal');
+            if (defaultMode) window.switchSubmitTab(defaultMode);
             if (modal) {
                 modal.classList.add('show');
                 const firstInput = document.getElementById('sw-title');
-                if (firstInput) setTimeout(() => firstInput.focus(), 150);
+                if (firstInput && defaultMode !== 'bulk') setTimeout(() => firstInput.focus(), 150);
             }
         };
 
@@ -1156,68 +2330,154 @@ window.closeVideoPlayer = function() {
             } catch (e) {}
         }
 
+        function buildWorkEntry({ title, category, workGroup, authors, year, synopsis, pdfUrl, trailerUrl, coverUrl, coverTheme }) {
+            const ytId = extractYouTubeId(trailerUrl);
+            const workId = 'trabalho-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+            const finalGroup = (workGroup || '').trim() || `Trabalhos e Seminários de ${category}`;
+            const finalAuthors = (authors || '').trim() || 'Alunos da Turma IFPI';
+            const finalSynopsis = (synopsis || '').trim() || `Trabalho acadêmico de ${category} (${finalGroup}) desenvolvido por ${finalAuthors}.`;
+
+            // Se não tiver capa personalizada: usa thumbnail do YouTube (se for vídeo) ou gera pôster SVG automático da matéria!
+            let autoCover = coverUrl;
+            if (!autoCover) {
+                if (ytId) {
+                    autoCover = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+                } else {
+                    autoCover = generateAutoPosterDataUri(title, category, finalAuthors);
+                }
+            }
+
+            return {
+                id: workId,
+                title: title,
+                subtitle: finalGroup.toUpperCase(),
+                materia: category,
+                trabalhoGrupo: finalGroup,
+                periodo: year || '2026 • 1º Bimestre',
+                bg: autoCover,
+                banner: autoCover,
+                pdf: pdfUrl || '',
+                ytTrailer: ytId || '',
+                match: "99% Relevante",
+                year: (year || '2026').split('•')[0].trim(),
+                age: "Livre",
+                duration: pdfUrl && ytId ? "PDF + Vídeo" : (pdfUrl ? "Slides / PDF" : "Vídeo"),
+                synopsis: finalSynopsis,
+                cast: finalAuthors,
+                genres: category,
+                tags: `${category}, ${finalGroup}`,
+                isMain: false,
+                coverTheme: coverTheme || '',
+                customCover: autoCover,
+                dateAdded: new Date().toISOString()
+            };
+        }
+
         window.saveNewWork = function(e) {
             if (e) e.preventDefault();
             const title = (document.getElementById('sw-title').value || '').trim();
             const category = document.getElementById('sw-category').value || 'Filosofia';
+            const workGroup = (document.getElementById('sw-work-group') ? document.getElementById('sw-work-group').value : '').trim();
             const authors = (document.getElementById('sw-authors').value || '').trim();
-            const year = (document.getElementById('sw-year').value || '2026').trim();
+            const year = (document.getElementById('sw-year').value || '2026 • 1º Bimestre').trim();
             const synopsis = (document.getElementById('sw-synopsis').value || '').trim();
             const pdfUrl = (document.getElementById('sw-pdf').value || '').trim();
-            let trailerUrl = (document.getElementById('sw-trailer').value || '').trim();
+            const trailerUrl = (document.getElementById('sw-trailer').value || '').trim();
             const coverUrl = (document.getElementById('sw-cover').value || '').trim();
-            const coverTheme = document.getElementById('sw-cover-theme').value || 'p-tema1';
+            const coverTheme = document.getElementById('sw-cover-theme').value || '';
 
-            if (!title || !authors || !synopsis) {
-                window.showToastNotification('Por favor, preencha os campos obrigatórios (*).');
+            if (!title || !authors) {
+                window.showToastNotification('Por favor, preencha o título e os integrantes.');
                 return;
             }
 
-            // Extrai ID do YouTube caso seja link completo
-            let ytId = trailerUrl;
-            if (trailerUrl.includes('youtu.be/')) {
-                ytId = trailerUrl.split('youtu.be/')[1].split('?')[0];
-            } else if (trailerUrl.includes('watch?v=')) {
-                ytId = trailerUrl.split('watch?v=')[1].split('&')[0];
-            }
+            const newWork = buildWorkEntry({
+                title, category, workGroup, authors, year, synopsis, pdfUrl, trailerUrl, coverUrl, coverTheme
+            });
 
-            const workId = 'trabalho-' + Date.now();
-            const newWork = {
-                id: workId,
-                title: title,
-                subtitle: category.toUpperCase(),
-                bg: coverUrl || 'banner.png',
-                banner: coverUrl || 'banner.png',
-                pdf: pdfUrl || '',
-                ytTrailer: ytId || '',
-                match: "99% Relevante",
-                year: year || "2026",
-                age: "Livre",
-                duration: "Apresentação",
-                synopsis: synopsis,
-                cast: authors,
-                genres: category,
-                tags: `Trabalho Acadêmico, ${category}`,
-                isMain: false,
-                coverTheme: coverTheme,
-                customCover: coverUrl,
-                dateAdded: new Date().toISOString()
-            };
-
-            // Adiciona ao catálogo em memória
-            filmesDB[workId] = newWork;
-
-            // Salva no localStorage
+            filmesDB[newWork.id] = newWork;
             const saved = getSavedTeacherWorks();
             saved.unshift(newWork);
             saveTeacherWorksToStorage(saved);
 
-            // Atualiza UI
             renderTeacherWorks();
+            if (typeof window.renderAcervoScreen === 'function') window.renderAcervoScreen();
             window.closeSubmitWorkModal(null, true);
             const form = document.getElementById('form-submit-work');
             if (form) form.reset();
-            window.showToastNotification(`Trabalho "${title}" cadastrado com sucesso!`);
+            window.showToastNotification(`Trabalho "${title}" adicionado à matéria ${category}!`);
+        };
+
+        window.saveBulkWorks = function(e) {
+            if (e) e.preventDefault();
+            const category = document.getElementById('bw-category').value || 'Filosofia';
+            const workGroup = (document.getElementById('bw-work-group').value || '').trim() || `Seminário de ${category}`;
+            const year = (document.getElementById('bw-year').value || '2025 • Acervo da Turma').trim();
+            const rawLines = (document.getElementById('bw-lines').value || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+            if (!rawLines.length) {
+                window.showToastNotification('Cole pelo menos uma linha para importar.');
+                return;
+            }
+
+            const saved = getSavedTeacherWorks();
+            let count = 0;
+
+            rawLines.forEach((line, idx) => {
+                const parts = line.split('|').map(p => p.trim()).filter(Boolean);
+                let title = '', authors = 'Turma IFPI', link = '';
+
+                if (parts.length >= 3) {
+                    title = parts[0];
+                    authors = parts[1];
+                    link = parts.slice(2).join(' ');
+                } else if (parts.length === 2) {
+                    title = parts[0];
+                    link = parts[1];
+                } else {
+                    link = parts[0];
+                    // Deduce title from filename or YouTube link
+                    const cleanName = link.split('/').pop().replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ');
+                    title = cleanName && !link.includes('youtube.com') && !link.includes('youtu.be')
+                        ? cleanName.charAt(0).toUpperCase() + cleanName.slice(1)
+                        : `${workGroup} #${idx + 1}`;
+                }
+
+                let pdfUrl = '';
+                let trailerUrl = '';
+                if (link.toLowerCase().endsWith('.pdf') || link.includes('drive.google.com') || link.includes('canva.com') || link.startsWith('trabalhos/')) {
+                    pdfUrl = link;
+                } else if (extractYouTubeId(link)) {
+                    trailerUrl = link;
+                } else if (link.startsWith('http')) {
+                    pdfUrl = link;
+                }
+
+                const entry = buildWorkEntry({
+                    title,
+                    category,
+                    workGroup,
+                    authors,
+                    year,
+                    synopsis: `Trabalho da barra "${workGroup}" na disciplina de ${category}, apresentado por ${authors}.`,
+                    pdfUrl,
+                    trailerUrl,
+                    coverUrl: '',
+                    coverTheme: ''
+                });
+
+                filmesDB[entry.id] = entry;
+                saved.unshift(entry);
+                count++;
+            });
+
+            saveTeacherWorksToStorage(saved);
+            renderTeacherWorks();
+            if (typeof window.renderAcervoScreen === 'function') window.renderAcervoScreen();
+            window.closeSubmitWorkModal(null, true);
+            const form = document.getElementById('form-bulk-work');
+            if (form) form.reset();
+            window.showToastNotification(`${count} ${count === 1 ? 'trabalho importado' : 'trabalhos importados'} com sucesso em "${workGroup}"!`);
         };
 
         function renderTeacherWorks() {
@@ -1231,19 +2491,25 @@ window.closeVideoPlayer = function() {
                 return;
             }
 
-            // Registra todos no filmesDB
             works.forEach(w => {
+                if (!w.customCover) {
+                    w.customCover = w.ytTrailer
+                        ? `https://img.youtube.com/vi/${w.ytTrailer}/hqdefault.jpg`
+                        : generateAutoPosterDataUri(w.title, w.materia || w.genres, w.cast);
+                    w.bg = w.customCover;
+                    w.banner = w.customCover;
+                }
                 filmesDB[w.id] = w;
             });
 
             container.style.display = 'block';
             grid.innerHTML = works.map(w => {
-                const bgStyle = w.customCover ? `background-image: url('${w.customCover}'); background-size: cover;` : '';
-                const themeClass = w.coverTheme || 'p-tema1';
+                const bgStyle = w.customCover ? `background-image: url('${w.customCover}'); background-size: cover; background-position: center;` : '';
+                const themeClass = w.coverTheme || '';
                 return `
                     <div class="card-portrait ${themeClass}" style="${bgStyle}" data-movie="${w.id}" role="button" tabindex="0" aria-label="${w.title}">
-                        <div class="card-portrait-content">
-                            <span style="font-size: 0.65rem; color: #60a5fa; font-weight: bold; margin-bottom: 4px;">${w.genres || 'ACERVO'}</span>
+                        <div class="card-portrait-content" style="display:flex !important;">
+                            <span style="font-size: 0.65rem; color: #60a5fa; font-weight: bold; margin-bottom: 4px;">${w.materia || w.genres || 'ACERVO'}</span>
                             <h4>${w.title}</h4>
                         </div>
                     </div>
@@ -2181,9 +3447,12 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
            SISTEMA DE ARRASTAR PARA OS LADOS (DRAG-TO-SCROLL & WHEEL)
            ========================================================= */
        function initDragToScroll() {
-            const sliders = document.querySelectorAll('.posters-container, .landscape-row, .top10-container');
+            const sliders = document.querySelectorAll('.posters-container, .landscape-row, .top10-container, .acervo-row-slider');
             
             sliders.forEach(slider => {
+                if (slider.dataset.dragInit === 'true') return;
+                slider.dataset.dragInit = 'true';
+
                 let isDown = false;
                 let startX;
                 let startY;
@@ -2235,7 +3504,7 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 }, {passive: true});
 
                 // Evita disparar cliques nos cards se o usuário estava arrastando
-                slider.querySelectorAll('.card-portrait, .card-landscape, .top10-item').forEach(card => {
+                slider.querySelectorAll('.card-portrait, .card-landscape, .top10-item, .academic-card, .seminario-card').forEach(card => {
                     card.addEventListener('click', (e) => {
                         if (hasMoved) { e.stopImmediatePropagation(); hasMoved = false; }
                     }, true);
@@ -2670,12 +3939,20 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             // Em celular/tablet (touch), não ativamos mini tela de hover
             if (isTouchDevice) return;
 
-            const cards = document.querySelectorAll('.card-portrait, .card-landscape, .more-card');
+            const cards = document.querySelectorAll('.card-portrait, .card-landscape');
             const hoverCard = document.getElementById('hover-preview-card');
             if (!hoverCard) return;
 
             cards.forEach(card => {
+                // Não ativa em cards dentro do modal de detalhes
+                if (card.closest('#title-modal-overlay') || card.closest('.title-modal-container')) return;
+                if (card.dataset.hoverInit === 'true') return;
+                card.dataset.hoverInit = 'true';
+
                 card.addEventListener('mouseenter', (e) => {
+                    const modalOverlay = document.getElementById('title-modal-overlay');
+                    if (modalOverlay && modalOverlay.classList.contains('show')) return;
+                    if (document.body.classList.contains('modal-open')) return;
                     if (isHoverCardActive) return; // Não abre se já tiver um aberto
 
                     let movieId = card.dataset.movie;
@@ -2704,10 +3981,23 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             
             // Se o usuário rolar a tela, esconde a mini tela imediatamente
             const home = document.getElementById('home-screen');
-            if (home) home.addEventListener('scroll', window.closeHoverPreview);
+            if (home && !home.dataset.scrollInit) {
+                home.dataset.scrollInit = 'true';
+                home.addEventListener('scroll', window.closeHoverPreview);
+            }
+            const acervo = document.getElementById('acervo-screen');
+            if (acervo && !acervo.dataset.scrollInit) {
+                acervo.dataset.scrollInit = 'true';
+                acervo.addEventListener('scroll', window.closeHoverPreview);
+            }
         }
 
         function openHoverPreview(cardElement, movieId, data) {
+            const modalOverlay = document.getElementById('title-modal-overlay');
+            if (modalOverlay && modalOverlay.classList.contains('show')) return;
+            if (document.body.classList.contains('modal-open')) return;
+            if (cardElement.closest('#title-modal-overlay') || cardElement.closest('.title-modal-container')) return;
+
             isHoverCardActive = true;
             const hoverCard = document.getElementById('hover-preview-card');
             if (!hoverCard) return;
@@ -2906,6 +4196,7 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             renderMinhaLista();
             renderContinueWatching();
             renderTeacherWorks();
+            renderDisneyCollectionsRow();
 
             // 2. Delegação de cliques em elementos com data-movie, data-profile ou episódios
             document.body.addEventListener('click', (e) => {
@@ -2987,6 +4278,13 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 searchIconBtn.addEventListener('click', () => {
                     searchInput.focus();
                 });
+            }
+
+            // 6. Deep Linking automático via URL
+            if (pendingScreenParam === 'acervo' || pendingScreenParam === 'trabalhos') {
+                setTimeout(() => {
+                    if (typeof window.selectProfile === 'function') window.selectProfile('Admin');
+                }, 100);
             }
         });
 

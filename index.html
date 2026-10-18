@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css?v=1.5">
+    <link rel="stylesheet" href="css/style.css?v=3.7">
 </head>
 <body>
 
@@ -111,25 +111,41 @@
         <div class="add-profile-box submit-work-box" onclick="event.stopPropagation()">
             <button type="button" class="modal-close-btn" aria-label="Fechar" onclick="window.closeSubmitWorkModal(event, true)"><i class="fa-solid fa-xmark"></i></button>
             <div class="submit-work-header">
-                <span class="prof-tag"><i class="fa-solid fa-chalkboard-user"></i> Painel do Professor</span>
-                <h2>Cadastrar Trabalho no Catálogo</h2>
-                <p class="add-profile-sub">Adicione as apresentações e paródias dos seus alunos para o acervo do IFPIFLIX.</p>
+                <span class="prof-tag"><i class="fa-solid fa-chalkboard-user"></i> Painel do Acervo &amp; Professor</span>
+                <h2>Adicionar Trabalhos ao Acervo</h2>
+                <p class="add-profile-sub">Cadastre um trabalho individual ou cole vários links/arquivos de uma vez sem preencher ficha por ficha.</p>
+            </div>
+
+            <div class="submit-mode-tabs">
+                <button type="button" class="submit-mode-tab active" id="tab-btn-single" onclick="window.switchSubmitTab('single')">
+                    <i class="fa-solid fa-file-circle-plus"></i> Individual
+                </button>
+                <button type="button" class="submit-mode-tab" id="tab-btn-bulk" onclick="window.switchSubmitTab('bulk')">
+                    <i class="fa-solid fa-bolt"></i> Importar Vários em Lote
+                </button>
             </div>
             
+            <!-- ABA 1: CADASTRO INDIVIDUAL -->
             <form id="form-submit-work" onsubmit="window.saveNewWork(event)">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="sw-title">Título do Trabalho / Paródia *</label>
+                        <label for="sw-title">Título do Trabalho / Equipe *</label>
                         <input type="text" id="sw-title" placeholder="Ex: O Exterminador de Bugs" required autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label for="sw-category">Matéria / Categoria *</label>
+                        <label for="sw-category">Matéria / Disciplina *</label>
                         <select id="sw-category" required>
                             <option value="Filosofia">Filosofia</option>
-                            <option value="T.I. & Redes">T.I. & Redes</option>
-                            <option value="Trabalhos Antigos">Trabalhos Antigos</option>
-                            <option value="Programação Web">Programação Web</option>
+                            <option value="História">História</option>
+                            <option value="Sociologia">Sociologia</option>
+                            <option value="Língua Portuguesa">Língua Portuguesa</option>
+                            <option value="Língua Inglesa">Língua Inglesa</option>
+                            <option value="Hardware & Arquitetura">Hardware &amp; Arquitetura</option>
+                            <option value="Segurança & Redes">Segurança &amp; Redes</option>
+                            <option value="Programação & T.I.">Programação &amp; T.I.</option>
+                            <option value="Inteligência Artificial & IoT">Inteligência Artificial &amp; IoT</option>
                             <option value="Sistemas Operacionais">Sistemas Operacionais</option>
+                            <option value="Banco de Dados">Banco de Dados</option>
                             <option value="Outra Disciplina">Outra Disciplina</option>
                         </select>
                     </div>
@@ -137,37 +153,42 @@
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="sw-authors">Alunos / Integrantes do Grupo *</label>
-                        <input type="text" id="sw-authors" placeholder="Ex: Lucas, Camila, Rafael, João..." required autocomplete="off">
+                        <label for="sw-work-group">Nome da Barra (Trabalho / Seminário)</label>
+                        <input type="text" id="sw-work-group" placeholder="Ex: Seminário 1 - Ciência Moderna" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label for="sw-year">Ano / Semestre</label>
-                        <input type="text" id="sw-year" placeholder="Ex: 2026.1" value="2026" autocomplete="off">
+                        <label for="sw-year">Bimestre / Ano</label>
+                        <input type="text" id="sw-year" placeholder="Ex: 2026 • 1º Bimestre" value="2026 • 1º Bimestre" autocomplete="off">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="sw-synopsis">Sinopse / Resumo do Trabalho *</label>
-                    <textarea id="sw-synopsis" rows="2" placeholder="Breve resumo da pesquisa ou paródia apresentada..." required></textarea>
+                    <label for="sw-authors">Alunos / Integrantes do Grupo *</label>
+                    <input type="text" id="sw-authors" placeholder="Ex: Lucas, Camila, Rafael, João..." required autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="sw-synopsis">Sinopse / Resumo (opcional — geramos automático se deixar curto)</label>
+                    <textarea id="sw-synopsis" rows="2" placeholder="Breve resumo da apresentação ou vídeo..." required></textarea>
                 </div>
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="sw-pdf">Link da Apresentação / PDF (Canva, Drive, Link)</label>
-                        <input type="url" id="sw-pdf" placeholder="https://exemplo.com/arquivo.pdf" autocomplete="off">
+                        <label for="sw-pdf">Link ou Arquivo do PDF (Ex: trabalhos/meu_slide.pdf)</label>
+                        <input type="text" id="sw-pdf" placeholder="trabalhos/arquivo.pdf ou https://..." autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label for="sw-trailer">Link do Trailer (YouTube URL ou Código)</label>
-                        <input type="text" id="sw-trailer" placeholder="Ex: https://youtube.com/watch?v=... ou ID" autocomplete="off">
+                        <label for="sw-trailer">Link do Vídeo / YouTube (URL ou ID)</label>
+                        <input type="text" id="sw-trailer" placeholder="Ex: https://youtube.com/watch?v=..." autocomplete="off">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="sw-cover">Imagem de Capa (URL personalizada ou Estilo Temático)</label>
+                    <label for="sw-cover">Imagem de Capa (Opcional — puxa do YouTube ou gera capa automática)</label>
                     <div class="cover-input-row">
-                        <input type="url" id="sw-cover" placeholder="URL da imagem (opcional)" autocomplete="off">
+                        <input type="text" id="sw-cover" placeholder="Deixe vazio para capa automática!" autocomplete="off">
                         <select id="sw-cover-theme" onchange="window.onWorkThemeChange()">
-                            <option value="">Capa padrão</option>
+                            <option value="">Capa Automática da Matéria</option>
                             <option value="p-tema1">Tema Filosofia Clássica</option>
                             <option value="p-stranger">Tema Ficção / Stranger</option>
                             <option value="p-opensource">Tema Código / Open Source</option>
@@ -178,7 +199,55 @@
                 </div>
 
                 <div class="add-profile-actions">
-                    <button type="submit" class="btn-save-profile"><i class="fa-solid fa-cloud-arrow-up"></i> Publicar no IFPIFLIX</button>
+                    <button type="submit" class="btn-save-profile"><i class="fa-solid fa-cloud-arrow-up"></i> Publicar no Acervo</button>
+                    <button type="button" class="btn-cancel-profile" onclick="window.closeSubmitWorkModal(event, true)">Cancelar</button>
+                </div>
+            </form>
+
+            <!-- ABA 2: IMPORTAÇÃO RÁPIDA EM LOTE -->
+            <form id="form-bulk-work" style="display: none;" onsubmit="window.saveBulkWorks(event)">
+                <div class="bulk-import-help">
+                    <strong><i class="fa-solid fa-wand-magic-sparkles"></i> Importador Inteligente:</strong> Cole uma linha por trabalho. Você pode colar só o link do YouTube/PDF ou usar o formato:<br>
+                    <code>Título | Alunos/Grupo | Link do PDF ou YouTube</code><br>
+                    O sistema cria automaticamente a capa, a sinopse e organiza na barra escolhida abaixo!
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="bw-category">Matéria de todos esses arquivos *</label>
+                        <select id="bw-category" required>
+                            <option value="Filosofia">Filosofia</option>
+                            <option value="História">História</option>
+                            <option value="Sociologia">Sociologia</option>
+                            <option value="Língua Portuguesa">Língua Portuguesa</option>
+                            <option value="Língua Inglesa">Língua Inglesa</option>
+                            <option value="Hardware & Arquitetura">Hardware &amp; Arquitetura</option>
+                            <option value="Segurança & Redes">Segurança &amp; Redes</option>
+                            <option value="Programação & T.I.">Programação &amp; T.I.</option>
+                            <option value="Inteligência Artificial & IoT">Inteligência Artificial &amp; IoT</option>
+                            <option value="Sistemas Operacionais">Sistemas Operacionais</option>
+                            <option value="Banco de Dados">Banco de Dados</option>
+                            <option value="Outra Disciplina">Outra Disciplina</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bw-work-group">Nome da Barra (Qual foi o Trabalho/Seminário?) *</label>
+                        <input type="text" id="bw-work-group" placeholder="Ex: Seminário de Criptografia" required autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bw-year">Bimestre / Ano</label>
+                    <input type="text" id="bw-year" placeholder="Ex: 2025 • 2º Bimestre" value="2025 • Acervo da Turma" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="bw-lines">Lista de Trabalhos / Links (1 por linha) *</label>
+                    <textarea id="bw-lines" rows="5" placeholder="Exemplo:&#10;Grupo 1 - Criptografia RSA | João, Maria | trabalhos/rsa.pdf&#10;Paródia Firewall | Pedro, Ana | https://www.youtube.com/watch?v=s-TRlV9D6FI&#10;trabalhos/seminario_redes.pdf" required></textarea>
+                </div>
+
+                <div class="add-profile-actions">
+                    <button type="submit" class="btn-save-profile"><i class="fa-solid fa-bolt"></i> Importar Todos Automaticamente</button>
                     <button type="button" class="btn-cancel-profile" onclick="window.closeSubmitWorkModal(event, true)">Cancelar</button>
                 </div>
             </form>
@@ -198,7 +267,7 @@
     <div id="home-screen" class="screen">
         <nav class="home-nav">
             <div class="nav-left-group">
-                <div class="nav-logo" onclick="window.switchScreen('home-screen')">IFPIFLIX</div>
+                <div class="nav-logo" onclick="window.filterNavCategory('inicio')">IFPIFLIX</div>
                 
                 <!-- Menu de Categorias no Topo (Estilo Netflix) -->
                 <ul class="nav-categories" id="nav-categories">
@@ -346,6 +415,20 @@
                     <!-- Cards injetados via JS -->
                 </div>
             </div>
+
+            <!-- LINHA DISNEY+: COLEÇÕES DE TRABALHOS DA TURMA -->
+            <div id="disney-collections-row" class="catalog-section disney-collections-section" style="margin-bottom: 36px;">
+                <h2 class="row-title" style="display: flex; align-items: center; justify-content: space-between;">
+                    <span style="display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-shapes" style="color: var(--netflix-red); font-size: 1.1rem;"></i>
+                        <span>Coleções dos Trabalhos</span>
+                    </span>
+                    <a href="#" onclick="event.preventDefault(); window.openAcervoScreen();" style="font-size: 0.88rem; color: #aaa; text-decoration: none; font-weight: 600;">Ver Acervo Completo &gt;</a>
+                </h2>
+                <div class="disney-collections-row" id="disney-collections-grid">
+                    <!-- Cards gerados via JS estilo Disney+ -->
+                </div>
+            </div>
             
             <!-- LINHA 1: LANÇAMENTOS DOS 5 TEMAS -->
             <div id="filosofia-row" class="catalog-section" style="margin-bottom: 30px;">
@@ -386,7 +469,10 @@
 
             <!-- LINHA 3: TRABALHOS ANTIGOS -->
             <div id="trabalhos-row" class="catalog-section" style="margin-bottom: 30px;">
-                <h2 class="row-title">Trabalhos Antigos</h2>
+                <h2 class="row-title" style="display: flex; align-items: center; justify-content: space-between;">
+                    <span>Trabalhos Antigos</span>
+                    <a href="#" onclick="event.preventDefault(); window.openAcervoScreen();" style="font-size: 0.88rem; color: #aaa; text-decoration: none; font-weight: 600;">Ver todos &gt;</a>
+                </h2>
                 <div class="landscape-row">
                     <div class="card-landscape p-mitm" data-movie="mitm" role="button" tabindex="0" aria-label="O Homem no Meio"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
                     <div class="card-landscape p-firewall" data-movie="firewall" role="button" tabindex="0" aria-label="A Muralha de Fogo"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
@@ -412,6 +498,7 @@
         <footer class="ifpiflix-footer">
             <div class="footer-links">
                 <a href="#" role="button" data-action="resumo">Guia de Estudos (Resumo)</a>
+                <a href="#" role="button" onclick="event.preventDefault(); window.openAcervoScreen();">Trabalhos Antigos</a>
                 <a href="#" role="button" data-action="ajuda">Central de Ajuda</a>
                 <a href="#" role="button" data-action="conta">Conta</a>
             </div>
@@ -421,6 +508,96 @@
         </footer>
 
     </div>
+
+    <!-- =======================================================
+         TELA: TRABALHOS ANTIGOS (DESIGN 100% AUTÊNTICO NETFLIX)
+         ======================================================= -->
+    <div id="acervo-screen" class="screen">
+        <nav class="home-nav scrolled">
+            <div class="nav-left-group">
+                <div class="nav-logo" onclick="window.filterNavCategory('inicio')">IFPIFLIX</div>
+                <ul class="nav-categories" id="acervo-nav-categories">
+                    <li class="nav-cat-item" data-cat="inicio" onclick="window.filterNavCategory('inicio')">Início</li>
+                    <li class="nav-cat-item" data-cat="top5" onclick="window.filterNavCategory('top5')">Em Alta</li>
+                    <li class="nav-cat-item" data-cat="filosofia" onclick="window.filterNavCategory('filosofia')">Filosofia</li>
+                    <li class="nav-cat-item" data-cat="ti" onclick="window.filterNavCategory('ti')">Séries de T.I.</li>
+                    <li class="nav-cat-item active" data-cat="trabalhos" onclick="window.filterNavCategory('trabalhos')">Trabalhos Antigos</li>
+                    <li class="nav-cat-item" data-cat="minha-lista" onclick="window.filterNavCategory('minha-lista')">Minha Lista</li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <button type="button" class="btn-professor-upload" id="btn-acervo-upload" style="display: none;" onclick="window.openSubmitWorkModal()" title="Cadastrar / Enviar Trabalho da Turma (Exclusivo Professor)">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span class="btn-upload-text">Enviar Trabalho</span>
+                </button>
+                <div class="search-box">
+                    <button type="button" class="search-icon" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="search" id="acervo-search-input" placeholder="Títulos, matérias..." oninput="window.renderAcervoScreen()" autocomplete="off">
+                </div>
+                <div class="nav-profile-wrapper">
+                    <button type="button" class="nav-profile-btn" onclick="window.switchScreen('profile-screen')">
+                        <i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- SUB-NAV ESTILO NETFLIX (TÍTULO DA SEÇÃO + SELETOR DE GÊNEROS/MATÉRIAS + FILTRO DE FORMATO) -->
+        <div class="netflix-subnav-bar">
+            <div class="netflix-subnav-left">
+                <h1 class="netflix-subnav-title">Trabalhos Antigos</h1>
+                <div class="netflix-genre-dropdown-wrapper">
+                    <button type="button" class="netflix-genre-select-btn" id="materia-dropdown-btn" onclick="window.toggleMateriaDropdown(event)">
+                        <span id="current-materia-label">Todas as Matérias</span>
+                        <i class="fa-solid fa-caret-down"></i>
+                    </button>
+                    <div class="netflix-genre-popover" id="materia-dropdown-menu">
+                        <!-- Itens das matérias gerados via JS -->
+                    </div>
+                </div>
+
+                <!-- Pílulas de Filtro de Formato Estilo Streaming -->
+                <div class="acervo-format-pills">
+                    <button type="button" class="format-pill active" id="pill-format-all" onclick="window.setAcervoFormat('all')">Todos</button>
+                    <button type="button" class="format-pill" id="pill-format-pdf" onclick="window.setAcervoFormat('pdf')"><i class="fa-solid fa-file-powerpoint"></i> Slides / PDF</button>
+                    <button type="button" class="format-pill" id="pill-format-video" onclick="window.setAcervoFormat('video')"><i class="fa-solid fa-clapperboard"></i> Vídeos &amp; Podcasts</button>
+                </div>
+
+                <!-- Alternador de Modo: Coleções vs Todos os Slides -->
+                <div class="acervo-view-toggles" id="acervo-view-toggles">
+                    <button type="button" class="view-toggle-btn active" id="view-toggle-collections" onclick="window.setAcervoViewMode('collections')" title="Agrupado por seminários">
+                        <i class="fa-solid fa-folder-open"></i> Coleções
+                    </button>
+                    <button type="button" class="view-toggle-btn" id="view-toggle-grid" onclick="window.setAcervoViewMode('grid')" title="Grade com todos os slides 16:9">
+                        <i class="fa-solid fa-table-cells-large"></i> Todos os Slides
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chip de Aluno / Elenco Ativo -->
+            <div id="acervo-author-chip" class="acervo-author-chip" style="display: none;">
+                <span>Filtrado por: <strong id="acervo-author-name">Aluno</strong></span>
+                <button type="button" onclick="window.clearAcervoAuthorFilter()" title="Remover filtro de aluno"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+
+        <!-- CATÁLOGO DAS FILEIRAS EM PURO ESTILO NETFLIX -->
+        <div class="catalog-container acervo-catalog" id="acervo-rows-container">
+            <!-- Fileiras geradas via JS exatamente iguais à Home -->
+        </div>
+
+        <footer class="ifpiflix-footer">
+            <div class="footer-links">
+                <a href="#" role="button" data-action="resumo">Guia de Estudos (Resumo)</a>
+                <a href="#" role="button" data-action="ajuda">Central de Ajuda</a>
+                <a href="#" role="button" data-action="conta">Conta</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2026 IFPIFLIX — Projeto Acadêmico de Filosofia, Grupo 6.
+            </div>
+        </footer>
+    </div>
+
 
     <!-- TELA DE EPISÓDIOS (O GRIMÓRIO - MODO CLÁSSICO) -->
     <div id="series-details-screen" class="screen">
@@ -1192,7 +1369,7 @@
         </div>
     </div>
 
-    <script src="js/script.js?v=1.5"></script>
+    <script src="js/script.js?v=3.7"></script>
 
     <!-- O HTML DO PLAYER DEVE FICAR FORA DO SCRIPT -->
     <div id="custom-video-player" class="video-overlay">
@@ -1221,7 +1398,7 @@
     </div>
 
     <!-- =======================================================
-         VIEWER DE APRESENTAÇÃO / SLIDES IN-SITE
+         VIEWER DE APRESENTAÇÃO / SLIDES IN-SITE (ESTILO NETFLIX PLAYER)
          ======================================================= -->
     <div id="custom-pdf-viewer" class="pdf-viewer-overlay">
         <div class="pdf-viewer-header">
@@ -1229,11 +1406,15 @@
                 <i class="fa-solid fa-arrow-left"></i> Voltar ao Catálogo
             </button>
             <div class="pdf-viewer-title-box">
-                <span class="pdf-badge"><i class="fa-solid fa-file-pdf"></i> APRESENTAÇÃO</span>
+                <span class="pdf-badge" id="pdf-viewer-badge"><i class="fa-solid fa-file-powerpoint"></i> SLIDES</span>
                 <span id="pdf-viewer-title" class="pdf-viewer-title">Nome do Trabalho</span>
+                <span id="pdf-slide-counter" class="pdf-slide-counter" style="display: none;">Slide 1 de 1</span>
             </div>
             <div class="pdf-viewer-actions">
-                <a id="pdf-external-link" href="#" target="_blank" rel="noopener" class="pdf-action-btn" title="Abrir em nova aba">
+                <button type="button" class="pdf-action-btn" id="pdf-mode-toggle" onclick="window.togglePdfViewerMode()" title="Alternar entre Leitor Nativo e PDF">
+                    <i class="fa-solid fa-file-lines"></i> <span style="font-size: 0.8rem; margin-left: 4px;">PDF Original</span>
+                </button>
+                <a id="pdf-external-link" href="#" target="_blank" rel="noopener" class="pdf-action-btn" title="Baixar / Abrir em nova aba">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
                 <button type="button" class="pdf-action-btn" onclick="window.togglePdfFullscreen()" title="Tela Cheia">
@@ -1241,7 +1422,31 @@
                 </button>
             </div>
         </div>
-        <div class="pdf-viewer-body">
+
+        <!-- STAGE DO PLAYER NATIVO DE SLIDES -->
+        <div class="netflix-slide-stage" id="netflix-slide-stage">
+            <button type="button" class="slide-nav-btn prev" id="slide-btn-prev" onclick="window.navSlide(-1)" aria-label="Slide anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            
+            <div class="slide-viewport">
+                <img id="netflix-slide-img" src="" alt="Slide atual" />
+            </div>
+
+            <button type="button" class="slide-nav-btn next" id="slide-btn-next" onclick="window.navSlide(1)" aria-label="Próximo slide">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <!-- BARRA DE PROGRESSO DO SLIDE NO RODAPÉ -->
+            <div class="slide-player-bottom-bar">
+                <div class="slide-progress-track" id="slide-progress-track">
+                    <div class="slide-progress-fill" id="slide-progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FALLBACK IFRAME (SEPARADO) -->
+        <div class="pdf-viewer-body" id="pdf-iframe-body" style="display: none;">
             <iframe id="main-pdf-iframe" src="" allowfullscreen></iframe>
         </div>
     </div>

@@ -799,7 +799,7 @@
            ========================================= */
         #hover-preview-card {
             position: fixed;
-            z-index: 9999;
+            z-index: 850;
             width: 340px;
             background: var(--netflix-bg);
             border-radius: 8px;
@@ -1652,7 +1652,7 @@
         #title-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
-            z-index: 1000; display: flex; justify-content: center; align-items: flex-start;
+            z-index: 12000; display: flex; justify-content: center; align-items: flex-start;
             overflow-y: auto; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
             padding: 40px 0;
         }
@@ -4651,6 +4651,1866 @@
             transform: translateX(-50%) translateY(0);
         }
         .global-toast i { color: #46d369; font-size: 1.2rem; }
+
+        /* =========================================================
+           TELA: TRABALHOS ANTIGOS (100% DESIGN NETFLIX BROWSE)
+           ========================================================= */
+        #acervo-screen {
+            overflow-y: auto;
+            overflow-x: hidden;
+            background: #141414;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .netflix-subnav-bar {
+            padding: 95px 4% 15px 4%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: rgba(20, 20, 20, 0.96);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .netflix-subnav-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .netflix-subnav-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0;
+            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+        }
+        .netflix-genre-dropdown-wrapper {
+            position: relative;
+        }
+        .netflix-genre-select-btn {
+            background: #000;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 5px 14px 5px 12px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 0;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+        .netflix-genre-select-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+        .netflix-genre-popover {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            min-width: 220px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            z-index: 100;
+            padding: 8px 0;
+        }
+        .netflix-genre-popover.open {
+            display: flex;
+        }
+        .netflix-genre-item {
+            padding: 9px 18px;
+            color: #ccc;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .netflix-genre-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        .netflix-genre-item.active {
+            color: #fff;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .netflix-genre-item .genre-count {
+            color: #777;
+            font-size: 0.78rem;
+        }
+        .acervo-catalog {
+            margin-top: 10px;
+            flex: 1 0 auto;
+            padding-bottom: 70px;
+        }
+
+        /* ABAS DO MODAL DE CADASTRO (INDIVIDUAL VS IMPORTAÇÃO EM LOTE) */
+        .submit-mode-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .submit-mode-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #aaa;
+            padding: 9px 12px;
+            border-radius: 7px;
+            font-size: 0.86rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+        .submit-mode-tab.active {
+            background: var(--netflix-red);
+            color: #fff;
+        }
+        .bulk-import-help {
+            background: rgba(37, 99, 235, 0.12);
+            border: 1px solid rgba(37, 99, 235, 0.35);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.8rem;
+            color: #bfdbfe;
+            line-height: 1.45;
+            margin-bottom: 12px;
+        }
+        .bulk-import-help code {
+            background: rgba(0, 0, 0, 0.45);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #93c5fd;
+        }
+
+        /* =========================================================
+           ESTILOS: VISUALIZAÇÃO DO ACERVO, COLEÇÕES DISNEY+ E CARDS 16:9
+           ========================================================= */
+
+        /* TOGGLE DE MODO: COLEÇÕES VS TODOS OS SLIDES */
+        .acervo-view-toggles {
+            display: inline-flex;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 6px;
+            padding: 3px;
+            gap: 4px;
+        }
+
+        .view-toggle-btn {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .view-toggle-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .view-toggle-btn.active {
+            background: rgba(255, 255, 255, 0.22);
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* BARRA DE COLEÇÕES DISNEY+ DENTRO DO ACERVO */
+        .acervo-disney-bar-wrapper {
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .acervo-disney-bar-title {
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: #aaa;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+
+        .acervo-disney-bar {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 4px 2px 14px 2px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .acervo-disney-bar::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .acervo-disney-bar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .acervo-disney-pill {
+            flex: 0 0 200px;
+            height: 110px;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+            transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.28s ease, box-shadow 0.28s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .acervo-disney-pill:hover {
+            transform: translateY(-4px) scale(1.04);
+            border-color: #fff;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.8), 0 0 14px rgba(255, 255, 255, 0.25);
+            z-index: 5;
+        }
+
+        .acervo-disney-pill.active {
+            border-color: var(--netflix-red, #e50914);
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.65);
+            transform: scale(1.02);
+        }
+
+        .acervo-disney-pill-all {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1f2937, #0f172a);
+            color: #fff;
+            gap: 6px;
+        }
+
+        .acervo-disney-pill-all i {
+            font-size: 1.6rem;
+            color: var(--netflix-red, #e50914);
+        }
+
+        .acervo-disney-pill-all span {
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .acervo-disney-pill-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: skewX(-20deg);
+            pointer-events: none;
+            transition: left 0.75s ease;
+        }
+
+        .acervo-disney-pill:hover .acervo-disney-pill-shine {
+            left: 140%;
+        }
+
+        /* GRID DE COLEÇÕES DE SEMINÁRIOS */
+        .seminarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 22px;
+            margin-top: 14px;
+            padding-bottom: 60px;
+        }
+
+        /* CARD DE COLEÇÃO DE SEMINÁRIO (ESTILO NETFLIX / DISNEY+) */
+        .seminario-card {
+            background: #181818;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+            transition: transform 0.28s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+            position: relative;
+        }
+
+        .seminario-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .seminario-card-thumb {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #111;
+            overflow: hidden;
+        }
+
+        .seminario-card-bg {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center top;
+            transition: transform 0.45s ease;
+        }
+
+        .seminario-card:hover .seminario-card-bg {
+            transform: scale(1.06);
+        }
+
+        .seminario-card-thumb-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.22s ease;
+            z-index: 2;
+        }
+
+        .seminario-card:hover .seminario-card-thumb-overlay {
+            opacity: 1;
+        }
+
+        .seminario-card-top-left-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 4;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #fff;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .seminario-card-top-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 4;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e5e5e5;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .seminario-card-content {
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 6px;
+            background: #181818;
+        }
+
+        .seminario-card-title {
+            color: #ffffff;
+            font-size: 1.02rem;
+            font-weight: 800;
+            line-height: 1.35;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            letter-spacing: -0.2px;
+        }
+
+        .seminario-card-preview-authors {
+            font-size: 0.76rem;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        .seminario-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.76rem;
+            margin-top: 6px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .seminario-card-count {
+            color: #ccc;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .seminario-card-btn-hint {
+            color: #fff;
+            font-size: 0.76rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .seminario-card:hover .seminario-card-btn-hint {
+            background: var(--netflix-red, #e50914);
+            border-color: var(--netflix-red, #e50914);
+            transform: translateX(2px);
+            color: #fff;
+        }
+
+        /* CABEÇALHO DO SEMINÁRIO EM DETALHE */
+        .seminario-detail-header {
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .seminario-back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 8px 16px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .seminario-back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #fff;
+        }
+
+        .seminario-detail-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+
+        .seminario-detail-materia-badge {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            color: #fff;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .seminario-detail-title {
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        .seminario-detail-subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .seminario-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 22px;
+            padding-bottom: 60px;
+        }
+
+        /* =========================================================
+           CARDS DE TRABALHOS ACADÊMICOS (16:9 WIDESCREEN - PURO DESIGN STREAMING)
+           ========================================================= */
+        .academic-card {
+            background: #181818;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.28s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+            position: relative;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+        }
+
+        .academic-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.85);
+            z-index: 10;
+        }
+
+        .academic-card-thumb {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #111;
+            overflow: hidden;
+        }
+
+        .academic-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .academic-card:hover .academic-card-img {
+            transform: scale(1.05);
+        }
+
+        .academic-thumb-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.22s ease;
+            z-index: 2;
+        }
+
+        .academic-card:hover .academic-thumb-overlay {
+            opacity: 1;
+        }
+
+        .academic-play-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--netflix-red, #e50914);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 6px 16px rgba(229, 9, 20, 0.6);
+            transform: scale(0.85);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .academic-card:hover .academic-play-badge {
+            transform: scale(1);
+        }
+
+        .academic-tag-left {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .academic-tag-right {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(4px);
+            color: #e5e5e5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .academic-card-content {
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 6px;
+            background: #181818;
+        }
+
+        .academic-card-title {
+            font-size: 0.98rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.35;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            letter-spacing: -0.2px;
+        }
+
+        .academic-card-subtitle {
+            font-size: 0.76rem;
+            color: #999;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .academic-card-authors {
+            font-size: 0.74rem;
+            color: #aaa;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            margin-top: 3px;
+            line-height: 1.35;
+        }
+
+        .academic-card-authors i {
+            margin-top: 2px;
+            flex-shrink: 0;
+            color: #888;
+        }
+
+        .academic-card-authors span {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            word-break: normal;
+        }
+
+        .academic-card-meta-row {
+            font-size: 0.72rem;
+            color: #777;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 2px;
+        }
+
+        .academic-card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .academic-btn-primary {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 7px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+
+        .academic-btn-primary:hover {
+            background: var(--netflix-red, #e50914);
+            border-color: var(--netflix-red, #e50914);
+            color: #fff;
+        }
+
+        .academic-btn-info {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ccc;
+            padding: 7px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        .academic-btn-info:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #fff;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .seminarios-grid {
+                grid-template-columns: 1fr;
+            }
+            .seminario-detail-title {
+                font-size: 1.3rem;
+            }
+            .seminario-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .acervo-disney-pill {
+                flex: 0 0 160px;
+                height: 90px;
+            }
+        }
+
+        /* =========================================================
+           DISNEY+ STYLE COLLECTIONS ROW (NA HOME)
+           ========================================================= */
+        .disney-collections-row {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 8px 4px 18px 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .disney-collections-row::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .disney-collections-row::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .disney-col-card {
+            flex: 0 0 290px;
+            height: 165px;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s, border-color 0.3s;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .disney-col-card:hover {
+            transform: scale(1.05) translateY(-4px);
+            border-color: #fff;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+
+        .disney-col-card-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: skewX(-20deg);
+            pointer-events: none;
+            transition: left 0.75s ease;
+        }
+
+        .disney-col-card:hover .disney-col-card-shine {
+            left: 140%;
+        }
+
+        @media (max-width: 768px) {
+            .disney-col-card {
+                flex: 0 0 230px;
+                height: 135px;
+            }
+        }
+
+        /* =========================================================
+           PÍLULAS DE FILTRO POR FORMATO (TRABALHOS ANTIGOS)
+           ========================================================= */
+        .acervo-format-pills {
+            display: inline-flex;
+            gap: 8px;
+            margin-left: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .format-pill {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ccc;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .format-pill:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .format-pill.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .acervo-author-chip {
+            background: rgba(229, 9, 20, 0.15);
+            border: 1px solid var(--netflix-red);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .acervo-author-chip button {
+            background: none;
+            border: none;
+            color: #ff8888;
+            cursor: pointer;
+            padding: 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .acervo-author-chip button:hover {
+            color: #fff;
+        }
+
+        /* Alunos Clicáveis no Elenco */
+        .cast-clickable-tag {
+            color: #e5e5e5;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: rgba(255, 255, 255, 0.3);
+            text-underline-offset: 3px;
+            transition: color 0.2s, text-decoration-color 0.2s;
+        }
+
+        .cast-clickable-tag:hover {
+            color: var(--netflix-red);
+            text-decoration-color: var(--netflix-red);
+        }
+
+        /* =========================================================
+           NETFLIX NATIVE SLIDE PLAYER STYLES
+           ========================================================= */
+        .netflix-slide-stage {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #000;
+            overflow: hidden;
+            width: 100%;
+            height: calc(100vh - 65px);
+        }
+
+        .slide-viewport {
+            max-width: 92vw;
+            max-height: 82vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .slide-viewport img {
+            max-width: 100%;
+            max-height: 82vh;
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .slide-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 55px;
+            height: 90px;
+            background: rgba(0, 0, 0, 0.45);
+            border: none;
+            color: #fff;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+            z-index: 10;
+        }
+
+        .slide-nav-btn:hover {
+            background: rgba(229, 9, 20, 0.85);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .slide-nav-btn.prev {
+            left: 20px;
+        }
+
+        .slide-nav-btn.next {
+            right: 20px;
+        }
+
+        .slide-slide-counter {
+            font-size: 0.85rem;
+            color: #aaa;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .slide-player-bottom-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 18px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 0 20px 8px 20px;
+            box-sizing: border-box;
+        }
+
+        .slide-progress-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+            transition: height 0.2s;
+        }
+
+        .slide-progress-track:hover {
+            height: 8px;
+        }
+
+        .slide-progress-fill {
+            height: 100%;
+            background: var(--netflix-red);
+            border-radius: 2px;
+            transition: width 0.2s ease;
+        }
+
+        @media (max-width: 768px) {
+            .slide-nav-btn {
+                width: 40px;
+                height: 65px;
+                font-size: 1.3rem;
+            }
+            .slide-nav-btn.prev { left: 8px; }
+            .slide-nav-btn.next { right: 8px; }
+            .acervo-format-pills {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+
+        /* =========================================================
+           PROTEÇÃO DE SOBREPOSIÇÃO: MODAL DE DETALHES VS HOVER PREVIEW
+           ========================================================= */
+        #title-modal-overlay.show ~ #hover-preview-card,
+        body:has(#title-modal-overlay.show) #hover-preview-card,
+        body.modal-open #hover-preview-card {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            display: none !important;
+        }
+
+        /* =========================================================
+           FILEIRAS DE TRABALHOS ANTIGOS SEPARADAS POR MATÉRIA (ESTILO HOME)
+           ========================================================= */
+        .acervo-shelves-container {
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+            width: 100%;
+        }
+
+        .acervo-subject-shelf {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .acervo-shelf-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+
+        .acervo-shelf-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .acervo-shelf-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.05rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+            flex-shrink: 0;
+        }
+
+        .acervo-shelf-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #f5f5f5;
+            letter-spacing: -0.2px;
+            margin: 0 !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .acervo-shelf-count {
+            font-size: 0.78rem;
+            color: #888;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+
+        .acervo-shelf-filter-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            color: #ccc;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.22s ease;
+        }
+
+        .acervo-shelf-filter-btn:hover {
+            background: rgba(229, 9, 20, 0.2);
+            color: #fff;
+            border-color: var(--netflix-red);
+            transform: translateX(2px);
+        }
+
+        .acervo-shelf-slider-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .acervo-slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 72px;
+            background: rgba(10, 10, 10, 0.78);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 25;
+            opacity: 0;
+            transition: opacity 0.22s ease, background 0.2s ease, transform 0.2s ease;
+            border-radius: 4px;
+        }
+
+        .acervo-shelf-slider-container:hover .acervo-slider-nav-btn {
+            opacity: 0.95;
+        }
+
+        .acervo-slider-nav-btn:hover {
+            opacity: 1;
+            background: var(--netflix-red);
+            transform: translateY(-50%) scale(1.08);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .acervo-slider-nav-btn.prev {
+            left: -10px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .acervo-slider-nav-btn.next {
+            right: -10px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .acervo-row-slider {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 8px 4px 18px 4px;
+            width: 100%;
+            cursor: grab;
+            user-select: none;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-y;
+        }
+
+        .acervo-row-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .acervo-row-slider.active-drag {
+            cursor: grabbing;
+        }
+
+        .acervo-row-slider .academic-card {
+            flex: 0 0 320px;
+            width: 320px;
+            max-width: 320px;
+        }
+
+        /* Banner de foco em matéria única filtrada */
+        .acervo-focused-materia-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.4));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+        }
+
+        .acervo-clear-filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .acervo-clear-filter-btn:hover {
+            background: var(--netflix-red);
+            border-color: var(--netflix-red);
+            transform: translateX(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .acervo-slider-nav-btn {
+                display: none;
+            }
+            .acervo-row-slider .academic-card {
+                flex: 0 0 270px;
+                width: 270px;
+                max-width: 270px;
+            }
+            .acervo-shelf-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .acervo-focused-materia-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+
+        /* =========================================================
+           CARD DE COLEÇÃO / TRABALHO COMPLETO (MULTI-ITEM)
+           ========================================================= */
+        .academic-card.is-multi {
+            border: 1px solid rgba(229, 9, 20, 0.4);
+            background: #171717;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65);
+        }
+
+        .academic-card.is-multi:hover {
+            border-color: var(--netflix-red);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 36px rgba(229, 9, 20, 0.35);
+        }
+
+        .academic-card.is-multi .multi-badge {
+            background: linear-gradient(135deg, var(--netflix-red), #990000) !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(229, 9, 20, 0.5);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .academic-card.is-multi::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            right: 10px;
+            left: 10px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.16);
+            border-radius: 4px 4px 0 0;
+            pointer-events: none;
+            transition: all 0.25s ease;
+        }
+
+        .academic-card.is-multi:hover::before {
+            background: rgba(229, 9, 20, 0.7);
+            top: -6px;
+        }
+
+        /* =========================================================
+           FEATURE 3: HERO BANNER DE DESTAQUE ROTATIVO NO ACERVO
+           ========================================================= */
+        .acervo-hero-banner {
+            position: relative;
+            width: 100%;
+            min-height: 440px;
+            height: 52vh;
+            max-height: 580px;
+            background-size: cover;
+            background-position: center 25%;
+            border-radius: 12px;
+            margin: 0 0 28px 0;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 36px 40px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
+            transition: background-image 0.6s ease-in-out;
+        }
+
+        .acervo-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, #141414 8%, rgba(20, 20, 20, 0.65) 50%, rgba(20, 20, 20, 0.25) 100%),
+                        linear-gradient(90deg, rgba(20, 20, 20, 0.95) 0%, rgba(20, 20, 20, 0.5) 55%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .acervo-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+        }
+
+        .acervo-hero-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .acervo-hero-badge {
+            background: var(--netflix-red);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .acervo-hero-meta {
+            color: #aaa;
+            font-size: 0.84rem;
+            font-weight: 600;
+        }
+
+        .acervo-hero-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.15;
+            margin: 0 0 8px 0;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
+            letter-spacing: -0.5px;
+        }
+
+        .acervo-hero-subtitle {
+            font-size: 1.05rem;
+            color: #60a5fa;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .acervo-hero-synopsis {
+            font-size: 0.92rem;
+            color: #ddd;
+            line-height: 1.45;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .acervo-hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .acervo-hero-btn-play {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 5px;
+            font-size: 0.98rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .acervo-hero-btn-play:hover {
+            background: rgba(255, 255, 255, 0.82);
+            transform: scale(1.04);
+        }
+
+        .acervo-hero-btn-info {
+            background: rgba(109, 109, 110, 0.7);
+            color: #fff;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 5px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .acervo-hero-btn-info:hover {
+            background: rgba(109, 109, 110, 0.45);
+            transform: scale(1.04);
+        }
+
+        .acervo-hero-pagers {
+            position: absolute;
+            bottom: 24px;
+            right: 40px;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .acervo-hero-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            transition: all 0.25s ease;
+        }
+
+        .acervo-hero-dot.active {
+            background: var(--netflix-red);
+            width: 26px;
+            border-radius: 8px;
+        }
+
+        /* =========================================================
+           FEATURE 1: PORTFÓLIO DO ALUNO ("ELENCO DA TURMA")
+           ========================================================= */
+        .acervo-students-row-container {
+            margin-bottom: 28px;
+        }
+
+        .acervo-students-row-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .acervo-students-row-header h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .acervo-students-slider {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding: 6px 2px 14px 2px;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+        }
+
+        .student-avatar-card {
+            flex: 0 0 115px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+            user-select: none;
+            background: none;
+            border: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .student-avatar-card:hover {
+            transform: translateY(-6px) scale(1.06);
+        }
+
+        .student-avatar-circle {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2b2b2b, #151515);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #fff;
+            position: relative;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6);
+            transition: all 0.25s ease;
+        }
+
+        .student-avatar-card:hover .student-avatar-circle {
+            border-color: var(--netflix-red);
+            box-shadow: 0 8px 22px rgba(229, 9, 20, 0.45);
+        }
+
+        .student-avatar-card.active .student-avatar-circle {
+            border-color: var(--netflix-red);
+            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.5), 0 8px 22px rgba(229, 9, 20, 0.6);
+        }
+
+        .student-avatar-badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: var(--netflix-red);
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 10px;
+            border: 2px solid #141414;
+        }
+
+        .student-avatar-name {
+            margin-top: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #eee;
+            line-height: 1.25;
+            max-width: 110px;
+            word-break: normal;
+        }
+
+        .student-avatar-sub {
+            font-size: 0.68rem;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        /* Banner de Perfil do Aluno Ativo no Acervo */
+        .student-portfolio-banner {
+            background: linear-gradient(135deg, #1c1517 0%, #151821 100%);
+            border: 1px solid rgba(229, 9, 20, 0.35);
+            border-radius: 10px;
+            padding: 22px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        .student-portfolio-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .student-portfolio-avatar {
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--netflix-red), #800);
+            border: 3px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0;
+        }
+
+        .student-portfolio-info h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin: 0 0 4px 0;
+        }
+
+        .student-portfolio-fullname {
+            font-size: 0.88rem;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+
+        .student-portfolio-stats {
+            display: flex;
+            gap: 14px;
+            font-size: 0.82rem;
+            color: #ccc;
+            flex-wrap: wrap;
+        }
+
+        .student-portfolio-stat-pill {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .student-portfolio-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .student-portfolio-close-btn:hover {
+            background: var(--netflix-red);
+            border-color: var(--netflix-red);
+        }
+
+        /* Tags de autor clicáveis no modal */
+        .cast-clickable-tag {
+            color: #60a5fa;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: rgba(96, 165, 250, 0.4);
+            transition: color 0.2s, text-decoration-color 0.2s;
+        }
+
+        .cast-clickable-tag:hover {
+            color: #fff;
+            text-decoration-color: #fff;
+        }
+
+        /* =========================================================
+           FEATURE 7: GRADE DE MINIATURAS (VISÃO GERAL DO SLIDE)
+           ========================================================= */
+        .slide-thumbnails-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 15000;
+            display: none;
+            flex-direction: column;
+            padding: 24px 32px;
+            overflow-y: auto;
+        }
+
+        .slide-thumbnails-overlay.show {
+            display: flex;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .slide-thumbnails-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .slide-thumbnails-header h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slide-thumbnails-close-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .slide-thumbnails-close-btn:hover {
+            background: var(--netflix-red);
+            transform: scale(1.1);
+        }
+
+        .slide-thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 18px;
+            padding-bottom: 30px;
+        }
+
+        .slide-thumb-card {
+            background: #181818;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+        }
+
+        .slide-thumb-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            border-color: var(--netflix-red);
+            box-shadow: 0 8px 24px rgba(229, 9, 20, 0.35);
+        }
+
+        .slide-thumb-card.active {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.45);
+        }
+
+        .slide-thumb-img-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        .slide-thumb-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-thumb-number {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .slide-thumb-label {
+            padding: 8px 10px;
+            font-size: 0.78rem;
+            color: #ddd;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* =========================================================
+           FEATURE 6: MODO TURBO DE DESEMPENHO (INTERSECTION OBSERVER)
+           ========================================================= */
+        .will-pause-offscreen {
+            will-change: transform;
+        }
+
+        @media (max-width: 768px) {
+            .acervo-hero-banner {
+                height: auto;
+                min-height: 360px;
+                padding: 24px 20px;
+            }
+            .acervo-hero-title {
+                font-size: 1.6rem;
+            }
+            .acervo-hero-subtitle {
+                font-size: 0.9rem;
+            }
+            .student-portfolio-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 16px;
+            }
+            .slide-thumbnails-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
+            }
+        }
+
+
 
 
 
