@@ -11,6 +11,9 @@ function imgUrl(file, width) {
     if (file.startsWith('data:') || file.startsWith('http://') || file.startsWith('https://') || file.startsWith('trabalhos/') || file.startsWith('midia/') || file.startsWith('/midia/') || file.includes('midia/') || file.startsWith('./')) {
         return file;
     }
+    if (typeof window !== 'undefined' && window.location && (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        return file;
+    }
     return 'https://wsrv.nl/?url=' + ASSET_BASE + file + '&w=' + width + '&output=webp';
 }
 function mediaUrl(file) {
@@ -285,6 +288,22 @@ let toastTimeout;
                 cast: "Micaías Lima",
                 genres: "Segurança da Informação, Telejornalismo", tags: "Cibersegurança, Redes, Políticas de Segurança", isMain: false,
                 materia: "Segurança & Redes", trabalhoGrupo: "Práticas de Segurança da Informação & Defesa Cibernética", periodo: "2026 • 1º Bimestre"
+            },
+            "seguranca-informacao": {
+                title: "SEGURANÇA DA INFORMAÇÃO",
+                subtitle: "VULNERABILIDADES WEB, S.O.C., NUVEM E AMEAÇAS SINTÉTICAS",
+                bg: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop",
+                banner: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop",
+                match: "99% Relevante", year: "2025", age: "14", duration: "6 Tópicos Interativos • IFPI",
+                synopsis: "Série original acadêmica sobre Segurança da Informação: análise prática e simulação visual de vulnerabilidades web em PHP (SQL Injection, XSS, LFI/RFI), arquitetura defensiva do S.O.C. (Tiers 1, 2, 3 e Red/Blue/Purple Team), responsabilidade compartilhada em Cloud Computing, novos vetores de ataque com Inteligência Artificial e Deepfakes, e governança corporativa com a norma ISO 27001.",
+                cast: "Francisco Lucas, João Pedro Santos, Pedro Victor, João Pedro Silva, Nícolas Marcell",
+                genres: "Segurança da Informação, Ciberdefesa, Redes",
+                tags: "Segurança, SOC, SQL Injection, XSS, Cloud, Deepfake, ISO 27001",
+                isMain: false,
+                isSecurityPresentation: true,
+                materia: "Segurança & Redes",
+                trabalhoGrupo: "Seminário: Práticas de Segurança da Informação & Defesa Cibernética",
+                periodo: "2025 • Acervo da Turma"
             },
             "memoria-cache": {
                 title: "MEMÓRIA CACHE E ARMAZENAMENTO", subtitle: "HIERARQUIA DE MEMÓRIAS E DISCOS MAGNÉTICOS",
@@ -593,6 +612,20 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
                 secBtn.onclick = function() {
                     window.closeTitleModal(null, true);
                     window.openResumoModal(true);
+                };
+                secBtn.style.display = 'inline-flex';
+            }
+        } else if (data.isSecurityPresentation) {
+            playBtn.innerHTML = '<i class="fa-solid fa-play"></i> Iniciar Apresentação Interativa';
+            playBtn.onclick = function() {
+                window.closeTitleModal(null, true);
+                window.openSecurityPresentation(0);
+            };
+            if (secBtn) {
+                secBtn.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Simulação S.O.C.';
+                secBtn.onclick = function() {
+                    window.closeTitleModal(null, true);
+                    window.openSecurityPresentation(1);
                 };
                 secBtn.style.display = 'inline-flex';
             }
@@ -1115,6 +1148,15 @@ window.closeVideoPlayer = function() {
            ========================================================= */
         const DEFAULT_PROFILES = [
             { name: "Admin", icon: "fa-solid fa-user-shield", bgClass: "av-admin" },
+            { name: "Francisco", bgClass: "av-francisco" },
+            { name: "Pedro", bgClass: "av-pedro" },
+            { name: "JP Santos", bgClass: "av-jsantos" },
+            { name: "JP Silva", bgClass: "av-jsilva" },
+            { name: "Nicolas", bgClass: "av-nicolas" },
+            { name: "Davi", bgClass: "av-davi" },
+            { name: "Maria", bgClass: "av-maria" },
+            { name: "Marcelo", bgClass: "av-marcelo" },
+            { name: "Samuel", bgClass: "av-samuel" },
             { name: "Turma IFPI", icon: "fa-solid fa-graduation-cap", bgClass: "av-turma" },
             { name: "Professor(a)", icon: "fa-solid fa-chalkboard-user", bgClass: "av-prof" },
             { name: "Visitante", icon: "fa-solid fa-masks-theater", bgClass: "av-visitante" }
@@ -1145,7 +1187,7 @@ window.closeVideoPlayer = function() {
 
             let html = allProfiles.map(p => `
                 <button type="button" class="profile-card" data-profile="${p.name}">
-                    <div class="avatar ${p.bgClass}"><i class="${p.icon}"></i></div>
+                    <div class="avatar ${p.bgClass}">${p.icon ? `<i class="${p.icon}"></i>` : ''}</div>
                     <span>${p.name}</span>
                 </button>
             `).join('');
@@ -1638,6 +1680,7 @@ window.closeVideoPlayer = function() {
             'podcast-desigualdade': { materia: 'Sociologia', trabalhoGrupo: 'Podcasts & Debates: Questões Sociais Brasileiras', periodo: '2025 • Acervo da Turma' },
             'podcast-round6':   { materia: 'Sociologia', trabalhoGrupo: 'Podcasts & Debates: Questões Sociais Brasileiras', periodo: '2025 • Acervo da Turma' },
             // Segurança & Redes
+            'seguranca-informacao': { materia: 'Segurança & Redes', trabalhoGrupo: 'Seminário: Práticas de Segurança da Informação & Defesa Cibernética', periodo: '2025 • Acervo da Turma' },
             'cyber-news':   { materia: 'Segurança & Redes', trabalhoGrupo: 'Práticas de Segurança da Informação & Defesa Cibernética', periodo: '2026 • 1º Bimestre' },
             // Hardware & Arquitetura
             'memoria-cache': { materia: 'Hardware & Arquitetura', trabalhoGrupo: 'Seminário: Arquitetura de Computadores e Hierarquia de Memória', periodo: '2025 • Acervo da Turma' },
@@ -1722,7 +1765,7 @@ window.closeVideoPlayer = function() {
                 const materia = item.materia || def.materia || 'Filosofia';
                 const trabalhoGrupo = item.trabalhoGrupo || def.trabalhoGrupo || `Trabalhos de ${materia}`;
                 const periodo = item.periodo || def.periodo || (item.year ? `${item.year}` : '2026');
-                const hasPdf = !!(item.pdf || item.isMain);
+                const hasPdf = !!(item.pdf || item.isMain || item.isSecurityPresentation);
                 const hasVideo = !!(item.ytTrailer || item.trailer || item.isMain);
                 return {
                     id,
@@ -1791,6 +1834,7 @@ window.closeVideoPlayer = function() {
                 name: 'Francisco Lucas',
                 fullName: 'Francisco Lucas Alves do Prado',
                 initials: 'FL',
+                avatar: 'midia/alunos/francisco.jpg',
                 color: '#e50914',
                 aliases: ['Francisco Lucas', 'Francisco L', 'Francisco Lucas Alves do Prado']
             },
@@ -1799,6 +1843,7 @@ window.closeVideoPlayer = function() {
                 name: 'Pedro Victor',
                 fullName: 'Pedro Victor Evangelista Gomes',
                 initials: 'PV',
+                avatar: 'midia/alunos/pedro.jpg',
                 color: '#2563eb',
                 aliases: ['Pedro Victor', 'Pedro', 'Pedro Victor Evangelista Gomes']
             },
@@ -1807,6 +1852,7 @@ window.closeVideoPlayer = function() {
                 name: 'Davi Costa',
                 fullName: 'Davi Costa de Lucena',
                 initials: 'DC',
+                avatar: 'midia/alunos/davi.jpg',
                 color: '#10b981',
                 aliases: ['Davi Costa', 'Davi', 'Davi Costa de Lucena']
             },
@@ -1815,6 +1861,7 @@ window.closeVideoPlayer = function() {
                 name: 'João Pedro Santos',
                 fullName: 'João Pedro dos Santos Silva',
                 initials: 'JS',
+                avatar: 'midia/alunos/jsantos.jpg',
                 color: '#f59e0b',
                 aliases: ['João Pedro Santos', 'JP Santos', 'João Pedro dos Santos', 'João Pedro dos Santos (JP)', 'João Pedro dos Santos Silva']
             },
@@ -1823,6 +1870,7 @@ window.closeVideoPlayer = function() {
                 name: 'João Pedro Silva',
                 fullName: 'João Pedro Silva Santos',
                 initials: 'JP',
+                avatar: 'midia/alunos/jsilva.jpg',
                 color: '#8b5cf6',
                 aliases: ['João Pedro Silva', 'João Pedro Silva Santos']
             },
@@ -1839,6 +1887,7 @@ window.closeVideoPlayer = function() {
                 name: 'Samuel Soares',
                 fullName: 'Samuel de Araújo Soares',
                 initials: 'SS',
+                avatar: 'midia/alunos/samuel.jpg',
                 color: '#06b6d4',
                 aliases: ['Samuel Soares', 'Samuel', 'Samuel de Araújo Soares']
             },
@@ -1855,6 +1904,7 @@ window.closeVideoPlayer = function() {
                 name: 'Nícolas Marcell',
                 fullName: 'Nícolas Marcell da Fonseca Sousa',
                 initials: 'NM',
+                avatar: 'midia/alunos/nicolas.jpg',
                 color: '#6366f1',
                 aliases: ['Nícolas Marcell', 'Nicolas Marcell', 'Nícolas Marcell da Fonseca Sousa']
             },
@@ -1911,6 +1961,7 @@ window.closeVideoPlayer = function() {
                 name: 'Maria Helena',
                 fullName: 'Maria Helena',
                 initials: 'MH',
+                avatar: 'midia/alunos/maria2.jpg',
                 color: '#e11d48',
                 aliases: ['Maria Helena']
             },
@@ -1919,6 +1970,7 @@ window.closeVideoPlayer = function() {
                 name: 'Marcelo',
                 fullName: 'Marcelo',
                 initials: 'MC',
+                avatar: 'midia/alunos/marcelo.jpeg',
                 color: '#0284c7',
                 aliases: ['Marcelo']
             }
@@ -1967,7 +2019,7 @@ window.closeVideoPlayer = function() {
                 materia: 'Filosofia',
                 synopsis: 'A fundação do pensamento político clássico na Grécia Antiga: o ideal da cidade justa e a República de Platão governada pelo Rei-Filósofo versus o realismo pragmático e a pólis em Aristóteles.',
                 cast: 'Davi Costa, Samuel Soares, Francisco Lucas, Yasmyn Paiva, Marcos Felipe, Nícolas Marcell, Micaías Lima, João Pedro Santos, Wislla Mariana, João Pedro Silva',
-                bg: 'midia/capas/capa_teorias_politicas.jpg'
+                bg: 'midia/slides/teorias_politicas/slide_01.jpg'
             },
             {
                 id: 'guerra-fria',
@@ -1976,7 +2028,7 @@ window.closeVideoPlayer = function() {
                 materia: 'História',
                 synopsis: 'O confronto ideológico e geopolítico entre as superpotências, a Doutrina Truman, a corrida armamentista e espacial, as crises na Ásia e América Latina e o colapso do bloco soviético.',
                 cast: 'Francisco Lucas, Pedro Victor, João Pedro Santos, Rodrigo Rubim, Nícolas Marcell, Micaías Lima, Orlando Júnior',
-                bg: 'midia/capas/capa_guerra_fria.jpg'
+                bg: 'midia/slides/guerra_fria/slide_01.jpg'
             },
             {
                 id: 'sociologia-desenvolvimento',
@@ -1985,7 +2037,7 @@ window.closeVideoPlayer = function() {
                 materia: 'Sociologia',
                 synopsis: 'Pesquisa sociológica sobre a produção socializada e a apropriação privada do lucro, as crises cíclicas do capitalismo, o relatório da fome da ONU e os desafios para o desenvolvimento sustentável.',
                 cast: 'Davi Costa, João Pedro Santos, Samuel Soares, Marcos Felipe, Micaías Lima, João Pedro Silva, Yasmyn Paiva, Wislla Mariana, Nícolas Marcell, Francisco Lucas',
-                bg: 'midia/capas/capa_sociologia_desenvolvimento.jpg'
+                bg: 'midia/slides/sociologia_desenvolvimento/slide_01.jpg'
             },
             {
                 id: 'prosa-1930',
@@ -1994,7 +2046,25 @@ window.closeVideoPlayer = function() {
                 materia: 'Língua Portuguesa',
                 synopsis: 'Análise aprofundada da Prosa Regionalista de 30: o impacto social da Crise de 1929 e da Era Vargas, a denúncia das desigualdades no Nordeste e o homem determinado pelo seu meio sociocultural.',
                 cast: 'João Pedro Santos, Pedro Victor, Francisco Lucas, João Pedro Silva, Nícolas Marcell, José Nildo',
-                bg: 'midia/capas/capa_prosa_1930.jpg'
+                bg: 'midia/slides/prosa_1930/slide_01.jpg'
+            },
+            {
+                id: 'memoria-cache',
+                title: 'ARQUITETURA DE COMPUTADORES',
+                subtitle: 'MEMÓRIA CACHE, HIERARQUIA E VELOCIDADE DE PROCESSAMENTO',
+                materia: 'Hardware & Arquitetura',
+                synopsis: 'Estudo técnico dos níveis L1, L2 e L3 de memória cache, o princípio da localidade temporal e espacial, e o impacto na latência dos processadores modernos.',
+                cast: 'Davi Costa, Francisco Lucas, Pedro Victor, Samuel Soares, Marcelo, João Pedro Santos',
+                bg: 'midia/slides/memoria_cache/slide_01.jpg'
+            },
+            {
+                id: 'seguranca-informacao',
+                title: 'SEGURANÇA DA INFORMAÇÃO',
+                subtitle: 'VULNERABILIDADES WEB, S.O.C., NUVEM E AMEAÇAS SINTÉTICAS',
+                materia: 'Segurança & Redes',
+                synopsis: 'Série original acadêmica sobre Segurança da Informação: análise prática de vulnerabilidades web em PHP (SQLi, XSS, LFI), a dinâmica operacional do S.O.C. (Tiers 1, 2, 3 e Red/Blue/Purple Team), computação em nuvem e novos vetores com Deepfakes e IA.',
+                cast: 'Francisco Lucas, João Pedro Santos, Pedro Victor, João Pedro Silva, Nícolas Marcell',
+                bg: 'deepfake_pix.jpg'
             }
         ];
 
@@ -2109,10 +2179,14 @@ window.closeVideoPlayer = function() {
                 const count = entries.filter(e => workHasStudent(e.item.cast, student.name)).length;
                 const isActive = currentAcervoAuthor && (currentAcervoAuthor.toLowerCase() === student.name.toLowerCase() || student.aliases.some(a => a.toLowerCase() === currentAcervoAuthor.toLowerCase()));
 
+                const avatarStyle = student.avatar
+                    ? `background-image: url('${imgUrl(student.avatar, 200)}'); background-size: cover; background-position: center; border-color: ${student.color};`
+                    : `background: linear-gradient(135deg, ${student.color}33, #151515); border-color: ${student.color};`;
+
                 return `
                     <button type="button" class="student-avatar-card ${isActive ? 'active' : ''}" onclick="window.filterAcervoByAuthor('${student.name.replace(/'/g, "\\'")}')" aria-label="Portfólio de ${student.name}">
-                        <div class="student-avatar-circle" style="background: linear-gradient(135deg, ${student.color}33, #151515); border-color: ${student.color};">
-                            ${student.initials}
+                        <div class="student-avatar-circle ${student.avatar ? 'has-photo' : ''}" style="${avatarStyle}">
+                            ${student.avatar ? '' : student.initials}
                             <span class="student-avatar-badge">${count}</span>
                         </div>
                         <span class="student-avatar-name">${student.name}</span>
@@ -2149,11 +2223,15 @@ window.closeVideoPlayer = function() {
             studentWorks.forEach(w => mats.add(w.materia));
             const matList = Array.from(mats).join(', ') || 'Diversas';
 
+            const avatarStyle = student.avatar
+                ? `background-image: url('${imgUrl(student.avatar, 300)}'); background-size: cover; background-position: center; border: 3px solid ${student.color};`
+                : `background: linear-gradient(135deg, ${student.color}, #700); border: 3px solid #fff;`;
+
             return `
                 <div class="student-portfolio-banner">
                     <div class="student-portfolio-left">
-                        <div class="student-portfolio-avatar" style="background: linear-gradient(135deg, ${student.color}, #700);">
-                            ${student.initials}
+                        <div class="student-portfolio-avatar ${student.avatar ? 'has-photo' : ''}" style="${avatarStyle}">
+                            ${student.avatar ? '' : student.initials}
                         </div>
                         <div class="student-portfolio-info">
                             <div style="font-size:0.75rem; font-weight:800; color:var(--netflix-red); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">
@@ -2297,6 +2375,10 @@ window.closeVideoPlayer = function() {
         window.openAcademicDirectAction = function(id) {
             const item = filmesDB[id];
             if (!item) return;
+            if (item.isSecurityPresentation) {
+                window.openSecurityPresentation(0);
+                return;
+            }
             if (item.pdf || item.slideKey) {
                 window.openPdfViewer(item.pdf || '', id);
             } else {
@@ -2310,14 +2392,18 @@ window.closeVideoPlayer = function() {
             const coverFile = w.banner || w.bg || w.customCover || 
                 (w.ytTrailer ? `https://img.youtube.com/vi/${w.ytTrailer}/hqdefault.jpg` : '');
             const coverUrl = imgUrl(coverFile, 800);
-            const hasSlides = !!(w.pdf || w.slideKey || e.hasPdf);
+            const hasSlides = !!(w.pdf || w.slideKey || e.hasPdf || w.isSecurityPresentation);
             const hasVideo = !!(w.ytTrailer || w.trailer || e.hasVideo);
 
             let tagText = 'APRESENTAÇÃO';
             let actionIcon = 'fa-play';
             let actionLabel = 'Abrir Slides';
 
-            if (hasSlides && hasVideo) {
+            if (w.isSecurityPresentation) {
+                tagText = '<i class="fa-solid fa-laptop-code"></i> INTERATIVO';
+                actionIcon = 'fa-play';
+                actionLabel = 'Apresentar';
+            } else if (hasSlides && hasVideo) {
                 tagText = '<i class="fa-solid fa-photo-film"></i> SLIDES + VÍDEO';
                 actionIcon = 'fa-play';
                 actionLabel = 'Apresentar';
@@ -4813,6 +4899,359 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 setTimeout(() => {
                     if (typeof window.selectProfile === 'function') window.selectProfile('Admin');
                 }, 100);
+            }
+        });
+
+        /* =========================================================
+           APRESENTAÇÃO INTERATIVA: SEGURANÇA DA INFORMAÇÃO
+           ========================================================= */
+        const securityScript = [
+            { id: 0, title: "T1:E1 - 01. Vulnerabilidades Web (PHP)", presenter: "Francisco Lucas", maxSteps: 3 },
+            { id: 1, title: "T1:E2 - 02. O S.O.C. (Security Operations Center)", presenter: "João Pedro Santos", maxSteps: 6 },
+            { id: 2, title: "T1:E3 - 03. A Nuvem (Modelos e Falhas)", presenter: "Pedro Victor", maxSteps: 2 },
+            { id: 3, title: "T1:E4 - 04. Ameaças Sintéticas (Deepfakes)", presenter: "João Pedro Silva", maxSteps: 2 },
+            { id: 4, title: "T1:E5 - 05. Governança e ISO 27001", presenter: "Nícolas Marcell", maxSteps: 2 },
+            { id: 5, title: "T1:E6 - 06. Conclusão & Cultura de Segurança", presenter: "Nícolas Marcell", maxSteps: 1 }
+        ];
+
+        let secCurrentSlide = 0;
+        let secCurrentStep = 1;
+        let secAnimationInterval = null;
+        let secAnimationTimeouts = [];
+        let secDeepfakeAudioPlayed = false;
+
+        function clearSecTimeouts() {
+            secAnimationTimeouts.forEach(t => clearTimeout(t));
+            secAnimationTimeouts = [];
+        }
+
+        function secSetTimeout(fn, delay) {
+            const t = setTimeout(fn, delay);
+            secAnimationTimeouts.push(t);
+            return t;
+        }
+
+        window.openSecurityPresentation = function(startIdx = 0) {
+            if (typeof window.closeTitleModal === 'function') {
+                window.closeTitleModal(null, true);
+            }
+            if (typeof window.closePdfViewer === 'function') {
+                window.closePdfViewer();
+            }
+            if (typeof window.closePlayer === 'function') {
+                window.closePlayer();
+            }
+
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const secScreen = document.getElementById('security-player-screen');
+            if (secScreen) {
+                secScreen.classList.add('active');
+            }
+
+            const idx = (typeof startIdx === 'number' && startIdx >= 0 && startIdx < securityScript.length) ? startIdx : 0;
+            window.renderSecuritySlide(idx);
+        };
+
+        window.closeSecurityPresentation = function() {
+            if (secAnimationInterval) {
+                clearInterval(secAnimationInterval);
+                secAnimationInterval = null;
+            }
+            clearSecTimeouts();
+
+            const dfAudio = document.getElementById('deepfake-audio');
+            if (dfAudio) {
+                dfAudio.pause();
+                dfAudio.currentTime = 0;
+            }
+
+            const secScreen = document.getElementById('security-player-screen');
+            if (secScreen) {
+                secScreen.classList.remove('active');
+            }
+
+            if (typeof window.switchScreen === 'function') {
+                window.switchScreen('acervo-screen');
+            }
+        };
+
+        window.renderSecuritySlide = function(idx) {
+            if (idx < 0) idx = 0;
+            if (idx >= securityScript.length) idx = securityScript.length - 1;
+
+            secCurrentSlide = idx;
+            secCurrentStep = 1;
+            secDeepfakeAudioPlayed = false;
+
+            const cur = securityScript[idx];
+            const titleEl = document.getElementById('sec-player-ep-title');
+            if (titleEl) titleEl.textContent = cur.title;
+
+            const presenterEl = document.getElementById('sec-presenter-name');
+            if (presenterEl) presenterEl.textContent = cur.presenter;
+
+            const barEl = document.getElementById('sec-progress-bar');
+            if (barEl) barEl.style.width = `${((idx + 1) / securityScript.length) * 100}%`;
+
+            document.querySelectorAll('#security-player-screen .slide').forEach(s => s.classList.remove('active'));
+            const activeS = document.getElementById(`sec-slide-${idx}`);
+            if (activeS) {
+                activeS.classList.add('active');
+                window.updateSecurityStepVisuals(activeS, 1);
+            }
+        };
+
+        window.playDeepfakeAudio = function() {
+            const dfAudio = document.getElementById('deepfake-audio');
+            if (dfAudio) {
+                dfAudio.currentTime = 0;
+                dfAudio.volume = 1.0;
+                dfAudio.play().catch(e => console.log('Áudio deepfake:', e));
+            }
+        };
+
+        window.updateSecurityStepVisuals = function(slideElement, stepNum) {
+            if (secAnimationInterval) {
+                clearInterval(secAnimationInterval);
+                secAnimationInterval = null;
+            }
+            clearSecTimeouts();
+
+            if (!slideElement) return;
+
+            slideElement.querySelectorAll('.step-info, .sim-screen').forEach(el => el.classList.remove('active-step', 'active-sim'));
+            slideElement.querySelectorAll(`.step-${stepNum}`).forEach(el => {
+                if (el.classList.contains('step-info')) el.classList.add('active-step');
+                if (el.classList.contains('sim-screen')) el.classList.add('active-sim');
+            });
+
+            // Slide 0: SQLi, XSS, LFI
+            if (secCurrentSlide === 0) {
+                const urlEl = document.getElementById('ep1-url');
+                if (stepNum === 1) {
+                    if (urlEl) {
+                        urlEl.textContent = "https://sistema-ifpi.com.br/login";
+                        urlEl.classList.remove('url-highlight');
+                    }
+                    const runSqli = () => {
+                        const ty = document.getElementById('typewriter-user');
+                        const loginForm = document.getElementById('login-form-sqli');
+                        const dbDump = document.getElementById('db-dump-sqli');
+                        if (ty) {
+                            ty.style.animation = 'none';
+                            ty.textContent = "";
+                        }
+                        if (dbDump) dbDump.style.display = 'none';
+                        if (loginForm) loginForm.style.display = 'block';
+
+                        secSetTimeout(() => {
+                            if (ty) {
+                                ty.style.animation = 'typing 3s steps(20, end) forwards';
+                                ty.textContent = "' OR 1=1 --";
+                            }
+                        }, 1500);
+
+                        secSetTimeout(() => {
+                            if (loginForm) loginForm.style.display = 'none';
+                            if (dbDump) dbDump.style.display = 'block';
+                        }, 6000);
+                    };
+                    runSqli();
+                    secAnimationInterval = setInterval(runSqli, 12000);
+                } else if (stepNum === 2) {
+                    if (urlEl) {
+                        urlEl.textContent = "https://sistema-ifpi.com.br/forum";
+                        urlEl.classList.remove('url-highlight');
+                    }
+                    const runXss = () => {
+                        const xssAlert = document.getElementById('xss-alert');
+                        const xssLogged = document.getElementById('xss-logged');
+                        const forumBox = document.querySelector('#sec-slide-0 .forum-box');
+                        if (xssAlert) xssAlert.style.display = 'none';
+                        if (xssLogged) xssLogged.style.display = 'none';
+                        if (forumBox) forumBox.style.display = 'block';
+
+                        secSetTimeout(() => {
+                            if (xssAlert) xssAlert.style.display = 'block';
+                        }, 2500);
+
+                        secSetTimeout(() => {
+                            if (xssAlert) xssAlert.style.display = 'none';
+                            if (forumBox) forumBox.style.display = 'none';
+                            if (xssLogged) xssLogged.style.display = 'block';
+                        }, 7000);
+                    };
+                    runXss();
+                    secAnimationInterval = setInterval(runXss, 14000);
+                } else if (stepNum === 3) {
+                    if (urlEl) {
+                        urlEl.textContent = "https://sistema-ifpi.com.br/index.php?pasta=arquivos_secretos";
+                        urlEl.classList.add('url-highlight');
+                    }
+                    const runLfi = () => {
+                        const dl = document.getElementById('lfi-download');
+                        if (dl) dl.style.display = 'none';
+                        secSetTimeout(() => {
+                            if (dl) dl.style.display = 'block';
+                        }, 2500);
+                    };
+                    runLfi();
+                    secAnimationInterval = setInterval(runLfi, 7000);
+                }
+            }
+
+            // Slide 1: S.O.C.
+            if (secCurrentSlide === 1) {
+                const socAlert = document.getElementById('soc-alert');
+                const socBlock = document.getElementById('soc-block');
+                const socHunt = document.getElementById('soc-hunt');
+                const socLogs = document.getElementById('soc-logs');
+                const purplePulse = document.getElementById('purple-pulse');
+
+                if (stepNum === 1) {
+                    if (socAlert) socAlert.style.display = 'block';
+                    if (socBlock) socBlock.style.display = 'none';
+                    if (socHunt) socHunt.style.display = 'none';
+                    if (socLogs) socLogs.style.display = 'block';
+                } else if (stepNum === 2) {
+                    if (socAlert) socAlert.style.display = 'none';
+                    if (socBlock) socBlock.style.display = 'block';
+                    if (socHunt) socHunt.style.display = 'none';
+                    if (socLogs) socLogs.style.display = 'block';
+                } else if (stepNum === 3) {
+                    if (socAlert) socAlert.style.display = 'none';
+                    if (socLogs) socLogs.style.display = 'none';
+                    if (socBlock) socBlock.style.display = 'none';
+                    if (socHunt) socHunt.style.display = 'flex';
+                } else if (stepNum === 4) {
+                    if (purplePulse) purplePulse.style.animation = "pulseSoft 2s infinite";
+                }
+            }
+
+            // Slide 2: A Nuvem
+            if (secCurrentSlide === 2) {
+                if (stepNum === 2) {
+                    const runBreach = () => {
+                        const breach = document.getElementById('breach-stamp');
+                        if (breach) breach.style.display = 'none';
+                        secSetTimeout(() => {
+                            if (breach) breach.style.display = 'block';
+                        }, 2000);
+                    };
+                    runBreach();
+                    secAnimationInterval = setInterval(runBreach, 7000);
+                }
+            }
+
+            // Slide 3: Deepfakes
+            if (secCurrentSlide === 3) {
+                if (stepNum === 1) {
+                    if (!secDeepfakeAudioPlayed) {
+                        const dfAudio = document.getElementById('deepfake-audio');
+                        if (dfAudio) {
+                            dfAudio.volume = 1.0;
+                            dfAudio.play().catch(e => console.log("Áudio deepfake bloqueado:", e));
+                        }
+                        secDeepfakeAudioPlayed = true;
+                    }
+
+                    const runAudio = () => {
+                        const bar = document.getElementById('audio-progress');
+                        const aiAlert = document.getElementById('ai-alert');
+                        if (aiAlert) aiAlert.style.display = 'none';
+                        if (bar) {
+                            bar.style.transition = 'none';
+                            bar.style.width = '0px';
+                        }
+                        secSetTimeout(() => {
+                            if (bar) {
+                                bar.style.transition = 'width 6s linear';
+                                bar.style.width = '120px';
+                            }
+                        }, 50);
+                        secSetTimeout(() => {
+                            if (aiAlert) aiAlert.style.display = 'block';
+                        }, 6500);
+                    };
+                    runAudio();
+                    secAnimationInterval = setInterval(runAudio, 11000);
+                }
+            }
+
+            // Slide 4: ISO 27001 / CISO
+            if (secCurrentSlide === 4) {
+                if (stepNum === 1) {
+                    const runCiso = () => {
+                        const ciso = document.getElementById('ciso-translation');
+                        if (ciso) ciso.style.display = 'none';
+                        secSetTimeout(() => {
+                            if (ciso) ciso.style.display = 'block';
+                        }, 2500);
+                    };
+                    runCiso();
+                    secAnimationInterval = setInterval(runCiso, 8000);
+                } else if (stepNum === 2) {
+                    const runTriad = () => {
+                        document.querySelectorAll('#sec-slide-4 .triad-item').forEach(i => i.classList.remove('active-triad'));
+                        secSetTimeout(() => {
+                            const t1 = document.getElementById('triad-1');
+                            if (t1) t1.classList.add('active-triad');
+                        }, 1500);
+                        secSetTimeout(() => {
+                            const t2 = document.getElementById('triad-2');
+                            if (t2) t2.classList.add('active-triad');
+                        }, 3500);
+                        secSetTimeout(() => {
+                            const t3 = document.getElementById('triad-3');
+                            if (t3) t3.classList.add('active-triad');
+                        }, 5500);
+                    };
+                    runTriad();
+                    secAnimationInterval = setInterval(runTriad, 9000);
+                }
+            }
+        };
+
+        window.navSecuritySlide = function(dir) {
+            const activeSlideEl = document.getElementById(`sec-slide-${secCurrentSlide}`);
+            const maxSteps = parseInt(activeSlideEl?.getAttribute('data-max-steps') || "1", 10);
+
+            if (dir > 0) {
+                if (secCurrentStep < maxSteps) {
+                    secCurrentStep++;
+                    window.updateSecurityStepVisuals(activeSlideEl, secCurrentStep);
+                } else {
+                    const next = secCurrentSlide + 1;
+                    if (next >= securityScript.length) {
+                        window.closeSecurityPresentation();
+                    } else {
+                        window.renderSecuritySlide(next);
+                    }
+                }
+            } else if (dir < 0) {
+                if (secCurrentStep > 1) {
+                    secCurrentStep--;
+                    window.updateSecurityStepVisuals(activeSlideEl, secCurrentStep);
+                } else if (secCurrentSlide > 0) {
+                    window.renderSecuritySlide(secCurrentSlide - 1);
+                }
+            }
+        };
+
+        // Teclado na Apresentação Interativa (Setas Direita/Esquerda, Espaço e Esc)
+        document.addEventListener('keydown', (e) => {
+            const secScreen = document.getElementById('security-player-screen');
+            if (!secScreen || !secScreen.classList.contains('active')) return;
+
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                window.navSecuritySlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                window.navSecuritySlide(-1);
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                window.closeSecurityPresentation();
             }
         });
 

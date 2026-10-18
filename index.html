@@ -847,6 +847,356 @@
     </div>
 
     <!-- =======================================================
+         PLAYER 3: APRESENTAÇÃO INTERATIVA DE SEGURANÇA DA INFORMAÇÃO
+         ======================================================= -->
+    <div id="security-player-screen" class="screen">
+        <audio id="deepfake-audio" preload="auto" src="midia/deepfake.mp3"></audio>
+        <div class="player-header">
+            <button type="button" class="control-btn" aria-label="Voltar" onclick="window.closeSecurityPresentation()"><i class="fa-solid fa-arrow-left"></i></button>
+            <div style="display:flex; flex-direction: column; margin-left: 10px;">
+                <span style="font-weight: bold;">Segurança da Informação</span>
+                <span id="sec-player-ep-title" style="color: #aaa; font-size: 0.9rem;">T1:E1 - Vulnerabilidades</span>
+            </div>
+        </div>
+
+        <div class="slide-area">
+            
+            <!-- EPISÓDIO 1: VULNERABILIDADES -->
+            <div class="slide" id="sec-slide-0" data-max-steps="3">
+                <div class="slide-grid">
+                    <div class="text-col">
+                        <h2>01. VULNERABILIDADES WEB (PHP)</h2>
+                        <div class="step-info step-1 active-step">
+                            <h3 class="highlight">Passo 1: Injeção de SQL</h3>
+                            <p>A falha de SQL Injection ocorre quando a aplicação web não sanitiza adequadamente as entradas do usuário. Isso permite a execução de comandos arbitrários no banco de dados, resultando na extração não autorizada de informações sensíveis.</p>
+                        </div>
+                        <div class="step-info step-2">
+                            <h3 class="highlight">Passo 2: XSS (Cross-Site Scripting)</h3>
+                            <p>Consiste na injeção de scripts maliciosos em páginas da web. Essa vulnerabilidade é frequentemente explorada para o sequestro de sessões <span class="blue-glow">(Session Hijacking)</span> através da interceptação de cookies de autenticação.</p>
+                        </div>
+                        <div class="step-info step-3">
+                            <h3 class="highlight">Passo 3: LFI / RFI</h3>
+                            <p>Vulnerabilidades de Inclusão de Arquivos permitem que um atacante manipule os parâmetros das requisições na URL, viabilizando o acesso a diretórios restritos e a leitura de arquivos críticos de configuração do servidor.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="visual-col">
+                        <div class="browser-top"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><div class="url-bar" id="ep1-url">https://sistema-ifpi.com.br/login</div></div>
+                        
+                        <div class="sim-screen active-sim step-1" id="sim-sqli">
+                            <div class="login-box" id="login-form-sqli">
+                                <h3 style="margin-bottom:15px; color:#333;">Acesso ao Sistema</h3>
+                                <div style="font-family: monospace; color:#E50914; margin-bottom:5px; height:20px; font-weight:bold;" class="typewriter" id="typewriter-user"></div>
+                                <input type="text" class="login-input" placeholder="Senha" disabled>
+                                <button type="button" style="width:100%; padding:10px; background:#3b82f6; color:#fff; border:none; border-radius:4px; font-weight:bold;">AUTENTICAR</button>
+                            </div>
+                            <div id="db-dump-sqli" style="display:none; width: 100%;">
+                                <h3 style="color:#E50914; margin-bottom:10px;"><i class="fa-solid fa-triangle-exclamation"></i> VAZAMENTO DE BD DETECTADO</h3>
+                                <table class="db-table">
+                                    <tr><th>ID</th><th>Usuário</th><th>Senha_Hash</th></tr>
+                                    <tr><td>1</td><td>admin</td><td>8c6976e5b5...</td></tr>
+                                    <tr><td>2</td><td>clautenis</td><td>9d4e1e23...</td></tr>
+                                    <tr><td>3</td><td>professor</td><td>5f4dcc3b5a...</td></tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="sim-screen step-2" id="sim-xss">
+                            <div class="forum-box">
+                                <h3 style="color:#333; margin-bottom:10px;">Fórum da Turma</h3>
+                                <div class="comment"><strong>João:</strong> Pessoal, que horas é a aula amanhã?</div>
+                                <div class="comment" style="background:#fff3f3; border-left:4px solid #E50914;">
+                                    <strong>Hacker:</strong> <span style="font-family:monospace; color:#E50914;">&lt;script&gt;capturar_cookie()&lt;/script&gt;</span>
+                                </div>
+                            </div>
+                            <div class="alert-box" id="xss-alert">
+                                <i class="fa-solid fa-cookie-bite" style="font-size:3rem; color:#f59e0b;"></i>
+                                <h3 style="color:#000; margin:10px 0;">Cookie Interceptado!</h3>
+                                <p style="font-family:monospace; font-size:0.8rem; color:#666;">PHPSESSID=9a8b7c6d...</p>
+                            </div>
+                            <div id="xss-logged" style="display:none; text-align:center;">
+                                <i class="fa-solid fa-user-shield" style="font-size:4rem; color:#10b981;"></i>
+                                <h2 style="color:#333; margin-top:10px;">Acesso Concedido</h2>
+                                <p style="color:#666; font-weight:bold;">Sessão Sequestrada (Autenticação Burlada)</p>
+                            </div>
+                        </div>
+
+                        <div class="sim-screen step-3 folder-screen" id="sim-lfi">
+                            <h3 style="color:#333; border-bottom: 2px solid #ccc; padding-bottom:10px; width: 100%;">/var/www/Arquivos_Privados/</h3>
+                            <div class="folder-grid">
+                                <div><i class="fa-solid fa-folder folder-icon"></i><br><span style="color:#333; font-size:0.8rem;">Imagens</span></div>
+                                <div><i class="fa-solid fa-folder folder-icon"></i><br><span style="color:#333; font-size:0.8rem;">Backups</span></div>
+                                <div><i class="fa-solid fa-file-lines file-icon" style="color:#E50914;"></i><br><span style="color:#333; font-size:0.8rem; font-weight:bold;">senhas_banco.txt</span></div>
+                            </div>
+                            <div class="download-box" id="lfi-download">
+                                <i class="fa-solid fa-circle-check"></i> Extração de Arquivo Concluída!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EPISÓDIO 2: O S.O.C -->
+            <div class="slide" id="sec-slide-1" data-max-steps="6">
+                <div class="slide-grid">
+                    <div class="text-col">
+                        <h2>02. O S.O.C.</h2>
+                        <div class="step-info step-1 active-step">
+                            <h3 class="highlight">Tier 1: Triagem</h3>
+                            <p>Atua na linha de frente do monitoramento de rede. Os analistas realizam a triagem inicial dos logs e alertas gerados pelas ferramentas de segurança, distinguindo falsos positivos de incidentes reais.</p>
+                        </div>
+                        <div class="step-info step-2">
+                            <h3 class="highlight">Tier 2: Resposta a Incidentes</h3>
+                            <p>Responsável direto pela mitigação. Ao confirmar uma ameaça, esta equipe executa ações táticas de contenção, como a implementação de regras de bloqueio em firewalls e o isolamento de ativos afetados.</p>
+                        </div>
+                        <div class="step-info step-3">
+                            <h3 class="highlight">Tier 3: Threat Hunting</h3>
+                            <p>Abordagem proativa de segurança cibernética. Os especialistas realizam varreduras contínuas na infraestrutura para identificar Ameaças Persistentes Avançadas (APTs) que conseguiram contornar as defesas perimetrais.</p>
+                        </div>
+                        <div class="step-info step-4">
+                            <h3 class="highlight">Dinâmica de Equipes (Cores)</h3>
+                            <p>O S.O.C. atua em frentes estratégicas: o <span style="color:#E50914; font-weight:bold;">Red Team</span> conduz ataques simulados ofensivos, o <span style="color:#3b82f6; font-weight:bold;">Blue Team</span> gerencia as defesas da rede, e o <span style="color:#8b5cf6; font-weight:bold;">Purple Team</span> integra os aprendizados de ambos para aprimorar os protocolos de resposta.</p>
+                        </div>
+                        <div class="step-info step-5">
+                            <h3 class="highlight">Ferramentas: SIEM, TIPs e SOAR</h3>
+                            <p>A operação é viabilizada por tecnologias centrais: <strong>SIEM</strong> (centraliza e correlaciona logs), <strong>TIPs</strong> (fornece inteligência global sobre novas ameaças em tempo real) e <strong>SOAR</strong> (automatiza as respostas para conter ataques em frações de segundos).</p>
+                        </div>
+                        <div class="step-info step-6">
+                            <h3 class="highlight">Modelos Operacionais</h3>
+                            <p>As organizações podem optar por um <strong>SOC Interno</strong> (infraestrutura <em>in-house</em> e equipe dedicada, garantindo controle local), ou um <strong>SOC Externo/MSSP</strong> (serviço terceirizado que oferece escalabilidade e monitoramento contínuo 24/7).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="visual-col">
+                        <div class="browser-top"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><div class="url-bar" style="text-align:center;">DASHBOARD DO S.O.C.</div></div>
+                        
+                        <div class="sim-screen soc-dash active-sim step-1 step-2 step-3" style="padding:15px; position:relative;">
+                            <div style="width:100%; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:10px;">
+                                <span style="font-weight:bold; color:#fff;"><i class="fa-solid fa-shield"></i> LOGS DO FIREWALL</span>
+                                <span class="highlight" id="soc-status">MONITORAMENTO ATIVO</span>
+                            </div>
+                            <div style="width:100%; height:100%; overflow:hidden;" id="soc-logs">
+                                <div class="log-line">GET /api/v1/users - 200 OK - IP: 192.168.1.5</div>
+                                <div class="log-line">GET /images/logo.png - 200 OK - IP: 172.16.0.4</div>
+                                <div class="log-line">GET /css/style.css - 200 OK - IP: 192.168.1.10</div>
+                                <div class="log-line step-1 step-2 log-red" style="display:none; padding:5px; margin: 10px 0;" id="soc-alert">CRÍTICO: TENTATIVA DE INVASÃO DETECTADA - IP: 185.20.14.9 (RÚSSIA)</div>
+                                <div class="log-line">GET /index.php - 200 OK - IP: 192.168.1.2</div>
+                            </div>
+                            <div id="soc-block" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.95); padding:25px; border:2px solid #10b981; border-radius:8px; text-align:center; box-shadow: 0 0 20px rgba(16,185,129,0.4);">
+                                <i class="fa-solid fa-lock" style="font-size:3rem; color:#10b981; margin-bottom:10px;"></i>
+                                <h3 style="color:#fff;">Ameaça Contida</h3>
+                                <p style="color:#aaa; font-size:0.9rem; margin-top:5px;">Bloqueio de IP executado pelo Tier 2</p>
+                            </div>
+                            
+                            <div class="radar-box" id="soc-hunt">
+                                <div class="radar-sweep"></div>
+                                <div class="server-box"><i class="fa-solid fa-server"></i> Server 01</div>
+                                <div class="server-box server-infected" id="infected-server"><i class="fa-solid fa-server"></i> Server 02<br><span style="font-size:0.6rem; margin-top:5px; font-weight:bold;">MALWARE OCULTO</span></div>
+                                <div class="server-box"><i class="fa-solid fa-server"></i> Server 03</div>
+                            </div>
+                        </div>
+
+                        <div class="sim-screen step-4" style="background:#111; color:#fff;">
+                            <h3 style="margin-bottom:30px;">Engajamento Tático</h3>
+                            <div style="display:flex; justify-content:center; align-items:center; gap:15px; width:100%;">
+                                <div style="text-align:center; color:#E50914;"><i class="fa-solid fa-fire" style="font-size:3.5rem;"></i><br><b style="font-size:1.1rem; display:block; margin-top:10px;">RED TEAM</b><span style="font-size:0.8rem; color:#aaa;">Ofensiva</span></div>
+                                <i class="fa-solid fa-plus" style="font-size:2rem; color:#555;"></i>
+                                <div style="text-align:center; color:#3b82f6;"><i class="fa-solid fa-shield-halved" style="font-size:3.5rem;"></i><br><b style="font-size:1.1rem; display:block; margin-top:10px;">BLUE TEAM</b><span style="font-size:0.8rem; color:#aaa;">Defesa</span></div>
+                                <i class="fa-solid fa-arrow-right-long" style="font-size:2rem; color:#555;"></i>
+                                <div style="text-align:center; color:#8b5cf6;" id="purple-pulse"><i class="fa-solid fa-handshake" style="font-size:3.5rem;"></i><br><b style="font-size:1.1rem; display:block; margin-top:10px;">PURPLE TEAM</b><span style="font-size:0.8rem; color:#aaa;">Evolução</span></div>
+                            </div>
+                        </div>
+
+                        <div class="sim-screen step-5" style="background:#111; color:#fff;">
+                            <h3 style="margin-bottom:30px;">Stack Tecnológica Integrada</h3>
+                            <div style="display:flex; justify-content:space-around; width:100%; align-items:center;">
+                                <div class="tool-box" style="border:2px solid #3b82f6;"><i class="fa-solid fa-database" style="color:#3b82f6;"></i><br><b>SIEM</b><br><span style="font-size:0.7rem; color:#aaa;">Coleta Logs</span></div>
+                                <i class="fa-solid fa-arrow-right" style="color:#aaa;"></i>
+                                <div class="tool-box" style="border:2px solid #E50914;"><i class="fa-solid fa-globe" style="color:#E50914;"></i><br><b>TIPs</b><br><span style="font-size:0.7rem; color:#aaa;">Ameaças Globais</span></div>
+                                <i class="fa-solid fa-arrow-right" style="color:#aaa;"></i>
+                                <div class="tool-box" style="border:2px solid #10b981;"><i class="fa-solid fa-robot" style="color:#10b981;"></i><br><b>SOAR</b><br><span style="font-size:0.7rem; color:#aaa;">Ação Automática</span></div>
+                            </div>
+                        </div>
+
+                        <div class="sim-screen step-6" style="background:#111; color:#fff;">
+                            <h3 style="margin-bottom:30px;">Modelos Operacionais</h3>
+                            <div style="display:flex; justify-content:space-around; width:100%;">
+                                <div style="background:#222; padding:20px; border-radius:8px; text-align:center; width:45%; border-top:4px solid #3b82f6;">
+                                    <i class="fa-solid fa-building" style="font-size:3.5rem; margin-bottom:15px; color:#3b82f6;"></i>
+                                    <br><b style="font-size:1.1rem;">SOC Interno</b><br><span style="font-size:0.8rem; color:#aaa;">Controle local e equipe inteiramente in-house.</span>
+                                </div>
+                                <div style="background:#222; padding:20px; border-radius:8px; text-align:center; width:45%; border-top:4px solid #10b981;">
+                                    <i class="fa-solid fa-cloud" style="font-size:3.5rem; margin-bottom:15px; color:#10b981;"></i>
+                                    <br><b style="font-size:1.1rem;">SOC Externo</b><br><span style="font-size:0.8rem; color:#aaa;">Terceirização (MSSP) e escalabilidade 24/7.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- EPISÓDIO 3: NUVEM -->
+            <div class="slide" id="sec-slide-2" data-max-steps="2">
+                <div class="slide-grid">
+                    <div class="text-col">
+                        <h2>03. A NUVEM</h2>
+                        <div class="step-info step-1 active-step">
+                            <h3 class="highlight">Modelos: IaaS, PaaS e SaaS</h3>
+                            <p>A nuvem divide-se em três estruturas primárias de serviço: <strong>IaaS</strong> (Infraestrutura terceirizada, mas o cliente gerencia o Sistema Operacional), <strong>PaaS</strong> (Plataforma focada em desenvolvedores com banco de dados pronto) e <strong>SaaS</strong> (Software 100% pronto e gerenciado pelo provedor, como o próprio modelo da Netflix).</p>
+                        </div>
+                        <div class="step-info step-2">
+                            <h3 class="highlight">Responsabilidade Compartilhada</h3>
+                            <p>O provedor garante a disponibilidade física do servidor, mas a proteção lógica dos dados é responsabilidade do cliente. Erros de configuração causam incidentes globais, como os recentes vazamentos enfrentados por corporações como a EA Games, Uber e Toyota.</p>
+                        </div>
+                    </div>
+
+                    <div class="visual-col" style="background:#111; color:#fff;">
+                        <div class="sim-screen active-sim step-1" id="sim-cloud-1" style="background:transparent; justify-content:center;">
+                            <h3 style="margin-bottom:30px;">Estruturas em Nuvem</h3>
+                            <div style="display:flex; justify-content:space-around; width:100%; gap:15px; text-align:center;">
+                                <div style="background:#222; padding:20px 10px; border-radius:8px; width:30%; border-bottom:4px solid #3b82f6;">
+                                    <i class="fa-solid fa-server" style="font-size:2.5rem; color:#3b82f6; margin-bottom:15px;"></i>
+                                    <br><b style="font-size:1.1rem;">IaaS</b><br><span style="font-size:0.75rem; color:#aaa; display:block; margin-top:5px;">Infraestrutura bruta. Máximo controle do cliente.</span>
+                                </div>
+                                <div style="background:#222; padding:20px 10px; border-radius:8px; width:30%; border-bottom:4px solid #f59e0b;">
+                                    <i class="fa-solid fa-code" style="font-size:2.5rem; color:#f59e0b; margin-bottom:15px;"></i>
+                                    <br><b style="font-size:1.1rem;">PaaS</b><br><span style="font-size:0.75rem; color:#aaa; display:block; margin-top:5px;">Foco no código. Banco e S.O. prontos.</span>
+                                </div>
+                                <div style="background:#222; padding:20px 10px; border-radius:8px; width:30%; border-bottom:4px solid #10b981;">
+                                    <i class="fa-solid fa-laptop-code" style="font-size:2.5rem; color:#10b981; margin-bottom:15px;"></i>
+                                    <br><b style="font-size:1.1rem;">SaaS</b><br><span style="font-size:0.75rem; color:#aaa; display:block; margin-top:5px;">Software final. Pronto para uso imediato.</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="sim-screen step-2" id="sim-cloud-2" style="background:transparent; position:relative;">
+                            <h3 style="margin-bottom:30px; color:#E50914;"><i class="fa-solid fa-globe"></i> Incidentes Corporativos</h3>
+                            <div style="display:flex; flex-direction:column; gap:15px; width:100%; align-items:center;">
+                                <div class="hacked-box">EA Games</div>
+                                <div class="hacked-box">Uber</div>
+                                <div class="hacked-box">Toyota</div>
+                            </div>
+                            <div id="breach-stamp" style="display:none; color:#E50914; font-weight:bold; border:5px solid #E50914; font-size:2.2rem; padding:15px; border-radius: 8px; position:absolute; transform:rotate(-15deg); background: rgba(0,0,0,0.85); box-shadow: 0 0 20px rgba(229,9,20,0.5);">MEGAVAZAMENTO</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EPISÓDIO 4: DEEPFAKES -->
+            <div class="slide" id="sec-slide-3" data-max-steps="2">
+                <div class="slide-grid">
+                    <div class="text-col">
+                        <h2>04. AMEAÇAS SINTÉTICAS</h2>
+                        <div class="step-info step-1 active-step">
+                            <h3 class="highlight">O Preço do Pix (Clonagem de Voz)</h3>
+                            <p>A Inteligência Artificial Generativa viabiliza a síntese precisa de padrões vocais. Cibercriminosos exploram essa técnica de <em>Vishing</em> enviando áudios sintéticos via WhatsApp para simular a voz de diretores ou professores, enganando familiares ou funcionários para extrair dados e vantagens.</p>
+                        </div>
+                        <div class="step-info step-2">
+                            <h3 class="highlight">Engenharia Social Automatizada</h3>
+                            <p>O treinamento de modelos com poucas amostras de áudio permite ataques ultradirecionados em escala. A melhor defesa combina canais secundários de autenticação verbal e conscientização constante dos usuários.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="visual-col" style="background:#e5ddd5; color:#000;">
+                        <div class="browser-top" style="background:#075e54;"><span style="color:#fff; font-weight:bold; padding-left:10px;"><i class="fa-solid fa-arrow-left"></i> Diretor / Professor</span></div>
+                        <div class="sim-screen active-sim step-1" style="background:transparent; padding:15px; justify-content:flex-start;">
+                            <div style="background:#dcf8c6; padding:15px; border-radius:8px; align-self:flex-start; max-width:90%; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                                    <i class="fa-solid fa-play" style="color:#10b981; font-size:1.5rem; cursor:pointer;" onclick="window.playDeepfakeAudio()"></i> 
+                                    <div style="height:4px; background:#aaa; width:120px; border-radius:2px;" id="audio-progress"></div> 
+                                    <span style="font-size:0.8rem; color:#666;">0:07</span>
+                                </div>
+                                <p style="font-size:1rem; font-weight:500;">"Seu filho é o melhor aluno de TI do Piauí, estamos muito gratos por ter um aluno desse."</p>
+                            </div>
+                            <div id="ai-alert" style="display:none; margin-top:auto; font-size:0.9rem; color:#E50914; font-weight:bold; background:rgba(229,9,20,0.1); padding:15px; border-radius:8px; text-align:center; border: 1px solid #E50914;"><i class="fa-solid fa-robot"></i> Alerta: Padrão Sintético Detectado pela IA de Defesa</div>
+                        </div>
+                        <div class="sim-screen step-2" style="background:#111; color:#fff;">
+                            <i class="fa-solid fa-shield-halved" style="font-size:5rem; color:#10b981;"></i>
+                            <h2 style="margin-top:20px; text-align:center;">Verificação em Duas Etapas</h2>
+                            <p style="color:#aaa; text-align:center; margin-top:8px;">Confirmação biométrica e canal secundário de confiança.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EPISÓDIO 5: ISO/CISO -->
+            <div class="slide" id="sec-slide-4" data-max-steps="2">
+                <div class="slide-grid">
+                    <div class="text-col">
+                        <h2>05. GOVERNANÇA E ISO 27001</h2>
+                        <div class="step-info step-1 active-step">
+                            <h3 class="highlight">A Função do CISO</h3>
+                            <p>O <em>Chief Information Security Officer</em> atua como o elo estratégico. Ele traduz vulnerabilidades sistêmicas altamente técnicas para a alta gestão corporativa, evidenciando o risco financeiro e reputacional de não investir em proteção de dados.</p>
+                        </div>
+                        <div class="step-info step-2">
+                            <h3 class="highlight">A Tríade CIA (ISO 27001)</h3>
+                            <p>A norma internacional fundamenta-se em três pilares: <span class="blue-glow">Confidencialidade</span> (acesso estritamente autorizado), <span class="blue-glow">Integridade</span> (salvaguarda contra modificações indevidas) e <span class="blue-glow">Disponibilidade</span> (sistemas e serviços operantes).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="visual-col" style="background:#1a1a1a; display:flex; align-items:center; justify-content:center;">
+                        <div class="sim-screen active-sim step-1" style="background:transparent; padding:0; flex-direction:row;">
+                            <div class="ciso-box">
+                                <div class="tech-risk" style="color:#aaa;">
+                                    <i class="fa-solid fa-bug" style="font-size:2.5rem; margin-bottom:10px;"></i>
+                                    <h4 style="color:#fff;">Risco Técnico</h4>
+                                    <p style="font-size:0.8rem; margin-top:10px;">Vulnerabilidade de execução de código descoberta no DB principal.</p>
+                                </div>
+                                <i class="fa-solid fa-arrow-right-long" style="font-size:3rem; color:#3b82f6; margin: 0 15px;"></i>
+                                <div class="bus-risk" id="ciso-translation">
+                                    <i class="fa-solid fa-sack-dollar" style="font-size:2.5rem; margin-bottom:10px; color:#f59e0b;"></i>
+                                    <h4 style="color:#fff;">Risco de Negócio</h4>
+                                    <p style="font-size:0.8rem; margin-top:10px;">Risco iminente de exposição de CPFs e sanções da LGPD (R$ 5 Mi).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sim-screen step-2" style="background:transparent; padding:20px;">
+                            <div class="triad-box">
+                                <div class="triad-item" id="triad-1"><i class="fa-solid fa-lock"></i><br><strong>Confidencialidade</strong></div>
+                                <div class="triad-item" id="triad-2"><i class="fa-solid fa-shield-halved"></i><br><strong>Integridade</strong></div>
+                                <div class="triad-item" id="triad-3"><i class="fa-solid fa-server"></i><br><strong>Disponibilidade</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- EPISÓDIO 6: CONCLUSÃO -->
+            <div class="slide" id="sec-slide-5" data-max-steps="1">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <div style="font-size: 4rem; color: var(--netflix-red); margin-bottom: 15px;"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h2 style="font-family:'Bebas Neue',sans-serif; font-size: 3.5rem; color:#fff; margin-bottom: 15px;">06. CONCLUSÃO &amp; CULTURA DE SEGURANÇA</h2>
+                    <p style="font-size: 1.25rem; color: #ccc; line-height: 1.6; margin-bottom: 25px;">
+                        A segurança cibernética não é um produto ou uma ferramenta isolada, mas sim um <strong>processo contínuo de governança, tecnologia e conscientização humana</strong>. Do código do desenvolvedor à alta diretoria, a resiliência digital depende de cada linha de defesa.
+                    </p>
+                    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:20px;">
+                        <span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.9rem;">Francisco Lucas</span>
+                        <span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.9rem;">João Pedro Santos</span>
+                        <span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.9rem;">Pedro Victor</span>
+                        <span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.9rem;">João Pedro Silva</span>
+                        <span style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.9rem;">Nícolas Marcell</span>
+                    </div>
+                    <button type="button" class="btn-play" style="margin-top: 35px;" onclick="window.closeSecurityPresentation()"><i class="fa-solid fa-check"></i> Concluir Apresentação</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="player-controls">
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="sec-progress-bar"></div></div>
+            <div class="nav-buttons">
+                <button type="button" class="control-btn" id="sec-btn-prev" aria-label="Slide anterior" onclick="window.navSecuritySlide(-1)"><i class="fa-solid fa-backward-step"></i></button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="background: #fff; color: #000; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; user-select: none;">🗣 <span id="sec-presenter-name">Francisco Lucas</span></span>
+                </div>
+                <button type="button" class="control-btn" id="sec-btn-next" aria-label="Próximo slide" onclick="window.navSecuritySlide(1)"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =======================================================
          PLAYER 2: MODO CINEMATOGRÁFICO 3D
          ======================================================= -->
     <div id="cinematic-stage" class="screen">

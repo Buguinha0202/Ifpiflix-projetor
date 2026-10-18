@@ -319,13 +319,15 @@
         }
         
         /* AVATARES DA EQUIPE */
-        .av-davi        { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/davi.jpg&w=150&output=webp&v=3'); background-color: transparent; }
-    .av-maria       { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/maria2.jpg&w=150&output=webp&v=5'); background-color: transparent; }
-    .av-francisco   { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/francisco.jpg&w=150&output=webp'); background-color: transparent; }
-    .av-pedro       { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/pedro.jpg&w=150&output=webp'); background-color: transparent; }
-    .av-marcelo     { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/marcelo.jpeg&w=150&output=webp&v=3'); background-color: transparent; }
-    .av-samuel      { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/samuel2.jpg&w=150&output=webp&v=5'); background-color: transparent; }
-    .av-jsantos     { background-image: url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/jsantos.jpg&w=150&output=webp'); background-color: transparent; }
+        .av-davi        { background-image: url('midia/alunos/davi.jpg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/davi.jpg&w=150&output=webp'); background-color: transparent; }
+        .av-maria       { background-image: url('midia/alunos/maria2.jpg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/maria2.jpg&w=150&output=webp'); background-color: transparent; }
+        .av-francisco   { background-image: url('midia/alunos/francisco.jpg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/francisco.jpg&w=150&output=webp'); background-color: transparent; }
+        .av-pedro       { background-image: url('midia/alunos/pedro.jpg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/pedro.jpg&w=150&output=webp'); background-color: transparent; }
+        .av-marcelo     { background-image: url('midia/alunos/marcelo.jpeg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/marcelo.jpeg&w=150&output=webp'); background-color: transparent; }
+        .av-samuel      { background-image: url('midia/alunos/samuel.jpg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/samuel.jpg&w=150&output=webp'); background-color: transparent; }
+        .av-jsantos     { background-image: url('midia/alunos/jsantos.jpg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/jsantos.jpg&w=150&output=webp'); background-color: transparent; }
+        .av-jsilva      { background-image: url('midia/alunos/jsilva.jpg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/jsilva.jpg&w=150&output=webp'); background-color: transparent; }
+        .av-nicolas     { background-image: url('midia/alunos/nicolas.jpg'), url('https://wsrv.nl/?url=https://buguinha0202.github.io/Ifpiflix-projetor/nicolas.jpg&w=150&output=webp'); background-color: transparent; }
         
         .profile-card:hover .avatar,
         .profile-card:focus-visible .avatar { outline: 4px solid #fff; transform: scale(1.06); box-shadow: 0 10px 25px rgba(0,0,0,0.6);}
@@ -5999,6 +6001,17 @@
             padding: 36px 40px;
             box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
             transition: background-image 0.6s ease-in-out;
+            background-color: #141414;
+        }
+
+        .acervo-hero-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center 25%;
+            background-repeat: no-repeat;
+            transition: opacity 0.5s ease-in-out, transform 0.8s ease;
+            z-index: 0;
         }
 
         .acervo-hero-overlay {
@@ -6218,6 +6231,12 @@
             transition: all 0.25s ease;
         }
 
+        .student-avatar-circle.has-photo {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
         .student-avatar-card:hover .student-avatar-circle {
             border-color: var(--netflix-red);
             box-shadow: 0 8px 22px rgba(229, 9, 20, 0.45);
@@ -6290,6 +6309,12 @@
             color: #fff;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
             flex-shrink: 0;
+        }
+
+        .student-portfolio-avatar.has-photo {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .student-portfolio-info h2 {
@@ -6507,6 +6532,410 @@
             .slide-thumbnails-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 gap: 12px;
+            }
+        }
+
+        /* =========================================================
+           APRESENTAÇÃO INTERATIVA: SEGURANÇA DA INFORMAÇÃO
+           ========================================================= */
+        #security-player-screen {
+            background: #000;
+            z-index: 12000;
+        }
+
+        #security-player-screen .player-header {
+            padding: 15px 4%;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 30;
+            background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+        }
+
+        #security-player-screen .slide-area {
+            flex-grow: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 70px 4% 90px 4%;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        #security-player-screen .slide {
+            position: absolute;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 4%;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.5s;
+            transform: scale(0.96);
+        }
+
+        #security-player-screen .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        #security-player-screen .slide-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        #security-player-screen .text-col h2 {
+            font-family: 'Bebas Neue', 'Inter', sans-serif;
+            font-size: 3.2rem;
+            color: #fff;
+            margin-bottom: 22px;
+            border-left: 4px solid var(--netflix-red);
+            padding-left: 15px;
+            line-height: 1.1;
+            letter-spacing: 1px;
+        }
+
+        #security-player-screen .step-info {
+            display: none;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #ccc;
+            animation: secFadeIn 0.4s ease;
+        }
+
+        #security-player-screen .step-info.active-step {
+            display: block;
+        }
+
+        #security-player-screen .step-info h3 {
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        #security-player-screen .highlight {
+            color: var(--netflix-red);
+            font-weight: bold;
+        }
+
+        #security-player-screen .blue-glow {
+            color: #00f0ff;
+            font-weight: bold;
+        }
+
+        @keyframes secFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #security-player-screen .visual-col {
+            background: #111;
+            border-radius: 8px;
+            border: 1px solid #333;
+            height: 450px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        #security-player-screen .browser-top {
+            background: #222;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 5px;
+            border-bottom: 1px solid #333;
+            z-index: 5;
+            position: relative;
+        }
+
+        #security-player-screen .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+        }
+        #security-player-screen .dot.r { background: #ff5f56; }
+        #security-player-screen .dot.y { background: #ffbd2e; }
+        #security-player-screen .dot.g { background: #27c93f; }
+
+        #security-player-screen .url-bar {
+            background: #000;
+            color: #aaa;
+            flex-grow: 1;
+            margin-left: 15px;
+            border-radius: 4px;
+            padding: 3px 10px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        #security-player-screen .url-highlight {
+            animation: secUrlGlow 1.5s infinite alternate;
+            color: #fff;
+        }
+        @keyframes secUrlGlow {
+            from { box-shadow: 0 0 5px #00f0ff; border-color: #00f0ff; }
+            to { box-shadow: 0 0 20px #00f0ff; border-color: #fff; }
+        }
+
+        #security-player-screen .sim-screen {
+            position: absolute;
+            top: 32px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 32px);
+            background: #fff;
+            color: #000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #security-player-screen .sim-screen.active-sim {
+            display: flex;
+            animation: secFadeIn 0.35s;
+        }
+
+        /* Simuladores EP 1 */
+        #security-player-screen .login-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        #security-player-screen .login-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            font-family: monospace;
+        }
+        #security-player-screen .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid transparent;
+            width: 0;
+        }
+        @keyframes secTyping { from { width: 0 } to { width: 100% } }
+
+        #security-player-screen .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        #security-player-screen .db-table th, #security-player-screen .db-table td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+        }
+        #security-player-screen .db-table th { background: #eee; }
+
+        #security-player-screen .forum-box { width: 90%; text-align: left; }
+        #security-player-screen .comment { background: #f0f0f0; padding: 10px; border-radius: 4px; margin-bottom: 10px; font-family: sans-serif; }
+        #security-player-screen .alert-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 2px solid #ccc;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            z-index: 10;
+            display: none;
+        }
+        #security-player-screen .folder-screen {
+            background: #f0f0f0;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        #security-player-screen .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #security-player-screen .folder-icon { font-size: 3rem; color: #fbbf24; }
+        #security-player-screen .file-icon { font-size: 3rem; color: #64748b; }
+        #security-player-screen .download-box {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Simuladores EP 2: S.O.C. */
+        #security-player-screen .soc-dash {
+            background: #090909;
+            color: #fff;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 0;
+        }
+        #security-player-screen .log-line {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #4af626;
+            margin-bottom: 5px;
+            width: 100%;
+            text-align: left;
+        }
+        #security-player-screen .log-red {
+            color: #ff3b30;
+            font-weight: bold;
+            background: rgba(255,0,0,0.2);
+            animation: secFlash 1s infinite;
+        }
+        #security-player-screen .radar-box {
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+        #security-player-screen .server-box {
+            width: 85px;
+            height: 105px;
+            background: #222;
+            border: 2px solid #444;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #aaa;
+            position: relative;
+        }
+        #security-player-screen .server-box i { font-size: 2rem; margin-bottom: 10px; }
+        #security-player-screen .radar-sweep {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+            animation: secSweep 4s linear infinite;
+            pointer-events: none;
+        }
+        #security-player-screen .server-infected {
+            border-color: #E50914;
+            color: #E50914;
+            animation: secFlash 1s infinite;
+        }
+        #security-player-screen .tool-box {
+            text-align:center;
+            padding:15px;
+            border-radius:8px;
+            width:30%;
+            font-size:0.9rem;
+        }
+        #security-player-screen .tool-box i { font-size:2rem; margin-bottom:10px; }
+
+        /* Simuladores EP 3: NUVEM */
+        #security-player-screen .hacked-box {
+            background: #222;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            width: 60%;
+            transition: 0.3s;
+        }
+
+        /* Simuladores EP 5: TRIADE / CISO */
+        #security-player-screen .triad-box { display: flex; justify-content: center; gap: 30px; width: 100%; }
+        #security-player-screen .triad-item { text-align: center; color: #444; transition: 0.5s; transform: scale(0.8); }
+        #security-player-screen .triad-item i { font-size: 4rem; margin-bottom: 15px; }
+        #security-player-screen .triad-item.active-triad { color: #10b981; transform: scale(1.1); }
+        #security-player-screen .ciso-box { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 20px; }
+        #security-player-screen .tech-risk { background: #222; padding: 20px; border-radius: 8px; width: 42%; text-align: center; border: 1px solid #444; }
+        #security-player-screen .bus-risk { background: rgba(229, 9, 20, 0.1); padding: 20px; border-radius: 8px; width: 42%; text-align: center; border: 1px solid #E50914; color: #fff; display: none; }
+
+        @keyframes secSweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        @keyframes secFlash { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes secPulseSoft { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        /* Player controls */
+        #security-player-screen .player-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 4%;
+            z-index: 40;
+            background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+        }
+        #security-player-screen .progress-bar-bg {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+        }
+        #security-player-screen .progress-bar-fill {
+            height: 100%;
+            background: var(--netflix-red);
+            width: 0%;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+        #security-player-screen .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        #security-player-screen .control-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #security-player-screen .control-btn:hover { color: var(--netflix-red); }
+
+        @media (max-width: 768px) {
+            #security-player-screen .slide-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            #security-player-screen .visual-col {
+                height: 350px;
+            }
+            #security-player-screen .text-col h2 {
+                font-size: 2.2rem;
             }
         }
 
