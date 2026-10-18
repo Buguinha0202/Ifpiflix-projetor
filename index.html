@@ -1766,6 +1766,17 @@
                 </div>
             </div>
         </div>
+
+        <!-- BOTÃO NETFLIX: PRÓXIMO EPISÓDIO NO PLAYER DE VÍDEO -->
+        <button type="button" class="slide-next-episode-btn video-next-ep-btn" id="video-next-episode-btn" style="display: none;" onclick="window.playNextEpisode()" aria-label="Ir para o próximo episódio">
+            <div class="next-ep-left">
+                <span class="next-ep-label"><i class="fa-solid fa-forward-step"></i> PRÓXIMO EPISÓDIO</span>
+                <span class="next-ep-title" id="video-next-ep-title">Próximo Episódio</span>
+            </div>
+            <div class="next-ep-icon">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </button>
     </div>
 
     <!-- =======================================================
@@ -1807,8 +1818,15 @@
                 <img id="netflix-slide-img" src="" alt="Slide atual" />
             </div>
 
-            <button type="button" class="slide-nav-btn next" id="slide-btn-next" onclick="window.navSlide(1)" aria-label="Próximo slide">
-                <i class="fa-solid fa-chevron-right"></i>
+            <!-- BOTÃO NETFLIX: PRÓXIMO EPISÓDIO -->
+            <button type="button" class="slide-next-episode-btn" id="slide-next-episode-btn" style="display: none;" onclick="window.playNextEpisode()" aria-label="Ir para o próximo episódio">
+                <div class="next-ep-left">
+                    <span class="next-ep-label"><i class="fa-solid fa-forward-step"></i> PRÓXIMO EPISÓDIO</span>
+                    <span class="next-ep-title" id="slide-next-ep-title">Ep. 2 — Guerra Civil</span>
+                </div>
+                <div class="next-ep-icon">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
             </button>
 
             <!-- BARRA DE PROGRESSO DO SLIDE NO RODAPÉ -->

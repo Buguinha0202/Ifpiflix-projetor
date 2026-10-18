@@ -391,6 +391,51 @@ let toastTimeout;
                 cast: "João Pedro Santos, Pedro Victor, Francisco Lucas, João Pedro Silva, Nícolas Marcell, José Nildo",
                 genres: "Língua Portuguesa, Modernismo", tags: "Jorge Amado, Prosa de 30, Modernismo, Bahia", isMain: false,
                 materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Segunda Geração Modernista (A Prosa de 30)", periodo: "2025 • Acervo da Turma"
+            },
+            "primo-basilio": {
+                title: "O PRIMO BASÍLIO", subtitle: "REALISMO PORTUGUÊS E CRÍTICA À BURGUESIA • EÇA DE QUEIRÓS",
+                bg: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1200&auto=format&fit=crop",
+                banner: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1200&auto=format&fit=crop",
+                match: "96% Relevante", year: "2025", age: "14", duration: "Em Breve • Sem PDF",
+                synopsis: "Análise crítica do romance realista de Eça de Queirós: as falsas aparências e o tédio existencial de Luísa, a sedução maquiavélica de seu primo Basílio e a chantagem impiedosa da criada Juliana, desmascarando a decadência moral da sociedade burguesa de Lisboa.",
+                cast: "Equipe de Literatura • Turma IFPI",
+                genres: "Língua Portuguesa, Literatura Clássica",
+                tags: "Literatura, Eça de Queirós, Realismo, Romance",
+                isMain: false,
+                hasNoPdf: true,
+                materia: "Língua Portuguesa",
+                trabalhoGrupo: "Seminário Literário: Obras Canônicas do Realismo",
+                periodo: "2025 • Em Breve"
+            },
+            "memorias-postumas": {
+                title: "MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS", subtitle: "A RUPTURA DO REALISMO BRASILEIRO • MACHADO DE ASSIS",
+                bg: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop",
+                banner: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop",
+                match: "99% Relevante", year: "2025", age: "14", duration: "Em Breve • Sem PDF",
+                synopsis: "Estudo da obra-prima fundadora do Realismo no Brasil: a genial audácia do 'defunto autor' narrando suas memórias do além-túmulo, o pessimismo filosófico machadiano, a sátira às elites do Segundo Reinado e o célebre legado das 'negativas' existenciais.",
+                cast: "Equipe de Literatura • Turma IFPI",
+                genres: "Língua Portuguesa, Literatura Clássica",
+                tags: "Literatura, Machado de Assis, Realismo Brasileiro, Filosofia",
+                isMain: false,
+                hasNoPdf: true,
+                materia: "Língua Portuguesa",
+                trabalhoGrupo: "Seminário Literário: Obras Canônicas do Realismo",
+                periodo: "2025 • Em Breve"
+            },
+            "dom-casmurro": {
+                title: "DOM CASMURRO", subtitle: "O ENIGMA DE CAPITU E A VOZ DO CIÚME • MACHADO DE ASSIS",
+                bg: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?q=80&w=1200&auto=format&fit=crop",
+                banner: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?q=80&w=1200&auto=format&fit=crop",
+                match: "98% Relevante", year: "2025", age: "14", duration: "Em Breve • Sem PDF",
+                synopsis: "Investigação literária e psicológica sobre o narrador não confiável Bento Santiago (Bentinho): a paixão de infância por Capitu, os inesquecíveis 'olhos de ressaca', a obsessão corrosiva pelo fantasma da traição com Escobar e o debate eterno sobre a verdade dos fatos.",
+                cast: "Equipe de Literatura • Turma IFPI",
+                genres: "Língua Portuguesa, Literatura Clássica",
+                tags: "Literatura, Machado de Assis, Capitu, Realismo Psicológico",
+                isMain: false,
+                hasNoPdf: true,
+                materia: "Língua Portuguesa",
+                trabalhoGrupo: "Seminário Literário: Obras Canônicas do Realismo",
+                periodo: "2025 • Em Breve"
             }
         };
 
@@ -496,6 +541,315 @@ function renderMovieCard(id, data, width) {
             </div>
         </div>`;
 }
+
+/* =========================================================
+   REGISTRO CANÔNICO DE SÉRIES ORIGINAIS IFPIFLIX
+   Organização sequencial em Episódios / Temporadas
+   ========================================================= */
+const SERIES_REGISTRY = {
+    'filosofia-3ano': {
+        id: 'filosofia-3ano',
+        title: 'Filosofia: Revolução Científica & Pensamento Contemporâneo',
+        subtitle: 'Da Escolástica Medieval aos Dilemas da Inteligência Artificial',
+        season: '1ª Temporada • 3º Ano 2026',
+        materia: 'Filosofia',
+        episodes: [
+            {
+                id: 'tema-1',
+                num: 1,
+                title: 'Tema 01: Invocação do Dogma',
+                topic: 'O Julgamento da Escolástica & Idade Média',
+                desc: 'Investigadores do pensamento tentam exorcizar dogmas medievais e o princípio de autoridade aristotélico.',
+                duration: 'Apresentação • Slides'
+            },
+            {
+                id: 'guerra-civil',
+                num: 2,
+                title: 'Tema 02: Guerra Civil (A Batalha Intelectual)',
+                topic: 'Empirismo vs Racionalismo & O Método Científico',
+                desc: 'A Revolução Científica: Heliocentrismo, Copérnico, Galileu, Bacon, Descartes e a grande síntese de Newton.',
+                duration: 'Filme 3D • 6 Atos'
+            },
+            {
+                id: 'tema-3',
+                num: 3,
+                title: 'Tema 03: Devoradores do Espaço Tempo',
+                topic: 'Física Moderna, Relatividade & Cosmologia',
+                desc: 'A crise da física clássica e a ruptura provocada pela relatividade de Einstein e a mecânica quântica.',
+                duration: 'Apresentação • Slides'
+            },
+            {
+                id: 'tema-4',
+                num: 4,
+                title: 'Tema 04: Obsessão',
+                topic: 'Karl Popper & O Critério da Falsificabilidade',
+                desc: 'O problema da demarcação científica: como separar a ciência genuína das pseudociências e dogmas contemporâneos.',
+                duration: 'Apresentação • Slides'
+            },
+            {
+                id: 'tema-5',
+                num: 5,
+                title: 'Tema 05: Não Olhe para a Ética',
+                topic: 'Bioética, Algoritmos & Inteligência Artificial',
+                desc: 'Os impactos morais da inteligência artificial e a responsabilidade ética na sociedade conectada.',
+                duration: 'Apresentação • Slides'
+            },
+            {
+                id: 'teorias-politicas-antiguidade',
+                num: 6,
+                title: 'Prelúdio: Teorias Políticas na Antiguidade',
+                topic: 'Origens do Pensamento Político: Platão e Aristóteles',
+                desc: 'A gênese da política, a justiça, a cidade ideal e os regimes de governo na Grécia Antiga.',
+                duration: 'Apresentação • 14 Slides'
+            }
+        ]
+    },
+    'literatura-realismo': {
+        id: 'literatura-realismo',
+        title: 'Língua Portuguesa: Cânone Literário & Realismo',
+        subtitle: 'Do Romantismo Urbano às Críticas Sociais do Século XIX e XX',
+        season: '1ª Temporada • Literatura',
+        materia: 'Língua Portuguesa',
+        episodes: [
+            {
+                id: 'sargento-milicias',
+                num: 1,
+                title: 'Memórias de um Sargento de Milícias',
+                topic: 'Manuel Antônio de Almeida • Romantismo Urbano',
+                desc: 'O romance de costumes no Rio colonial e a introdução da figura do anti-herói malandro na literatura brasileira.',
+                duration: '6 Slides • Análise'
+            },
+            {
+                id: 'padre-amaro',
+                num: 2,
+                title: 'O Crime do Padre Amaro',
+                topic: 'Eça de Queirós • Realismo Português',
+                desc: 'A crítica mordaz à hipocrisia e corrupção clerical da sociedade provincial leiriense do século XIX.',
+                duration: '10 Slides • Análise'
+            },
+            {
+                id: 'padre-amaro-jogo',
+                num: 3,
+                title: 'O Crime do Padre Amaro: Tabuleiro',
+                topic: 'Gamificação Literária & Dinâmica de Regras',
+                desc: 'Adaptação dos dilemas e conflitos do romance de Eça de Queirós em mecânicas originais de jogo de tabuleiro.',
+                duration: '6 Slides • Tabuleiro'
+            },
+            {
+                id: 'primo-basilio',
+                num: 4,
+                title: 'O Primo Basílio',
+                topic: 'Eça de Queirós • A Pequena Burguesia de Lisboa',
+                desc: 'O adultério burguês, o vazio existencial de Luísa e a tirania chantagista da empregada Juliana.',
+                duration: 'Em Breve • Sem PDF',
+                hasNoPdf: true
+            },
+            {
+                id: 'memorias-postumas',
+                num: 5,
+                title: 'Memórias Póstumas de Brás Cubas',
+                topic: 'Machado de Assis • Ruptura e Ironia do Defunto Autor',
+                desc: 'A fundação do Realismo brasileiro: pessimismo elegante, metalinguagem e a denúncia da elite carioca.',
+                duration: 'Em Breve • Sem PDF',
+                hasNoPdf: true
+            },
+            {
+                id: 'dom-casmurro',
+                num: 6,
+                title: 'Dom Casmurro',
+                topic: 'Machado de Assis • Capitu e o Enigma da Traição',
+                desc: 'O narrador não confiável, os olhos de ressaca e a corrosão psicológica do ciúme obsessivo.',
+                duration: 'Em Breve • Sem PDF',
+                hasNoPdf: true
+            },
+            {
+                id: 'prosa-1930',
+                num: 7,
+                title: 'A Prosa de 1930: Jorge Amado',
+                topic: 'Modernismo • Retratos da Bahia e Romance Social',
+                desc: 'A Segunda Geração Modernista: denúncia das desigualdades sociais e o homem marcado pela sua terra.',
+                duration: '11 Slides • Análise'
+            }
+        ]
+    },
+    'sociologia-debates': {
+        id: 'sociologia-debates',
+        title: 'Sociologia: Estruturas Sociais & Crítica Contemporânea',
+        subtitle: 'Do Capitalismo Histórico às Leituras da Cultura Pop',
+        season: '1ª Temporada • Sociologia',
+        materia: 'Sociologia',
+        episodes: [
+            {
+                id: 'sociologia-desenvolvimento',
+                num: 1,
+                title: 'Sociologia do Desenvolvimento',
+                topic: 'Contradições Sociais, Fome e Capitalismo Global',
+                desc: 'A produção socializada versus apropriação privada do lucro e as crises estruturais do capitalismo moderno.',
+                duration: '10 Slides • Pesquisa'
+            },
+            {
+                id: 'podcast-desigualdade',
+                num: 2,
+                title: 'Podcast: Desigualdade Social',
+                topic: 'Debate em Áudio e Vídeo • Vozes da Turma',
+                desc: 'Mesa redonda gravada pelos alunos analisando as disparidades de renda e oportunidades no Brasil.',
+                duration: 'Vídeo / Podcast'
+            },
+            {
+                id: 'podcast-round6',
+                num: 3,
+                title: 'Clássicos em Série: Round 6',
+                topic: 'Marx, Durkheim e Weber na Cultura Pop',
+                desc: 'A luta de classes, a anomia social e a ação racional calculista decodificadas através do fenômeno sul-coreano.',
+                duration: 'Podcast • Canva'
+            }
+        ]
+    },
+    'hardware-arquitetura': {
+        id: 'hardware-arquitetura',
+        title: 'Hardware & Arquitetura: Do Silício aos Processadores Modernos',
+        subtitle: 'Evolução, Microarquitetura e Hierarquia de Memória',
+        season: '1ª Temporada • T.I.',
+        materia: 'Hardware & Arquitetura',
+        episodes: [
+            {
+                id: 'evolucao-computadores',
+                num: 1,
+                title: 'Evolução dos Computadores',
+                topic: 'Das Válvulas aos Microprocessadores',
+                desc: 'Um panorama histórico completo das gerações da computação desde os anos 1940 até os dias atuais.',
+                duration: '9 Slides • Histórico'
+            },
+            {
+                id: 'memoria-cache',
+                num: 2,
+                title: 'Memória Cache e Armazenamento',
+                topic: 'Hierarquia, Latência e Organização de Memória',
+                desc: 'Como a CPU supera o gargalo da memória principal: funcionamento das caches L1, L2, L3 e discos magnéticos.',
+                duration: '6 Slides • Técnico'
+            }
+        ]
+    },
+    'seguranca-ciberdefesa': {
+        id: 'seguranca-ciberdefesa',
+        title: 'Segurança & Redes: Defesa Cibernética no Mundo Real',
+        subtitle: 'Ataques Web, S.O.C., Engenharia Social e Governança',
+        season: '1ª Temporada • Cibersegurança',
+        materia: 'Segurança & Redes',
+        episodes: [
+            {
+                id: 'seguranca-informacao',
+                num: 1,
+                title: 'Segurança da Informação Interativa',
+                topic: 'Vulnerabilidades Web, S.O.C., Cloud e Deepfakes',
+                desc: 'Simulação interativa prática de vetores de invasão em PHP, resposta a incidentes e inteligência artificial.',
+                duration: 'Apresentação Interativa'
+            },
+            {
+                id: 'cyber-news',
+                num: 2,
+                title: 'Jornal Cyber News',
+                topic: 'Políticas de Segurança da Informação (PSI)',
+                desc: 'Telejornal produzido pelos alunos cobrindo boas práticas digitais, higiene de senhas e defesa contra vazamentos.',
+                duration: 'Vídeo / Telejornal'
+            }
+        ]
+    }
+};
+
+function getSeriesForMovie(movieId) {
+    if (!movieId) return null;
+    for (const sKey in SERIES_REGISTRY) {
+        const series = SERIES_REGISTRY[sKey];
+        if (series.episodes.some(ep => ep.id === movieId)) {
+            return series;
+        }
+    }
+    return null;
+}
+
+function renderSeriesEpisodesHtml(seriesInfo, currentMovieId) {
+    let html = seriesInfo.episodes.map((ep, idx) => {
+        const epData = filmesDB[ep.id] || {};
+        const isActive = ep.id === currentMovieId;
+        const isPending = !!(ep.hasNoPdf || epData.hasNoPdf);
+        const epNum = ep.num || (idx + 1);
+
+        // Thumbnail do episódio
+        let thumb = '';
+        if (epData.banner) thumb = imgUrl(epData.banner, 300);
+        else if (epData.bg) thumb = imgUrl(epData.bg, 300);
+        else if (epData.customCover) thumb = imgUrl(epData.customCover, 300);
+        else thumb = generateAutoPosterDataUri(ep.title, seriesInfo.materia, epData.cast);
+
+        const durationBadge = ep.duration || epData.duration || 'Trabalho Acadêmico';
+        const topicHtml = ep.topic ? `<div class="ep-topic">${ep.topic}</div>` : '';
+        const descText = ep.desc || epData.synopsis || '';
+
+        return `
+            <div class="episode-item ${isActive ? 'is-active-episode' : ''} ${isPending ? 'is-pending-episode' : ''}" 
+                 role="button" tabindex="0" 
+                 onclick="window.selectSeriesEpisode('${ep.id}', '${seriesInfo.id}')"
+                 title="${isActive ? 'Você está neste episódio' : (isPending ? 'Trabalho em breve (PDF pendente)' : 'Assistir ' + ep.title)}">
+                <div class="ep-number">${epNum}</div>
+                <div class="ep-img" style="background-image: url('${thumb}')">
+                    ${isActive ? '<span class="ep-playing-pill"><i class="fa-solid fa-play"></i></span>' : (isPending ? '<span class="ep-pending-badge"><i class="fa-regular fa-clock"></i></span>' : '<i class="fa-solid fa-play"></i>')}
+                </div>
+                <div class="ep-details">
+                    <div class="ep-title-row">
+                        <h4>${ep.title}</h4>
+                        <span class="ep-duration-badge">${durationBadge}</span>
+                    </div>
+                    ${topicHtml}
+                    <p>${descText}</p>
+                    ${isActive ? '<div class="ep-active-status"><i class="fa-solid fa-circle-dot"></i> Assistindo Agora</div>' : ''}
+                    ${isPending ? '<div class="ep-pending-status"><i class="fa-solid fa-circle-exclamation"></i> Aguardando envio de slides pela turma</div>' : ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Se for a série de Filosofia, adiciona os 3 episódios especiais do Grimório / Quiz / Resumo
+    if (seriesInfo.id === 'filosofia-3ano') {
+        const thumbGuerra = "background-image: url('" + imgUrl('banner.png', 200) + "')";
+        const thumbGrimorio = "background-image: url('" + imgUrl('guerra_civil.png', 200) + "')";
+        html += `
+            <div class="series-companion-divider" style="margin: 22px 0 12px 0; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,0.2); font-size: 0.8rem; font-weight: 800; color: #ffd700; letter-spacing: 1.5px; text-transform: uppercase;">
+                <i class="fa-solid fa-sparkles"></i> Conteúdos Especiais &bull; Guerra Civil (Modo Clássico)
+            </div>
+            <div class="episode-item special-ep" role="button" tabindex="0" data-ep-action="classic" onclick="runEpisodeAction(this)">
+                <div class="ep-number"><i class="fa-solid fa-star"></i></div>
+                <div class="ep-img" style="${thumbGrimorio}"><i class="fa-solid fa-play"></i></div>
+                <div class="ep-details"><h4>O Grimório (Modo Clássico)</h4><p>Apresentação original em slides com simulações e mapa de conceitos.</p></div>
+            </div>
+            <div class="episode-item special-ep quiz-ep" role="button" tabindex="0" data-ep-action="quiz" onclick="runEpisodeAction(this)">
+                <div class="ep-number"><i class="fa-solid fa-gamepad"></i></div>
+                <div class="ep-img" style="${thumbGuerra}"><i class="fa-solid fa-play"></i></div>
+                <div class="ep-details"><h4>Episódio Interativo: O Quiz</h4><p>Teste os conhecimentos da turma com 7 questões sobre a Revolução Científica.</p></div>
+            </div>
+            <div class="episode-item special-ep resumo-ep" role="button" tabindex="0" data-ep-action="resumo" onclick="runEpisodeAction(this)">
+                <div class="ep-number"><i class="fa-solid fa-book-open"></i></div>
+                <div class="ep-img" style="${thumbGrimorio}"><i class="fa-solid fa-book-bookmark"></i></div>
+                <div class="ep-details"><h4>Guia de Estudos (Resumo da Matéria)</h4><p>Síntese completa em 1 página com os 7 temas da Revolução Científica e tabela comparativa.</p></div>
+            </div>
+        `;
+    }
+
+    return html;
+}
+
+window.selectSeriesEpisode = function(targetMovieId, seriesId) {
+    if (!targetMovieId) return;
+    const data = filmesDB[targetMovieId];
+    if (data && data.hasNoPdf) {
+        window.openTitleModal(targetMovieId);
+        if (typeof window.showToastNotification === 'function') {
+            window.showToastNotification('Este trabalho faz parte da série oficial! O PDF está aguardando envio da equipe.');
+        }
+        return;
+    }
+    window.openTitleModal(targetMovieId);
+};
 
 function updateListButtonIcon(btn, movieId) {
     const icon = btn && btn.querySelector('i');
@@ -629,11 +983,28 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
                 };
                 secBtn.style.display = 'inline-flex';
             }
+        } else if (data.hasNoPdf) {
+            playBtn.innerHTML = '<i class="fa-solid fa-clock"></i> Trabalho em Breve';
+            playBtn.onclick = function() {
+                if (typeof window.showToastNotification === 'function') {
+                    window.showToastNotification('Os slides em PDF deste trabalho literário ainda não foram enviados pelos alunos.');
+                } else {
+                    alert('Os slides em PDF deste trabalho literário ainda não foram enviados pelos alunos.');
+                }
+            };
+            if (secBtn) {
+                secBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Enviar Slides';
+                secBtn.onclick = function() {
+                    window.closeTitleModal(null, true);
+                    if (typeof window.openUploadModal === 'function') window.openUploadModal();
+                };
+                secBtn.style.display = 'inline-flex';
+            }
         } else if (data.pdf && (data.trailer || data.ytTrailer)) {
             // TÍTULO COM 2 BOTÕES: Apresentação da Turma + Trailer da Paródia
             playBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
             playBtn.onclick = function() {
-                window.openPdfViewer(data.pdf, data.title);
+                window.openPdfViewer(data.pdf, data.title, movieId);
             };
             if (secBtn) {
                 secBtn.innerHTML = '<i class="fa-solid fa-clapperboard"></i> Assistir Trailer';
@@ -644,7 +1015,7 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
             const isCanva = data.pdf && (data.pdf.includes('canva.') || data.pdf.includes('canva.link'));
             playBtn.innerHTML = isCanva ? '<i class="fa-solid fa-chalkboard-user"></i> Abrir no Canva' : '<i class="fa-solid fa-file-pdf"></i> Abrir Apresentação';
             playBtn.onclick = function() {
-                window.openPdfViewer(data.pdf, data.title);
+                window.openPdfViewer(data.pdf, data.title, movieId);
             };
             if (secBtn) secBtn.style.display = 'none';
         } else if (data.trailer || data.ytTrailer) {
@@ -688,14 +1059,23 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
             }
         }
 
-        // Episódios (filme principal) ou recomendações (outros títulos)
+        // Episódios (se pertence a uma série canônica) ou recomendações da turma
         const recContainer = document.getElementById('m-recommendations');
         const bottomTitle = document.getElementById('m-bottom-title');
 
-        if (movieId === 'guerra-civil') {
-            bottomTitle.textContent = 'Episódios';
+        const seriesInfo = getSeriesForMovie(movieId);
+        if (seriesInfo) {
+            bottomTitle.innerHTML = `
+                <div class="series-episodes-header">
+                    <div>
+                        <span class="series-tag"><i class="fa-solid fa-layer-group"></i> SÉRIE ORIGINAL IFPI</span>
+                        <h3 class="series-name">${seriesInfo.title}</h3>
+                    </div>
+                    <span class="series-season-badge">${seriesInfo.season || '1ª Temporada'} &bull; ${seriesInfo.episodes.length} Episódios</span>
+                </div>
+            `;
             recContainer.className = 'episodes-list';
-            recContainer.innerHTML = renderEpisodios();
+            recContainer.innerHTML = renderSeriesEpisodesHtml(seriesInfo, movieId);
         } else {
             bottomTitle.textContent = 'Recomendações da Turma';
             recContainer.className = 'more-grid';
@@ -887,8 +1267,8 @@ function watchModalTrailer(data) {
         }
     }
     clearTimeout(trailerTimeout);
-    if (data.ytTrailer) window.openVideoPlayer(data.ytTrailer, true, startAt);
-    else window.openVideoPlayer(mediaUrl(data.trailer), false, startAt);
+    if (data.ytTrailer) window.openVideoPlayer(data.ytTrailer, true, startAt, currentModalMovieId);
+    else window.openVideoPlayer(mediaUrl(data.trailer), false, startAt, currentModalMovieId);
 }
 
 /* ---------- Controles personalizados do player em tela cheia ---------- */
@@ -912,6 +1292,9 @@ function updateYtControlsUI() {
     if (overlay) {
         if (st.state === 2) overlay.classList.add('paused');
         else overlay.classList.remove('paused');
+    }
+    if (st.state === 0) {
+        showVideoNextEpisodeButton();
     }
 }
 
@@ -1054,10 +1437,12 @@ window.toggleModalTrailerInfo = function(e) {
     }
 };
 
-window.closeVideoPlayer = function() {
+window.closeVideoPlayer = function(e, suppressReopen = false) {
     const overlay = document.getElementById('custom-video-player');
     const video = document.getElementById('main-video-element');
     const iframe = document.getElementById('main-iframe-element');
+    const nextVideoEpBtn = document.getElementById('video-next-episode-btn');
+    if (nextVideoEpBtn) nextVideoEpBtn.style.display = 'none';
     if (video) {
         video.pause();
         video.removeAttribute('src');
@@ -1069,12 +1454,36 @@ window.closeVideoPlayer = function() {
     resetYtState('main');
     if (document.fullscreenElement) { document.exitFullscreen().catch(() => {}); }
     if (overlay) overlay.classList.remove('show', 'yt-mode', 'show-controls');
-    if (currentModalMovieId) {
+    if (!suppressReopen && currentModalMovieId) {
         setTimeout(() => {
             window.openTitleModal(currentModalMovieId);
         }, 180);
     }
 };
+
+function showVideoNextEpisodeButton() {
+    const nextBtn = document.getElementById('video-next-episode-btn');
+    if (!nextBtn) return;
+    const currentId = currentPlayingMovieId || currentModalMovieId;
+    const sInfo = getSeriesForMovie(currentId);
+    if (sInfo) {
+        const epIdx = sInfo.episodes.findIndex(e => e.id === currentId);
+        if (epIdx >= 0 && epIdx < sInfo.episodes.length - 1) {
+            const nextEp = sInfo.episodes[epIdx + 1];
+            const nextData = filmesDB[nextEp.id] || nextEp;
+            nextBtn.innerHTML = `
+                <div class="next-ep-left">
+                    <span class="next-ep-label">Próximo Episódio (Ep. ${epIdx + 2})</span>
+                    <span class="next-ep-title">${nextData.title}</span>
+                </div>
+                <div class="next-ep-icon"><i class="fa-solid fa-forward-step"></i></div>
+            `;
+            nextBtn.style.display = 'flex';
+            return;
+        }
+    }
+    nextBtn.style.display = 'none';
+}
 
         // Listener de Segurança: Pausa o vídeo caso o usuário aperte ESC para sair da tela cheia
         document.addEventListener('fullscreenchange', () => {
@@ -1401,6 +1810,7 @@ window.closeVideoPlayer = function() {
         let currentActiveSlides = [];
         let currentSlideIndex = 0;
         let isNativeSlideMode = true;
+        let currentPlayingMovieId = null;
 
         window.openPdfViewer = function(pdfUrl, title = 'Apresentação da Turma', movieId = null) {
             if (pdfUrl.includes('canva.') || pdfUrl.includes('canva.link')) {
@@ -1428,12 +1838,15 @@ window.closeVideoPlayer = function() {
                 slideKey = filmesDB[movieId].slideKey;
             } else {
                 for (const k in filmesDB) {
-                    if (filmesDB[k].pdf === pdfUrl && filmesDB[k].slideKey) {
-                        slideKey = filmesDB[k].slideKey;
+                    if (filmesDB[k].pdf === pdfUrl) {
+                        movieId = k;
+                        if (filmesDB[k].slideKey) slideKey = filmesDB[k].slideKey;
                         break;
                     }
                 }
             }
+
+            currentPlayingMovieId = movieId || currentModalMovieId;
 
             if (slideKey && SLIDES_MANIFEST[slideKey] && SLIDES_MANIFEST[slideKey].length > 0) {
                 currentActiveSlides = SLIDES_MANIFEST[slideKey];
@@ -1490,6 +1903,32 @@ window.closeVideoPlayer = function() {
 
             if (prevBtn) prevBtn.style.opacity = currentSlideIndex === 0 ? '0.3' : '1';
             if (nextBtn) nextBtn.style.opacity = currentSlideIndex === currentActiveSlides.length - 1 ? '0.3' : '1';
+
+            // Botão Netflix de Próximo Episódio no último slide
+            const nextSlideEpBtn = document.getElementById('slide-next-episode-btn');
+            if (nextSlideEpBtn) {
+                const sInfo = getSeriesForMovie(currentPlayingMovieId);
+                const isLastSlide = currentActiveSlides.length > 1 && currentSlideIndex === currentActiveSlides.length - 1;
+                if (sInfo && isLastSlide) {
+                    const epIdx = sInfo.episodes.findIndex(e => e.id === currentPlayingMovieId);
+                    if (epIdx >= 0 && epIdx < sInfo.episodes.length - 1) {
+                        const nextEp = sInfo.episodes[epIdx + 1];
+                        const nextData = filmesDB[nextEp.id] || nextEp;
+                        nextSlideEpBtn.innerHTML = `
+                            <div class="next-ep-left">
+                                <span class="next-ep-label">Próximo Episódio (Ep. ${epIdx + 2})</span>
+                                <span class="next-ep-title">${nextData.title}</span>
+                            </div>
+                            <div class="next-ep-icon"><i class="fa-solid fa-forward-step"></i></div>
+                        `;
+                        nextSlideEpBtn.style.display = 'flex';
+                    } else {
+                        nextSlideEpBtn.style.display = 'none';
+                    }
+                } else {
+                    nextSlideEpBtn.style.display = 'none';
+                }
+            }
         }
 
         window.navSlide = function(delta) {
@@ -1604,17 +2043,55 @@ window.closeVideoPlayer = function() {
             }
         });
 
-        window.closePdfViewer = function() {
+        window.closePdfViewer = function(e, suppressReopen = false) {
             window.closeSlideThumbnailsModal(null, true);
             const viewer = document.getElementById('custom-pdf-viewer');
             const iframe = document.getElementById('main-pdf-iframe');
+            const nextSlideEpBtn = document.getElementById('slide-next-episode-btn');
+            if (nextSlideEpBtn) nextSlideEpBtn.style.display = 'none';
             if (iframe) iframe.src = 'about:blank';
             if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
             if (viewer) viewer.classList.remove('show');
-            if (currentModalMovieId) {
+            if (!suppressReopen && currentModalMovieId) {
                 setTimeout(() => {
                     window.openTitleModal(currentModalMovieId);
                 }, 150);
+            }
+        };
+
+        window.playNextEpisode = function() {
+            const currentId = currentPlayingMovieId || currentModalMovieId;
+            const sInfo = getSeriesForMovie(currentId);
+            if (!sInfo) return;
+            const epIdx = sInfo.episodes.findIndex(e => e.id === currentId);
+            if (epIdx >= 0 && epIdx < sInfo.episodes.length - 1) {
+                const nextEp = sInfo.episodes[epIdx + 1];
+                const nextData = filmesDB[nextEp.id];
+                
+                // Fecha players atuais sem reabrir modal antigo
+                window.closePdfViewer(null, true);
+                window.closeVideoPlayer(null, true);
+
+                currentModalMovieId = nextEp.id;
+                currentPlayingMovieId = nextEp.id;
+
+                if (nextData && nextData.hasNoPdf) {
+                    window.openTitleModal(nextEp.id);
+                    if (typeof window.showToastNotification === 'function') {
+                        window.showToastNotification(`O próximo episódio ("${nextData.title}") está aguardando envio do PDF.`);
+                    }
+                } else if (nextData && nextData.pdf) {
+                    window.openPdfViewer(nextData.pdf, nextData.title, nextEp.id);
+                    if (typeof window.showToastNotification === 'function') {
+                        window.showToastNotification(`Iniciando Ep. ${epIdx + 2}: ${nextData.title}`);
+                    }
+                } else if (nextData && nextData.isMain) {
+                    window.openTitleModal(nextEp.id);
+                } else if (nextData && (nextData.ytTrailer || nextData.trailer)) {
+                    watchModalTrailer(nextData);
+                } else {
+                    window.openTitleModal(nextEp.id);
+                }
             }
         };
 
@@ -1660,9 +2137,12 @@ window.closeVideoPlayer = function() {
             // História
             'guerra-fria':  { materia: 'História', trabalhoGrupo: 'Seminário: A Guerra Fria e Relações Internacionais', periodo: '2025 • Acervo da Turma' },
             // Língua Portuguesa & Literatura
-            'padre-amaro':  { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Realismo e Obras Clássicas', periodo: '2025 • Acervo da Turma' },
+            'padre-amaro':      { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Realismo e Obras Clássicas', periodo: '2025 • Acervo da Turma' },
             'padre-amaro-jogo': { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Realismo e Obras Clássicas', periodo: '2025 • Acervo da Turma' },
             'sargento-milicias':{ materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Romantismo Urbano e Transição ao Realismo', periodo: '2025 • Acervo da Turma' },
+            'primo-basilio':    { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Obras Canônicas do Realismo', periodo: '2025 • Em Breve' },
+            'memorias-postumas':{ materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Obras Canônicas do Realismo', periodo: '2025 • Em Breve' },
+            'dom-casmurro':     { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Obras Canônicas do Realismo', periodo: '2025 • Em Breve' },
             'prosa-1930':       { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Segunda Geração Modernista (A Prosa de 30)', periodo: '2025 • Acervo da Turma' },
             // Língua Inglesa
             'ia-ingles':        { materia: 'Língua Inglesa', trabalhoGrupo: 'Seminário: Inteligência Artificial no Ensino de Idiomas', periodo: '2025 • Acervo da Turma' },
@@ -2814,7 +3294,11 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             let actionIcon = 'fa-play';
             let actionLabel = 'Abrir Slides';
 
-            if (w.isSecurityPresentation) {
+            if (w.hasNoPdf) {
+                tagText = '<i class="fa-regular fa-clock"></i> EM BREVE';
+                actionIcon = 'fa-circle-info';
+                actionLabel = 'Ver Detalhes';
+            } else if (w.isSecurityPresentation) {
                 tagText = '<i class="fa-solid fa-laptop-code"></i> INTERATIVO';
                 actionIcon = 'fa-play';
                 actionLabel = 'Apresentar';
@@ -2832,14 +3316,24 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 actionLabel = 'Assistir Vídeo';
             }
 
+            const sInfo = getSeriesForMovie(e.id);
+            let epBadgeHtml = '';
+            if (sInfo) {
+                const epIdx = sInfo.episodes.findIndex(x => x.id === e.id);
+                if (epIdx >= 0) {
+                    epBadgeHtml = `<div class="academic-ep-badge">EP. ${epIdx + 1}</div>`;
+                }
+            }
+
             const durationText = w.duration || (hasSlides ? 'Apresentação em Slides' : 'Vídeo');
             const safeTitle = (w.title || '').replace(/"/g, '&quot;');
             const safeAuthors = (w.cast || 'Turma IFPI').replace(/"/g, '&quot;');
 
             return `
-                <div class="academic-card" data-movie="${e.id}" role="button" tabindex="0" aria-label="${safeTitle}">
+                <div class="academic-card ${w.hasNoPdf ? 'has-no-pdf-card' : ''}" data-movie="${e.id}" role="button" tabindex="0" aria-label="${safeTitle}">
                     <div class="academic-card-thumb">
                         <img src="${coverUrl}" alt="${safeTitle}" class="academic-card-img" loading="lazy">
+                        ${epBadgeHtml}
                         <div class="academic-thumb-overlay">
                             <div class="academic-play-badge"><i class="fa-solid ${actionIcon}"></i></div>
                         </div>
@@ -4242,8 +4736,13 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
         /* =========================================================
            ABRIR PLAYER DE VÍDEO / TRAILERS (MP4 E YOUTUBE)
            ========================================================= */
-        window.openVideoPlayer = function(videoSrc, isYouTube = false, startAt = 0) {
+        window.openVideoPlayer = function(videoSrc, isYouTube = false, startAt = 0, movieId = null) {
             window.closeTitleModal(null, true);
+            currentPlayingMovieId = movieId || currentModalMovieId;
+
+            const nextVideoEpBtn = document.getElementById('video-next-episode-btn');
+            if (nextVideoEpBtn) nextVideoEpBtn.style.display = 'none';
+
             if (isYouTube && isLocalFileProtocol()) {
                 const t = Math.floor(startAt || 0);
                 window.open(`https://www.youtube.com/watch?v=${videoSrc}${t ? '&t=' + t + 's' : ''}`, '_blank', 'noopener');
@@ -4276,6 +4775,9 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 if (video) {
                     video.style.display = 'block';
                     video.src = videoSrc;
+                    video.onended = () => {
+                        showVideoNextEpisodeButton();
+                    };
                     if (startAt > 0) {
                         video.addEventListener('loadedmetadata', function seekOnce() {
                             video.removeEventListener('loadedmetadata', seekOnce);
