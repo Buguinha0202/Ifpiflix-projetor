@@ -1,0 +1,124 @@
+{
+  "prosa_1930": [
+    "midia/slides/prosa_1930/slide_01.jpg",
+    "midia/slides/prosa_1930/slide_02.jpg",
+    "midia/slides/prosa_1930/slide_03.jpg",
+    "midia/slides/prosa_1930/slide_04.jpg",
+    "midia/slides/prosa_1930/slide_05.jpg",
+    "midia/slides/prosa_1930/slide_06.jpg",
+    "midia/slides/prosa_1930/slide_07.jpg",
+    "midia/slides/prosa_1930/slide_08.jpg",
+    "midia/slides/prosa_1930/slide_09.jpg",
+    "midia/slides/prosa_1930/slide_10.jpg",
+    "midia/slides/prosa_1930/slide_11.jpg"
+  ],
+  "memoria_cache": [
+    "midia/slides/memoria_cache/slide_01.jpg",
+    "midia/slides/memoria_cache/slide_02.jpg",
+    "midia/slides/memoria_cache/slide_03.jpg",
+    "midia/slides/memoria_cache/slide_04.jpg",
+    "midia/slides/memoria_cache/slide_05.jpg",
+    "midia/slides/memoria_cache/slide_06.jpg"
+  ],
+  "evolucao_computadores": [
+    "midia/slides/evolucao_computadores/slide_01.jpg",
+    "midia/slides/evolucao_computadores/slide_02.jpg",
+    "midia/slides/evolucao_computadores/slide_03.jpg",
+    "midia/slides/evolucao_computadores/slide_04.jpg",
+    "midia/slides/evolucao_computadores/slide_05.jpg",
+    "midia/slides/evolucao_computadores/slide_06.jpg",
+    "midia/slides/evolucao_computadores/slide_07.jpg",
+    "midia/slides/evolucao_computadores/slide_08.jpg",
+    "midia/slides/evolucao_computadores/slide_09.jpg"
+  ],
+  "guerra_fria": [
+    "midia/slides/guerra_fria/slide_01.jpg",
+    "midia/slides/guerra_fria/slide_02.jpg",
+    "midia/slides/guerra_fria/slide_03.jpg",
+    "midia/slides/guerra_fria/slide_04.jpg",
+    "midia/slides/guerra_fria/slide_05.jpg",
+    "midia/slides/guerra_fria/slide_06.jpg",
+    "midia/slides/guerra_fria/slide_07.jpg",
+    "midia/slides/guerra_fria/slide_08.jpg",
+    "midia/slides/guerra_fria/slide_09.jpg",
+    "midia/slides/guerra_fria/slide_10.jpg",
+    "midia/slides/guerra_fria/slide_11.jpg",
+    "midia/slides/guerra_fria/slide_12.jpg",
+    "midia/slides/guerra_fria/slide_13.jpg",
+    "midia/slides/guerra_fria/slide_14.jpg",
+    "midia/slides/guerra_fria/slide_15.jpg"
+  ],
+  "sargento_milicias": [
+    "midia/slides/sargento_milicias/slide_01.jpg",
+    "midia/slides/sargento_milicias/slide_02.jpg",
+    "midia/slides/sargento_milicias/slide_03.jpg",
+    "midia/slides/sargento_milicias/slide_04.jpg",
+    "midia/slides/sargento_milicias/slide_05.jpg",
+    "midia/slides/sargento_milicias/slide_06.jpg"
+  ],
+  "padre_amaro_jogo": [
+    "midia/slides/padre_amaro_jogo/slide_01.jpg",
+    "midia/slides/padre_amaro_jogo/slide_02.jpg",
+    "midia/slides/padre_amaro_jogo/slide_03.jpg",
+    "midia/slides/padre_amaro_jogo/slide_04.jpg",
+    "midia/slides/padre_amaro_jogo/slide_05.jpg",
+    "midia/slides/padre_amaro_jogo/slide_06.jpg"
+  ],
+  "padre_amaro": [
+    "midia/slides/padre_amaro/slide_01.jpg",
+    "midia/slides/padre_amaro/slide_02.jpg",
+    "midia/slides/padre_amaro/slide_03.jpg",
+    "midia/slides/padre_amaro/slide_04.jpg",
+    "midia/slides/padre_amaro/slide_05.jpg",
+    "midia/slides/padre_amaro/slide_06.jpg",
+    "midia/slides/padre_amaro/slide_07.jpg",
+    "midia/slides/padre_amaro/slide_08.jpg",
+    "midia/slides/padre_amaro/slide_09.jpg",
+    "midia/slides/padre_amaro/slide_10.jpg"
+  ],
+  "sociologia_desenvolvimento": [
+    "midia/slides/sociologia_desenvolvimento/slide_01.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_02.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_03.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_04.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_05.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_06.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_07.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_08.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_09.jpg",
+    "midia/slides/sociologia_desenvolvimento/slide_10.jpg"
+  ],
+  "teorias_politicas": [
+    "midia/slides/teorias_politicas/slide_01.jpg",
+    "midia/slides/teorias_politicas/slide_02.jpg",
+    "midia/slides/teorias_politicas/slide_03.jpg",
+    "midia/slides/teorias_politicas/slide_04.jpg",
+    "midia/slides/teorias_politicas/slide_05.jpg",
+    "midia/slides/teorias_politicas/slide_06.jpg",
+    "midia/slides/teorias_politicas/slide_07.jpg",
+    "midia/slides/teorias_politicas/slide_08.jpg",
+    "midia/slides/teorias_politicas/slide_09.jpg",
+    "midia/slides/teorias_politicas/slide_10.jpg",
+    "midia/slides/teorias_politicas/slide_11.jpg",
+    "midia/slides/teorias_politicas/slide_12.jpg",
+    "midia/slides/teorias_politicas/slide_13.jpg"
+  ],
+  "jogo_transito": [
+    "midia/slides/jogo_transito/slide_01.jpg",
+    "midia/slides/jogo_transito/slide_02.jpg",
+    "midia/slides/jogo_transito/slide_03.jpg"
+  ],
+  "ia_ingles": [
+    "midia/slides/ia_ingles/slide_01.jpg",
+    "midia/slides/ia_ingles/slide_02.jpg",
+    "midia/slides/ia_ingles/slide_03.jpg",
+    "midia/slides/ia_ingles/slide_04.jpg",
+    "midia/slides/ia_ingles/slide_05.jpg",
+    "midia/slides/ia_ingles/slide_06.jpg",
+    "midia/slides/ia_ingles/slide_07.jpg",
+    "midia/slides/ia_ingles/slide_08.jpg",
+    "midia/slides/ia_ingles/slide_09.jpg",
+    "midia/slides/ia_ingles/slide_10.jpg",
+    "midia/slides/ia_ingles/slide_11.jpg"
+  ]
+}
