@@ -1148,15 +1148,6 @@ window.closeVideoPlayer = function() {
            ========================================================= */
         const DEFAULT_PROFILES = [
             { name: "Admin", icon: "fa-solid fa-user-shield", bgClass: "av-admin" },
-            { name: "Francisco", bgClass: "av-francisco" },
-            { name: "Pedro", bgClass: "av-pedro" },
-            { name: "JP Santos", bgClass: "av-jsantos" },
-            { name: "JP Silva", bgClass: "av-jsilva" },
-            { name: "Nicolas", bgClass: "av-nicolas" },
-            { name: "Davi", bgClass: "av-davi" },
-            { name: "Maria", bgClass: "av-maria" },
-            { name: "Marcelo", bgClass: "av-marcelo" },
-            { name: "Samuel", bgClass: "av-samuel" },
             { name: "Turma IFPI", icon: "fa-solid fa-graduation-cap", bgClass: "av-turma" },
             { name: "Professor(a)", icon: "fa-solid fa-chalkboard-user", bgClass: "av-prof" },
             { name: "Visitante", icon: "fa-solid fa-masks-theater", bgClass: "av-visitante" }
