@@ -2318,6 +2318,14 @@ window.closeVideoPlayer = function() {
             { id: 'col-games', title: 'DEV & GAMES', materia: 'Programação & T.I.', img: 'midia/colecoes/col_disney_games.jpg' }
         ];
 
+        /* =========================================================
+           COLEÇÕES DE TRABALHOS DA TURMA (DISNEY+)
+           ========================================================= */
+        window.playDisneyCollectionIntro = function(materia, onFinished) {
+            if (onFinished) onFinished();
+            else window.openAcervoScreen(materia);
+        };
+
         window.renderDisneyCollectionsRow = function() {
             const container = document.getElementById('disney-collections-grid');
             if (!container) return;
@@ -2350,6 +2358,422 @@ window.closeVideoPlayer = function() {
 
             return allPill + tiles;
         }
+
+        /* =========================================================
+           FEATURE 6: IFPIFLIX WRAPPED (RETROSPECTIVA GERAL DA TURMA)
+           ========================================================= */
+        const WRAPPED_TOTAL_STEPS = 5;
+        let wrappedCurrentStep = 0;
+        let wrappedStepProgress = 0;
+        let wrappedTimer = null;
+        let wrappedSoundEnabled = true;
+
+        const WRAPPED_TIMELINE = [
+            {
+                era: '1999',
+                title: 'O Big Bang dos Filmes e Ficção',
+                desc: 'Início das lendas digitais com Fuga do Metaverso e a reflexão sobre o domínio das corporações e realidades virtuais.',
+                works: ['Fuga do Metaverso (1999)']
+            },
+            {
+                era: '2003 – 2006',
+                title: 'A Era das Redes & Infraestrutura',
+                desc: 'A saga dos pacotes perdidos na Deep Web, a rebelião dos eletrodomésticos inteligentes (IoT) e a defesa perimetral com firewalls.',
+                works: ['Procurando IP (2003)', 'Rebelião das Torradeiras (2003)', 'Nicolas O Grande (2004)', 'A Muralha de Fogo (2006)']
+            },
+            {
+                era: '2010 – 2013',
+                title: 'O Surgimento das IAs & Ataques MITM',
+                desc: 'O treinamento das primeiras inteligências artificiais, as armadilhas honeypot e os mistérios dos ataques Man-in-the-Middle.',
+                works: ['Como Treinar a sua I.A. (2010)', 'O Pote de Mel (2011)', 'O Homem no Meio (2013)']
+            },
+            {
+                era: '2016 – 2023',
+                title: 'A Era dos Grandes Blockbusters Acadêmicos',
+                desc: 'A eclosão do debate clássico entre Empirismo e Racionalismo, relatividade, Popper, redes locais, hacking e a revolução do Código Aberto.',
+                works: ['Guerra Civil (2016)', 'Devoradores de Espaço-Tempo (2016)', 'Obsessão: Popper (2016)', 'Stranger Pings (2016)', 'La La Lan (2016)', 'K-pop 3 (2017)', 'Não Olhe para a Ética (2021)', 'Deepfake: O Preço do Pix (2022)', 'Open Source (2023)']
+            },
+            {
+                era: '2025',
+                title: 'O Grande Marco da Turma IFPI',
+                desc: 'Ano histórico com 14 seminários e produções de alto nível abrangendo Filosofia Política, Guerra Fria, Realismo e Modernismo, Sociologia do Desenvolvimento, Hardware, Ciberdefesa e Games.',
+                works: [
+                    'Teorias Políticas (Filosofia)', 'Guerra Fria (História)', 'Padre Amaro & Jogo (Literatura)', 
+                    'Sargento de Milícias (Literatura)', 'A Prosa de 30 (Literatura)', 'Sociologia do Desenvolvimento', 
+                    'Podcasts Round 6 & Desigualdade', 'Segurança da Informação Interativa', 'Memória Cache', 
+                    'Evolução dos Computadores', 'Jogo Educativo de Trânsito', 'IA no Inglês'
+                ]
+            },
+            {
+                era: '2026',
+                title: 'O Presente & O Futuro do IFPIFLIX',
+                desc: 'O lançamento do 1º Bimestre de Filosofia com os 5 Temas da Revolução Científica e a estreia do telejornal Cyber News com políticas corporativas de segurança.',
+                works: ['Os 5 Temas de Filosofia (2026)', 'Jornal Cyber News (2026)']
+            }
+        ];
+
+        function playWrappedSoundEffect(type) {
+            if (!wrappedSoundEnabled) return;
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                if (ctx.state === 'suspended') ctx.resume();
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                if (type === 'next') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                } else if (type === 'complete') {
+                    // Fanfare chord
+                    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+                        const subOsc = ctx.createOscillator();
+                        const subGain = ctx.createGain();
+                        subOsc.type = 'triangle';
+                        subOsc.frequency.setValueAtTime(f, now + i * 0.05);
+                        subGain.gain.setValueAtTime(0.07, now + i * 0.05);
+                        subGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+                        subOsc.connect(subGain);
+                        subGain.connect(ctx.destination);
+                        subOsc.start(now + i * 0.05);
+                        subOsc.stop(now + 1.2);
+                    });
+                    return;
+                } else {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(600, now);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                }
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } catch(e) {}
+        }
+
+        window.toggleWrappedSound = function() {
+            wrappedSoundEnabled = !wrappedSoundEnabled;
+            const icon = document.getElementById('wrapped-sound-icon');
+            if (icon) {
+                icon.className = wrappedSoundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+                icon.style.color = wrappedSoundEnabled ? '#ffd700' : '#888';
+            }
+        };
+
+        window.openIfpiflixWrapped = function() {
+            const modal = document.getElementById('wrapped-modal');
+            if (!modal) return;
+            wrappedCurrentStep = 0;
+            wrappedStepProgress = 0;
+            modal.classList.add('show');
+            window.renderWrappedCurrentStory();
+            window.startWrappedTimer();
+            playWrappedSoundEffect('next');
+        };
+
+        window.closeIfpiflixWrapped = function(e, force) {
+            if (!force && e && e.target !== e.currentTarget) return;
+            const modal = document.getElementById('wrapped-modal');
+            if (modal) modal.classList.remove('show');
+            if (wrappedTimer) {
+                clearInterval(wrappedTimer);
+                wrappedTimer = null;
+            }
+        };
+
+        window.startWrappedTimer = function() {
+            if (wrappedTimer) clearInterval(wrappedTimer);
+            wrappedStepProgress = 0;
+            const stepDuration = 6500; // 6.5s por história
+            const intervalTick = 60; // ms
+            const increment = (intervalTick / stepDuration) * 100;
+
+            wrappedTimer = setInterval(() => {
+                wrappedStepProgress += increment;
+                if (wrappedStepProgress >= 100) {
+                    wrappedStepProgress = 0;
+                    if (wrappedCurrentStep < WRAPPED_TOTAL_STEPS - 1) {
+                        window.navWrapped(1);
+                    } else {
+                        // Pausa na última história
+                        clearInterval(wrappedTimer);
+                        wrappedTimer = null;
+                        const fill = document.getElementById(`w-fill-${wrappedCurrentStep}`);
+                        if (fill) fill.style.width = '100%';
+                    }
+                } else {
+                    const fill = document.getElementById(`w-fill-${wrappedCurrentStep}`);
+                    if (fill) fill.style.width = `${wrappedStepProgress}%`;
+                }
+            }, intervalTick);
+        };
+
+        window.navWrapped = function(direction) {
+            const next = wrappedCurrentStep + direction;
+            if (next < 0 || next >= WRAPPED_TOTAL_STEPS) return;
+            wrappedCurrentStep = next;
+            wrappedStepProgress = 0;
+            window.renderWrappedCurrentStory();
+            window.startWrappedTimer();
+            if (wrappedCurrentStep === WRAPPED_TOTAL_STEPS - 1) {
+                playWrappedSoundEffect('complete');
+            } else {
+                playWrappedSoundEffect('next');
+            }
+        };
+
+        window.jumpWrappedStep = function(stepIdx) {
+            if (stepIdx < 0 || stepIdx >= WRAPPED_TOTAL_STEPS) return;
+            wrappedCurrentStep = stepIdx;
+            wrappedStepProgress = 0;
+            window.renderWrappedCurrentStory();
+            window.startWrappedTimer();
+            playWrappedSoundEffect('next');
+        };
+
+        window.renderWrappedCurrentStory = function() {
+            const stage = document.getElementById('wrapped-story-stage');
+            const prevBtn = document.getElementById('wrapped-prev-btn');
+            const nextBtn = document.getElementById('wrapped-next-btn');
+            if (!stage) return;
+
+            // Atualiza steppers
+            for (let i = 0; i < WRAPPED_TOTAL_STEPS; i++) {
+                const fill = document.getElementById(`w-fill-${i}`);
+                if (!fill) continue;
+                if (i < wrappedCurrentStep) {
+                    fill.style.width = '100%';
+                    fill.classList.add('completed');
+                } else if (i === wrappedCurrentStep) {
+                    fill.style.width = '0%';
+                    fill.classList.remove('completed');
+                } else {
+                    fill.style.width = '0%';
+                    fill.classList.remove('completed');
+                }
+            }
+
+            if (prevBtn) prevBtn.disabled = wrappedCurrentStep === 0;
+            if (nextBtn) nextBtn.disabled = wrappedCurrentStep === WRAPPED_TOTAL_STEPS - 1;
+
+            const allEntries = getAllAcervoEntries();
+            const totalWorks = Object.keys(filmesDB).length;
+
+            // RENDERIZAÇÃO DE CADA HISTÓRIA
+            switch (wrappedCurrentStep) {
+                case 0: // HISTÓRIA 1: LINHA DO TEMPO GERAL (1999 a 2026)
+                    stage.innerHTML = `
+                        <div class="wrapped-story-card">
+                            <span class="wrapped-story-tag"><i class="fa-solid fa-timeline"></i> História 1 de 5 &bull; A Linha do Tempo</span>
+                            <h2 class="wrapped-story-title">A Jornada Histórica do IFPIFLIX</h2>
+                            <p class="wrapped-story-subtitle">De 1999 a 2026: Cada produção marcou um capítulo da nossa turma no IFPI.</p>
+                            
+                            <div class="wrapped-timeline-container">
+                                ${WRAPPED_TIMELINE.map(t => `
+                                    <div class="wrapped-timeline-era">
+                                        <div class="wrapped-era-year-badge">${t.era}</div>
+                                        <div class="wrapped-era-content">
+                                            <h4>${t.title}</h4>
+                                            <p>${t.desc}</p>
+                                            <div class="wrapped-era-works">
+                                                ${t.works.map(w => `<span class="wrapped-era-pill">${w}</span>`).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 1: // HISTÓRIA 2: VOLUME & MÉTRICAS DE PRODUÇÃO
+                    stage.innerHTML = `
+                        <div class="wrapped-story-card">
+                            <span class="wrapped-story-tag"><i class="fa-solid fa-fire"></i> História 2 de 5 &bull; Volume de Conhecimento</span>
+                            <h2 class="wrapped-story-title">Uma Verdadeira Fábrica de Conteúdo</h2>
+                            <p class="wrapped-story-subtitle">Centenas de horas de estudo condensadas em apresentações e filmes interativos.</p>
+                            
+                            <div class="wrapped-metrics-grid">
+                                <div class="wrapped-metric-card">
+                                    <div class="wrapped-metric-number">+90</div>
+                                    <div class="wrapped-metric-label">Slides em Alta Definição</div>
+                                    <div class="wrapped-metric-desc">Renderizados nativamente em 16:9 HD para visualização no projetor.</div>
+                                </div>
+                                <div class="wrapped-metric-card">
+                                    <div class="wrapped-metric-number">27+</div>
+                                    <div class="wrapped-metric-label">Produções Registradas</div>
+                                    <div class="wrapped-metric-desc">Seminários acadêmicos, curtas de ficção, paródias e séries de T.I.</div>
+                                </div>
+                                <div class="wrapped-metric-card">
+                                    <div class="wrapped-metric-number">6</div>
+                                    <div class="wrapped-metric-label">Formatos Distintos</div>
+                                    <div class="wrapped-metric-desc">Slides, Podcasts, Jogos em Pixel Art, Jogos de Tabuleiro, Radar de Defesa e Jornalismo.</div>
+                                </div>
+                                <div class="wrapped-metric-card">
+                                    <div class="wrapped-metric-number">100%</div>
+                                    <div class="wrapped-metric-label">Produção Autoral</div>
+                                    <div class="wrapped-metric-desc">Pesquisado, estruturado e defendido com excelência pelos alunos.</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 2: // HISTÓRIA 3: AS MATÉRIAS MAIS EXPLORADAS
+                    // Calcula contagem de matérias
+                    const matCounts = {};
+                    allEntries.forEach(e => {
+                        matCounts[e.materia] = (matCounts[e.materia] || 0) + 1;
+                    });
+                    const sortedMats = Object.entries(matCounts).sort((a, b) => b[1] - a[1]);
+                    const maxCount = sortedMats[0] ? sortedMats[0][1] : 1;
+
+                    stage.innerHTML = `
+                        <div class="wrapped-story-card">
+                            <span class="wrapped-story-tag"><i class="fa-solid fa-chart-column"></i> História 3 de 5 &bull; As Matérias</span>
+                            <h2 class="wrapped-story-title">Os Assuntos que Dominaram os Debates</h2>
+                            <p class="wrapped-story-subtitle">Filosofia, Humanas e Tecnologia lideraram a produção intelectual da turma.</p>
+                            
+                            <div class="wrapped-subjects-list">
+                                ${sortedMats.map(([mat, count]) => {
+                                    const st = getMateriaStyle(mat);
+                                    const percent = Math.round((count / maxCount) * 100);
+                                    return `
+                                        <div class="wrapped-subject-item">
+                                            <div class="wrapped-subject-header">
+                                                <span><i class="${st.icon}" style="color:${st.color}; margin-right:8px;"></i>${mat}</span>
+                                                <span style="color:#ffd700;">${count} ${count === 1 ? 'trabalho' : 'trabalhos'}</span>
+                                            </div>
+                                            <div class="wrapped-bar-track">
+                                                <div class="wrapped-bar-fill" style="width: ${percent}%; background: linear-gradient(90deg, ${st.color}, #ffd700);"></div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 3: // HISTÓRIA 4: HALL DA FAMA (RANKING DOS ALUNOS)
+                    const studentRanks = STUDENTS_REGISTRY.map(student => {
+                        const count = allEntries.filter(e => workHasStudent(e.item.cast, student.name)).length;
+                        return { student, count };
+                    }).sort((a, b) => b.count - a.count);
+
+                    stage.innerHTML = `
+                        <div class="wrapped-story-card">
+                            <span class="wrapped-story-tag"><i class="fa-solid fa-crown"></i> História 4 de 5 &bull; Hall da Fama</span>
+                            <h2 class="wrapped-story-title">O Elenco de Ouro da Turma</h2>
+                            <p class="wrapped-story-subtitle">Reconhecimento aos alunos que mais subiram ao palco para apresentar trabalhos.</p>
+                            
+                            <div class="wrapped-hall-grid">
+                                ${studentRanks.map((item, idx) => {
+                                    const s = item.student;
+                                    let medalHtml = '';
+                                    if (idx === 0) medalHtml = '<div class="wrapped-student-medal gold"><i class="fa-solid fa-crown"></i></div>';
+                                    else if (idx === 1) medalHtml = '<div class="wrapped-student-medal silver">2º</div>';
+                                    else if (idx === 2) medalHtml = '<div class="wrapped-student-medal bronze">3º</div>';
+
+                                    const avatarStyle = s.avatar
+                                        ? `background-image: url('${imgUrl(s.avatar, 200)}'); background-size: cover; border-color: ${s.color};`
+                                        : `background: linear-gradient(135deg, ${s.color}, #111); border-color: ${s.color};`;
+
+                                    return `
+                                        <div class="wrapped-student-card">
+                                            ${medalHtml}
+                                            <div class="wrapped-student-avatar" style="${avatarStyle}">
+                                                ${s.avatar ? '' : s.initials}
+                                            </div>
+                                            <div class="wrapped-student-name" title="${s.fullName}">${s.name}</div>
+                                            <div class="wrapped-student-count">${item.count} ${item.count === 1 ? 'apresentação' : 'apresentações'}</div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 4: // HISTÓRIA 5: O SELO OFICIAL & CERTIFICADO DA TURMA
+                    stage.innerHTML = `
+                        <div class="wrapped-story-card">
+                            <span class="wrapped-story-tag"><i class="fa-solid fa-award"></i> História 5 de 5 &bull; Selo de Excelência</span>
+                            <h2 class="wrapped-story-title">Selo Oficial IFPIFLIX 2026</h2>
+                            <p class="wrapped-story-subtitle">A turma que transformou seminários tradicionais em uma experiência de cinema.</p>
+                            
+                            <div class="wrapped-certificate">
+                                <div class="wrapped-cert-emblem"><i class="fa-solid fa-certificate"></i></div>
+                                <h3 style="color:#fff; font-size:1.6rem; margin:0 0 6px 0; letter-spacing:1px;">TURMA DE INFORMÁTICA &bull; IFPI</h3>
+                                <div style="color:var(--netflix-red); font-weight:800; font-size:1rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">
+                                    CLASSIFICAÇÃO LENDÁRIA ★★★★★
+                                </div>
+                                <p style="color:#ccc; font-size:0.95rem; line-height:1.5; max-width:550px; margin:0 auto;">
+                                    "Pela preservação histórica, rigor acadêmico e genialidade na apresentação de cada disciplina — da Grécia Antiga e Filosofia da Ciência à Ciberdefesa e Arquitetura de Redes."
+                                </p>
+
+                                <div class="wrapped-cert-actions">
+                                    <button type="button" class="wrapped-share-btn" onclick="window.copyWrappedSummary()">
+                                        <i class="fa-solid fa-share-nodes"></i> Copiar Resumo para a Turma
+                                    </button>
+                                    <button type="button" class="wrapped-explore-btn" onclick="window.closeIfpiflixWrapped(null, true); window.openAcervoScreen();">
+                                        <i class="fa-solid fa-shapes"></i> Explorar Acervo Completo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+        };
+
+        window.copyWrappedSummary = function() {
+            const summaryText = 
+`✨ IFPIFLIX WRAPPED • RETROSPECTIVA GERAL DA TURMA IFPI ✨
+
+🏆 Produção Acadêmica Consolidada:
+📚 +90 Slides em Alta Definição (16:9 HD)
+🎬 27+ Obras e Seminários Históricos
+📅 Linha do Tempo: de 1999 aos 5 Temas de 2026
+🏅 Áreas Campeãs: Filosofia, Literatura, Segurança & Redes, Sociologia e Hardware!
+
+🎓 Elenco de Ouro:
+Francisco Lucas, João Pedro Santos, Pedro Victor, Davi Costa, Samuel Soares, João Pedro Silva, Nícolas Marcell, Micaías Lima, Marcelo, Maria Helena, Marcos Felipe e toda a Turma IFPI!
+
+Confira todos os trabalhos e assista em:
+https://buguinha0202.github.io/Ifpiflix-projetor/`;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(summaryText).then(() => {
+                    showGlobalToast("Resumo da Retrospectiva copiado para a Área de Transferência!");
+                }).catch(() => {
+                    showGlobalToast("Resumo pronto para compartilhamento!");
+                });
+            } else {
+                showGlobalToast("Resumo copiado com sucesso!");
+            }
+        };
+
+        // Teclado para Retrospectiva (Setas Esquerda / Direita e ESC)
+        document.addEventListener('keydown', (e) => {
+            const wrappedModal = document.getElementById('wrapped-modal');
+            if (wrappedModal && wrappedModal.classList.contains('show')) {
+                if (e.key === 'Escape') {
+                    window.closeIfpiflixWrapped(null, true);
+                } else if (e.key === 'ArrowRight') {
+                    window.navWrapped(1);
+                } else if (e.key === 'ArrowLeft') {
+                    window.navWrapped(-1);
+                }
+            }
+        });
 
         let currentAcervoViewMode = 'collections'; // 'collections' ou 'grid'
 

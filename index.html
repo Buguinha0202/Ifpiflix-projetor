@@ -277,6 +277,7 @@
                     <li class="nav-cat-item" data-cat="ti" onclick="window.filterNavCategory('ti')">Séries de T.I.</li>
                     <li class="nav-cat-item" data-cat="trabalhos" onclick="window.filterNavCategory('trabalhos')">Trabalhos Antigos</li>
                     <li class="nav-cat-item" data-cat="minha-lista" onclick="window.filterNavCategory('minha-lista')">Minha Lista</li>
+                    <li class="nav-cat-item" data-cat="wrapped" onclick="window.openIfpiflixWrapped()"><i class="fa-solid fa-sparkles" style="color: #ffd700; margin-right: 5px;"></i>Retrospectiva</li>
                 </ul>
             </div>
             
@@ -292,6 +293,12 @@
                     <button type="button" class="search-icon" id="search-icon-btn" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <input type="search" id="search-input" placeholder="Títulos, gêneros..." aria-label="Pesquisar títulos e gêneros" enterkeyhint="search" autocomplete="off">
                 </div>
+
+                <!-- Botão IFPIFLIX Wrapped (Retrospectiva Geral) -->
+                <button type="button" class="btn-wrapped" id="btn-wrapped" onclick="window.openIfpiflixWrapped()" title="Retrospectiva Geral do IFPI (IFPIFLIX Wrapped)">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span class="btn-wrapped-text">Retrospectiva</span>
+                </button>
 
                 <!-- Botão Surpreenda-me (Roleta) -->
                 <button type="button" class="btn-surprise" id="btn-surprise-me" onclick="window.triggerSurpriseMe()" title="Surpreenda-me (Sorteador de Filmes)">
@@ -310,6 +317,9 @@
                     <div class="profile-dropdown">
                         <div class="dropdown-item" onclick="window.switchScreen('profile-screen')">
                             <i class="fa-solid fa-users"></i> Trocar de Perfil
+                        </div>
+                        <div class="dropdown-item" onclick="window.openIfpiflixWrapped()">
+                            <i class="fa-solid fa-sparkles" style="color: #ffd700;"></i> Retrospectiva da Turma (Wrapped)
                         </div>
                         <div class="dropdown-item teacher-only" id="dropdown-upload-item" style="display: none;" onclick="window.openSubmitWorkModal()">
                             <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Trabalho da Turma
@@ -523,6 +533,7 @@
                     <li class="nav-cat-item" data-cat="ti" onclick="window.filterNavCategory('ti')">Séries de T.I.</li>
                     <li class="nav-cat-item active" data-cat="trabalhos" onclick="window.filterNavCategory('trabalhos')">Trabalhos Antigos</li>
                     <li class="nav-cat-item" data-cat="minha-lista" onclick="window.filterNavCategory('minha-lista')">Minha Lista</li>
+                    <li class="nav-cat-item" data-cat="wrapped" onclick="window.openIfpiflixWrapped()"><i class="fa-solid fa-sparkles" style="color: #ffd700; margin-right: 5px;"></i>Retrospectiva</li>
                 </ul>
             </div>
             <div class="nav-right">
@@ -534,6 +545,11 @@
                     <button type="button" class="search-icon" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <input type="search" id="acervo-search-input" placeholder="Títulos, matérias..." oninput="window.renderAcervoScreen()" autocomplete="off">
                 </div>
+                <!-- Botão Wrapped no Acervo -->
+                <button type="button" class="btn-wrapped" onclick="window.openIfpiflixWrapped()" title="Retrospectiva Geral do IFPI (IFPIFLIX Wrapped)">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span class="btn-wrapped-text">Retrospectiva</span>
+                </button>
                 <div class="nav-profile-wrapper">
                     <button type="button" class="nav-profile-btn" onclick="window.switchScreen('profile-screen')">
                         <i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i>
@@ -562,6 +578,11 @@
                     <button type="button" class="format-pill" id="pill-format-pdf" onclick="window.setAcervoFormat('pdf')"><i class="fa-solid fa-file-powerpoint"></i> Slides / PDF</button>
                     <button type="button" class="format-pill" id="pill-format-video" onclick="window.setAcervoFormat('video')"><i class="fa-solid fa-clapperboard"></i> Vídeos &amp; Podcasts</button>
                 </div>
+
+                <!-- Botão de Retrospectiva na Sub-Nav -->
+                <button type="button" class="btn-acervo-wrapped" onclick="window.openIfpiflixWrapped()" title="Retrospectiva Geral de todos os anos da turma">
+                    <i class="fa-solid fa-sparkles"></i> Retrospectiva IFPI
+                </button>
 
                 <!-- Alternador de Modo: Coleções vs Todos os Slides -->
                 <div class="acervo-view-toggles" id="acervo-view-toggles">
@@ -2046,6 +2067,54 @@
     <div id="global-toast" class="global-toast">
         <i class="fa-solid fa-circle-check"></i>
         <span id="global-toast-msg">Mensagem</span>
+    </div>
+
+    <!-- MODAL IFPIFLIX WRAPPED (RETROSPECTIVA GERAL DE TODOS OS ANOS DO IFPI) -->
+    <div id="wrapped-modal" class="wrapped-modal-overlay" onclick="window.closeIfpiflixWrapped(event)">
+        <div class="wrapped-container" onclick="event.stopPropagation()">
+            <!-- Barra Superior do Story (Steppers estilo Spotify/Instagram) -->
+            <div class="wrapped-header">
+                <div class="wrapped-steppers" id="wrapped-steppers">
+                    <div class="wrapped-step-bar"><div class="wrapped-step-fill" id="w-fill-0"></div></div>
+                    <div class="wrapped-step-bar"><div class="wrapped-step-fill" id="w-fill-1"></div></div>
+                    <div class="wrapped-step-bar"><div class="wrapped-step-fill" id="w-fill-2"></div></div>
+                    <div class="wrapped-step-bar"><div class="wrapped-step-fill" id="w-fill-3"></div></div>
+                    <div class="wrapped-step-bar"><div class="wrapped-step-fill" id="w-fill-4"></div></div>
+                </div>
+                <div class="wrapped-nav-row">
+                    <div class="wrapped-brand">
+                        <span class="wrapped-brand-logo">IFPIFLIX</span>
+                        <span class="wrapped-brand-badge"><i class="fa-solid fa-sparkles"></i> WRAPPED &bull; RETROSPECTIVA GERAL</span>
+                    </div>
+                    <div class="wrapped-controls">
+                        <button type="button" class="wrapped-ctrl-btn" id="wrapped-sound-btn" onclick="window.toggleWrappedSound()" title="Ativar/Desativar Efeitos Sonoros">
+                            <i class="fa-solid fa-volume-high" id="wrapped-sound-icon"></i>
+                        </button>
+                        <button type="button" class="wrapped-ctrl-btn" onclick="window.closeIfpiflixWrapped(event, true)" title="Fechar Retrospectiva">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Palco Dinâmico dos Stories -->
+            <div class="wrapped-story-stage" id="wrapped-story-stage">
+                <!-- Conteúdo dos slides renderizado via JS -->
+            </div>
+
+            <!-- Navegação Inferior / Toque -->
+            <div class="wrapped-footer-controls">
+                <button type="button" class="wrapped-arrow-btn prev" id="wrapped-prev-btn" onclick="window.navWrapped(-1)" aria-label="História Anterior">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="wrapped-hint">
+                    <i class="fa-regular fa-hand-pointer"></i> Use as setas do teclado ou clique para avançar
+                </div>
+                <button type="button" class="wrapped-arrow-btn next" id="wrapped-next-btn" onclick="window.navWrapped(1)" aria-label="Próxima História">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
 </body>
