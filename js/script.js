@@ -1061,17 +1061,22 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
                 }
             }, MODAL_TRAILER_DELAY);
         } else if (previewId) {
-            if (!isLocalFileProtocol()) {
-                trailerTimeout = setTimeout(() => {
-                    if (iframeEl) {
-                        resetYtState('modal');
-                        modalAutoUnmute = true;
-                        iframeEl.src = getYouTubeEmbedUrl(previewId, true);
-                        iframeEl.classList.add('playing');
-                        onModalTrailerStarted();
-                    }
-                }, MODAL_TRAILER_DELAY);
-            }
+            trailerTimeout = setTimeout(() => {
+                if (iframeEl) {
+                    resetYtState('modal');
+                    modalAutoUnmute = true;
+                    iframeEl.classList.remove('playing');
+                    iframeEl.src = getYouTubeEmbedUrl(previewId, true);
+                    // O iframe inicia com opacity: 0 para esconder o carregamento e o play nativo do YouTube.
+                    // Revela suavemente após 2.2s de buffer no escuro atrás da capa:
+                    setTimeout(() => {
+                        if (iframeEl && iframeEl.getAttribute('src')) {
+                            iframeEl.classList.add('playing');
+                            onModalTrailerStarted();
+                        }
+                    }, 2200);
+                }
+            }, MODAL_TRAILER_DELAY);
         }
 
         // Abas estilo Netflix no Modal (Episódios, Títulos Semelhantes, Detalhes & Elenco)
@@ -1309,8 +1314,24 @@ window.addEventListener('message', (e) => {
     if (typeof info.playerState === 'number') st.state = info.playerState;
     if (typeof info.muted === 'boolean') st.muted = info.muted;
 
-    if (key === 'modal') syncModalSoundButton(st.muted);
-    else updateYtControlsUI();
+    if (key === 'modal') {
+        syncModalSoundButton(st.muted);
+        // Revela o trailer no modal APENAS quando o vídeo estiver efetivamente tocando (state 1 = PLAYING ou time > 0.1s).
+        // Isso elimina completamente o flash do botão de play e barra de título nativa do YouTube!
+        const mIframe = ytIframe('modal');
+        if (mIframe && mIframe.getAttribute('src') && !mIframe.classList.contains('playing')) {
+            if (st.state === 1 || (typeof st.time === 'number' && st.time > 0.1)) {
+                mIframe.classList.add('playing');
+                onModalTrailerStarted();
+            }
+        }
+    } else {
+        const pIframe = ytIframe('main');
+        if (pIframe && pIframe.style.opacity !== '1' && (st.state === 1 || (typeof st.time === 'number' && st.time > 0.1))) {
+            pIframe.style.opacity = '1';
+        }
+        updateYtControlsUI();
+    }
 });
 
 /* ---------- Controles do trailer no modal ---------- */
@@ -1375,12 +1396,16 @@ function watchModalTrailer(data) {
 
 /* ---------- Controles personalizados do player em tela cheia ---------- */
 let ytControlsTimer;
+let isDraggingScrubber = false;
+let scrubRatio = 0;
+
 function fmtTime(s) {
     s = Math.max(0, Math.floor(s || 0));
     return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
 }
 
 function updateYtControlsUI() {
+    if (isDraggingScrubber) return; // Não sobrescreve durante o arrasto do usuário!
     const st = ytState.main;
     const fill = document.getElementById('ytc-fill');
     const time = document.getElementById('ytc-time');
@@ -1406,8 +1431,14 @@ function pokeYtControls() {
     overlay.classList.add('show-controls');
     clearTimeout(ytControlsTimer);
     ytControlsTimer = setTimeout(() => {
-        if (ytState.main.state === 1) overlay.classList.remove('show-controls');
-    }, 3000);
+        // Mantém a barra visível apenas se o vídeo estiver explicitamente pausado ou sendo arrastado
+        const isPaused = (ytState.main.state === 2);
+        const nativeVideo = document.getElementById('main-video-element');
+        const isNativePaused = nativeVideo && nativeVideo.style.display !== 'none' && nativeVideo.paused;
+        if (!isPaused && !isNativePaused && !isDraggingScrubber) {
+            overlay.classList.remove('show-controls');
+        }
+    }, 2200);
 }
 
 window.ytMainTogglePlay = function(e) {
@@ -1426,17 +1457,104 @@ window.ytMainToggleMute = function(e) {
     pokeYtControls();
 };
 
+/* Sistema de Arrastar e Clicar na Minutagem (Scrubber Drag & Seek com Pointer Capture) */
+function setupScrubberEvents() {
+    const bar = document.getElementById('ytc-progress');
+    const overlay = document.getElementById('custom-video-player');
+    if (!bar) return;
+
+    function getRatio(e) {
+        const rect = bar.getBoundingClientRect();
+        const clientX = (e.clientX !== undefined) 
+            ? e.clientX 
+            : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+        return Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+    }
+
+    function updateVisual(ratio) {
+        const st = ytState.main;
+        const fill = document.getElementById('ytc-fill');
+        const time = document.getElementById('ytc-time');
+        if (fill) fill.style.width = (ratio * 100) + '%';
+        if (time && st.duration) time.textContent = fmtTime(ratio * st.duration) + ' / ' + fmtTime(st.duration);
+    }
+
+    function onPointerDown(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        const st = ytState.main;
+        if (!st.duration) return;
+
+        isDraggingScrubber = true;
+        bar.classList.add('dragging');
+        document.body.classList.add('scrubber-dragging');
+        if (overlay) overlay.classList.add('scrubbing');
+
+        try {
+            if (bar.setPointerCapture && e.pointerId) {
+                bar.setPointerCapture(e.pointerId);
+            }
+        } catch (err) {}
+
+        scrubRatio = getRatio(e);
+        updateVisual(scrubRatio);
+        pokeYtControls();
+    }
+
+    function onPointerMove(e) {
+        if (!isDraggingScrubber) return;
+        e.stopPropagation();
+        e.preventDefault();
+        scrubRatio = getRatio(e);
+        updateVisual(scrubRatio);
+        pokeYtControls();
+    }
+
+    function onPointerUp(e) {
+        if (!isDraggingScrubber) return;
+        if (e) {
+            e.stopPropagation();
+            try {
+                if (bar.hasPointerCapture && e.pointerId && bar.hasPointerCapture(e.pointerId)) {
+                    bar.releasePointerCapture(e.pointerId);
+                }
+            } catch (err) {}
+            scrubRatio = getRatio(e);
+        }
+        isDraggingScrubber = false;
+        bar.classList.remove('dragging');
+        document.body.classList.remove('scrubber-dragging');
+        if (overlay) overlay.classList.remove('scrubbing');
+
+        const st = ytState.main;
+        if (st && st.duration) {
+            st.time = scrubRatio * st.duration;
+            ytCommand('main', 'seekTo', [st.time, true]);
+            updateYtControlsUI();
+        }
+        pokeYtControls();
+    }
+
+    bar.addEventListener('pointerdown', onPointerDown);
+    bar.addEventListener('pointermove', onPointerMove);
+    bar.addEventListener('pointerup', onPointerUp);
+    bar.addEventListener('pointercancel', onPointerUp);
+
+    // Salvaguardas globais: se o ponteiro for solto em qualquer lugar da tela, limpa o arrasto imediatamente
+    window.addEventListener('pointerup', (e) => {
+        if (isDraggingScrubber) onPointerUp(e);
+    });
+    window.addEventListener('mouseup', (e) => {
+        if (isDraggingScrubber) onPointerUp(e);
+    });
+}
+
+window.startScrubberDrag = function(e) {
+    if (e) e.stopPropagation();
+};
+
 window.ytMainSeek = function(e) {
     if (e) e.stopPropagation();
-    const bar = document.getElementById('ytc-progress');
-    const st = ytState.main;
-    if (!bar || !st.duration) return;
-    const rect = bar.getBoundingClientRect();
-    const ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
-    st.time = ratio * st.duration;
-    ytCommand('main', 'seekTo', [st.time, true]);
-    updateYtControlsUI();
-    pokeYtControls();
 };
 
 window.ytMainFullscreen = function(e) {
@@ -1448,10 +1566,19 @@ window.ytMainFullscreen = function(e) {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
+    setupScrubberEvents();
     const overlay = document.getElementById('custom-video-player');
     if (!overlay) return;
     overlay.addEventListener('mousemove', pokeYtControls);
     overlay.addEventListener('touchstart', pokeYtControls, { passive: true });
+    overlay.addEventListener('mouseleave', () => {
+        const isPaused = (ytState.main.state === 2);
+        const nativeVideo = document.getElementById('main-video-element');
+        const isNativePaused = nativeVideo && nativeVideo.style.display !== 'none' && nativeVideo.paused;
+        if (!isPaused && !isNativePaused) {
+            overlay.classList.remove('show-controls');
+        }
+    });
     overlay.addEventListener('click', (e) => {
         if (!overlay.classList.contains('yt-mode')) return;
         if (e.target.closest('#custom-yt-controls') || e.target.closest('.close-video-btn')) return;
@@ -1543,8 +1670,10 @@ window.closeVideoPlayer = function(e, suppressReopen = false) {
     const overlay = document.getElementById('custom-video-player');
     const video = document.getElementById('main-video-element');
     const iframe = document.getElementById('main-iframe-element');
+    const curtain = document.getElementById('ytc-curtain');
     const nextVideoEpBtn = document.getElementById('video-next-episode-btn');
     if (nextVideoEpBtn) nextVideoEpBtn.style.display = 'none';
+    if (curtain) curtain.classList.remove('active');
     if (video) {
         video.pause();
         video.removeAttribute('src');
@@ -1552,7 +1681,13 @@ window.closeVideoPlayer = function(e, suppressReopen = false) {
     if (iframe) {
         iframe.removeAttribute('src');
         iframe.style.display = 'none';
+        iframe.style.opacity = '0';
     }
+    isDraggingScrubber = false;
+    const bar = document.getElementById('ytc-progress');
+    if (bar) bar.classList.remove('dragging');
+    document.body.classList.remove('scrubber-dragging');
+    if (overlay) overlay.classList.remove('scrubbing');
     resetYtState('main');
     if (document.fullscreenElement) { document.exitFullscreen().catch(() => {}); }
     if (overlay) overlay.classList.remove('show', 'yt-mode', 'show-controls');
@@ -2654,10 +2789,18 @@ function showVideoNextEpisodeButton() {
         let currentAcervoHeroIdx = 0;
         let acervoHeroTimer = null;
 
-        function renderAcervoHeroBannerHtml() {
+        function updateAcervoHeroDOM() {
+            const heroEl = document.getElementById('acervo-hero');
+            if (!heroEl) return;
             const cur = ACERVO_HERO_ITEMS[currentAcervoHeroIdx] || ACERVO_HERO_ITEMS[0];
             const st = getMateriaStyle(cur.materia);
-            const bgUrl = imgUrl(cur.bg, 1200);
+            const bgUrl = imgUrl(cur.bg, 1400);
+
+            heroEl.style.backgroundImage = `linear-gradient(to right, #141414 42%, rgba(20,20,20,0.7) 65%, transparent 85%), linear-gradient(to top, #141414 0%, transparent 25%), url('${bgUrl}')`;
+            heroEl.style.backgroundRepeat = 'no-repeat';
+            heroEl.style.backgroundSize = 'cover';
+            heroEl.style.backgroundPosition = 'right center';
+            heroEl.style.backgroundColor = '#141414';
 
             const dots = ACERVO_HERO_ITEMS.map((item, idx) => `
                 <button type="button" class="acervo-hero-dot ${idx === currentAcervoHeroIdx ? 'active' : ''}" 
@@ -2666,72 +2809,35 @@ function showVideoNextEpisodeButton() {
                 </button>
             `).join('');
 
-            return `
-                <div class="acervo-hero-banner" id="acervo-hero-banner" onmouseenter="window.pauseAcervoHeroTimer()" onmouseleave="window.resumeAcervoHeroTimer()">
-                    <div class="acervo-hero-bg" id="acervo-hero-bg" style="background-image: url('${bgUrl}');"></div>
-                    <div class="acervo-hero-overlay"></div>
-                    <div class="acervo-hero-content">
-                        <div class="acervo-hero-badge">
-                            <span class="badge-acervo-mat" style="background: ${st.color};"><i class="${st.icon}"></i> ${cur.materia}</span>
-                            <span class="badge-acervo-special"><i class="fa-solid fa-star"></i> DESTAQUE DO ACERVO</span>
-                        </div>
-                        <h1 class="acervo-hero-title" id="acervo-hero-title">${cur.title}</h1>
-                        ${cur.subtitle ? `<div class="acervo-hero-subtitle" id="acervo-hero-subtitle">${cur.subtitle}</div>` : ''}
-                        <p class="acervo-hero-synopsis" id="acervo-hero-synopsis">${cur.synopsis}</p>
-                        <div class="acervo-hero-cast" id="acervo-hero-cast">
-                            <i class="fa-solid fa-user-group"></i> <span>${cur.cast}</span>
-                        </div>
-                        <div class="acervo-hero-actions">
-                            <button type="button" class="acervo-hero-btn-play" onclick="window.openAcademicDirectAction('${cur.id}')">
-                                <i class="fa-solid fa-play"></i> Apresentar Trabalho
-                            </button>
-                            <button type="button" class="acervo-hero-btn-info" onclick="window.openTitleModal('${cur.id}')">
-                                <i class="fa-solid fa-circle-info"></i> Detalhes
-                            </button>
-                        </div>
+            heroEl.innerHTML = `
+                <div class="hero-content">
+                    <div style="color: var(--rpg-gold); font-weight: bold; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 8px;">
+                        <span class="badge-acervo-mat" style="background: ${st.color}; padding: 3px 8px; border-radius: 4px; color: #fff; font-size: 0.78rem; margin-right: 8px;"><i class="${st.icon}"></i> ${cur.materia}</span>
+                        <i class="fa-solid fa-clapperboard"></i> TRABALHOS ANTIGOS &bull; DESTAQUE DO ACERVO
                     </div>
-                    <div class="acervo-hero-pagers" id="acervo-hero-pagers">
-                        ${dots}
+                    <h1 id="acervo-hero-title">${cur.title}</h1>
+                    ${cur.subtitle ? `<p id="acervo-hero-subtitle" style="font-size: 1.3rem; margin-bottom: 5px; color: var(--netflix-red); font-weight: bold; letter-spacing: 1px;">${cur.subtitle}</p>` : ''}
+                    <p id="acervo-hero-synopsis" style="font-size: 1.15rem; margin-bottom: 15px; color: #ccc; line-height: 1.5;">${cur.synopsis}</p>
+                    <div class="hero-buttons">
+                        <button type="button" class="btn-play" onclick="window.openAcademicDirectAction('${cur.id}')">
+                            <i class="fa-solid fa-play"></i> Assistir / Apresentar
+                        </button>
+                        <button type="button" class="btn-info" onclick="window.openTitleModal('${cur.id}')">
+                            <i class="fa-solid fa-circle-info"></i> Detalhes
+                        </button>
                     </div>
+                </div>
+                <div class="hero-carousel-pagers" id="acervo-hero-pagers">
+                    ${dots}
                 </div>
             `;
         }
+        window.updateAcervoHeroDOM = updateAcervoHeroDOM;
 
         window.setAcervoHeroSlide = function(idx) {
             if (idx < 0 || idx >= ACERVO_HERO_ITEMS.length) return;
             currentAcervoHeroIdx = idx;
-            const cur = ACERVO_HERO_ITEMS[idx];
-            const st = getMateriaStyle(cur.materia);
-            const bgUrl = imgUrl(cur.bg, 1200);
-
-            const bgEl = document.getElementById('acervo-hero-bg');
-            const titleEl = document.getElementById('acervo-hero-title');
-            const subEl = document.getElementById('acervo-hero-subtitle');
-            const synEl = document.getElementById('acervo-hero-synopsis');
-            const castEl = document.getElementById('acervo-hero-cast');
-            const pagersEl = document.getElementById('acervo-hero-pagers');
-
-            if (bgEl) {
-                bgEl.style.opacity = '0.3';
-                setTimeout(() => {
-                    bgEl.style.backgroundImage = `url('${bgUrl}')`;
-                    bgEl.style.opacity = '1';
-                }, 200);
-            }
-            if (titleEl) titleEl.textContent = cur.title;
-            if (subEl) subEl.textContent = cur.subtitle || '';
-            if (synEl) synEl.textContent = cur.synopsis;
-            if (castEl) castEl.innerHTML = `<i class="fa-solid fa-user-group"></i> <span>${cur.cast}</span>`;
-
-            const playBtn = document.querySelector('.acervo-hero-btn-play');
-            const infoBtn = document.querySelector('.acervo-hero-btn-info');
-            if (playBtn) playBtn.onclick = () => window.openAcademicDirectAction(cur.id);
-            if (infoBtn) infoBtn.onclick = () => window.openTitleModal(cur.id);
-
-            if (pagersEl) {
-                const dots = pagersEl.querySelectorAll('.acervo-hero-dot');
-                dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-            }
+            updateAcervoHeroDOM();
         };
 
         window.nextAcervoHeroSlide = function() {
@@ -3640,58 +3746,41 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             const entries = getAllAcervoEntries();
             const rowsContainer = document.getElementById('acervo-rows-container');
             const searchInput = document.getElementById('acervo-search-input');
-            const dropdownMenu = document.getElementById('materia-dropdown-menu');
-            const labelEl = document.getElementById('current-materia-label');
-            const authorChip = document.getElementById('acervo-author-chip');
-            const authorNameEl = document.getElementById('acervo-author-name');
-            const btnCol = document.getElementById('view-toggle-collections');
-            const btnGrid = document.getElementById('view-toggle-grid');
             if (!rowsContainer) return;
 
-            // Sincroniza botões de visualização
-            if (btnCol) btnCol.classList.toggle('active', currentAcervoViewMode === 'collections');
-            if (btnGrid) btnGrid.classList.toggle('active', currentAcervoViewMode === 'grid');
-
-            // Atualiza chip de autor
-            if (authorChip && authorNameEl) {
-                if (currentAcervoAuthor) {
-                    authorChip.style.display = 'flex';
-                    authorNameEl.textContent = currentAcervoAuthor;
-                } else {
-                    authorChip.style.display = 'none';
-                }
-            }
+            // 1. Atualiza Hero Billboard Banner do topo (idêntico ao da Home)
+            updateAcervoHeroDOM();
 
             const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
 
-            // 1. Contagem por Matéria
+            // 2. Contagem e ordenação canônica por Matéria
             const matCounts = {};
             entries.forEach(e => {
                 matCounts[e.materia] = (matCounts[e.materia] || 0) + 1;
             });
 
-            // 2. Atualiza Botão e Menu Dropdown estilo Netflix
-            if (labelEl) {
-                labelEl.textContent = currentAcervoMateria === 'all' ? 'Todas as Matérias' : currentAcervoMateria;
-            }
+            const materiaOrder = [
+                'Filosofia', 
+                'Sociologia', 
+                'Língua Portuguesa', 
+                'História', 
+                'Hardware & Arquitetura', 
+                'Segurança & Redes',
+                'Tópicos Especiais em Desenvolvimento',
+                'Programação & T.I.', 
+                'Língua Inglesa'
+            ];
 
-            if (dropdownMenu) {
-                const materiasList = Object.keys(matCounts);
-                dropdownMenu.innerHTML = `
-                    <div class="netflix-genre-item ${currentAcervoMateria === 'all' ? 'active' : ''}" onclick="window.setAcervoMateria('all')">
-                        <span>Todas as Matérias</span>
-                        <span class="genre-count">${entries.length}</span>
-                    </div>
-                    ${materiasList.map(m => `
-                        <div class="netflix-genre-item ${currentAcervoMateria === m ? 'active' : ''}" onclick="window.setAcervoMateria('${m.replace(/'/g, "\\'")}')">
-                            <span>${m}</span>
-                            <span class="genre-count">${matCounts[m]}</span>
-                        </div>
-                    `).join('')}
-                `;
-            }
+            const sortedMaterias = Object.keys(matCounts).sort((a, b) => {
+                const idxA = materiaOrder.indexOf(a);
+                const idxB = materiaOrder.indexOf(b);
+                if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+                if (idxA !== -1) return -1;
+                if (idxB !== -1) return 1;
+                return a.localeCompare(b);
+            });
 
-            // 3. Filtragem (Matéria, Formato, Autor e Busca)
+            // Filtragem
             const filtered = entries.filter(e => {
                 if (currentAcervoMateria !== 'all' && e.materia !== currentAcervoMateria) return false;
                 if (currentAcervoFormat === 'pdf' && !e.hasPdf) return false;
@@ -3706,18 +3795,40 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 return true;
             });
 
-            // Barra Disney+ no topo do Acervo com suporte a rolagem por setas
-            const disneyBarHtml = `
-                <div class="acervo-disney-bar-wrapper">
-                    <div class="acervo-disney-bar-title"><i class="fa-solid fa-shapes" style="color:var(--netflix-red);"></i> Selecione uma Coleção:</div>
-                    <div class="acervo-shelf-slider-container acervo-disney-slider-container">
-                        <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('acervo-disney-bar-shelf', -1)">
+            // 1. Coleções dos Trabalhos (Disney+ Collection Shelf - Filtro Visual Principal)
+            const disneyShelfHtml = `
+                <div class="catalog-section disney-collections-section" style="margin-bottom: 34px;">
+                    <h2 class="row-title" style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-shapes" style="color: var(--netflix-red); font-size: 1.1rem;"></i>
+                            <span>Coleções dos Trabalhos</span>
+                        </span>
+                        ${currentAcervoMateria !== 'all' ? `
+                            <button type="button" onclick="window.setAcervoMateria('all')" style="background: rgba(229,9,20,0.18); border: 1px solid var(--netflix-red); color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                                <i class="fa-solid fa-arrow-left"></i> Ver Todas as Coleções
+                            </button>
+                        ` : ''}
+                    </h2>
+                    <div class="acervo-shelf-slider-container">
+                        <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('acervo-disney-collections-shelf', -1)">
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
-                        <div class="acervo-disney-bar" id="acervo-disney-bar-shelf">
-                            ${renderAcervoDisneyTiles(currentAcervoMateria)}
+                        <div class="disney-collections-row" id="acervo-disney-collections-shelf">
+                            ${DISNEY_HOME_COLLECTIONS.map(c => {
+                                const isActive = currentAcervoMateria === c.materia;
+                                return `
+                                    <div class="disney-col-card ${isActive ? 'active' : ''}" 
+                                         style="background-image: url('${c.img}');" 
+                                         onclick="window.setAcervoMateria('${isActive ? 'all' : c.materia.replace(/'/g, "\\'")}')" 
+                                         role="button" tabindex="0" 
+                                         title="${isActive ? 'Clique para ver todas' : 'Filtrar por ' + c.title}"
+                                         aria-label="Coleção ${c.title}">
+                                        <div class="disney-col-card-shine"></div>
+                                    </div>
+                                `;
+                            }).join('')}
                         </div>
-                        <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('acervo-disney-bar-shelf', 1)">
+                        <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('acervo-disney-collections-shelf', 1)">
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
                     </div>
@@ -3726,11 +3837,11 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
 
             if (!filtered.length) {
                 rowsContainer.innerHTML = `
-                    ${disneyBarHtml}
+                    ${disneyShelfHtml}
                     <div style="text-align:center; padding: 70px 20px; color: #888;">
                         <i class="fa-solid fa-folder-open" style="font-size: 3rem; margin-bottom: 16px; color: #444;"></i>
                         <h3 style="color:#fff; font-size: 1.3rem; margin-bottom: 8px;">Nenhum trabalho encontrado</h3>
-                        <p style="font-size: 0.95rem;">Experimente selecionar "Todas as Matérias", outro formato ou limpar os filtros.</p>
+                        <p style="font-size: 0.95rem;">Experimente selecionar outra coleção ou limpar a busca.</p>
                         ${currentAcervoAuthor ? `<button onclick="window.clearAcervoAuthorFilter()" style="margin-top:14px; background:var(--netflix-red); border:none; color:#fff; padding:8px 18px; border-radius:4px; cursor:pointer; font-weight:bold;">Limpar filtro de aluno</button>` : ''}
                     </div>
                 `;
@@ -3738,19 +3849,18 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 return;
             }
 
-            // MODO 0: Filtrado por Aluno (Portfólio Individual do Aluno)
+            // MODO: Filtrado por Aluno (Portfólio Individual)
             if (currentAcervoAuthor) {
                 const studentCardsHtml = filtered.map(renderAcervoPosterCardHtml).join('');
                 rowsContainer.innerHTML = `
-                    ${renderAcervoHeroBannerHtml()}
-                    ${disneyBarHtml}
+                    ${disneyShelfHtml}
                     ${renderStudentPortfolioBannerHtml(currentAcervoAuthor, filtered)}
                     <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
                         <span style="color: #bbb; font-size: 0.95rem; font-weight: 700;">
                             <i class="fa-solid fa-graduation-cap" style="color:var(--netflix-red); margin-right:6px;"></i>
                             ${filtered.length} ${filtered.length === 1 ? 'apresentação realizada' : 'apresentações realizadas'}
                         </span>
-                        <button type="button" class="acervo-clear-filter-btn" onclick="window.clearAcervoAuthorFilter()" style="font-size: 0.82rem; padding: 5px 12px;">
+                        <button type="button" class="acervo-clear-filter-btn" onclick="window.clearAcervoAuthorFilter()" style="font-size: 0.82rem; padding: 5px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color:#fff; border-radius: 4px; cursor:pointer;">
                             <i class="fa-solid fa-arrow-left"></i> Ver Toda a Turma
                         </button>
                     </div>
@@ -3764,70 +3874,21 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 return;
             }
 
-            // 4. Agrupamento por Seminário / Coleção (trabalhoGrupo)
-            const groupsMap = new Map();
-            filtered.forEach(e => {
-                const key = `${e.materia}|||${e.trabalhoGrupo}`;
-                if (!groupsMap.has(key)) {
-                    groupsMap.set(key, {
-                        key: key,
-                        materia: e.materia,
-                        trabalhoGrupo: e.trabalhoGrupo,
-                        periodo: e.periodo,
-                        items: []
-                    });
-                }
-                groupsMap.get(key).items.push(e);
-            });
-
-            // MODO 1: Um seminário específico está em foco (Visão Detalhada com Cartazes Verticais)
-            if (currentAcervoSeminario && groupsMap.has(currentAcervoSeminario)) {
-                const grp = groupsMap.get(currentAcervoSeminario);
-                const st = getMateriaStyle(grp.materia);
-                const cardsHtml = grp.items.map(renderAcervoPosterCardHtml).join('');
-
+            // MODO: Filtrado por Busca Textual
+            if (query) {
+                const searchCardsHtml = filtered.map(renderAcervoPosterCardHtml).join('');
                 rowsContainer.innerHTML = `
-                    <div class="seminario-detail-header">
-                        <button type="button" class="seminario-back-btn" onclick="window.backToSeminarios()">
-                            <i class="fa-solid fa-arrow-left"></i> Voltar para todas as coleções
-                        </button>
-                        <div class="seminario-detail-title-group">
-                            <span class="seminario-detail-materia-badge" style="background: ${st.color};">
-                                <i class="${st.icon}"></i> ${grp.materia}
-                            </span>
-                            <h2 class="seminario-detail-title">${grp.trabalhoGrupo}</h2>
-                        </div>
-                        <div class="seminario-detail-subtitle">
-                            <span><i class="fa-regular fa-calendar"></i> ${grp.periodo}</span> &bull; 
-                            <span>${grp.items.length} ${grp.items.length === 1 ? 'apresentação disponível' : 'apresentações disponíveis'}</span>
-                        </div>
-                    </div>
-                    <div class="acervo-posters-grid">
-                        ${cardsHtml}
-                    </div>
-                `;
-
-                initDragToScroll();
-                initHoverAutoPlay();
-                initTurboObserver();
-                return;
-            }
-
-            // MODO 3: Visão Todos os Slides (Grade direta com cartazes verticais)
-            if (currentAcervoViewMode === 'grid') {
-                const allCardsHtml = filtered.map(renderAcervoPosterCardHtml).join('');
-                rowsContainer.innerHTML = `
-                    ${renderAcervoHeroBannerHtml()}
-                    ${disneyBarHtml}
-                    <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-                        <span style="color: #bbb; font-size: 0.95rem; font-weight: 700;">
-                            <i class="fa-solid fa-layer-group" style="color:var(--netflix-red); margin-right:6px;"></i>
-                            ${filtered.length} ${filtered.length === 1 ? 'apresentação encontrada' : 'apresentações encontradas'}
+                    ${disneyShelfHtml}
+                    <div style="margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="color: #bbb; font-size: 1rem; font-weight: 700;">
+                            Resultados para "${query}": ${filtered.length} ${filtered.length === 1 ? 'trabalho' : 'trabalhos'}
                         </span>
-                        <span style="color: #777; font-size: 0.82rem;">Catálogo Completo em Cartazes</span>
+                        <button type="button" onclick="document.getElementById('acervo-search-input').value=''; window.renderAcervoScreen();" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color:#fff; padding: 6px 14px; border-radius: 4px; cursor:pointer;">
+                            Limpar busca
+                        </button>
                     </div>
                     <div class="acervo-posters-grid">
-                        ${allCardsHtml}
+                        ${searchCardsHtml}
                     </div>
                 `;
                 initDragToScroll();
@@ -3836,36 +3897,44 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 return;
             }
 
-            // CASO 3: Filtrado por Matéria Específica (ex: Filosofia, Sociologia, etc.)
+            // MODO: Filtrado por Matéria Específica
             if (currentAcervoMateria !== 'all') {
                 const st = getMateriaStyle(currentAcervoMateria);
-                // No catálogo agrupado por coleções/séries: cada série ou trabalho completo ocupa 1 cartaz
-                let matCardsHtml = '';
-                if (currentAcervoViewMode === 'grid') {
-                    matCardsHtml = filtered.map(renderAcervoPosterCardHtml).join('');
-                } else {
-                    matCardsHtml = Array.from(groupsMap.values()).map(renderAcervoPosterCardHtml).join('');
-                }
+                // Agrupa em séries/coleções para exibição limpa
+                const matGroupsMap = new Map();
+                filtered.forEach(e => {
+                    const key = `${e.materia}|||${e.trabalhoGrupo}`;
+                    if (!matGroupsMap.has(key)) {
+                        matGroupsMap.set(key, {
+                            key: key,
+                            materia: e.materia,
+                            trabalhoGrupo: e.trabalhoGrupo,
+                            periodo: e.periodo,
+                            items: []
+                        });
+                    }
+                    matGroupsMap.get(key).items.push(e);
+                });
 
-                const countSubtitle = groupsMap.size === filtered.length
+                const matCardsHtml = Array.from(matGroupsMap.values()).map(renderAcervoPosterCardHtml).join('');
+                const countSubtitle = matGroupsMap.size === filtered.length
                     ? `${filtered.length} ${filtered.length === 1 ? 'trabalho disponível' : 'trabalhos disponíveis'}`
-                    : `${groupsMap.size} ${groupsMap.size === 1 ? 'série / coleção' : 'séries / coleções'} • ${filtered.length} apresentações`;
+                    : `${matGroupsMap.size} ${matGroupsMap.size === 1 ? 'série / coleção' : 'séries / coleções'} • ${filtered.length} apresentações`;
 
                 rowsContainer.innerHTML = `
-                    ${renderAcervoHeroBannerHtml()}
-                    ${disneyBarHtml}
-                    <div class="acervo-focused-materia-header">
-                        <div class="acervo-shelf-title-group">
-                            <span class="acervo-shelf-badge" style="background: ${st.color};">
+                    ${disneyShelfHtml}
+                    <div class="acervo-focused-materia-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                        <div class="acervo-shelf-title-group" style="display: flex; align-items: center; gap: 10px;">
+                            <span class="acervo-shelf-badge" style="background: ${st.color}; padding: 4px 8px; border-radius: 4px; color: #fff; font-size: 0.9rem;">
                                 <i class="${st.icon}"></i>
                             </span>
                             <div>
-                                <h2 class="row-title acervo-shelf-title" style="margin: 0;">${currentAcervoMateria}</h2>
+                                <h2 class="row-title acervo-shelf-title" style="margin: 0; font-size: 1.4rem;">${currentAcervoMateria}</h2>
                                 <span style="font-size: 0.82rem; color: #888;">${countSubtitle}</span>
                             </div>
                         </div>
-                        <button type="button" class="acervo-clear-filter-btn" onclick="window.setAcervoMateria('all')">
-                            <i class="fa-solid fa-arrow-left"></i> Ver Todas as Matérias
+                        <button type="button" class="acervo-clear-filter-btn" onclick="window.setAcervoMateria('all')" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color:#fff; padding: 6px 14px; border-radius: 4px; cursor:pointer; font-weight:600;">
+                            <i class="fa-solid fa-arrow-left"></i> Ver Todas as Coleções
                         </button>
                     </div>
                     <div class="acervo-posters-grid">
@@ -3878,9 +3947,95 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 return;
             }
 
-            // CASO 4: PADRÃO (currentAcervoMateria === 'all')
-            // Separados por matérias, em fileiras que arrastam para os lados, igual à tela inicial!
-            // Cada trabalho completo ocupa apenas UM cartaz (ex: podcasts de sociologia agrupados em 1 série, filosofia em 1 série)
+            // MODO PADRÃO: TODAS AS MATÉRIAS (MESMO DESIGN DA TELA INICIAL)
+            // 2. Apresentações & Slides da Turma
+            const slidesEntries = entries.filter(e => e.hasPdf || e.item.pdf || e.item.slideKey || e.item.isSecurityPresentation);
+            const slidesGroupsMap = new Map();
+            slidesEntries.forEach(e => {
+                const key = `${e.materia}|||${e.trabalhoGrupo}`;
+                if (!slidesGroupsMap.has(key)) {
+                    slidesGroupsMap.set(key, {
+                        key: key,
+                        materia: e.materia,
+                        trabalhoGrupo: e.trabalhoGrupo,
+                        periodo: e.periodo,
+                        items: []
+                    });
+                }
+                slidesGroupsMap.get(key).items.push(e);
+            });
+            const slidesCardsHtml = Array.from(slidesGroupsMap.values()).map(renderAcervoPosterCardHtml).join('');
+
+            const slidesShelfHtml = `
+                <div class="catalog-section" style="margin-bottom: 34px;">
+                    <h2 class="row-title" style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-file-powerpoint" style="color: var(--netflix-red); font-size: 1.1rem;"></i>
+                            <span>Apresentações &amp; Slides da Turma</span>
+                        </span>
+                        <span style="font-size: 0.84rem; color: #888; font-weight: normal;">${slidesGroupsMap.size} seminários em slides</span>
+                    </h2>
+                    <div class="acervo-shelf-slider-container">
+                        <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('acervo-slides-row-shelf', -1)">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <div class="landscape-row acervo-row-slider" id="acervo-slides-row-shelf">
+                            ${slidesCardsHtml}
+                        </div>
+                        <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('acervo-slides-row-shelf', 1)">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // 3. Podcasts & Debates em Vídeo
+            const podcastEntries = entries.filter(e => 
+                e.id.includes('podcast') || e.id === 'cyber-news' || e.trabalhoGrupo.toLowerCase().includes('podcast') || (e.materia === 'Sociologia' && e.hasVideo)
+            );
+            const podcastGroupsMap = new Map();
+            podcastEntries.forEach(e => {
+                const key = `${e.materia}|||${e.trabalhoGrupo}`;
+                if (!podcastGroupsMap.has(key)) {
+                    podcastGroupsMap.set(key, {
+                        key: key,
+                        materia: e.materia,
+                        trabalhoGrupo: e.trabalhoGrupo,
+                        periodo: e.periodo,
+                        items: []
+                    });
+                }
+                podcastGroupsMap.get(key).items.push(e);
+            });
+            const podcastCardsHtml = Array.from(podcastGroupsMap.values()).map(renderAcervoPosterCardHtml).join('');
+
+            const podcastsShelfHtml = `
+                <div class="catalog-section" style="margin-bottom: 34px;">
+                    <h2 class="row-title" style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-podcast" style="color: var(--netflix-red); font-size: 1.1rem;"></i>
+                            <span>Podcasts &amp; Debates em Vídeo</span>
+                        </span>
+                        <span style="font-size: 0.84rem; color: #888; font-weight: normal;">Produções em áudio e vídeo</span>
+                    </h2>
+                    <div class="acervo-shelf-slider-container">
+                        <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('acervo-podcasts-row-shelf', -1)">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <div class="landscape-row acervo-row-slider" id="acervo-podcasts-row-shelf">
+                            ${podcastCardsHtml}
+                        </div>
+                        <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('acervo-podcasts-row-shelf', 1)">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // 4. Elenco da Turma • Alunos
+            const studentsShelfHtml = renderStudentsRowHtml(entries);
+
+            // 5. Fileiras por Matéria (Filosofia, Sociologia, Literatura, História, Hardware, Cyber Defesa...)
             const materiasMap = new Map();
             filtered.forEach(e => {
                 if (!materiasMap.has(e.materia)) {
@@ -3889,35 +4044,12 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 materiasMap.get(e.materia).push(e);
             });
 
-            // Ordem recomendada das matérias
-            const materiaOrder = [
-                'Filosofia', 
-                'Sociologia', 
-                'Língua Portuguesa', 
-                'História', 
-                'Hardware & Arquitetura', 
-                'Segurança & Redes',
-                'Tópicos Especiais em Desenvolvimento',
-                'Programação & T.I.', 
-                'Língua Inglesa'
-            ];
-
-            const sortedMaterias = Array.from(materiasMap.keys()).sort((a, b) => {
-                const idxA = materiaOrder.indexOf(a);
-                const idxB = materiaOrder.indexOf(b);
-                if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-                if (idxA !== -1) return -1;
-                if (idxB !== -1) return 1;
-                return a.localeCompare(b);
-            });
-
-            let shelvesHtml = sortedMaterias.map((matName, idx) => {
+            const shelvesHtml = sortedMaterias.filter(m => materiasMap.has(m)).map((matName, idx) => {
                 const items = materiasMap.get(matName);
                 const st = getMateriaStyle(matName);
                 const slug = matName.toLowerCase().replace(/[^a-z0-9]/g, '-');
                 const rowId = `acervo-shelf-row-${slug}-${idx}`;
                 
-                // Agrupa as apresentações daquela matéria pelo seu trabalho/seminário completo
                 const matGroupsMap = new Map();
                 items.forEach(e => {
                     const key = `${e.materia}|||${e.trabalhoGrupo}`;
@@ -3942,16 +4074,16 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                     : `${groupCount} ${groupCount === 1 ? 'série / coleção' : 'séries / coleções'} • ${workCount} apresentações`;
 
                 return `
-                    <div class="catalog-section acervo-subject-shelf" id="acervo-shelf-${slug}">
-                        <div class="acervo-shelf-header">
-                            <div class="acervo-shelf-title-group">
-                                <span class="acervo-shelf-badge" style="background: ${st.color};">
+                    <div class="catalog-section acervo-subject-shelf" id="acervo-shelf-${slug}" style="margin-bottom: 34px;">
+                        <div class="acervo-shelf-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <div class="acervo-shelf-title-group" style="display: flex; align-items: center; gap: 10px;">
+                                <span class="acervo-shelf-badge" style="background: ${st.color}; padding: 4px 8px; border-radius: 4px; color: #fff; font-size: 0.85rem;">
                                     <i class="${st.icon}"></i>
                                 </span>
-                                <h2 class="row-title acervo-shelf-title">${matName}</h2>
-                                <span class="acervo-shelf-count">${countBadgeText}</span>
+                                <h2 class="row-title acervo-shelf-title" style="margin: 0; font-size: 1.35rem; font-weight: bold; color: #e5e5e5;">${matName}</h2>
+                                <span class="acervo-shelf-count" style="font-size: 0.82rem; color: #888;">${countBadgeText}</span>
                             </div>
-                            <button type="button" class="acervo-shelf-filter-btn" onclick="window.setAcervoMateria('${safeMat}')">
+                            <button type="button" class="acervo-shelf-filter-btn" onclick="window.setAcervoMateria('${safeMat}')" style="background: transparent; border: none; color: #aaa; font-size: 0.88rem; font-weight: 600; cursor: pointer;">
                                 Explorar ${matName} <i class="fa-solid fa-chevron-right"></i>
                             </button>
                         </div>
@@ -3970,10 +4102,12 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 `;
             }).join('');
 
+            // Renderiza estrutura idêntica à Home (sem a barra duplicada de pílulas)
             rowsContainer.innerHTML = `
-                ${renderAcervoHeroBannerHtml()}
-                ${disneyBarHtml}
-                ${renderStudentsRowHtml(entries)}
+                ${disneyShelfHtml}
+                ${slidesShelfHtml}
+                ${podcastsShelfHtml}
+                ${studentsShelfHtml}
                 <div class="acervo-shelves-container">
                     ${shelvesHtml}
                 </div>
@@ -4943,15 +5077,10 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             const nextVideoEpBtn = document.getElementById('video-next-episode-btn');
             if (nextVideoEpBtn) nextVideoEpBtn.style.display = 'none';
 
-            if (isYouTube && isLocalFileProtocol()) {
-                const t = Math.floor(startAt || 0);
-                window.open(`https://www.youtube.com/watch?v=${videoSrc}${t ? '&t=' + t + 's' : ''}`, '_blank', 'noopener');
-                return;
-            }
-
             const overlay = document.getElementById('custom-video-player');
             const video = document.getElementById('main-video-element');
             const iframe = document.getElementById('main-iframe-element');
+            const curtain = document.getElementById('ytc-curtain');
             
             if (isYouTube) {
                 if (video) {
@@ -4961,8 +5090,25 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 }
                 if (iframe) {
                     resetYtState('main');
+                    iframe.style.opacity = '0';
                     iframe.src = getYouTubeEmbedUrl(videoSrc, false, startAt);
                     iframe.style.display = 'block';
+
+                    if (curtain) {
+                        curtain.classList.add('active');
+                        setTimeout(() => {
+                            curtain.classList.remove('active');
+                            if (iframe && iframe.getAttribute('src')) {
+                                iframe.style.opacity = '1';
+                            }
+                        }, 2200);
+                    } else {
+                        setTimeout(() => {
+                            if (iframe && iframe.getAttribute('src')) {
+                                iframe.style.opacity = '1';
+                            }
+                        }, 2200);
+                    }
                 }
                 overlay.classList.add('yt-mode', 'show-controls');
                 pokeYtControls();
@@ -5753,16 +5899,24 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 });
             });
             
-            // Se o usuário rolar a tela, esconde a mini tela imediatamente
+            // Se o usuário rolar a tela, esconde a mini tela e atualiza o navbar transparente/preto
             const home = document.getElementById('home-screen');
             if (home && !home.dataset.scrollInit) {
                 home.dataset.scrollInit = 'true';
-                home.addEventListener('scroll', window.closeHoverPreview);
+                const homeNav = home.querySelector('.home-nav');
+                home.addEventListener('scroll', () => {
+                    window.closeHoverPreview();
+                    if (homeNav) homeNav.classList.toggle('scrolled', home.scrollTop > 50);
+                });
             }
             const acervo = document.getElementById('acervo-screen');
             if (acervo && !acervo.dataset.scrollInit) {
                 acervo.dataset.scrollInit = 'true';
-                acervo.addEventListener('scroll', window.closeHoverPreview);
+                const acervoNav = document.getElementById('acervo-home-nav');
+                acervo.addEventListener('scroll', () => {
+                    window.closeHoverPreview();
+                    if (acervoNav) acervoNav.classList.toggle('scrolled', acervo.scrollTop > 50);
+                });
             }
         }
 
@@ -5817,10 +5971,12 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                     videoEl.classList.add('playing');
                 }).catch(() => { /* Sem autoplay se bloqueado */ });
             } else if (previewId) {
-                if (!isLocalFileProtocol()) {
-                    iframeEl.src = getYouTubeEmbedUrl(previewId, true);
-                    iframeEl.classList.add('playing');
-                }
+                iframeEl.src = getYouTubeEmbedUrl(previewId, true);
+                setTimeout(() => {
+                    if (iframeEl && iframeEl.getAttribute('src')) {
+                        iframeEl.classList.add('playing');
+                    }
+                }, 1800);
             }
 
             // 3. Configura os Botões

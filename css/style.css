@@ -129,23 +129,69 @@
         }
 
         /* YouTube Trailer em tela cheia com estilo nativo IFPIFLIX */
+        #custom-video-player {
+            overflow: hidden !important;
+        }
         #custom-video-player.yt-mode iframe#main-iframe-element {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 124%;
+            height: 124%;
+            transform: translate(-50%, -50%);
             border: none;
             pointer-events: none; /* Bloqueia cliques diretos nos elementos ou botões nativos do YouTube */
-            transform: scale(1.02);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #custom-video-player.scrubbing iframe,
+        #custom-video-player.scrubbing video {
+            pointer-events: none !important;
+        }
+
+        /* Cortina de carregamento cinema (elimina flash do play do YouTube) */
+        .ytc-curtain {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s ease;
+        }
+        .ytc-curtain.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .ytc-curtain-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(229, 9, 20, 0.2);
+            border-top-color: var(--netflix-red, #e50914);
+            border-radius: 50%;
+            animation: ytcSpin 0.8s linear infinite;
+        }
+        @keyframes ytcSpin {
+            to { transform: rotate(360deg); }
         }
         #custom-video-player.yt-mode {
             cursor: pointer;
+            transition: cursor 0.2s ease;
+        }
+        #custom-video-player.yt-mode:not(.show-controls) {
+            cursor: none;
         }
         #custom-video-player.yt-mode .close-video-btn {
             opacity: 0;
             pointer-events: none;
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
         }
-        #custom-video-player.yt-mode.show-controls .close-video-btn,
-        #custom-video-player.yt-mode:not(.show-controls):hover .close-video-btn {
+        #custom-video-player.yt-mode.show-controls .close-video-btn {
             opacity: 1;
             pointer-events: auto;
             transform: translateY(0);
@@ -165,14 +211,13 @@
             gap: 14px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.35s ease, transform 0.35s ease;
-            transform: translateY(5px);
+            transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+            transform: translateY(12px);
         }
         #custom-video-player.yt-mode .custom-yt-controls-overlay {
             display: flex;
         }
-        #custom-video-player.yt-mode.show-controls .custom-yt-controls-overlay,
-        #custom-video-player.yt-mode:not(.show-controls):hover .custom-yt-controls-overlay {
+        #custom-video-player.yt-mode.show-controls .custom-yt-controls-overlay {
             opacity: 1;
             pointer-events: auto;
             transform: translateY(0);
@@ -186,8 +231,22 @@
             cursor: pointer;
             position: relative;
             transition: height 0.15s ease;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
-        .ytc-progress-bar:hover {
+        /* Hit-box invisível ampliada para facilitar arrasto com dedo no mobile ou mouse */
+        .ytc-progress-bar::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            bottom: -12px;
+            left: 0;
+            right: 0;
+            z-index: 2;
+        }
+        .ytc-progress-bar:hover,
+        .ytc-progress-bar.dragging {
             height: 9px;
         }
         .ytc-progress-fill {
@@ -197,19 +256,29 @@
             border-radius: 4px;
             position: relative;
             pointer-events: none;
-            transition: width 0.1s linear;
+            transition: width 0.08s linear;
         }
-        .ytc-progress-bar:hover .ytc-progress-fill::after {
+        .ytc-progress-bar.dragging .ytc-progress-fill {
+            transition: none !important;
+        }
+        .ytc-progress-bar:hover .ytc-progress-fill::after,
+        .ytc-progress-bar.dragging .ytc-progress-fill::after {
             content: '';
             position: absolute;
-            right: -6px;
+            right: -7px;
             top: 50%;
             transform: translateY(-50%);
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
             background: #fff;
             border-radius: 50%;
-            box-shadow: 0 0 8px rgba(0,0,0,0.7);
+            box-shadow: 0 0 10px rgba(0,0,0,0.8), 0 0 4px #e50914;
+            z-index: 3;
+        }
+        body.scrubber-dragging {
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            cursor: grabbing !important;
         }
 
         .ytc-buttons-row {
@@ -395,7 +464,8 @@
         .profile-card:focus-visible span { color: #fff; }
 
         /* LOBBY / HOME */
-        .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between;}
+        .home-nav { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent); display: flex; align-items: center; padding: 0 4%; z-index: 100; justify-content: space-between; transition: background 0.35s ease, box-shadow 0.35s ease; }
+        .home-nav.scrolled { background: #141414 !important; box-shadow: 0 4px 20px rgba(0,0,0,0.8); }
         .nav-left-group { display: flex; align-items: center; gap: 35px; }
         .nav-logo { color: var(--netflix-red); font-family: 'Bebas Neue', cursive; font-size: 2.2rem; letter-spacing: 2px; cursor: pointer; flex-shrink: 0; }
 
@@ -1756,13 +1826,13 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 130%;
-            height: 130%;
+            width: 150%;
+            height: 150%;
             transform: translate(-50%, -50%);
             border: none;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
             z-index: 1;
         }
         #m-trailer-iframe.playing { opacity: 1; }
@@ -2243,25 +2313,246 @@
            📱 ADAPTAÇÃO PARA CELULARES (RESPONSIVIDADE)
            ========================================================= */
         @media (max-width: 768px) {
-            /* 1. Textos e Botões da Tela Inicial */
-            .hero h1 { font-size: 3.5rem; }
-            .hero-content { margin-top: 80px; }
-            .hero-buttons { flex-direction: column; width: 100%; }
-            .btn-play, .btn-info { width: 100%; justify-content: center; }
+            /* 1. Barra de Navegação no Mobile */
+            .home-nav {
+                height: 60px;
+                padding: 0 16px;
+            }
+            .nav-left-group {
+                gap: 14px;
+                min-width: 0;
+                flex-shrink: 1;
+            }
+            .nav-logo {
+                font-size: 1.7rem;
+                letter-spacing: 1.5px;
+            }
+            .nav-categories {
+                display: flex !important;
+                gap: 14px;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding: 4px 0;
+                max-width: calc(100vw - 180px);
+            }
+            .nav-categories::-webkit-scrollbar {
+                display: none;
+            }
+            .nav-cat-item {
+                font-size: 0.86rem;
+                flex-shrink: 0;
+            }
+            .nav-right {
+                gap: 10px;
+                flex-shrink: 0;
+            }
+            .search-box.active input[type="search"],
+            .search-box:focus-within input,
+            .search-box.active #search-input,
+            .search-box.active #acervo-search-input {
+                width: 130px !important;
+                padding: 0 8px !important;
+                font-size: 0.85rem !important;
+            }
+            .btn-surprise {
+                width: 36px;
+                height: 36px;
+                padding: 0;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .nav-profile-btn img,
+            .nav-profile-btn .avatar {
+                width: 32px;
+                height: 32px;
+            }
+
+            /* 2. Textos e Botões da Tela Inicial (Home) */
+            .hero {
+                min-height: 80vh;
+                padding: 0 18px;
+            }
+            .hero h1 {
+                font-size: 2.3rem;
+                line-height: 1.05;
+                margin-bottom: 8px;
+            }
+            .hero-content {
+                margin-top: 60px;
+                max-width: 100%;
+            }
+            .hero-desc {
+                font-size: 0.88rem;
+                line-height: 1.35;
+                -webkit-line-clamp: 3;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                margin-bottom: 16px;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+            .btn-play, .btn-info {
+                width: 100%;
+                justify-content: center;
+                padding: 11px 18px;
+                font-size: 0.95rem;
+            }
+
+            /* 3. Hero Billboard no Acervo */
+            .acervo-hero-banner {
+                min-height: 380px;
+                height: auto;
+                padding: 22px 16px;
+                border-radius: 8px;
+                margin-bottom: 22px;
+            }
+            .acervo-hero-title {
+                font-size: 1.7rem;
+                line-height: 1.1;
+                margin-bottom: 6px;
+            }
+            .acervo-hero-subtitle {
+                font-size: 0.88rem;
+                margin-bottom: 8px;
+            }
+            .acervo-hero-synopsis {
+                font-size: 0.82rem;
+                line-height: 1.35;
+                margin-bottom: 14px;
+                -webkit-line-clamp: 2;
+            }
+            .acervo-hero-actions {
+                width: 100%;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .acervo-hero-btn-play,
+            .acervo-hero-btn-info {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+                padding: 10px 14px;
+                font-size: 0.92rem;
+            }
+            .acervo-hero-pagers {
+                right: 14px;
+                bottom: 12px;
+                gap: 6px;
+            }
+            .acervo-hero-dot {
+                width: 8px;
+                height: 8px;
+            }
+            .acervo-hero-dot.active {
+                width: 22px;
+            }
+
+            /* 4. Prateleiras e Cards no Mobile */
+            .shelf-container,
+            .catalog-section {
+                padding: 0 16px;
+                margin-bottom: 26px;
+            }
+            .shelf-header h3,
+            .catalog-section h3 {
+                font-size: 1.15rem;
+                margin-bottom: 10px;
+            }
+            .acervo-card-portrait {
+                flex: 0 0 135px;
+                width: 135px;
+                height: 205px;
+                border-radius: 6px;
+            }
+            .acervo-card-badge {
+                font-size: 0.62rem;
+                padding: 2px 6px;
+            }
+            .acervo-card-title {
+                font-size: 0.78rem;
+                line-height: 1.2;
+            }
+            .disney-col-card {
+                flex: 0 0 185px;
+                height: 110px;
+            }
+            .slide-col-card {
+                flex: 0 0 200px;
+                height: 125px;
+            }
+            .podcast-col-card {
+                flex: 0 0 220px;
+                height: 95px;
+            }
+            .student-col-card {
+                flex: 0 0 120px;
+                padding: 10px 8px;
+            }
+            .student-col-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+            .acervo-slider-nav-btn,
+            .slide-nav-btn {
+                display: none !important;
+            }
+            .posters-container,
+            .landscape-row,
+            .top10-container,
+            .acervo-row-slider,
+            .acervo-disney-bar,
+            .acervo-students-slider,
+            .disney-collections-row {
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x proximity;
+            }
             
-            /* 2. Modal de Detalhes do Filme */
-            .modal-hero { height: 250px; }
-            .modal-title { font-size: 2.5rem; }
-            .modal-hero-content { left: 20px; right: 20px; bottom: 10px; }
-            .modal-info-grid { grid-template-columns: 1fr; padding: 0 20px 20px 20px; gap: 15px; }
-            .modal-more-like { padding: 0 20px 20px 20px; }
+            /* 5. Modal de Detalhes do Filme */
+            .title-modal-container {
+                width: 95%;
+                max-width: 100%;
+                margin: 15px auto 40px auto;
+                border-radius: 8px;
+            }
+            .modal-hero { height: 230px; }
+            .modal-hero.modal-hero-expanded { height: 300px; }
+            .modal-title { font-size: 1.7rem; line-height: 1.1; margin-bottom: 8px; }
+            .modal-hero-content { left: 14px; right: 14px; bottom: 12px; }
+            .modal-actions { gap: 8px; flex-wrap: wrap; }
+            .modal-actions button { padding: 8px 12px; font-size: 0.85rem; }
+            .modal-close-btn { width: 36px; height: 36px; top: 10px; right: 10px; font-size: 1rem; }
+            .modal-trailer-floating-controls { top: 10px; right: 52px; gap: 6px; }
+            .trailer-control-btn { width: 36px; height: 36px; font-size: 0.85rem; }
+            .modal-info-grid { grid-template-columns: 1fr; padding: 0 16px 16px 16px; gap: 14px; }
+            .modal-more-like { padding: 0 16px 20px 16px; }
+            .more-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .netflix-modal-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: 8px;
+            }
+            .netflix-tab-btn {
+                font-size: 0.85rem;
+                padding: 8px 12px;
+                flex-shrink: 0;
+            }
             
-            /* 3. Lista de Episódios */
+            /* 6. Lista de Episódios */
             .episode-item { flex-direction: column; text-align: center; gap: 10px; }
             .ep-img { width: 100%; height: 150px; }
             .ep-number { width: 100%; text-align: center; margin-bottom: -5px; }
 
-            /* 4. Player Clássico (Slides) */
+            /* 7. Player Clássico (Slides) */
             .slide-grid { flex-direction: column; gap: 10px; margin-top: 20px; }
             .text-col { padding-right: 0; text-align: center; }
             .text-col h2 { font-size: 2.2rem; border-left: none; border-bottom: 3px solid var(--netflix-red); padding-left: 0; padding-bottom: 5px; }
@@ -2269,11 +2560,9 @@
             .slide-area { padding-top: 50px; }
             .lis-container { flex-direction: column; height: auto; }
             
-            /* 5. Player 3D (Modo Cinematográfico) */
+            /* 8. Player 3D (Modo Cinematográfico) */
             .cine-title { font-size: 2.5rem; }
             .cine-desc { font-size: 1rem; }
-            
-            /* Força as caixas de texto do filme 3D a ficarem na parte de baixo da tela */
             .cine-text-box {
                 width: 90vw !important;
                 left: 5vw !important;
@@ -2287,20 +2576,90 @@
                 border-radius: 8px !important;
                 padding: 15px !important;
             }
-            
-            /* Encolhe o Sistema Solar gigante para caber na tela do celular */
             .cine-solar-system {
                 left: 50%;
-                transform: translate(-50%, -50%) scale(0.45); /* Reduz para 45% do tamanho original */
+                transform: translate(-50%, -50%) scale(0.45);
             }
-            
-            /* Ajusta a maçã gigante e a fórmula de Newton */
             .cine-giant-apple { font-size: 8rem; }
             .cine-math-wave { font-size: 3rem; top: 50px; }
             
-            /* Ajusta a tela de Perfis */
+            /* 9. Video Player Overlay & Controls */
+            #custom-video-player .close-video-btn {
+                top: 12px;
+                left: 12px;
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+            .custom-yt-controls-overlay {
+                padding: 12px 16px 14px 16px;
+                gap: 10px;
+            }
+            .ytc-btn {
+                font-size: 1.15rem;
+                min-width: 42px;
+                min-height: 42px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .ytc-time {
+                font-size: 0.78rem;
+            }
+            .video-next-episode-btn {
+                bottom: 70px;
+                right: 16px;
+                font-size: 0.85rem;
+                padding: 10px 16px;
+            }
+
+            /* 10. Modais de Perfil & Envio de Trabalho */
+            .add-profile-box,
+            .submit-work-box {
+                width: 95%;
+                max-width: 100%;
+                padding: 22px 16px;
+                max-height: 88vh;
+            }
+            .add-profile-form {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 15px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .cover-input-row {
+                flex-direction: column;
+                gap: 8px;
+            }
             .avatar { width: 90px; height: 90px; }
             #profile-screen h1 { font-size: 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .acervo-hero-title {
+                font-size: 1.5rem;
+            }
+            .acervo-card-portrait {
+                flex: 0 0 125px;
+                width: 125px;
+                height: 190px;
+            }
+            .disney-col-card {
+                flex: 0 0 170px;
+                height: 100px;
+            }
+            .modal-hero {
+                height: 210px;
+            }
+            .modal-hero.modal-hero-expanded {
+                height: 270px;
+            }
         }
 
         /* =========================================================
@@ -4966,7 +5325,7 @@
         .global-toast i { color: #46d369; font-size: 1.2rem; }
 
         /* =========================================================
-           TELA: TRABALHOS ANTIGOS (100% DESIGN NETFLIX BROWSE)
+           TELA: TRABALHOS ANTIGOS (MESMO DESIGN DA TELA INICIAL)
            ========================================================= */
         #acervo-screen {
             overflow-y: auto;
@@ -4975,102 +5334,116 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            padding-top: 70px;
-        }
-        #acervo-screen .home-nav {
-            background: rgba(20, 20, 20, 0.98);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .netflix-subnav-bar {
-            padding: 16px 4% 10px 4%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding-top: 0;
             position: relative;
-            background: transparent;
+        }
+        #acervo-screen .acervo-catalog {
+            padding: 0 4% 60px 4%;
+            position: relative;
             z-index: 10;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: -30px;
+            flex: 1 0 auto;
         }
-        .netflix-subnav-left {
+
+        /* HERO BANNER / CARROSSEL DO ACERVO (ESTILO HOME) */
+        .hero.acervo-hero {
+            height: 90vh;
+            min-height: 620px;
+            padding: 0 4%;
             display: flex;
             align-items: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-        .netflix-subnav-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #fff;
-            margin: 0;
-            letter-spacing: 0.5px;
-            font-family: 'Inter', sans-serif;
-        }
-        .netflix-genre-dropdown-wrapper {
             position: relative;
+            background-size: contain;
+            background-position: right center;
+            background-repeat: no-repeat;
+            background-color: #141414;
+            transition: background 0.6s ease-in-out;
         }
-        .netflix-genre-select-btn {
-            background: #000;
+        .hero.acervo-hero .hero-content {
+            max-width: 540px;
+            margin-top: 40px;
+            z-index: 5;
+        }
+        .hero.acervo-hero .hero-content h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4.8rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.9);
+            line-height: 0.95;
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            padding: 5px 14px 5px 12px;
-            font-size: 0.88rem;
-            font-weight: 700;
+        }
+        .hero.acervo-hero .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .hero-carousel-pagers {
+            position: absolute;
+            bottom: 45px;
+            right: 4%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 15;
+        }
+        .acervo-hero-dot {
+            width: 26px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.35);
+            border: none;
+            border-radius: 2px;
             cursor: pointer;
+            transition: all 0.25s ease;
+            padding: 0;
+        }
+        .acervo-hero-dot.active {
+            background: #fff;
+            width: 44px;
+        }
+        .acervo-hero-dot:hover {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        /* FILTRO DE MATÉRIAS (PÍLULAS ESTILO NETFLIX) */
+        .acervo-materia-filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 10px 0 20px 0;
+            margin-bottom: 12px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .acervo-materia-filter-bar::-webkit-scrollbar {
+            display: none;
+        }
+        .materia-filter-chip {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ccc;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            padding: 8px 18px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            border-radius: 0;
-            letter-spacing: 0.5px;
+            gap: 8px;
             transition: all 0.2s ease;
+            font-family: inherit;
         }
-        .netflix-genre-select-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #fff;
-        }
-        .netflix-genre-popover {
-            position: absolute;
-            top: calc(100% + 4px);
-            left: 0;
-            background: rgba(0, 0, 0, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            min-width: 220px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95);
-            display: none;
-            flex-direction: column;
-            z-index: 100;
-            padding: 8px 0;
-        }
-        .netflix-genre-popover.open {
-            display: flex;
-        }
-        .netflix-genre-item {
-            padding: 9px 18px;
-            color: #ccc;
-            font-size: 0.88rem;
-            cursor: pointer;
-            transition: background 0.15s, color 0.15s;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .netflix-genre-item:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .materia-filter-chip:hover {
+            background: rgba(255, 255, 255, 0.18);
             color: #fff;
+            border-color: rgba(255, 255, 255, 0.38);
         }
-        .netflix-genre-item.active {
+        .materia-filter-chip.active {
+            background: var(--netflix-red, #e50914);
             color: #fff;
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .netflix-genre-item .genre-count {
-            color: #777;
-            font-size: 0.78rem;
-        }
-        .acervo-catalog {
-            margin-top: 10px;
-            flex: 1 0 auto;
-            padding-bottom: 70px;
+            border-color: var(--netflix-red, #e50914);
+            box-shadow: 0 2px 10px rgba(229, 9, 20, 0.45);
         }
 
         /* ABAS DO MODAL DE CADASTRO (INDIVIDUAL VS IMPORTAÇÃO EM LOTE) */
@@ -5798,6 +6171,12 @@
             border-color: #fff;
             box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.2);
             z-index: 10;
+        }
+
+        .disney-col-card.active {
+            border-color: var(--netflix-red);
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.7);
+            transform: scale(1.03);
         }
 
         .disney-col-card-shine {

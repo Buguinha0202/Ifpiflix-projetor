@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css?v=3.8">
+    <link rel="stylesheet" href="css/style.css?v=4.0">
 </head>
 <body>
 
@@ -1768,7 +1768,7 @@
         </div>
     </div>
 
-    <script src="js/script.js?v=3.8"></script>
+    <script src="js/script.js?v=4.0"></script>
 
     <!-- O HTML DO PLAYER DEVE FICAR FORA DO SCRIPT -->
     <div id="custom-video-player" class="video-overlay">
@@ -1778,9 +1778,14 @@
         <video id="main-video-element" controls playsinline preload="auto"></video>
         <iframe id="main-iframe-element" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="display:none; width: 100%; height: 100%; border: none;"></iframe>
 
+        <!-- Cortina de carregamento cinema (elimina flash do play do YouTube) -->
+        <div id="ytc-curtain" class="ytc-curtain">
+            <div class="ytc-curtain-spinner"></div>
+        </div>
+
         <!-- Controles Customizados IFPIFLIX para Trailer do YouTube -->
         <div class="custom-yt-controls-overlay" id="custom-yt-controls">
-            <div class="ytc-progress-bar" id="ytc-progress" onclick="window.ytMainSeek(event)">
+            <div class="ytc-progress-bar" id="ytc-progress">
                 <div class="ytc-progress-fill" id="ytc-fill"></div>
             </div>
             <div class="ytc-buttons-row">
