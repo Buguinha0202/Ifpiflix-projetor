@@ -14,37 +14,63 @@
             background: transparent;
             border: 1px solid transparent;
             transition: all 0.3s ease;
-            padding: 5px;
+            padding: 4px 6px;
+            border-radius: 4px;
         }
-        .search-box.active {
-            background: rgba(0, 0, 0, 0.75);
-            border-color: #fff;
+        .search-box.active,
+        .search-box:focus-within {
+            background: rgba(0, 0, 0, 0.85);
+            border-color: rgba(255, 255, 255, 0.9);
         }
         .search-icon {
             background: transparent;
             border: none;
             outline: none;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             cursor: pointer;
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 4px;
+            flex-shrink: 0;
         }
-        #search-input {
+        .search-box input[type="search"],
+        .search-box input,
+        #search-input,
+        #acervo-search-input {
             width: 0;
-            border: none;
-            background: transparent;
-            color: #fff;
-            outline: none;
-            transition: width 0.3s ease;
+            border: none !important;
+            background: transparent !important;
+            color: #fff !important;
+            outline: none !important;
+            transition: width 0.3s ease, padding 0.3s ease;
             padding: 0;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
+            box-shadow: none !important;
+            -webkit-appearance: none;
+            appearance: none;
         }
-        .search-box.active #search-input {
+        .search-box.active input[type="search"],
+        .search-box.active input,
+        .search-box:focus-within input[type="search"],
+        .search-box:focus-within input,
+        .search-box.active #search-input,
+        .search-box.active #acervo-search-input,
+        #search-input:focus,
+        #acervo-search-input:focus {
             width: 220px;
             padding: 0 10px;
+        }
+        .search-box input::placeholder {
+            color: #888;
+        }
+        .search-box input::-webkit-search-decoration,
+        .search-box input::-webkit-search-cancel-button,
+        .search-box input::-webkit-search-results-button,
+        .search-box input::-webkit-search-results-decoration {
+            display: none;
         }
         
         /* Container de Resultados */
@@ -232,8 +258,42 @@
             --netflix-bg: #141414; 
             --text-dim: #808080; 
             --rpg-gold: #d4af37;
+            color-scheme: dark;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            color-scheme: dark;
+            background-color: var(--netflix-dark);
+        }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.22) #141414;
+        }
+
+        /* Barra de rolagem global discreta estilo streaming (Dark Netflix) */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #141414;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 4px;
+            border: 2px solid #141414;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.45);
+        }
+        ::-webkit-scrollbar-thumb:active {
+            background: var(--netflix-red);
+        }
+        ::-webkit-scrollbar-corner {
+            background: #141414;
+        }
         
         body { background-color: var(--netflix-dark); color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; width: 100vw; height: 100vh; }
         p, h1, h2, h3, h4, span, .text-col, .cine-desc, .modal-synopsis { user-select: text; -webkit-user-select: text; }
@@ -2054,6 +2114,33 @@
             letter-spacing: 1px;
             z-index: 5;
             backdrop-filter: blur(4px);
+        }
+
+        /* Separador de Temporadas na Lista de Episódios */
+        .series-season-divider {
+            grid-column: 1 / -1;
+            margin: 20px 0 10px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+        }
+        .series-season-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(229, 9, 20, 0.18);
+            border: 1px solid rgba(229, 9, 20, 0.5);
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .series-season-pill i {
+            color: var(--netflix-red);
         }
         
         .modal-info-grid {
@@ -4888,17 +4975,21 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-top: 70px;
+        }
+        #acervo-screen .home-nav {
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
         .netflix-subnav-bar {
-            padding: 95px 4% 15px 4%;
+            padding: 16px 4% 10px 4%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            background: rgba(20, 20, 20, 0.96);
-            backdrop-filter: blur(10px);
-            z-index: 50;
+            position: relative;
+            background: transparent;
+            z-index: 10;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .netflix-subnav-left {
@@ -5095,15 +5186,15 @@
             scroll-behavior: smooth;
             padding: 4px 2px 14px 2px;
             -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            user-select: none;
+            touch-action: pan-y;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
         }
 
-        .acervo-disney-bar::-webkit-scrollbar {
-            height: 5px;
-        }
-
-        .acervo-disney-bar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
+        .acervo-disney-bar.active-drag {
+            cursor: grabbing;
         }
 
         .acervo-disney-pill {
@@ -6033,7 +6124,9 @@
             transform: translateX(2px);
         }
 
-        .acervo-shelf-slider-container {
+        .acervo-shelf-slider-container,
+        .acervo-disney-slider-container,
+        .acervo-students-slider-container {
             position: relative;
             width: 100%;
         }
@@ -6044,9 +6137,9 @@
             transform: translateY(-50%);
             width: 44px;
             height: 72px;
-            background: rgba(10, 10, 10, 0.78);
+            background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
             font-size: 1.3rem;
             display: flex;
@@ -6059,12 +6152,21 @@
             border-radius: 4px;
         }
 
-        .acervo-shelf-slider-container:hover .acervo-slider-nav-btn {
+        .acervo-shelf-slider-container:hover .acervo-slider-nav-btn,
+        .acervo-disney-slider-container:hover .acervo-slider-nav-btn,
+        .acervo-students-slider-container:hover .acervo-slider-nav-btn,
+        .catalog-section:hover .acervo-slider-nav-btn {
             opacity: 0.95;
         }
 
+        @media (hover: none) {
+            .acervo-slider-nav-btn {
+                opacity: 0.8 !important;
+            }
+        }
+
         .acervo-slider-nav-btn:hover {
-            opacity: 1;
+            opacity: 1 !important;
             background: var(--netflix-red);
             transform: translateY(-50%) scale(1.08);
             border-color: rgba(255, 255, 255, 0.4);
@@ -6086,7 +6188,8 @@
             display: flex;
             gap: 16px;
             overflow-x: auto;
-            scrollbar-width: none;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
             padding: 8px 4px 18px 4px;
             width: 100%;
             cursor: grab;
@@ -6095,115 +6198,293 @@
             touch-action: pan-y;
         }
 
-        .acervo-row-slider::-webkit-scrollbar {
-            display: none;
+        /* Scrollbars horizontais elegantes e discretas em todas as fileiras */
+        .posters-container,
+        .landscape-row,
+        .top10-container,
+        .acervo-row-slider,
+        .acervo-disney-bar,
+        .acervo-students-slider,
+        .disney-collections-row,
+        .continue-watching-grid {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+
+        .posters-container::-webkit-scrollbar,
+        .landscape-row::-webkit-scrollbar,
+        .top10-container::-webkit-scrollbar,
+        .acervo-row-slider::-webkit-scrollbar,
+        .acervo-disney-bar::-webkit-scrollbar,
+        .acervo-students-slider::-webkit-scrollbar,
+        .disney-collections-row::-webkit-scrollbar,
+        .continue-watching-grid::-webkit-scrollbar {
+            height: 6px !important;
+            display: block !important;
+        }
+
+        .posters-container::-webkit-scrollbar-track,
+        .landscape-row::-webkit-scrollbar-track,
+        .top10-container::-webkit-scrollbar-track,
+        .acervo-row-slider::-webkit-scrollbar-track,
+        .acervo-disney-bar::-webkit-scrollbar-track,
+        .acervo-students-slider::-webkit-scrollbar-track,
+        .disney-collections-row::-webkit-scrollbar-track,
+        .continue-watching-grid::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .posters-container::-webkit-scrollbar-thumb,
+        .landscape-row::-webkit-scrollbar-thumb,
+        .top10-container::-webkit-scrollbar-thumb,
+        .acervo-row-slider::-webkit-scrollbar-thumb,
+        .acervo-disney-bar::-webkit-scrollbar-thumb,
+        .acervo-students-slider::-webkit-scrollbar-thumb,
+        .disney-collections-row::-webkit-scrollbar-thumb,
+        .continue-watching-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 4px;
+        }
+
+        .posters-container::-webkit-scrollbar-thumb:hover,
+        .landscape-row::-webkit-scrollbar-thumb:hover,
+        .top10-container::-webkit-scrollbar-thumb:hover,
+        .acervo-row-slider::-webkit-scrollbar-thumb:hover,
+        .acervo-disney-bar::-webkit-scrollbar-thumb:hover,
+        .acervo-students-slider::-webkit-scrollbar-thumb:hover,
+        .disney-collections-row::-webkit-scrollbar-thumb:hover,
+        .continue-watching-grid::-webkit-scrollbar-thumb:hover {
+            background: var(--netflix-red, #e50914);
         }
 
         .acervo-row-slider.active-drag {
             cursor: grabbing;
         }
 
-        .acervo-row-slider .academic-card {
-            flex: 0 0 320px;
-            width: 320px;
-            max-width: 320px;
+        /* =========================================================
+           CARDS VERTICAIS DE CARTAZ (ESTILO NETFLIX 2:3) NO ACERVO
+           ========================================================= */
+        .acervo-card-portrait {
+            flex: 0 0 195px;
+            width: 195px;
+            height: 295px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            border: 2px solid #222;
+            background-color: #141414;
+            transition: transform 0.28s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.28s ease, box-shadow 0.28s ease;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        /* Banner de foco em matéria única filtrada */
-        .acervo-focused-materia-header {
+        .acervo-card-portrait:hover {
+            transform: translateY(-8px) scale(1.04);
+            border-color: var(--netflix-red);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.85), 0 0 20px rgba(229, 9, 20, 0.45);
+            z-index: 15;
+        }
+
+        .acervo-card-portrait.is-series-card {
+            border-color: rgba(229, 9, 20, 0.5);
+        }
+
+        .acervo-card-portrait.is-series-card:hover {
+            border-color: var(--netflix-red);
+            box-shadow: 0 16px 36px rgba(229, 9, 20, 0.6);
+        }
+
+        /* Badges no topo do cartaz */
+        .acervo-card-top-badges {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.4));
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+            gap: 6px;
+            z-index: 4;
+            pointer-events: none;
         }
 
-        .acervo-clear-filter-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .acervo-tag-materia {
+            font-size: 0.64rem;
+            font-weight: 800;
             color: #fff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
+            gap: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 110px;
         }
 
-        .acervo-clear-filter-btn:hover {
+        .acervo-tag-series {
+            font-size: 0.64rem;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, var(--netflix-red), #990000);
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 8px rgba(229, 9, 20, 0.6);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .acervo-tag-format {
+            font-size: 0.64rem;
+            font-weight: 700;
+            color: #eee;
+            background: rgba(0, 0, 0, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            backdrop-filter: blur(4px);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        /* Overlay de Play no Hover (Centro) */
+        .acervo-card-play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 2;
+        }
+
+        .acervo-card-portrait:hover .acervo-card-play-overlay {
+            opacity: 1;
+        }
+
+        .acervo-card-play-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
             background: var(--netflix-red);
-            border-color: var(--netflix-red);
-            transform: translateX(-2px);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 18px rgba(229, 9, 20, 0.7);
+            transform: scale(0.85);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .acervo-card-portrait:hover .acervo-card-play-btn {
+            transform: scale(1);
+        }
+
+        /* Informações do Rodapé do Cartaz */
+        .acervo-card-bottom-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 28px 10px 10px 10px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.82) 65%, transparent 100%);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            pointer-events: none;
+        }
+
+        .acervo-card-title {
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.25;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .acervo-card-meta {
+            font-size: 0.72rem;
+            color: #ffd700;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .acervo-card-authors {
+            font-size: 0.68rem;
+            color: #aaa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Grid de cartazes para modo filtrado (Matéria específica ou Aluno) */
+        .acervo-posters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 22px;
+            padding: 10px 0 40px 0;
+            width: 100%;
+        }
+
+        .acervo-posters-grid .acervo-card-portrait {
+            flex: none;
+            width: 100%;
+            height: 295px;
         }
 
         @media (max-width: 768px) {
             .acervo-slider-nav-btn {
                 display: none;
             }
-            .acervo-row-slider .academic-card {
-                flex: 0 0 270px;
-                width: 270px;
-                max-width: 270px;
+            .acervo-card-portrait {
+                flex: 0 0 155px;
+                width: 155px;
+                height: 235px;
             }
-            .acervo-shelf-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
+            .acervo-posters-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 14px;
             }
-            .acervo-focused-materia-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
+            .acervo-posters-grid .acervo-card-portrait {
+                height: 220px;
             }
-        }
-
-        /* =========================================================
-           CARD DE COLEÇÃO / TRABALHO COMPLETO (MULTI-ITEM)
-           ========================================================= */
-        .academic-card.is-multi {
-            border: 1px solid rgba(229, 9, 20, 0.4);
-            background: #171717;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65);
-        }
-
-        .academic-card.is-multi:hover {
-            border-color: var(--netflix-red);
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 16px 36px rgba(229, 9, 20, 0.35);
-        }
-
-        .academic-card.is-multi .multi-badge {
-            background: linear-gradient(135deg, var(--netflix-red), #990000) !important;
-            font-weight: 800 !important;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 10px rgba(229, 9, 20, 0.5);
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .academic-card.is-multi::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            right: 10px;
-            left: 10px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.16);
-            border-radius: 4px 4px 0 0;
-            pointer-events: none;
-            transition: all 0.25s ease;
-        }
-
-        .academic-card.is-multi:hover::before {
-            background: rgba(229, 9, 20, 0.7);
-            top: -6px;
+            .acervo-card-title {
+                font-size: 0.82rem;
+            }
         }
 
         /* =========================================================
@@ -6417,7 +6698,15 @@
             overflow-x: auto;
             padding: 6px 2px 14px 2px;
             scroll-behavior: smooth;
+            cursor: grab;
+            user-select: none;
+            touch-action: pan-y;
             scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+        }
+
+        .acervo-students-slider.active-drag {
+            cursor: grabbing;
         }
 
         .student-avatar-card {

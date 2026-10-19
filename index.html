@@ -277,7 +277,6 @@
                     <li class="nav-cat-item" data-cat="ti" onclick="window.filterNavCategory('ti')">Séries de T.I.</li>
                     <li class="nav-cat-item" data-cat="trabalhos" onclick="window.filterNavCategory('trabalhos')">Trabalhos Antigos</li>
                     <li class="nav-cat-item" data-cat="minha-lista" onclick="window.filterNavCategory('minha-lista')">Minha Lista</li>
-                    <li class="nav-cat-item" data-cat="wrapped" onclick="window.openIfpiflixWrapped()"><i class="fa-solid fa-sparkles" style="color: #ffd700; margin-right: 5px;"></i>Retrospectiva</li>
                 </ul>
             </div>
             
@@ -294,12 +293,6 @@
                     <input type="search" id="search-input" placeholder="Títulos, gêneros..." aria-label="Pesquisar títulos e gêneros" enterkeyhint="search" autocomplete="off">
                 </div>
 
-                <!-- Botão IFPIFLIX Wrapped (Retrospectiva Geral) -->
-                <button type="button" class="btn-wrapped" id="btn-wrapped" onclick="window.openIfpiflixWrapped()" title="Retrospectiva Geral do IFPI (IFPIFLIX Wrapped)">
-                    <i class="fa-solid fa-sparkles"></i>
-                    <span class="btn-wrapped-text">Retrospectiva</span>
-                </button>
-
                 <!-- Botão Surpreenda-me (Roleta) -->
                 <button type="button" class="btn-surprise" id="btn-surprise-me" onclick="window.triggerSurpriseMe()" title="Surpreenda-me (Sorteador de Filmes)">
                     <i class="fa-solid fa-shuffle"></i>
@@ -309,7 +302,7 @@
                 <!-- Dropdown de Perfil -->
                 <div class="nav-profile-wrapper" id="nav-profile-wrapper">
                     <button type="button" class="nav-profile-btn" id="nav-profile-btn" aria-haspopup="true" aria-expanded="false" aria-label="Menu do perfil">
-                        <span id="nav-profile-name" style="font-weight:bold;">Admin</span>
+                        <span id="nav-profile-name" class="nav-profile-name" style="font-weight:bold;">Admin</span>
                         <i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i>
                         <i class="fa-solid fa-caret-down"></i>
                     </button>
@@ -384,37 +377,45 @@
             <!-- LINHA: TOP 5 NO IFPI HOJE (Estilo Netflix com números gigantes lado a lado) -->
             <div id="top5-section" class="catalog-section" style="margin-bottom: 30px;">
                 <h2 class="row-title"><span class="top10-badge">TOP 5</span> de hoje no IFPI</h2>
-                <div class="top10-container" id="top10-container">
-                    <div class="top10-item" onclick="window.openTitleModal('guerra-civil')">
-                        <div class="top10-rank">1</div>
-                        <div class="card-portrait p-tema2" data-movie="guerra-civil" role="button" tabindex="0" aria-label="Guerra Civil">
-                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TOP 1</span><h4>Guerra Civil</h4></div>
+                <div class="acervo-shelf-slider-container">
+                    <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('top10-container', -1)">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="top10-container" id="top10-container">
+                        <div class="top10-item" onclick="window.openTitleModal('guerra-civil')">
+                            <div class="top10-rank">1</div>
+                            <div class="card-portrait p-tema2" data-movie="guerra-civil" role="button" tabindex="0" aria-label="Guerra Civil">
+                                <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TOP 1</span><h4>Guerra Civil</h4></div>
+                            </div>
+                        </div>
+                        <div class="top10-item" onclick="window.openTitleModal('tema-1')">
+                            <div class="top10-rank">2</div>
+                            <div class="card-portrait p-tema1" data-movie="tema-1" role="button" tabindex="0" aria-label="Invocação do Dogma">
+                                <div class="card-portrait-content"><span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TOP 2</span><h4>Invocação do Dogma</h4></div>
+                            </div>
+                        </div>
+                        <div class="top10-item" onclick="window.openTitleModal('tema-4')">
+                            <div class="top10-rank">3</div>
+                            <div class="card-portrait p-tema4" data-movie="tema-4" role="button" tabindex="0" aria-label="Obsessão: Falsificabilidade">
+                                <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TOP 3</span><h4>Obsessão: Falsificabilidade</h4></div>
+                            </div>
+                        </div>
+                        <div class="top10-item" onclick="window.openTitleModal('tema-3')">
+                            <div class="top10-rank">4</div>
+                            <div class="card-portrait p-tema3" data-movie="tema-3" role="button" tabindex="0" aria-label="Devoradores de Espaço-Tempo">
+                                <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span><h4>Devoradores de Espaço-Tempo</h4></div>
+                            </div>
+                        </div>
+                        <div class="top10-item" onclick="window.openTitleModal('tema-5')">
+                            <div class="top10-rank">5</div>
+                            <div class="card-portrait p-tema5" data-movie="tema-5" role="button" tabindex="0" aria-label="Não Olhe para a Ética">
+                                <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span><h4>Não Olhe para a Ética</h4></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="top10-item" onclick="window.openTitleModal('tema-1')">
-                        <div class="top10-rank">2</div>
-                        <div class="card-portrait p-tema1" data-movie="tema-1" role="button" tabindex="0" aria-label="Invocação do Dogma">
-                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TOP 2</span><h4>Invocação do Dogma</h4></div>
-                        </div>
-                    </div>
-                    <div class="top10-item" onclick="window.openTitleModal('tema-4')">
-                        <div class="top10-rank">3</div>
-                        <div class="card-portrait p-tema4" data-movie="tema-4" role="button" tabindex="0" aria-label="Obsessão: Falsificabilidade">
-                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TOP 3</span><h4>Obsessão: Falsificabilidade</h4></div>
-                        </div>
-                    </div>
-                    <div class="top10-item" onclick="window.openTitleModal('tema-3')">
-                        <div class="top10-rank">4</div>
-                        <div class="card-portrait p-tema3" data-movie="tema-3" role="button" tabindex="0" aria-label="Devoradores de Espaço-Tempo">
-                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span><h4>Devoradores de Espaço-Tempo</h4></div>
-                        </div>
-                    </div>
-                    <div class="top10-item" onclick="window.openTitleModal('tema-5')">
-                        <div class="top10-rank">5</div>
-                        <div class="card-portrait p-tema5" data-movie="tema-5" role="button" tabindex="0" aria-label="Não Olhe para a Ética">
-                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span><h4>Não Olhe para a Ética</h4></div>
-                        </div>
-                    </div>
+                    <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('top10-container', 1)">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
 
@@ -435,45 +436,69 @@
                     </span>
                     <a href="#" onclick="event.preventDefault(); window.openAcervoScreen();" style="font-size: 0.88rem; color: #aaa; text-decoration: none; font-weight: 600;">Ver Acervo Completo &gt;</a>
                 </h2>
-                <div class="disney-collections-row" id="disney-collections-grid">
-                    <!-- Cards gerados via JS estilo Disney+ -->
+                <div class="acervo-shelf-slider-container">
+                    <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('disney-collections-grid', -1)">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="disney-collections-row" id="disney-collections-grid">
+                        <!-- Cards gerados via JS estilo Disney+ -->
+                    </div>
+                    <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('disney-collections-grid', 1)">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
             
             <!-- LINHA 1: LANÇAMENTOS DOS 5 TEMAS -->
             <div id="filosofia-row" class="catalog-section" style="margin-bottom: 30px;">
                 <h2 class="row-title">Lançamentos da Turma • Os 5 Temas de Filosofia</h2>
-                <div class="posters-container">
-                    <div class="card-portrait p-tema1" data-movie="tema-1" role="button" tabindex="0" aria-label="Invocação do Dogma">
-                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TEMA 01</span><h4>Invocação do Dogma</h4></div>
+                <div class="acervo-shelf-slider-container">
+                    <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('filosofia-posters-shelf', -1)">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="posters-container" id="filosofia-posters-shelf">
+                        <div class="card-portrait p-tema1" data-movie="tema-1" role="button" tabindex="0" aria-label="Invocação do Dogma">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: var(--rpg-gold); font-weight: bold; margin-bottom: 4px;">TEMA 01</span><h4>Invocação do Dogma</h4></div>
+                        </div>
+                        <div class="card-portrait p-tema2" style="border-color: var(--netflix-red); box-shadow: 0 0 15px rgba(229,9,20,0.5);" data-movie="guerra-civil" role="button" tabindex="0" aria-label="Guerra Civil">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 02 </span><h4>Guerra Civil</h4></div>
+                        </div>
+                        <div class="card-portrait p-tema3" data-movie="tema-3" role="button" tabindex="0" aria-label="Devoradores de Espaço-Tempo">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span><h4>Devoradores de Espaço-Tempo</h4></div>
+                        </div>
+                        <div class="card-portrait p-tema4" data-movie="tema-4" role="button" tabindex="0" aria-label="Obsessão: Falsificabilidade">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TEMA 04</span><h4>Obsessão: Falsificabilidade</h4></div>
+                        </div>
+                        <div class="card-portrait p-tema5" data-movie="tema-5" role="button" tabindex="0" aria-label="Não Olhe para a Ética">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span><h4>Não Olhe para a Ética</h4></div>
+                        </div>
                     </div>
-                    <div class="card-portrait p-tema2" style="border-color: var(--netflix-red); box-shadow: 0 0 15px rgba(229,9,20,0.5);" data-movie="guerra-civil" role="button" tabindex="0" aria-label="Guerra Civil">
-                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 02 </span><h4>Guerra Civil</h4></div>
-                    </div>
-                    <div class="card-portrait p-tema3" data-movie="tema-3" role="button" tabindex="0" aria-label="Devoradores de Espaço-Tempo">
-                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px;">TEMA 03</span><h4>Devoradores de Espaço-Tempo</h4></div>
-                    </div>
-                    <div class="card-portrait p-tema4" data-movie="tema-4" role="button" tabindex="0" aria-label="Obsessão: Falsificabilidade">
-                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #ffd700; font-weight: bold; margin-bottom: 4px;">TEMA 04</span><h4>Obsessão: Falsificabilidade</h4></div>
-                    </div>
-                    <div class="card-portrait p-tema5" data-movie="tema-5" role="button" tabindex="0" aria-label="Não Olhe para a Ética">
-                        <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #fff; font-weight: bold; margin-bottom: 4px;">TEMA 05</span><h4>Não Olhe para a Ética</h4></div>
-                    </div>
+                    <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('filosofia-posters-shelf', 1)">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
 
             <!-- LINHA 2: SÉRIES E CURTAS DE T.I. -->
             <div id="ti-row" class="catalog-section" style="margin-bottom: 30px;">
                 <h2 class="row-title">Séries e Curtas de T.I.</h2>
-                <div class="posters-container">
-                    <div class="card-portrait p-stranger" data-movie="stranger-pings" role="button" tabindex="0" aria-label="Stranger Pings"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
-                    <div class="card-portrait p-dragon" data-movie="treinar-ia" role="button" tabindex="0" aria-label="Como Treinar a sua I.A."><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
-                    <div class="card-portrait p-pix" data-movie="deepfake-pix" role="button" tabindex="0" aria-label="Deepfake: O Preço do Pix"><div class="card-portrait-content"><h4>Deepfake: O Preço do Pix</h4></div></div>
-                    <div class="card-portrait p-opensource" data-movie="open-source" role="button" tabindex="0" aria-label="Open Source"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
-                    <div class="card-portrait p-kpop" data-movie="kpop" role="button" tabindex="0" aria-label="Guerreiras do Pop 3"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
-                    <div class="card-portrait p-procurando" data-movie="procurando-ip" role="button" tabindex="0" aria-label="Procurando IP"><div class="card-portrait-content"><h4>Procurando IP</h4></div></div>
-                    <div class="card-portrait p-nicolas" data-movie="nicolas" role="button" tabindex="0" aria-label="Nicolas O Grande"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
-                    <div class="card-portrait p-lalalan" data-movie="lalalan" role="button" tabindex="0" aria-label="La La LAN"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
+                <div class="acervo-shelf-slider-container">
+                    <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('ti-posters-shelf', -1)">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="posters-container" id="ti-posters-shelf">
+                        <div class="card-portrait p-stranger" data-movie="stranger-pings" role="button" tabindex="0" aria-label="Stranger Pings"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
+                        <div class="card-portrait p-dragon" data-movie="treinar-ia" role="button" tabindex="0" aria-label="Como Treinar a sua I.A."><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
+                        <div class="card-portrait p-pix" data-movie="deepfake-pix" role="button" tabindex="0" aria-label="Deepfake: O Preço do Pix"><div class="card-portrait-content"><h4>Deepfake: O Preço do Pix</h4></div></div>
+                        <div class="card-portrait p-opensource" data-movie="open-source" role="button" tabindex="0" aria-label="Open Source"><div class="card-portrait-content"><h4>Open Source</h4></div></div>
+                        <div class="card-portrait p-kpop" data-movie="kpop" role="button" tabindex="0" aria-label="Guerreiras do Pop 3"><div class="card-portrait-content"><h4>Guerreiras do Pop 3</h4></div></div>
+                        <div class="card-portrait p-procurando" data-movie="procurando-ip" role="button" tabindex="0" aria-label="Procurando IP"><div class="card-portrait-content"><h4>Procurando IP</h4></div></div>
+                        <div class="card-portrait p-nicolas" data-movie="nicolas" role="button" tabindex="0" aria-label="Nicolas O Grande"><div class="card-portrait-content"><h4>Nicolas O Grande</h4></div></div>
+                        <div class="card-portrait p-lalalan" data-movie="lalalan" role="button" tabindex="0" aria-label="La La LAN"><div class="card-portrait-content"><h4>La La LAN</h4></div></div>
+                    </div>
+                    <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('ti-posters-shelf', 1)">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
 
@@ -483,12 +508,20 @@
                     <span>Trabalhos Antigos</span>
                     <a href="#" onclick="event.preventDefault(); window.openAcervoScreen();" style="font-size: 0.88rem; color: #aaa; text-decoration: none; font-weight: 600;">Ver todos &gt;</a>
                 </h2>
-                <div class="landscape-row">
-                    <div class="card-landscape p-mitm" data-movie="mitm" role="button" tabindex="0" aria-label="O Homem no Meio"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
-                    <div class="card-landscape p-firewall" data-movie="firewall" role="button" tabindex="0" aria-label="A Muralha de Fogo"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
-                    <div class="card-landscape p-metaverso" data-movie="metaverso" role="button" tabindex="0" aria-label="Fuga do Metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
-                    <div class="card-landscape p-iot" data-movie="iot" role="button" tabindex="0" aria-label="Rebelião das Torradeiras"><div class="card-landscape-content"><h4>Rebelião das Torradeiras</h4></div></div>
-                    <div class="card-landscape p-honeypot" data-movie="honeypot" role="button" tabindex="0" aria-label="O Pote de Mel"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
+                <div class="acervo-shelf-slider-container">
+                    <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('trabalhos-landscape-shelf', -1)">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div class="landscape-row" id="trabalhos-landscape-shelf">
+                        <div class="card-landscape p-mitm" data-movie="mitm" role="button" tabindex="0" aria-label="O Homem no Meio"><div class="card-landscape-content"><h4>O Homem no Meio</h4></div></div>
+                        <div class="card-landscape p-firewall" data-movie="firewall" role="button" tabindex="0" aria-label="A Muralha de Fogo"><div class="card-landscape-content"><h4>A Muralha de Fogo</h4></div></div>
+                        <div class="card-landscape p-metaverso" data-movie="metaverso" role="button" tabindex="0" aria-label="Fuga do Metaverso"><div class="card-landscape-content"><h4>Fuga do Metaverso</h4></div></div>
+                        <div class="card-landscape p-iot" data-movie="iot" role="button" tabindex="0" aria-label="Rebelião das Torradeiras"><div class="card-landscape-content"><h4>Rebelião das Torradeiras</h4></div></div>
+                        <div class="card-landscape p-honeypot" data-movie="honeypot" role="button" tabindex="0" aria-label="O Pote de Mel"><div class="card-landscape-content"><h4>O Pote de Mel</h4></div></div>
+                    </div>
+                    <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('trabalhos-landscape-shelf', 1)">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
 
@@ -509,6 +542,7 @@
             <div class="footer-links">
                 <a href="#" role="button" data-action="resumo">Guia de Estudos (Resumo)</a>
                 <a href="#" role="button" onclick="event.preventDefault(); window.openAcervoScreen();">Trabalhos Antigos</a>
+                <a href="#" role="button" onclick="event.preventDefault(); window.openIfpiflixWrapped();" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa-solid fa-sparkles" style="color: #ffd700;"></i> Retrospectiva da Turma</a>
                 <a href="#" role="button" data-action="ajuda">Central de Ajuda</a>
                 <a href="#" role="button" data-action="conta">Conta</a>
             </div>
@@ -533,27 +567,59 @@
                     <li class="nav-cat-item" data-cat="ti" onclick="window.filterNavCategory('ti')">Séries de T.I.</li>
                     <li class="nav-cat-item active" data-cat="trabalhos" onclick="window.filterNavCategory('trabalhos')">Trabalhos Antigos</li>
                     <li class="nav-cat-item" data-cat="minha-lista" onclick="window.filterNavCategory('minha-lista')">Minha Lista</li>
-                    <li class="nav-cat-item" data-cat="wrapped" onclick="window.openIfpiflixWrapped()"><i class="fa-solid fa-sparkles" style="color: #ffd700; margin-right: 5px;"></i>Retrospectiva</li>
                 </ul>
             </div>
             <div class="nav-right">
+                <!-- Botão Enviar Trabalho (EXCLUSIVO PROFESSOR) -->
                 <button type="button" class="btn-professor-upload" id="btn-acervo-upload" style="display: none;" onclick="window.openSubmitWorkModal()" title="Cadastrar / Enviar Trabalho da Turma (Exclusivo Professor)">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     <span class="btn-upload-text">Enviar Trabalho</span>
                 </button>
-                <div class="search-box">
-                    <button type="button" class="search-icon" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    <input type="search" id="acervo-search-input" placeholder="Títulos, matérias..." oninput="window.renderAcervoScreen()" autocomplete="off">
+
+                <!-- Lupa de Pesquisa no Acervo -->
+                <div class="search-box" id="acervo-search-box">
+                    <button type="button" class="search-icon" id="acervo-search-icon-btn" aria-label="Pesquisar no Acervo"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="search" id="acervo-search-input" placeholder="Títulos, matérias..." aria-label="Pesquisar no Acervo" enterkeyhint="search" oninput="window.renderAcervoScreen()" autocomplete="off">
                 </div>
-                <!-- Botão Wrapped no Acervo -->
-                <button type="button" class="btn-wrapped" onclick="window.openIfpiflixWrapped()" title="Retrospectiva Geral do IFPI (IFPIFLIX Wrapped)">
-                    <i class="fa-solid fa-sparkles"></i>
-                    <span class="btn-wrapped-text">Retrospectiva</span>
+
+                <!-- Botão Surpreenda-me (Roleta) -->
+                <button type="button" class="btn-surprise" onclick="window.triggerSurpriseMe()" title="Surpreenda-me (Sorteador de Filmes)">
+                    <i class="fa-solid fa-shuffle"></i>
+                    <span class="btn-surprise-text">Surpreenda-me</span>
                 </button>
-                <div class="nav-profile-wrapper">
-                    <button type="button" class="nav-profile-btn" onclick="window.switchScreen('profile-screen')">
+
+                <!-- Dropdown de Perfil Completo -->
+                <div class="nav-profile-wrapper" id="acervo-nav-profile-wrapper">
+                    <button type="button" class="nav-profile-btn" id="acervo-nav-profile-btn" aria-haspopup="true" aria-expanded="false" aria-label="Menu do perfil">
+                        <span class="nav-profile-name" style="font-weight:bold;">Admin</span>
                         <i class="fa-solid fa-user-circle" style="font-size:1.5rem;"></i>
+                        <i class="fa-solid fa-caret-down"></i>
                     </button>
+
+                    <div class="profile-dropdown">
+                        <div class="dropdown-item" onclick="window.switchScreen('profile-screen')">
+                            <i class="fa-solid fa-users"></i> Trocar de Perfil
+                        </div>
+                        <div class="dropdown-item" onclick="window.openIfpiflixWrapped()">
+                            <i class="fa-solid fa-sparkles" style="color: #ffd700;"></i> Retrospectiva da Turma (Wrapped)
+                        </div>
+                        <div class="dropdown-item teacher-only" style="display: none;" onclick="window.openSubmitWorkModal()">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Trabalho da Turma
+                        </div>
+                        <div class="dropdown-item" onclick="window.openInfoModal('conta')">
+                            <i class="fa-regular fa-user"></i> Conta
+                        </div>
+                        <div class="dropdown-item" onclick="window.openInfoModal('ajuda')">
+                            <i class="fa-regular fa-circle-question"></i> Central de Ajuda
+                        </div>
+                        <div class="dropdown-item" onclick="window.openResumoModal()">
+                            <i class="fa-solid fa-book-open"></i> Guia de Estudos (Resumo)
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item sair" onclick="window.logoutIfpiflix()">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair da IFPIFLIX
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -578,21 +644,6 @@
                     <button type="button" class="format-pill" id="pill-format-pdf" onclick="window.setAcervoFormat('pdf')"><i class="fa-solid fa-file-powerpoint"></i> Slides / PDF</button>
                     <button type="button" class="format-pill" id="pill-format-video" onclick="window.setAcervoFormat('video')"><i class="fa-solid fa-clapperboard"></i> Vídeos &amp; Podcasts</button>
                 </div>
-
-                <!-- Botão de Retrospectiva na Sub-Nav -->
-                <button type="button" class="btn-acervo-wrapped" onclick="window.openIfpiflixWrapped()" title="Retrospectiva Geral de todos os anos da turma">
-                    <i class="fa-solid fa-sparkles"></i> Retrospectiva IFPI
-                </button>
-
-                <!-- Alternador de Modo: Coleções vs Todos os Slides -->
-                <div class="acervo-view-toggles" id="acervo-view-toggles">
-                    <button type="button" class="view-toggle-btn active" id="view-toggle-collections" onclick="window.setAcervoViewMode('collections')" title="Agrupado por seminários">
-                        <i class="fa-solid fa-folder-open"></i> Coleções
-                    </button>
-                    <button type="button" class="view-toggle-btn" id="view-toggle-grid" onclick="window.setAcervoViewMode('grid')" title="Grade com todos os slides 16:9">
-                        <i class="fa-solid fa-table-cells-large"></i> Todos os Slides
-                    </button>
-                </div>
             </div>
 
             <!-- Chip de Aluno / Elenco Ativo -->
@@ -610,6 +661,7 @@
         <footer class="ifpiflix-footer">
             <div class="footer-links">
                 <a href="#" role="button" data-action="resumo">Guia de Estudos (Resumo)</a>
+                <a href="#" role="button" onclick="event.preventDefault(); window.openIfpiflixWrapped();" style="display: inline-flex; align-items: center; gap: 6px;"><i class="fa-solid fa-sparkles" style="color: #ffd700;"></i> Retrospectiva da Turma</a>
                 <a href="#" role="button" data-action="ajuda">Central de Ajuda</a>
                 <a href="#" role="button" data-action="conta">Conta</a>
             </div>

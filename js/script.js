@@ -254,7 +254,7 @@ let toastTimeout;
                 synopsis: "Estudo crítico da célebre obra realista de Eça de Queirós, denunciando a corrupção moral do clero e a hipocrisia da sociedade burguesa de Leiria através do drama proibido entre o padre Amaro e Amélia.",
                 cast: "Davi Costa, Marcos Felipe, Micaías Lima, Samuel Soares",
                 genres: "Língua Portuguesa, Literatura", tags: "Literatura, Realismo, Eça de Queirós", isMain: false,
-                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Realismo e Obras Clássicas", periodo: "2025 • Acervo da Turma"
+                materia: "Língua Portuguesa", trabalhoGrupo: "Série: Clássicos do Realismo & Jogos de Tabuleiro", periodo: "2025 • Acervo da Turma"
             },
             "sociologia-desenvolvimento": {
                 title: "SOCIOLOGIA DO DESENVOLVIMENTO", subtitle: "CONTRADIÇÕES SOCIAIS, CAPITALISMO E DESIGUALDADE",
@@ -265,7 +265,7 @@ let toastTimeout;
                 synopsis: "Pesquisa sociológica sobre a produção socializada e a apropriação privada do lucro, as crises cíclicas do capitalismo, o relatório da fome da ONU e os desafios estruturais para o desenvolvimento sustentável.",
                 cast: "Davi Costa, João Pedro Santos, Samuel Soares, Marcos Felipe, Micaías Lima, João Pedro Silva, Yasmyn Paiva, Wislla Mariana, Nícolas Marcell, Francisco Lucas",
                 genres: "Sociologia, Economia Política", tags: "Sociologia, Desigualdade, Capitalismo", isMain: false,
-                materia: "Sociologia", trabalhoGrupo: "Seminário: Teorias Sociais e Desenvolvimento Global", periodo: "2025 • Acervo da Turma"
+                materia: "Sociologia", trabalhoGrupo: "Seminário: Sociologia do Desenvolvimento", periodo: "2025 • Acervo da Turma"
             },
             "podcast-desigualdade": {
                 title: "PODCAST: DESIGUALDADE SOCIAL", subtitle: "DEBATE EM ÁUDIO E VÍDEO • IFPI 2025",
@@ -276,7 +276,7 @@ let toastTimeout;
                 synopsis: "Episódio especial gravado em formato podcast pelos alunos da turma, debatendo com profundidade as raízes históricas, os dados estatísticos e os reflexos modernos da desigualdade social e econômica.",
                 cast: "Micaías Lima",
                 genres: "Sociologia, Podcast Acadêmico", tags: "Sociologia, Podcast, Desigualdade Social", isMain: false,
-                materia: "Sociologia", trabalhoGrupo: "Podcasts & Debates: Questões Sociais Brasileiras", periodo: "2025 • Acervo da Turma"
+                materia: "Sociologia", trabalhoGrupo: "Série: Podcasts de Sociologia (2025)", periodo: "2025 • Acervo da Turma"
             },
             "cyber-news": {
                 title: "JORNAL CYBER NEWS", subtitle: "POLÍTICA DE SEGURANÇA DA INFORMAÇÃO • IFPI 2026",
@@ -287,7 +287,7 @@ let toastTimeout;
                 synopsis: "Edição especial do telejornal acadêmico 'Cyber News' produzida pelos alunos, cobrindo as políticas de segurança da informação (PSI), boas práticas corporativas, senhas fortes e prevenção a vazamentos de dados.",
                 cast: "Micaías Lima",
                 genres: "Segurança da Informação, Telejornalismo", tags: "Cibersegurança, Redes, Políticas de Segurança", isMain: false,
-                materia: "Segurança & Redes", trabalhoGrupo: "Práticas de Segurança da Informação & Defesa Cibernética", periodo: "2026 • 1º Bimestre"
+                materia: "Segurança & Redes", trabalhoGrupo: "Série: Práticas de Segurança da Informação & Ciberdefesa", periodo: "2026 • 1º Bimestre"
             },
             "seguranca-informacao": {
                 title: "SEGURANÇA DA INFORMAÇÃO",
@@ -302,7 +302,7 @@ let toastTimeout;
                 isMain: false,
                 isSecurityPresentation: true,
                 materia: "Segurança & Redes",
-                trabalhoGrupo: "Seminário: Práticas de Segurança da Informação & Defesa Cibernética",
+                trabalhoGrupo: "Série: Práticas de Segurança da Informação & Ciberdefesa",
                 periodo: "2025 • Acervo da Turma"
             },
             "memoria-cache": {
@@ -314,7 +314,7 @@ let toastTimeout;
                 synopsis: "Apresentação técnica sobre a organização interna e o fluxo de dados em sistemas computacionais: funcionamento da memória cache (L1, L2, L3), latência, barramentos e dispositivos de armazenamento secundário.",
                 cast: "Micaías Lima, Maria Helena",
                 genres: "Hardware, Arquitetura de Computadores", tags: "Hardware, Memória Cache, Processadores", isMain: false,
-                materia: "Hardware & Arquitetura", trabalhoGrupo: "Seminário: Arquitetura de Computadores e Hierarquia de Memória", periodo: "2025 • Acervo da Turma"
+                materia: "Hardware & Arquitetura", trabalhoGrupo: "Série: Arquitetura de Computadores & Hardware", periodo: "2025 • Acervo da Turma"
             },
             "evolucao-computadores": {
                 title: "EVOLUÇÃO DOS COMPUTADORES", subtitle: "DA PRIMEIRA GERAÇÃO À COMPUTAÇÃO MODERNA",
@@ -325,7 +325,7 @@ let toastTimeout;
                 synopsis: "Um panorama histórico da informática: desde a primeira geração com válvulas eletrônicas gigantes (1945), a revolução dos transistores e circuitos integrados até os microprocessadores de alto desempenho.",
                 cast: "Micaías Lima",
                 genres: "Manutenção de Computadores, História da T.I.", tags: "Hardware, Evolução dos Computadores", isMain: false,
-                materia: "Hardware & Arquitetura", trabalhoGrupo: "Seminário: História da Computação e Manutenção", periodo: "2025 • Acervo da Turma"
+                materia: "Hardware & Arquitetura", trabalhoGrupo: "Série: Arquitetura de Computadores & Hardware", periodo: "2025 • Acervo da Turma"
             },
             "podcast-round6": {
                 title: "CLÁSSICOS EM SÉRIE", subtitle: "ROUND 6 E AS TEORIAS SOCIOLÓGICAS (MARX, DURKHEIM E WEBER)",
@@ -335,7 +335,7 @@ let toastTimeout;
                 synopsis: "Episódio de estreia do podcast 'Clássicos em Série': os alunos analisam a série Round 6 através dos conceitos clássicos da sociologia — a luta de classes e desumanização em Marx, a anomia moral em Durkheim e a ação social racional calculista em Weber.",
                 cast: "Francisco Lucas, João Pedro Santos, Pedro Victor",
                 genres: "Sociologia, Podcast Cultural", tags: "Sociologia, Round 6, Marx, Durkheim, Weber", isMain: false,
-                materia: "Sociologia", trabalhoGrupo: "Podcasts & Debates: Questões Sociais Brasileiras", periodo: "2025 • Acervo da Turma"
+                materia: "Sociologia", trabalhoGrupo: "Série: Podcasts de Sociologia (2025)", periodo: "2025 • Acervo da Turma"
             },
             "ia-ingles": {
                 title: "INTELIGÊNCIA ARTIFICIAL NO INGLÊS", subtitle: "COMO A IA PODE AJUDAR NO APRENDIZADO DE IDIOMAS",
@@ -357,7 +357,7 @@ let toastTimeout;
                 synopsis: "Adaptação criativa da narrativa do clássico realista de Eça de Queirós em formato de regras e dinâmicas de jogo de tabuleiro: a chegada de Amaro a Leiria, as intrigas de João Eduardo, a quebra de votos e o sacrilégio moral.",
                 cast: "João Pedro Santos, Pedro Victor, Francisco Lucas",
                 genres: "Língua Portuguesa, Gamificação", tags: "Literatura, Eça de Queirós, Jogo de Tabuleiro", isMain: false,
-                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Realismo e Obras Clássicas", periodo: "2025 • Acervo da Turma"
+                materia: "Língua Portuguesa", trabalhoGrupo: "Série: Clássicos do Realismo & Jogos de Tabuleiro", periodo: "2025 • Acervo da Turma"
             },
             "jogo-transito": {
                 title: "JOGO EDUCATIVO DE TRÂNSITO", subtitle: "PROJETO INTEGRADOR EM REACT NATIVE E PIXEL ART",
@@ -368,7 +368,7 @@ let toastTimeout;
                 synopsis: "Proposta de desenvolvimento de um jogo mobile educativo com minigames interativos ensinando regras do Código de Trânsito Brasileiro, programado em React Native, arte em pixel art (Aseprite) e trilha sonora via Beepbox.",
                 cast: "João Pedro Santos, Francisco Lucas, Pedro Victor, Rodrigo Rubim",
                 genres: "Programação & T.I., Desenvolvimento de Jogos", tags: "React Native, Games, Código de Trânsito", isMain: false,
-                materia: "Programação & T.I.", trabalhoGrupo: "Projeto Integrador: Desenvolvimento de Software e Games", periodo: "2025 • Acervo da Turma"
+                materia: "Tópicos Especiais em Desenvolvimento", trabalhoGrupo: "Projeto Integrador: Jogo Educativo de Trânsito", periodo: "2025 • Acervo da Turma"
             },
             "sargento-milicias": {
                 title: "MEMÓRIAS DE UM SARGENTO DE MILÍCIAS", subtitle: "O ROMANCE URBANO E O ANTI-HERÓI MALANDRO",
@@ -379,7 +379,7 @@ let toastTimeout;
                 synopsis: "Estudo crítico sobre a célebre obra de Manuel Antônio de Almeida: a representação das camadas populares do Rio de Janeiro colonial, as aventuras e malandragens de Leonardo e a transição do Romantismo para o Realismo.",
                 cast: "João Pedro Santos, Pedro Victor, Francisco Lucas",
                 genres: "Língua Portuguesa, Literatura Brasileira", tags: "Romantismo Urbano, Malandragem, Literatura", isMain: false,
-                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Romantismo Urbano e Transição ao Realismo", periodo: "2025 • Acervo da Turma"
+                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Memórias de um Sargento de Milícias", periodo: "2025 • Acervo da Turma"
             },
             "prosa-1930": {
                 title: "A PROSA DE 1930: JORGE AMADO", subtitle: "RETRATOS DA BAHIA E A SEGUNDA GERAÇÃO MODERNISTA",
@@ -390,7 +390,7 @@ let toastTimeout;
                 synopsis: "Análise aprofundada da Prosa Regionalista de 30 com foco em Jorge Amado: o impacto social da Crise de 1929 e da Era Vargas, a denúncia das desigualdades no Nordeste e o homem determinado pelo seu meio sociocultural.",
                 cast: "João Pedro Santos, Pedro Victor, Francisco Lucas, João Pedro Silva, Nícolas Marcell, José Nildo",
                 genres: "Língua Portuguesa, Modernismo", tags: "Jorge Amado, Prosa de 30, Modernismo, Bahia", isMain: false,
-                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: Segunda Geração Modernista (A Prosa de 30)", periodo: "2025 • Acervo da Turma"
+                materia: "Língua Portuguesa", trabalhoGrupo: "Seminário Literário: A Prosa de 1930 (Jorge Amado)", periodo: "2025 • Acervo da Turma"
             },
             "primo-basilio": {
                 title: "O PRIMO BASÍLIO", subtitle: "REALISMO PORTUGUÊS E CRÍTICA À BURGUESIA • EÇA DE QUEIRÓS",
@@ -404,7 +404,7 @@ let toastTimeout;
                 isMain: false,
                 hasNoPdf: true,
                 materia: "Língua Portuguesa",
-                trabalhoGrupo: "Seminário Literário: Obras Canônicas do Realismo",
+                trabalhoGrupo: "Série: Clássicos do Realismo & Jogos de Tabuleiro",
                 periodo: "2025 • Em Breve"
             },
             "memorias-postumas": {
@@ -419,7 +419,7 @@ let toastTimeout;
                 isMain: false,
                 hasNoPdf: true,
                 materia: "Língua Portuguesa",
-                trabalhoGrupo: "Seminário Literário: Obras Canônicas do Realismo",
+                trabalhoGrupo: "Série: Clássicos do Realismo & Jogos de Tabuleiro",
                 periodo: "2025 • Em Breve"
             },
             "dom-casmurro": {
@@ -434,7 +434,7 @@ let toastTimeout;
                 isMain: false,
                 hasNoPdf: true,
                 materia: "Língua Portuguesa",
-                trabalhoGrupo: "Seminário Literário: Obras Canônicas do Realismo",
+                trabalhoGrupo: "Série: Clássicos do Realismo & Jogos de Tabuleiro",
                 periodo: "2025 • Em Breve"
             }
         };
@@ -553,6 +553,7 @@ const SERIES_REGISTRY = {
         subtitle: 'Da Escolástica Medieval aos Dilemas da Inteligência Artificial',
         season: '1ª Temporada • 3º Ano 2026',
         materia: 'Filosofia',
+        cover: 'guerra_civil.png',
         episodes: [
             {
                 id: 'tema-1',
@@ -593,51 +594,33 @@ const SERIES_REGISTRY = {
                 topic: 'Bioética, Algoritmos & Inteligência Artificial',
                 desc: 'Os impactos morais da inteligência artificial e a responsabilidade ética na sociedade conectada.',
                 duration: 'Apresentação • Slides'
-            },
-            {
-                id: 'teorias-politicas-antiguidade',
-                num: 6,
-                title: 'Prelúdio: Teorias Políticas na Antiguidade',
-                topic: 'Origens do Pensamento Político: Platão e Aristóteles',
-                desc: 'A gênese da política, a justiça, a cidade ideal e os regimes de governo na Grécia Antiga.',
-                duration: 'Apresentação • 14 Slides'
             }
         ]
     },
     'literatura-realismo': {
         id: 'literatura-realismo',
-        title: 'Língua Portuguesa: Cânone Literário & Realismo',
-        subtitle: 'Do Romantismo Urbano às Críticas Sociais do Século XIX e XX',
-        season: '1ª Temporada • Literatura',
+        title: 'Língua Portuguesa: Clássicos do Realismo & Jogos',
+        subtitle: 'Romances Canônicos do Século XIX e Adaptações Gamificadas',
+        season: '2 Temporadas • 5 Episódios',
         materia: 'Língua Portuguesa',
+        cover: 'midia/capas/capa_padre_amaro.jpg',
         episodes: [
-            {
-                id: 'sargento-milicias',
-                num: 1,
-                title: 'Memórias de um Sargento de Milícias',
-                topic: 'Manuel Antônio de Almeida • Romantismo Urbano',
-                desc: 'O romance de costumes no Rio colonial e a introdução da figura do anti-herói malandro na literatura brasileira.',
-                duration: '6 Slides • Análise'
-            },
+            // TEMPORADA 1: LIVROS / ROMANCES DO REALISMO
             {
                 id: 'padre-amaro',
-                num: 2,
+                num: 1,
+                season: 1,
+                seasonTitle: '1ª Temporada: Romances Canônicos do Realismo (Livros)',
                 title: 'O Crime do Padre Amaro',
                 topic: 'Eça de Queirós • Realismo Português',
                 desc: 'A crítica mordaz à hipocrisia e corrupção clerical da sociedade provincial leiriense do século XIX.',
                 duration: '10 Slides • Análise'
             },
             {
-                id: 'padre-amaro-jogo',
-                num: 3,
-                title: 'O Crime do Padre Amaro: Tabuleiro',
-                topic: 'Gamificação Literária & Dinâmica de Regras',
-                desc: 'Adaptação dos dilemas e conflitos do romance de Eça de Queirós em mecânicas originais de jogo de tabuleiro.',
-                duration: '6 Slides • Tabuleiro'
-            },
-            {
                 id: 'primo-basilio',
-                num: 4,
+                num: 2,
+                season: 1,
+                seasonTitle: '1ª Temporada: Romances Canônicos do Realismo (Livros)',
                 title: 'O Primo Basílio',
                 topic: 'Eça de Queirós • A Pequena Burguesia de Lisboa',
                 desc: 'O adultério burguês, o vazio existencial de Luísa e a tirania chantagista da empregada Juliana.',
@@ -646,7 +629,9 @@ const SERIES_REGISTRY = {
             },
             {
                 id: 'memorias-postumas',
-                num: 5,
+                num: 3,
+                season: 1,
+                seasonTitle: '1ª Temporada: Romances Canônicos do Realismo (Livros)',
                 title: 'Memórias Póstumas de Brás Cubas',
                 topic: 'Machado de Assis • Ruptura e Ironia do Defunto Autor',
                 desc: 'A fundação do Realismo brasileiro: pessimismo elegante, metalinguagem e a denúncia da elite carioca.',
@@ -655,41 +640,39 @@ const SERIES_REGISTRY = {
             },
             {
                 id: 'dom-casmurro',
-                num: 6,
+                num: 4,
+                season: 1,
+                seasonTitle: '1ª Temporada: Romances Canônicos do Realismo (Livros)',
                 title: 'Dom Casmurro',
                 topic: 'Machado de Assis • Capitu e o Enigma da Traição',
                 desc: 'O narrador não confiável, os olhos de ressaca e a corrosão psicológica do ciúme obsessivo.',
                 duration: 'Em Breve • Sem PDF',
                 hasNoPdf: true
             },
+            // TEMPORADA 2: JOGOS DE TABULEIRO
             {
-                id: 'prosa-1930',
-                num: 7,
-                title: 'A Prosa de 1930: Jorge Amado',
-                topic: 'Modernismo • Retratos da Bahia e Romance Social',
-                desc: 'A Segunda Geração Modernista: denúncia das desigualdades sociais e o homem marcado pela sua terra.',
-                duration: '11 Slides • Análise'
+                id: 'padre-amaro-jogo',
+                num: 1,
+                season: 2,
+                seasonTitle: '2ª Temporada: Jogos de Tabuleiro (Adaptações Literárias)',
+                title: 'O Crime do Padre Amaro: Tabuleiro',
+                topic: 'Gamificação Literária & Dinâmica de Regras',
+                desc: 'Adaptação dos dilemas e conflitos do romance de Eça de Queirós em mecânicas originais de jogo de tabuleiro.',
+                duration: '6 Slides • Tabuleiro'
             }
         ]
     },
-    'sociologia-debates': {
-        id: 'sociologia-debates',
-        title: 'Sociologia: Estruturas Sociais & Crítica Contemporânea',
-        subtitle: 'Do Capitalismo Histórico às Leituras da Cultura Pop',
-        season: '1ª Temporada • Sociologia',
+    'sociologia-podcasts': {
+        id: 'sociologia-podcasts',
+        title: 'Sociologia: Série de Podcasts (2025)',
+        subtitle: 'Debates em Áudio e Vídeo sobre Desigualdades e Cultura Pop',
+        season: '1ª Temporada • 2025',
         materia: 'Sociologia',
+        cover: 'https://img.youtube.com/vi/M4rHhajry4A/hqdefault.jpg',
         episodes: [
             {
-                id: 'sociologia-desenvolvimento',
-                num: 1,
-                title: 'Sociologia do Desenvolvimento',
-                topic: 'Contradições Sociais, Fome e Capitalismo Global',
-                desc: 'A produção socializada versus apropriação privada do lucro e as crises estruturais do capitalismo moderno.',
-                duration: '10 Slides • Pesquisa'
-            },
-            {
                 id: 'podcast-desigualdade',
-                num: 2,
+                num: 1,
                 title: 'Podcast: Desigualdade Social',
                 topic: 'Debate em Áudio e Vídeo • Vozes da Turma',
                 desc: 'Mesa redonda gravada pelos alunos analisando as disparidades de renda e oportunidades no Brasil.',
@@ -697,7 +680,7 @@ const SERIES_REGISTRY = {
             },
             {
                 id: 'podcast-round6',
-                num: 3,
+                num: 2,
                 title: 'Clássicos em Série: Round 6',
                 topic: 'Marx, Durkheim e Weber na Cultura Pop',
                 desc: 'A luta de classes, a anomia social e a ação racional calculista decodificadas através do fenômeno sul-coreano.',
@@ -711,6 +694,7 @@ const SERIES_REGISTRY = {
         subtitle: 'Evolução, Microarquitetura e Hierarquia de Memória',
         season: '1ª Temporada • T.I.',
         materia: 'Hardware & Arquitetura',
+        cover: 'midia/capas/capa_evolucao_computadores.jpg',
         episodes: [
             {
                 id: 'evolucao-computadores',
@@ -736,6 +720,7 @@ const SERIES_REGISTRY = {
         subtitle: 'Ataques Web, S.O.C., Engenharia Social e Governança',
         season: '1ª Temporada • Cibersegurança',
         materia: 'Segurança & Redes',
+        cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop',
         episodes: [
             {
                 id: 'seguranca-informacao',
@@ -769,11 +754,25 @@ function getSeriesForMovie(movieId) {
 }
 
 function renderSeriesEpisodesHtml(seriesInfo, currentMovieId) {
+    let lastSeason = null;
     let html = seriesInfo.episodes.map((ep, idx) => {
         const epData = filmesDB[ep.id] || {};
         const isActive = ep.id === currentMovieId;
         const isPending = !!(ep.hasNoPdf || epData.hasNoPdf);
         const epNum = ep.num || (idx + 1);
+
+        // Header de Temporada se houver divisão
+        let seasonHeaderHtml = '';
+        if (ep.season && ep.season !== lastSeason) {
+            lastSeason = ep.season;
+            const seasonTitle = ep.seasonTitle || `Temporada ${ep.season}`;
+            const seasonIcon = ep.season === 2 ? 'fa-solid fa-dice' : 'fa-solid fa-book-open';
+            seasonHeaderHtml = `
+                <div class="series-season-divider">
+                    <span class="series-season-pill"><i class="${seasonIcon}"></i> ${seasonTitle}</span>
+                </div>
+            `;
+        }
 
         // Thumbnail do episódio
         let thumb = '';
@@ -787,6 +786,7 @@ function renderSeriesEpisodesHtml(seriesInfo, currentMovieId) {
         const descText = ep.desc || epData.synopsis || '';
 
         return `
+            ${seasonHeaderHtml}
             <div class="episode-item ${isActive ? 'is-active-episode' : ''} ${isPending ? 'is-pending-episode' : ''}" 
                  role="button" tabindex="0" 
                  onclick="window.selectSeriesEpisode('${ep.id}', '${seriesInfo.id}')"
@@ -1681,7 +1681,9 @@ function showVideoNextEpisodeButton() {
 
         window.selectProfile = function(name) {
             activeProfile = name; 
-            document.getElementById('nav-profile-name').textContent = name; 
+            document.querySelectorAll('.nav-profile-name').forEach(el => { el.textContent = name; });
+            const oldNameEl = document.getElementById('nav-profile-name');
+            if (oldNameEl) oldNameEl.textContent = name; 
             if (pendingScreenParam === 'acervo' || pendingScreenParam === 'trabalhos') {
                 pendingScreenParam = null;
                 if (pendingViewParam) currentAcervoViewMode = pendingViewParam;
@@ -2113,6 +2115,7 @@ function showVideoNextEpisodeButton() {
             'Língua Inglesa': { icon: 'fa-solid fa-language', color: '#0ea5e9', grad1: '#075985', grad2: '#082f49' },
             'Hardware & Arquitetura': { icon: 'fa-solid fa-memory', color: '#6366f1', grad1: '#1e1b4b', grad2: '#0b0a19' },
             'Segurança & Redes': { icon: 'fa-solid fa-shield-halved', color: '#2563eb', grad1: '#0f295c', grad2: '#090d16' },
+            'Tópicos Especiais em Desenvolvimento': { icon: 'fa-solid fa-gamepad', color: '#10b981', grad1: '#064e3b', grad2: '#091410' },
             'Programação & T.I.': { icon: 'fa-solid fa-code', color: '#10b981', grad1: '#064e3b', grad2: '#091410' },
             'Inteligência Artificial & IoT': { icon: 'fa-solid fa-microchip', color: '#8b5cf6', grad1: '#3b0764', grad2: '#0f0a19' },
             'Sistemas Operacionais': { icon: 'fa-solid fa-terminal', color: '#f59e0b', grad1: '#451a03', grad2: '#120d07' },
@@ -2126,38 +2129,40 @@ function showVideoNextEpisodeButton() {
 
         // Metadados padrão de Matéria e Barra (Trabalho/Seminário) para os títulos originais do catálogo
         const DEFAULT_ACERVO_META = {
-            // Filosofia (Trabalhos Atuais do 1º Bimestre)
-            'tema-1':       { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
-            'guerra-civil': { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
-            'tema-3':       { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
-            'tema-4':       { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
-            'tema-5':       { materia: 'Filosofia', trabalhoGrupo: 'Seminário: A Revolução Científica e os 5 Temas de Filosofia', periodo: '2026 • 1º Bimestre' },
-            // Filosofia Política (Antiguidade)
+            // Filosofia (Trabalhos Atuais do 1º Bimestre - Unidos em uma única série no Acervo, mantidos independentes na Home)
+            'tema-1':       { materia: 'Filosofia', trabalhoGrupo: 'Filosofia: Revolução Científica & Pensamento Contemporâneo', periodo: '2026 • 1º Bimestre' },
+            'guerra-civil': { materia: 'Filosofia', trabalhoGrupo: 'Filosofia: Revolução Científica & Pensamento Contemporâneo', periodo: '2026 • 1º Bimestre' },
+            'tema-3':       { materia: 'Filosofia', trabalhoGrupo: 'Filosofia: Revolução Científica & Pensamento Contemporâneo', periodo: '2026 • 1º Bimestre' },
+            'tema-4':       { materia: 'Filosofia', trabalhoGrupo: 'Filosofia: Revolução Científica & Pensamento Contemporâneo', periodo: '2026 • 1º Bimestre' },
+            'tema-5':       { materia: 'Filosofia', trabalhoGrupo: 'Filosofia: Revolução Científica & Pensamento Contemporâneo', periodo: '2026 • 1º Bimestre' },
+            // Filosofia Política (Antiguidade - Trabalho separado de 2025)
             'teorias-politicas-antiguidade': { materia: 'Filosofia', trabalhoGrupo: 'Seminário: Filosofia Política na Antiguidade', periodo: '2025 • Acervo da Turma' },
-            // História
+            // História - Standalone
             'guerra-fria':  { materia: 'História', trabalhoGrupo: 'Seminário: A Guerra Fria e Relações Internacionais', periodo: '2025 • Acervo da Turma' },
-            // Língua Portuguesa & Literatura
-            'padre-amaro':      { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Realismo e Obras Clássicas', periodo: '2025 • Acervo da Turma' },
-            'padre-amaro-jogo': { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Realismo e Obras Clássicas', periodo: '2025 • Acervo da Turma' },
-            'sargento-milicias':{ materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Romantismo Urbano e Transição ao Realismo', periodo: '2025 • Acervo da Turma' },
-            'primo-basilio':    { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Obras Canônicas do Realismo', periodo: '2025 • Em Breve' },
-            'memorias-postumas':{ materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Obras Canônicas do Realismo', periodo: '2025 • Em Breve' },
-            'dom-casmurro':     { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Obras Canônicas do Realismo', periodo: '2025 • Em Breve' },
-            'prosa-1930':       { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Segunda Geração Modernista (A Prosa de 30)', periodo: '2025 • Acervo da Turma' },
-            // Língua Inglesa
+            // Língua Portuguesa & Literatura - SÉRIE DE LIVROS E TABULEIRO (2 Temporadas)
+            'padre-amaro':      { materia: 'Língua Portuguesa', trabalhoGrupo: 'Série: Clássicos do Realismo & Jogos de Tabuleiro', periodo: '2025 • Acervo da Turma' },
+            'primo-basilio':    { materia: 'Língua Portuguesa', trabalhoGrupo: 'Série: Clássicos do Realismo & Jogos de Tabuleiro', periodo: '2025 • Em Breve' },
+            'memorias-postumas':{ materia: 'Língua Portuguesa', trabalhoGrupo: 'Série: Clássicos do Realismo & Jogos de Tabuleiro', periodo: '2025 • Em Breve' },
+            'dom-casmurro':     { materia: 'Língua Portuguesa', trabalhoGrupo: 'Série: Clássicos do Realismo & Jogos de Tabuleiro', periodo: '2025 • Em Breve' },
+            'padre-amaro-jogo': { materia: 'Língua Portuguesa', trabalhoGrupo: 'Série: Clássicos do Realismo & Jogos de Tabuleiro', periodo: '2025 • Acervo da Turma' },
+            // Língua Portuguesa - Trabalhos Separados
+            'sargento-milicias':{ materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: Memórias de um Sargento de Milícias', periodo: '2025 • Acervo da Turma' },
+            'prosa-1930':       { materia: 'Língua Portuguesa', trabalhoGrupo: 'Seminário Literário: A Prosa de 1930 (Jorge Amado)', periodo: '2025 • Acervo da Turma' },
+            // Língua Inglesa - Standalone
             'ia-ingles':        { materia: 'Língua Inglesa', trabalhoGrupo: 'Seminário: Inteligência Artificial no Ensino de Idiomas', periodo: '2025 • Acervo da Turma' },
-            // Sociologia
-            'sociologia-desenvolvimento': { materia: 'Sociologia', trabalhoGrupo: 'Seminário: Teorias Sociais e Desenvolvimento Global', periodo: '2025 • Acervo da Turma' },
-            'podcast-desigualdade': { materia: 'Sociologia', trabalhoGrupo: 'Podcasts & Debates: Questões Sociais Brasileiras', periodo: '2025 • Acervo da Turma' },
-            'podcast-round6':   { materia: 'Sociologia', trabalhoGrupo: 'Podcasts & Debates: Questões Sociais Brasileiras', periodo: '2025 • Acervo da Turma' },
-            // Segurança & Redes
-            'seguranca-informacao': { materia: 'Segurança & Redes', trabalhoGrupo: 'Seminário: Práticas de Segurança da Informação & Defesa Cibernética', periodo: '2025 • Acervo da Turma' },
-            'cyber-news':   { materia: 'Segurança & Redes', trabalhoGrupo: 'Práticas de Segurança da Informação & Defesa Cibernética', periodo: '2026 • 1º Bimestre' },
-            // Hardware & Arquitetura
-            'memoria-cache': { materia: 'Hardware & Arquitetura', trabalhoGrupo: 'Seminário: Arquitetura de Computadores e Hierarquia de Memória', periodo: '2025 • Acervo da Turma' },
-            'evolucao-computadores': { materia: 'Hardware & Arquitetura', trabalhoGrupo: 'Seminário: História da Computação e Manutenção', periodo: '2025 • Acervo da Turma' },
-            // Programação & T.I.
-            'jogo-transito':    { materia: 'Programação & T.I.', trabalhoGrupo: 'Projeto Integrador: Desenvolvimento de Software e Games', periodo: '2025 • Acervo da Turma' }
+            // Sociologia - SÉRIE DE PODCASTS (2025)
+            'podcast-desigualdade': { materia: 'Sociologia', trabalhoGrupo: 'Série: Podcasts de Sociologia (2025)', periodo: '2025 • Acervo da Turma' },
+            'podcast-round6':       { materia: 'Sociologia', trabalhoGrupo: 'Série: Podcasts de Sociologia (2025)', periodo: '2025 • Acervo da Turma' },
+            // Sociologia - Trabalho Separado (Slides)
+            'sociologia-desenvolvimento': { materia: 'Sociologia', trabalhoGrupo: 'Seminário: Sociologia do Desenvolvimento', periodo: '2025 • Acervo da Turma' },
+            // Segurança & Redes - SÉRIE
+            'seguranca-informacao': { materia: 'Segurança & Redes', trabalhoGrupo: 'Série: Práticas de Segurança da Informação & Ciberdefesa', periodo: '2025 • Acervo da Turma' },
+            'cyber-news':           { materia: 'Segurança & Redes', trabalhoGrupo: 'Série: Práticas de Segurança da Informação & Ciberdefesa', periodo: '2026 • 1º Bimestre' },
+            // Hardware & Arquitetura - SÉRIE
+            'evolucao-computadores': { materia: 'Hardware & Arquitetura', trabalhoGrupo: 'Série: Arquitetura de Computadores & Hardware', periodo: '2025 • Acervo da Turma' },
+            'memoria-cache':         { materia: 'Hardware & Arquitetura', trabalhoGrupo: 'Série: Arquitetura de Computadores & Hardware', periodo: '2025 • Acervo da Turma' },
+            // Tópicos Especiais em Desenvolvimento - Standalone
+            'jogo-transito':    { materia: 'Tópicos Especiais em Desenvolvimento', trabalhoGrupo: 'Projeto Integrador: Jogo Educativo de Trânsito', periodo: '2025 • Acervo da Turma' }
         };
 
         // Gera automaticamente um pôster SVG estilo Netflix quando o trabalho não tem imagem própria
@@ -2672,8 +2677,16 @@ function showVideoNextEpisodeButton() {
                         <h3><i class="fa-solid fa-graduation-cap" style="color:var(--netflix-red);"></i> Elenco da Turma &bull; Alunos</h3>
                         <span style="font-size:0.82rem; color:#888;">Clique no aluno para filtrar seus trabalhos</span>
                     </div>
-                    <div class="acervo-students-slider">
-                        ${studentCards}
+                    <div class="acervo-shelf-slider-container acervo-students-slider-container">
+                        <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('acervo-students-slider-shelf', -1)">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <div class="acervo-students-slider" id="acervo-students-slider-shelf">
+                            ${studentCards}
+                        </div>
+                        <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('acervo-students-slider-shelf', 1)">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             `;
@@ -2795,7 +2808,7 @@ function showVideoNextEpisodeButton() {
             { id: 'col-hardware', title: 'HARDWARE & T.I.', materia: 'Hardware & Arquitetura', img: 'midia/colecoes/col_disney_hardware.jpg' },
             { id: 'col-seguranca', title: 'CYBER DEFESA', materia: 'Segurança & Redes', img: 'midia/colecoes/col_disney_seguranca.jpg' },
             { id: 'col-ingles', title: 'LÍNGUA INGLESA', materia: 'Língua Inglesa', img: 'midia/colecoes/col_disney_ingles.jpg' },
-            { id: 'col-games', title: 'DEV & GAMES', materia: 'Programação & T.I.', img: 'midia/colecoes/col_disney_games.jpg' }
+            { id: 'col-topicos', title: 'TÓPICOS ESPECIAIS', materia: 'Tópicos Especiais em Desenvolvimento', img: 'midia/colecoes/col_disney_games.jpg' }
         ];
 
         /* =========================================================
@@ -3367,34 +3380,79 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             `;
         }
 
-        function renderSeminarioShelfCardHtml(grp) {
-            const st = getMateriaStyle(grp.materia);
+        function renderAcervoPosterCardHtml(grpOrEntry) {
+            const isGroup = !!(grpOrEntry && grpOrEntry.items && Array.isArray(grpOrEntry.items));
+            const grp = isGroup ? grpOrEntry : {
+                materia: grpOrEntry.materia,
+                trabalhoGrupo: grpOrEntry.trabalhoGrupo,
+                periodo: grpOrEntry.periodo,
+                items: [grpOrEntry]
+            };
             const count = grp.items.length;
-            if (count === 1) {
-                return renderAcademicCardHtml(grp.items[0]);
+            const firstEntry = grp.items[0] || {};
+            const firstItem = firstEntry.item || {};
+            const firstId = firstEntry.id || '';
+            const st = getMateriaStyle(grp.materia);
+            const sInfo = getSeriesForMovie(firstId);
+
+            if (count === 1 && !sInfo) {
+                // Trabalho individual / standalone
+                const w = firstItem;
+                const e = firstEntry;
+                const coverFile = w.bg || w.banner || w.customCover || 
+                    (w.ytTrailer ? `https://img.youtube.com/vi/${w.ytTrailer}/hqdefault.jpg` : '');
+                const coverUrl = coverFile ? imgUrl(coverFile, 800) : generateAutoPosterDataUri(w.title, e.materia, w.cast);
+                const hasSlides = !!(w.pdf || w.slideKey || e.hasPdf || w.isSecurityPresentation);
+                const hasVideo = !!(w.ytTrailer || w.trailer || e.hasVideo);
+
+                let formatTag = '<i class="fa-solid fa-file-powerpoint"></i> SLIDES';
+                if (w.hasNoPdf) formatTag = '<i class="fa-regular fa-clock"></i> EM BREVE';
+                else if (w.isSecurityPresentation) formatTag = '<i class="fa-solid fa-laptop-code"></i> INTERATIVO';
+                else if (hasSlides && hasVideo) formatTag = '<i class="fa-solid fa-photo-film"></i> SLIDES + VÍDEO';
+                else if (hasVideo) formatTag = '<i class="fa-solid fa-clapperboard"></i> VÍDEO';
+
+                const safeTitle = (w.title || '').replace(/"/g, '&quot;');
+                const safeAuthors = (w.cast || 'Turma IFPI').replace(/"/g, '&quot;');
+
+                return `
+                    <div class="acervo-card-portrait ${w.hasNoPdf ? 'has-no-pdf-card' : ''}" 
+                         style="background-image: url('${coverUrl}');"
+                         data-movie="${e.id}" 
+                         onclick="window.openTitleModal('${e.id}')" 
+                         role="button" tabindex="0" aria-label="${safeTitle}">
+                        <div class="acervo-card-top-badges">
+                            <span class="acervo-tag-materia" style="background: ${st.color};">
+                                <i class="${st.icon}"></i> ${e.materia}
+                            </span>
+                            <span class="acervo-tag-format">
+                                ${formatTag}
+                            </span>
+                        </div>
+                        <div class="acervo-card-play-overlay">
+                            <div class="acervo-card-play-btn"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                        <div class="acervo-card-bottom-info">
+                            <h4 class="acervo-card-title">${w.title}</h4>
+                            <div class="acervo-card-meta">
+                                <i class="fa-regular fa-calendar"></i> <span>${e.periodo}</span>
+                            </div>
+                            <div class="acervo-card-authors" title="${safeAuthors}">
+                                <i class="fa-solid fa-user-group"></i> <span>${safeAuthors}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
 
-            const firstItem = grp.items[0]?.item || {};
-            const firstId = grp.items[0]?.id || '';
-            const hasPdf = grp.items.some(e => e.hasPdf);
-            const hasVideo = grp.items.some(e => e.hasVideo);
+            // Série ou Coleção de Trabalhos
+            const isSeries = !!sInfo;
+            const repImg = (sInfo && sInfo.cover) || firstItem.bg || firstItem.banner || firstItem.customCover || 
+                (firstItem.ytTrailer ? `https://img.youtube.com/vi/${firstItem.ytTrailer}/hqdefault.jpg` : '');
+            const cardTitle = sInfo ? sInfo.title : grp.trabalhoGrupo;
+            const cardSubtitle = sInfo ? (sInfo.season || `Série • ${count} Episódios`) : `Coleção • ${count} trabalhos`;
+            const repImgUrl = repImg ? imgUrl(repImg, 800) : generateAutoPosterDataUri(cardTitle, grp.materia, firstItem.cast);
 
-            // Badge de formato
-            let formatBadge = `${count} TRABALHOS`;
-            if (grp.trabalhoGrupo.toLowerCase().includes('podcast')) {
-                formatBadge = `${count} PODCASTS`;
-            } else if (hasPdf && hasVideo) {
-                formatBadge = `${count} APRESENTAÇÕES`;
-            }
-
-            // Capa do 1º slide ou banner da coleção
-            const repImg = firstItem.banner || firstItem.bg || firstItem.customCover || 
-                (firstItem.ytTrailer ? `https://img.youtube.com/vi/${firstItem.ytTrailer}/hqdefault.jpg` : (st.colImg || 'midia/colecoes/col_disney_filosofia.jpg'));
-            const repImgUrl = imgUrl(repImg, 800);
-            const safeKey = grp.key.replace(/'/g, "\\'");
-            const safeTitle = (grp.trabalhoGrupo || '').replace(/"/g, '&quot;');
-
-            // Roster consolidado de autores dos trabalhos desse grupo
+            // Roster consolidado de autores
             const authorSet = new Set();
             grp.items.forEach(e => {
                 const c = (e.item.cast || '').split(',');
@@ -3402,56 +3460,60 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             });
             const authorsList = Array.from(authorSet).slice(0, 4).join(', ') + (authorSet.size > 4 ? ' e outros' : '');
             const safeAuthors = (authorsList || firstItem.cast || 'Turma IFPI').replace(/"/g, '&quot;');
+            const safeTitle = (cardTitle || '').replace(/"/g, '&quot;');
+
+            let epBadgeText = `<i class="fa-solid fa-tv"></i> SÉRIE • ${count} EPS`;
+            if (!isSeries && grp.trabalhoGrupo.toLowerCase().includes('podcast')) {
+                epBadgeText = `<i class="fa-solid fa-microphone-lines"></i> ${count} PODCASTS`;
+            }
 
             return `
-                <div class="academic-card seminario-shelf-card is-multi" onclick="window.openSeminarioView('${safeKey}')" role="button" tabindex="0" aria-label="${safeTitle}">
-                    <div class="academic-card-thumb">
-                        <img src="${repImgUrl}" alt="${safeTitle}" class="academic-card-img" loading="lazy">
-                        <div class="academic-thumb-overlay">
-                            <div class="academic-play-badge"><i class="fa-solid fa-folder-open"></i></div>
-                        </div>
-                        <div class="academic-tag-left" style="background: ${st.color};">
+                <div class="acervo-card-portrait is-series-card" 
+                     style="background-image: url('${repImgUrl}');"
+                     data-movie="${firstId}" 
+                     onclick="window.openTitleModal('${firstId}')" 
+                     role="button" tabindex="0" aria-label="${safeTitle}">
+                    <div class="acervo-card-top-badges">
+                        <span class="acervo-tag-materia" style="background: ${st.color};">
                             <i class="${st.icon}"></i> ${grp.materia}
-                        </div>
-                        <div class="academic-tag-right multi-badge">
-                            <i class="fa-solid fa-layer-group"></i> ${formatBadge}
-                        </div>
+                        </span>
+                        <span class="acervo-tag-series">
+                            ${epBadgeText}
+                        </span>
                     </div>
-                    <div class="academic-card-content">
-                        <h4 class="academic-card-title">${grp.trabalhoGrupo}</h4>
-                        <div class="academic-card-subtitle" style="color: var(--netflix-red); font-weight: 700;">
-                            <i class="fa-solid fa-shapes"></i> Coleção &bull; ${count} ${count === 1 ? 'trabalho' : 'trabalhos'}
+                    <div class="acervo-card-play-overlay">
+                        <div class="acervo-card-play-btn"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <div class="acervo-card-bottom-info">
+                        <h4 class="acervo-card-title">${cardTitle}</h4>
+                        <div class="acervo-card-meta">
+                            <i class="fa-solid fa-tv"></i> <span>${cardSubtitle}</span>
                         </div>
-                        <div class="academic-card-authors" title="${safeAuthors}">
+                        <div class="acervo-card-authors" title="${safeAuthors}">
                             <i class="fa-solid fa-user-group"></i> <span>${safeAuthors}</span>
-                        </div>
-                        <div class="academic-card-meta-row">
-                            <span class="academic-meta-duration"><i class="fa-solid fa-list-check"></i> ${count} apresentações</span>
-                            <span class="academic-meta-year">${grp.periodo}</span>
-                        </div>
-                        <div class="academic-card-actions">
-                            <button type="button" class="academic-btn-primary" onclick="event.stopPropagation(); window.openSeminarioView('${safeKey}')">
-                                <i class="fa-solid fa-folder-open"></i> Abrir Coleção (${count})
-                            </button>
-                            <button type="button" class="academic-btn-info" onclick="event.stopPropagation(); window.openTitleModal('${firstId}')" title="Ver Informações">
-                                <i class="fa-solid fa-circle-info"></i> Detalhes
-                            </button>
                         </div>
                     </div>
                 </div>
             `;
         }
 
+        const renderSeminarioShelfCardHtml = renderAcervoPosterCardHtml;
+
         window.onSeminarioCardClick = function(seminarioKey, firstMovieId, count) {
-            window.openSeminarioView(seminarioKey);
+            if (firstMovieId) {
+                window.openTitleModal(firstMovieId);
+            } else {
+                window.openSeminarioView(seminarioKey);
+            }
         };
 
         window.scrollAcervoShelf = function(rowId, dir) {
-            const row = document.getElementById(rowId);
+            const row = (typeof rowId === 'string') ? document.getElementById(rowId) : rowId;
             if (!row) return;
-            const amount = row.clientWidth * 0.75 * dir;
+            const amount = (row.clientWidth * 0.75) * dir;
             row.scrollBy({ left: amount, behavior: 'smooth' });
         };
+        window.scrollContainerHorizontal = window.scrollAcervoShelf;
 
         window.renderAcervoScreen = function() {
             const entries = getAllAcervoEntries();
@@ -3523,12 +3585,20 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 return true;
             });
 
-            // Barra Disney+ no topo do Acervo
+            // Barra Disney+ no topo do Acervo com suporte a rolagem por setas
             const disneyBarHtml = `
                 <div class="acervo-disney-bar-wrapper">
                     <div class="acervo-disney-bar-title"><i class="fa-solid fa-shapes" style="color:var(--netflix-red);"></i> Selecione uma Coleção:</div>
-                    <div class="acervo-disney-bar">
-                        ${renderAcervoDisneyTiles(currentAcervoMateria)}
+                    <div class="acervo-shelf-slider-container acervo-disney-slider-container">
+                        <button type="button" class="acervo-slider-nav-btn prev" aria-label="Voltar" onclick="window.scrollAcervoShelf('acervo-disney-bar-shelf', -1)">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <div class="acervo-disney-bar" id="acervo-disney-bar-shelf">
+                            ${renderAcervoDisneyTiles(currentAcervoMateria)}
+                        </div>
+                        <button type="button" class="acervo-slider-nav-btn next" aria-label="Avançar" onclick="window.scrollAcervoShelf('acervo-disney-bar-shelf', 1)">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
             `;
@@ -3549,8 +3619,9 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
 
             // MODO 0: Filtrado por Aluno (Portfólio Individual do Aluno)
             if (currentAcervoAuthor) {
-                const studentCardsHtml = filtered.map(renderAcademicCardHtml).join('');
+                const studentCardsHtml = filtered.map(renderAcervoPosterCardHtml).join('');
                 rowsContainer.innerHTML = `
+                    ${renderAcervoHeroBannerHtml()}
                     ${disneyBarHtml}
                     ${renderStudentPortfolioBannerHtml(currentAcervoAuthor, filtered)}
                     <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
@@ -3562,7 +3633,7 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                             <i class="fa-solid fa-arrow-left"></i> Ver Toda a Turma
                         </button>
                     </div>
-                    <div class="seminario-detail-grid">
+                    <div class="acervo-posters-grid">
                         ${studentCardsHtml}
                     </div>
                 `;
@@ -3588,11 +3659,11 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 groupsMap.get(key).items.push(e);
             });
 
-            // MODO 1: Um seminário específico está em foco (Visão Detalhada com Cards 16:9)
+            // MODO 1: Um seminário específico está em foco (Visão Detalhada com Cartazes Verticais)
             if (currentAcervoSeminario && groupsMap.has(currentAcervoSeminario)) {
                 const grp = groupsMap.get(currentAcervoSeminario);
                 const st = getMateriaStyle(grp.materia);
-                const cardsHtml = grp.items.map(renderAcademicCardHtml).join('');
+                const cardsHtml = grp.items.map(renderAcervoPosterCardHtml).join('');
 
                 rowsContainer.innerHTML = `
                     <div class="seminario-detail-header">
@@ -3610,7 +3681,7 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                             <span>${grp.items.length} ${grp.items.length === 1 ? 'apresentação disponível' : 'apresentações disponíveis'}</span>
                         </div>
                     </div>
-                    <div class="seminario-detail-grid">
+                    <div class="acervo-posters-grid">
                         ${cardsHtml}
                     </div>
                 `;
@@ -3621,19 +3692,20 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 return;
             }
 
-            // MODO 3: Visão Todos os Slides (Grade direta com todos os trabalhos 16:9)
+            // MODO 3: Visão Todos os Slides (Grade direta com cartazes verticais)
             if (currentAcervoViewMode === 'grid') {
-                const allCardsHtml = filtered.map(renderAcademicCardHtml).join('');
+                const allCardsHtml = filtered.map(renderAcervoPosterCardHtml).join('');
                 rowsContainer.innerHTML = `
+                    ${renderAcervoHeroBannerHtml()}
                     ${disneyBarHtml}
                     <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
                         <span style="color: #bbb; font-size: 0.95rem; font-weight: 700;">
                             <i class="fa-solid fa-layer-group" style="color:var(--netflix-red); margin-right:6px;"></i>
                             ${filtered.length} ${filtered.length === 1 ? 'apresentação encontrada' : 'apresentações encontradas'}
                         </span>
-                        <span style="color: #777; font-size: 0.82rem;">Exibição em Slides 16:9</span>
+                        <span style="color: #777; font-size: 0.82rem;">Catálogo Completo em Cartazes</span>
                     </div>
-                    <div class="seminario-detail-grid">
+                    <div class="acervo-posters-grid">
                         ${allCardsHtml}
                     </div>
                 `;
@@ -3646,19 +3718,20 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             // CASO 3: Filtrado por Matéria Específica (ex: Filosofia, Sociologia, etc.)
             if (currentAcervoMateria !== 'all') {
                 const st = getMateriaStyle(currentAcervoMateria);
-                // Se modo for 'grid', exibe todos os slides individuais; senão, cada trabalho completo ocupa 1 card
+                // No catálogo agrupado por coleções/séries: cada série ou trabalho completo ocupa 1 cartaz
                 let matCardsHtml = '';
                 if (currentAcervoViewMode === 'grid') {
-                    matCardsHtml = filtered.map(renderAcademicCardHtml).join('');
+                    matCardsHtml = filtered.map(renderAcervoPosterCardHtml).join('');
                 } else {
-                    matCardsHtml = Array.from(groupsMap.values()).map(renderSeminarioShelfCardHtml).join('');
+                    matCardsHtml = Array.from(groupsMap.values()).map(renderAcervoPosterCardHtml).join('');
                 }
 
                 const countSubtitle = groupsMap.size === filtered.length
                     ? `${filtered.length} ${filtered.length === 1 ? 'trabalho disponível' : 'trabalhos disponíveis'}`
-                    : `${groupsMap.size} ${groupsMap.size === 1 ? 'coleção' : 'coleções'} • ${filtered.length} apresentações`;
+                    : `${groupsMap.size} ${groupsMap.size === 1 ? 'série / coleção' : 'séries / coleções'} • ${filtered.length} apresentações`;
 
                 rowsContainer.innerHTML = `
+                    ${renderAcervoHeroBannerHtml()}
                     ${disneyBarHtml}
                     <div class="acervo-focused-materia-header">
                         <div class="acervo-shelf-title-group">
@@ -3674,7 +3747,7 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                             <i class="fa-solid fa-arrow-left"></i> Ver Todas as Matérias
                         </button>
                     </div>
-                    <div class="seminario-detail-grid">
+                    <div class="acervo-posters-grid">
                         ${matCardsHtml}
                     </div>
                 `;
@@ -3686,7 +3759,7 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
 
             // CASO 4: PADRÃO (currentAcervoMateria === 'all')
             // Separados por matérias, em fileiras que arrastam para os lados, igual à tela inicial!
-            // Cada trabalho completo ocupa apenas UM card (ex: podcasts de sociologia agrupados em 1 card)
+            // Cada trabalho completo ocupa apenas UM cartaz (ex: podcasts de sociologia agrupados em 1 série, filosofia em 1 série)
             const materiasMap = new Map();
             filtered.forEach(e => {
                 if (!materiasMap.has(e.materia)) {
@@ -3703,6 +3776,7 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 'História', 
                 'Hardware & Arquitetura', 
                 'Segurança & Redes',
+                'Tópicos Especiais em Desenvolvimento',
                 'Programação & T.I.', 
                 'Língua Inglesa'
             ];
@@ -3738,13 +3812,13 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                     matGroupsMap.get(key).items.push(e);
                 });
 
-                const cardsHtml = Array.from(matGroupsMap.values()).map(renderSeminarioShelfCardHtml).join('');
+                const cardsHtml = Array.from(matGroupsMap.values()).map(renderAcervoPosterCardHtml).join('');
                 const safeMat = matName.replace(/'/g, "\\'");
                 const groupCount = matGroupsMap.size;
                 const workCount = items.length;
                 const countBadgeText = groupCount === workCount 
                     ? `${workCount} ${workCount === 1 ? 'trabalho' : 'trabalhos'}`
-                    : `${groupCount} ${groupCount === 1 ? 'coleção' : 'coleções'} • ${workCount} apresentações`;
+                    : `${groupCount} ${groupCount === 1 ? 'série / coleção' : 'séries / coleções'} • ${workCount} apresentações`;
 
                 return `
                     <div class="catalog-section acervo-subject-shelf" id="acervo-shelf-${slug}">
@@ -3776,8 +3850,8 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             }).join('');
 
             rowsContainer.innerHTML = `
-                ${disneyBarHtml}
                 ${renderAcervoHeroBannerHtml()}
+                ${disneyBarHtml}
                 ${renderStudentsRowHtml(entries)}
                 <div class="acervo-shelves-container">
                     ${shelvesHtml}
@@ -3800,6 +3874,9 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             if (uploadBtn) uploadBtn.style.display = isProf ? 'inline-flex' : 'none';
             if (uploadAcervoBtn) uploadAcervoBtn.style.display = isProf ? 'inline-flex' : 'none';
             if (uploadDropdown) uploadDropdown.style.display = isProf ? 'flex' : 'none';
+            document.querySelectorAll('.dropdown-item.teacher-only').forEach(el => {
+                el.style.display = isProf ? 'flex' : 'none';
+            });
         }
 
         window.switchSubmitTab = function(mode) {
@@ -4203,7 +4280,9 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
 
         window.logoutIfpiflix = function() {
             activeProfile = "Admin";
-            document.getElementById('nav-profile-name').textContent = "Admin";
+            document.querySelectorAll('.nav-profile-name').forEach(el => { el.textContent = "Admin"; });
+            const oldEl = document.getElementById('nav-profile-name');
+            if (oldEl) oldEl.textContent = "Admin";
             if (typeof window.renderProfiles === 'function') window.renderProfiles();
             window.switchScreen('profile-screen');
         }
@@ -4978,7 +5057,9 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
            SISTEMA DE ARRASTAR PARA OS LADOS (DRAG-TO-SCROLL & WHEEL)
            ========================================================= */
        function initDragToScroll() {
-            const sliders = document.querySelectorAll('.posters-container, .landscape-row, .top10-container, .acervo-row-slider');
+            const sliders = document.querySelectorAll(
+                '.posters-container, .landscape-row, .top10-container, .acervo-row-slider, .acervo-disney-bar, .acervo-students-slider, .disney-collections-row, .continue-watching-grid'
+            );
             
             sliders.forEach(slider => {
                 if (slider.dataset.dragInit === 'true') return;
@@ -4990,34 +5071,60 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 let scrollLeft;
                 let hasMoved = false;
 
+                // Evita que imagens ou links criem fantasma de arrasto nativo do navegador
+                slider.addEventListener('dragstart', (e) => {
+                    e.preventDefault();
+                });
+
                 // --- EVENTOS DE MOUSE (PC) ---
                 slider.addEventListener('mousedown', (e) => {
-                    isDown = true; hasMoved = false; slider.classList.add('active-drag');
-                    startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft;
+                    if (e.button !== 0) return; // apenas botão esquerdo
+                    isDown = true;
+                    hasMoved = false;
+                    slider.classList.add('active-drag');
+                    slider.style.scrollBehavior = 'auto'; // evita lag do CSS smooth durante arraste
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
                 });
-                slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('active-drag'); });
-                slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active-drag'); });
+
+                const stopDrag = () => {
+                    if (!isDown) return;
+                    isDown = false;
+                    slider.classList.remove('active-drag');
+                    slider.style.scrollBehavior = '';
+                    // Mantém hasMoved true por 80ms para interceptar o evento de 'click' subsequente
+                    setTimeout(() => { hasMoved = false; }, 80);
+                };
+
+                slider.addEventListener('mouseleave', stopDrag);
+                slider.addEventListener('mouseup', stopDrag);
+
                 slider.addEventListener('mousemove', (e) => {
                     if (!isDown) return;
-                    e.preventDefault(); 
                     const x = e.pageX - slider.offsetLeft;
                     const walk = (x - startX);
                     
-                    // Só considera que arrastou se moveu mais de 5 pixels (evita bloquear cliques acidentais)
                     if (Math.abs(walk) > 5) {
                         hasMoved = true;
+                        e.preventDefault();
                     }
-                    slider.scrollLeft = scrollLeft - (walk * 1.8);
+                    slider.scrollLeft = scrollLeft - (walk * 1.5);
                 });
 
                 // --- EVENTOS DE TOQUE (CELULAR) ---
                 slider.addEventListener('touchstart', (e) => {
-                    isDown = true; hasMoved = false;
+                    isDown = true;
+                    hasMoved = false;
                     startX = e.touches[0].pageX - slider.offsetLeft;
                     startY = e.touches[0].pageY;
                     scrollLeft = slider.scrollLeft;
-                }, {passive: true});
-                slider.addEventListener('touchend', () => { isDown = false; });
+                }, { passive: true });
+
+                slider.addEventListener('touchend', () => {
+                    isDown = false;
+                    setTimeout(() => { hasMoved = false; }, 80);
+                });
+
                 slider.addEventListener('touchmove', (e) => {
                     if (!isDown) return;
                     const currentY = e.touches[0].pageY;
@@ -5025,28 +5132,41 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                     const walkX = (currentX - startX);
                     const walkY = Math.abs(currentY - startY);
                     
-                    // Se o movimento for predominantemente vertical, não interfere no scroll da página
+                    // Se o movimento for predominantemente vertical, permite rolagem vertical da página
                     if (walkY > Math.abs(walkX)) return;
                     
                     if (Math.abs(walkX) > 5) {
                         hasMoved = true;
                     }
-                    slider.scrollLeft = scrollLeft - (walkX * 1.8);
-                }, {passive: true});
+                    slider.scrollLeft = scrollLeft - (walkX * 1.5);
+                }, { passive: true });
 
-                // Evita disparar cliques nos cards se o usuário estava arrastando
-                slider.querySelectorAll('.card-portrait, .card-landscape, .top10-item, .academic-card, .seminario-card').forEach(card => {
-                    card.addEventListener('click', (e) => {
-                        if (hasMoved) { e.stopImmediatePropagation(); hasMoved = false; }
-                    }, true);
-                });
-
-                // --- ROLAGEM COM A RODA DO MOUSE (WHEEL) ---
-                slider.addEventListener('wheel', (e) => {
-                    if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                // Intercepta qualquer clique em qualquer filho se o usuário estava arrastando
+                slider.addEventListener('click', (e) => {
+                    if (hasMoved) {
                         e.preventDefault();
-                        const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
-                        slider.scrollLeft += delta;
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        hasMoved = false;
+                    }
+                }, true);
+
+                // --- ROLAGEM COM A RODA DO MOUSE (WHEEL INTELIGENTE) ---
+                slider.addEventListener('wheel', (e) => {
+                    // Se o container não tiver conteúdo transbordando horizontalmente, não intercepta
+                    if (slider.scrollWidth <= slider.clientWidth) return;
+
+                    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+                    if (delta === 0) return;
+
+                    const maxScroll = slider.scrollWidth - slider.clientWidth;
+                    const canScrollLeft = slider.scrollLeft > 2 && delta < 0;
+                    const canScrollRight = slider.scrollLeft < (maxScroll - 2) && delta > 0;
+
+                    // Se puder rolar horizontalmente na direção desejada ou se o usuário estiver segurando Shift
+                    if (canScrollLeft || canScrollRight || e.shiftKey) {
+                        e.preventDefault();
+                        slider.scrollLeft += delta * 1.15;
                     }
                 }, { passive: false });
             });
@@ -5324,20 +5444,21 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
         const searchGrid = document.getElementById('search-grid');
 
         // Expande a barra ao focar
-        searchInput.addEventListener('focus', () => {
-            searchBox.classList.add('active');
-        });
+        if (searchInput && searchBox) {
+            searchInput.addEventListener('focus', () => {
+                searchBox.classList.add('active');
+            });
 
-        // Recolhe a barra se clicar fora e estiver vazia
-        searchInput.addEventListener('blur', () => {
-            if(searchInput.value.trim() === '') {
-                searchBox.classList.remove('active');
-            }
-        });
+            // Recolhe a barra se clicar fora e estiver vazia
+            searchInput.addEventListener('blur', () => {
+                if(searchInput.value.trim() === '') {
+                    searchBox.classList.remove('active');
+                }
+            });
 
-        // Filtra em tempo real
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
+            // Filtra em tempo real
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
 
             if (query.length > 0) {
                 // Esconde o catálogo normal e mostra a pesquisa
@@ -5384,6 +5505,7 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 searchResults.style.display = 'none';
             }
         });
+        }
 
         /* =========================================================
            SISTEMA: MINHA LISTA (Persistência no localStorage)
@@ -5784,32 +5906,58 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 }
             });
 
-            // 4. Menu de Perfil no celular (toque no botão abre/fecha dropdown)
-            const profileBtn = document.getElementById('nav-profile-btn');
-            const profileWrapper = document.getElementById('nav-profile-wrapper');
-            if (profileBtn && profileWrapper) {
-                profileBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isOpen = profileWrapper.classList.toggle('open');
-                    profileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-                });
+            // 4. Menu de Perfil (toque ou clique no botão abre/fecha dropdown em todas as telas)
+            document.querySelectorAll('.nav-profile-wrapper').forEach(wrapper => {
+                const btn = wrapper.querySelector('.nav-profile-btn');
+                if (btn) {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        // Fecha outros menus se abertos
+                        document.querySelectorAll('.nav-profile-wrapper.open').forEach(w => {
+                            if (w !== wrapper) {
+                                w.classList.remove('open');
+                                const ob = w.querySelector('.nav-profile-btn');
+                                if (ob) ob.setAttribute('aria-expanded', 'false');
+                            }
+                        });
+                        const isOpen = wrapper.classList.toggle('open');
+                        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    });
+                }
+            });
 
-                document.addEventListener('click', (e) => {
-                    if (!profileWrapper.contains(e.target)) {
-                        profileWrapper.classList.remove('open');
-                        profileBtn.setAttribute('aria-expanded', 'false');
+            document.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-profile-wrapper.open').forEach(wrapper => {
+                    if (!wrapper.contains(e.target)) {
+                        wrapper.classList.remove('open');
+                        const btn = wrapper.querySelector('.nav-profile-btn');
+                        if (btn) btn.setAttribute('aria-expanded', 'false');
                     }
                 });
-            }
+            });
 
-            // 5. Botão de pesquisa
-            const searchIconBtn = document.getElementById('search-icon-btn');
-            const searchInput = document.getElementById('search-input');
-            if (searchIconBtn && searchInput) {
-                searchIconBtn.addEventListener('click', () => {
-                    searchInput.focus();
-                });
-            }
+            // 5. Botões e Caixas de pesquisa dinâmicas (Home e Acervo)
+            document.querySelectorAll('.search-box').forEach(box => {
+                const iconBtn = box.querySelector('.search-icon');
+                const input = box.querySelector('input');
+                if (iconBtn && input) {
+                    iconBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        box.classList.add('active');
+                        input.focus();
+                    });
+                }
+                if (input) {
+                    input.addEventListener('focus', () => {
+                        box.classList.add('active');
+                    });
+                    input.addEventListener('blur', () => {
+                        if (input.value.trim() === '') {
+                            box.classList.remove('active');
+                        }
+                    });
+                }
+            });
 
             // 6. Deep Linking automático via URL
             if (pendingScreenParam === 'acervo' || pendingScreenParam === 'trabalhos') {
