@@ -8576,6 +8576,916 @@
             }
         }
 
+        /* =========================================================
+           BOTÃO GLOBAL DE SFX (EFEITOS SONOROS PROCEDURAIS)
+           ========================================================= */
+        .btn-sfx-toggle {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #fff;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-right: 6px;
+            position: relative;
+        }
+        .btn-sfx-toggle:hover {
+            background: rgba(229, 9, 20, 0.25);
+            border-color: var(--netflix-red);
+            transform: scale(1.12);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+        }
+        .btn-sfx-toggle.muted {
+            opacity: 0.45;
+            color: #888;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .btn-sfx-toggle.muted:hover {
+            opacity: 0.8;
+            border-color: #888;
+        }
+
+        /* =========================================================
+           PROPAGANDA INTERATIVA / CTA CLICÁVEL
+           ========================================================= */
+        .clickable-price-cta {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+            animation: ctaPulseGlow 2.5s infinite;
+        }
+        .clickable-price-cta:hover {
+            transform: scale(1.06) translateY(-4px);
+            box-shadow: 0 15px 45px rgba(229, 9, 20, 0.75) !important;
+        }
+        .clickable-price-cta:active {
+            transform: scale(0.98);
+        }
+        @keyframes ctaPulseGlow {
+            0%, 100% { box-shadow: 0 10px 30px rgba(229, 9, 20, 0.45); }
+            50% { box-shadow: 0 12px 40px rgba(229, 9, 20, 0.8), 0 0 25px rgba(255, 215, 0, 0.3); }
+        }
+
+        /* =========================================================
+           ROCKSTAR ACHIEVEMENTS TOAST (XBOX / PS5 STYLE)
+           ========================================================= */
+        .achievement-toast {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, rgba(18, 18, 20, 0.96), rgba(28, 28, 34, 0.94));
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-left: 5px solid #ffd700;
+            border-radius: 12px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 215, 0, 0.2);
+            z-index: 120000;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(-80px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 420px;
+        }
+        .achievement-toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+        .achievement-badge-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            pointer-events: none;
+            background: radial-gradient(circle at 15% 50%, rgba(255, 215, 0, 0.15) 0%, transparent 60%);
+        }
+        .achievement-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            color: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            animation: trophyBounce 1s infinite alternate;
+        }
+        @keyframes trophyBounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-3px); }
+        }
+        .achievement-text-box {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            flex-grow: 1;
+        }
+        .achievement-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #ffd700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .achievement-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+        .achievement-desc {
+            font-size: 0.82rem;
+            color: #bbb;
+            line-height: 1.25;
+        }
+        .achievement-points {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            color: #46d369;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+        }
+
+        /* =========================================================
+           IFPI ULTIMATE TEAM - CARD HOLOGRÁFICO 3D COM RAINBOW FOIL
+           ========================================================= */
+        .btn-view-card-3d {
+            background: linear-gradient(135deg, #d4af37, #996515);
+            color: #111;
+            font-weight: 800;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn-view-card-3d:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+            color: #000;
+            filter: brightness(1.1);
+        }
+
+        .student-card-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 4, 6, 0.88);
+            backdrop-filter: blur(18px);
+            z-index: 110000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .student-card-modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .student-card-dialog {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 580px;
+            width: 100%;
+            margin: auto;
+            transform: scale(0.92);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .student-card-modal-overlay.show .student-card-dialog {
+            transform: scale(1);
+        }
+        .student-card-close-btn {
+            position: absolute;
+            top: -15px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            z-index: 20;
+        }
+        .student-card-close-btn:hover {
+            background: var(--netflix-red);
+            border-color: var(--netflix-red);
+            transform: rotate(90deg);
+        }
+
+        .card-3d-stage {
+            perspective: 1200px;
+            padding: 20px 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .holographic-card-3d {
+            position: relative;
+            width: 330px;
+            height: 510px;
+            border-radius: 20px;
+            background: #111319;
+            transform-style: preserve-3d;
+            transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+            transition: transform 0.1s ease-out;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(229, 9, 20, 0.25);
+            cursor: grab;
+            user-select: none;
+            border: 2px solid rgba(255, 215, 0, 0.55);
+            overflow: hidden;
+        }
+        .holographic-card-3d:active {
+            cursor: grabbing;
+        }
+
+        /* Efeito Rainbow Foil Holográfico */
+        .card-foil-shine {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(
+                var(--foil-deg, 125deg),
+                rgba(255, 0, 128, 0.22) 0%,
+                rgba(0, 255, 255, 0.25) 25%,
+                rgba(255, 215, 0, 0.3) 50%,
+                rgba(0, 255, 128, 0.25) 75%,
+                rgba(128, 0, 255, 0.22) 100%
+            );
+            background-size: 200% 200%;
+            background-position: var(--glare-x, 50%) var(--glare-y, 50%);
+            mix-blend-mode: color-dodge;
+            opacity: 0.75;
+            pointer-events: none;
+            z-index: 5;
+            transition: opacity 0.2s ease;
+        }
+        .card-foil-glare {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: radial-gradient(
+                circle 240px at var(--glare-x, 50%) var(--glare-y, 50%),
+                rgba(255, 255, 255, 0.65) 0%,
+                rgba(255, 255, 255, 0.1) 40%,
+                transparent 75%
+            );
+            mix-blend-mode: overlay;
+            opacity: 0.85;
+            pointer-events: none;
+            z-index: 6;
+        }
+
+        .card-inner-content {
+            position: relative;
+            z-index: 4;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 22px 20px;
+            color: #fff;
+            background: radial-gradient(circle at 50% 20%, rgba(45, 20, 20, 0.9), rgba(12, 12, 16, 0.97));
+        }
+
+        /* Cabeçalho da Carta (OVR + Nome) */
+        .card-rpg-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .card-ovr-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+        }
+        .card-ovr-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.2rem;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            letter-spacing: -1px;
+        }
+        .card-ovr-pos {
+            font-size: 0.72rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .card-header-titles {
+            text-align: right;
+        }
+        .card-class-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--netflix-red);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .card-student-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.9rem;
+            letter-spacing: 1px;
+            line-height: 1.1;
+            color: #fff;
+        }
+
+        /* Avatar da Carta */
+        .card-avatar-wrap {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 12px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, #ffd700, #e50914, #00ffff);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
+        }
+        .card-avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #1a1a24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.8rem;
+            color: #fff;
+        }
+
+        /* Especial Skill / Frase */
+        .card-special-skill {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #ffd700;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 14px;
+            font-size: 0.8rem;
+            color: #e0e0e0;
+        }
+        .card-special-skill strong {
+            color: #ffd700;
+            display: block;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        /* Tabela de Atributos (4 Stats) */
+        .card-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 14px;
+            margin-top: auto;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .card-stat-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-stat-label {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #aaa;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .card-stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.35rem;
+            color: #46d369;
+            letter-spacing: 0.5px;
+        }
+
+        /* Ações e Duelo */
+        .student-card-actions {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+        .card-hint-text {
+            font-size: 0.78rem;
+            color: #888;
+            letter-spacing: 0.5px;
+        }
+        .card-action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-card-action {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        .btn-card-action.duel {
+            background: linear-gradient(135deg, #e50914, #900);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+        }
+        .btn-card-action.duel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(229, 9, 20, 0.6);
+            filter: brightness(1.15);
+        }
+        .btn-card-action.share {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-card-action.share:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* =========================================================
+           ARENA DE DUELO 1V1
+           ========================================================= */
+        .duel-arena-box {
+            margin-top: 20px;
+            width: 100%;
+            background: rgba(18, 18, 24, 0.95);
+            border: 1px solid rgba(229, 9, 20, 0.35);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            animation: fadeInDuel 0.3s ease-out;
+        }
+        @keyframes fadeInDuel {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .duel-header {
+            text-align: center;
+            margin-bottom: 14px;
+        }
+        .duel-header h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: #ffd700;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .duel-header p {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin: 4px 0 0;
+        }
+        .duel-select-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .duel-select-dropdown {
+            background: #111;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .btn-start-duel {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            font-weight: 900;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.35);
+        }
+        .btn-start-duel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .duel-arena-fighters {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+        }
+        .duel-fighter {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            width: 40%;
+            text-align: center;
+        }
+        .duel-fighter-name {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+        .duel-fighter-hp {
+            width: 100%;
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .duel-hp-bar {
+            height: 100%;
+            background: #46d369;
+            width: 100%;
+            transition: width 0.4s ease, background 0.4s ease;
+        }
+        .duel-vs-badge {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--netflix-red);
+            text-shadow: 0 0 10px rgba(229, 9, 20, 0.6);
+        }
+        .duel-battle-log {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.82rem;
+            color: #ccc;
+            line-height: 1.4;
+            max-height: 160px;
+            overflow-y: auto;
+        }
+        .duel-battle-round {
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+        }
+        .duel-battle-round strong {
+            color: #ffd700;
+        }
+
+        /* =========================================================
+           CHECKOUT PARÓDIA DO IFPIFLIX
+           ========================================================= */
+        .subscription-checkout-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(16px);
+            z-index: 115000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .subscription-checkout-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .subscription-checkout-box {
+            position: relative;
+            background: linear-gradient(135deg, #14141c, #0c0c12);
+            border: 1px solid rgba(229, 9, 20, 0.4);
+            border-radius: 16px;
+            max-width: 520px;
+            width: 100%;
+            padding: 30px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(229, 9, 20, 0.2);
+            color: #fff;
+            transform: scale(0.92);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .subscription-checkout-overlay.show .subscription-checkout-box {
+            transform: scale(1);
+        }
+        .checkout-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+        .checkout-close-btn:hover {
+            background: var(--netflix-red);
+        }
+        .checkout-badge {
+            display: inline-block;
+            background: var(--netflix-red);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .checkout-header h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            color: #fff;
+            letter-spacing: 1px;
+            margin: 0 0 6px;
+        }
+        .checkout-header p {
+            font-size: 0.88rem;
+            color: #aaa;
+            margin: 0 0 20px;
+        }
+
+        .checkout-price-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        .price-label {
+            color: #bbb;
+        }
+        .price-value.original {
+            color: #fff;
+            font-weight: 700;
+        }
+        .price-value.original.struck {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .discount-row {
+            margin-top: 8px;
+            color: #46d369;
+        }
+        .price-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 12px 0;
+        }
+        .total-row {
+            font-weight: 800;
+            font-size: 1.15rem;
+        }
+        .total-row .price-value.total {
+            color: #ffd700;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+        }
+
+        .checkout-coupon-section {
+            margin-bottom: 20px;
+        }
+        .checkout-coupon-section label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+        .coupon-input-group {
+            display: flex;
+            gap: 8px;
+        }
+        .coupon-input-group input {
+            flex-grow: 1;
+            background: #09090e;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            outline: none;
+            letter-spacing: 1px;
+        }
+        .coupon-input-group input:focus {
+            border-color: var(--netflix-red);
+        }
+        .coupon-input-group button {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            font-weight: 700;
+            padding: 0 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .coupon-input-group button:hover {
+            background: #fff;
+            color: #000;
+        }
+        .coupon-msg {
+            font-size: 0.78rem;
+            color: #ffd700;
+            margin-top: 6px;
+        }
+
+        .checkout-guarantee-list {
+            font-size: 0.8rem;
+            color: #888;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 22px;
+        }
+        .checkout-guarantee-list i {
+            color: #46d369;
+            margin-right: 6px;
+        }
+
+        .btn-confirm-subscription {
+            width: 100%;
+            background: linear-gradient(135deg, #E50914, #900);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 25px rgba(229, 9, 20, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-confirm-subscription:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 35px rgba(229, 9, 20, 0.75);
+            filter: brightness(1.1);
+        }
+
+        /* Comprovante de Sucesso / Aprovação */
+        .checkout-success-view {
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+        }
+        .success-stamp {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            transform: rotate(-12deg);
+            border: 3px dashed #46d369;
+            color: #46d369;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            padding: 4px 12px;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            opacity: 0.9;
+        }
+        .success-icon {
+            font-size: 3.5rem;
+            color: #46d369;
+            margin-bottom: 12px;
+            animation: successPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes successPop {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .checkout-success-view h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            letter-spacing: 1px;
+            margin: 0 0 8px;
+        }
+        .success-receipt-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(70, 211, 105, 0.3);
+            border-radius: 10px;
+            padding: 16px;
+            margin: 18px 0;
+            text-align: left;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+        .btn-receipt-close {
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-receipt-close:hover {
+            background: var(--netflix-red);
+            color: #fff;
+        }
+
+        /* =========================================================
+           CANVAS DA GRAVIDADE DE NEWTON
+           ========================================================= */
+        .newton-canvas-overlay {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 105000;
+            display: none;
+        }
+        .newton-canvas-overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .holographic-card-3d {
+                width: 290px;
+                height: 470px;
+            }
+            .card-ovr-num {
+                font-size: 2.6rem;
+            }
+            .card-student-name {
+                font-size: 1.6rem;
+            }
+            .card-avatar-wrap {
+                width: 110px;
+                height: 110px;
+            }
+            .subscription-checkout-box {
+                padding: 20px;
+            }
+        }
+
+
 
 
 

@@ -287,6 +287,11 @@
                     <span class="btn-upload-text">Enviar Trabalho</span>
                 </button>
 
+                <!-- Botão SFX Cinemático Procedural -->
+                <button type="button" class="btn-sfx-toggle" id="nav-sfx-btn" onclick="window.toggleIfpiflixSfx()" title="Efeitos Sonoros Cinemáticos (Ativar / Desativar)" aria-label="Som">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+
                 <!-- Lupa de Pesquisa -->
                 <div class="search-box" id="search-box">
                     <button type="button" class="search-icon" id="search-icon-btn" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -574,6 +579,11 @@
                 <button type="button" class="btn-professor-upload" id="btn-acervo-upload" style="display: none;" onclick="window.openSubmitWorkModal()" title="Cadastrar / Enviar Trabalho da Turma (Exclusivo Professor)">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     <span class="btn-upload-text">Enviar Trabalho</span>
+                </button>
+
+                <!-- Botão SFX Cinemático Procedural -->
+                <button type="button" class="btn-sfx-toggle" id="nav-acervo-sfx-btn" onclick="window.toggleIfpiflixSfx()" title="Efeitos Sonoros Cinemáticos (Ativar / Desativar)" aria-label="Som">
+                    <i class="fa-solid fa-volume-high"></i>
                 </button>
 
                 <!-- Lupa de Pesquisa no Acervo -->
@@ -865,7 +875,7 @@
                         <div class="ticker-box" id="ticker-12">Uma maçã caiu, e o cara inventou o cálculo.</div>
                         <h3 class="highlight">O Método Científico</h3><p>Newton consolida a revolução. Racionalismo e Empirismo se unem para formar o <strong>Método Hipotético-Dedutivo</strong>.</p>
                     </div>
-                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-trophy"></i> Fim da Campanha</div><div class="sim-screen"><div class="newton-scene"><i class="fa-solid fa-apple-whole newton-apple"></i><div class="math-wave">F = G(m1m2)/r²</div></div></div></div>
+                    <div class="visual-col"><div class="rpg-top"><i class="fa-solid fa-trophy"></i> Fim da Campanha</div><div class="sim-screen"><div class="newton-scene"><i class="fa-solid fa-apple-whole newton-apple" onclick="window.triggerNewtonGravityEasterEgg(event)" title="Clique 3x na Maçã de Newton para testar a gravidade!" style="cursor: pointer;"></i><div class="math-wave">F = G(m1m2)/r²</div></div></div></div>
                 </div>
             </div>
 
@@ -874,8 +884,9 @@
                 <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; width: 100%; z-index: 50;">
                     <h1 style="font-family:'Bebas Neue'; font-size:7rem; color:var(--netflix-red); text-shadow: 0 0 30px rgba(229,9,20,0.8); margin-bottom:10px;">ASSINE O IFPIFLIX</h1>
                     <p style="font-size:2rem; color:#fff;">Acesso ilimitado à sabedoria universal.</p>
-                    <div style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 50px; border-radius: 8px; font-size: 3rem; font-weight: bold; margin-top: 30px; box-shadow: 0 10px 30px rgba(229,9,20,0.5);">
+                    <div class="clickable-price-cta" onclick="window.openSubscriptionCheckout()" title="Clique para assinar agora!" style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 50px; border-radius: 8px; font-size: 3rem; font-weight: bold; margin-top: 30px; box-shadow: 0 10px 30px rgba(229,9,20,0.5); cursor: pointer; user-select: none;">
                         POR APENAS R$ 67,90 <span style="font-size: 1.5rem; font-weight: normal;">/ mês</span>
+                        <div style="font-size: 0.95rem; font-weight: 600; opacity: 0.85; margin-top: 8px; letter-spacing: 1px;"><i class="fa-solid fa-ticket"></i> TEMOS CUPOM: NOTA10 (100% OFF)</div>
                     </div>
                 </div>
             </div>
@@ -1612,7 +1623,7 @@
         <div class="cine-prop prop-apple" style="left: 25%;">
             <!-- A Onda Matemática explodindo atrás da Maçã -->
             <div class="cine-math-wave" style="font-size: 8rem; position: absolute; z-index: 1;">F = G(m1m2)/r²</div>
-            <i class="fa-solid fa-apple-whole" style="font-size: 16rem; color: #E50914; filter: drop-shadow(0 20px 30px #000); position: relative; z-index: 5;"></i>
+            <i class="fa-solid fa-apple-whole" onclick="window.triggerNewtonGravityEasterEgg(event)" title="Clique 3x na Maçã de Newton!" style="font-size: 16rem; color: #E50914; filter: drop-shadow(0 20px 30px #000); position: relative; z-index: 5; cursor: pointer;"></i>
         </div>
 
         <!-- TEXTO (Na Direita) -->
@@ -1632,8 +1643,9 @@
     <div class="cine-camera" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; background: #000;">
         <h1 style="font-family:'Bebas Neue'; font-size:8rem; color:var(--netflix-red); text-shadow: 0 0 50px rgba(229,9,20,0.8); margin-bottom:10px;">ASSINE O IFPIFLIX</h1>
         <p style="font-size:2.5rem; color:#fff; margin-bottom: 40px;">Acesso ilimitado à sabedoria universal.</p>
-        <div style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 60px; border-radius: 8px; font-size: 3.5rem; font-weight: bold; box-shadow: 0 10px 40px rgba(229,9,20,0.6);">
+        <div class="clickable-price-cta" onclick="window.openSubscriptionCheckout()" title="Clique para assinar agora!" style="background: linear-gradient(135deg, #E50914, #8b0000); padding: 20px 60px; border-radius: 8px; font-size: 3.5rem; font-weight: bold; box-shadow: 0 10px 40px rgba(229,9,20,0.6); cursor: pointer; user-select: none;">
             R$ 67,90 <span style="font-size: 1.8rem; font-weight: normal;">/ mês</span>
+            <div style="font-size: 1rem; font-weight: 600; opacity: 0.9; margin-top: 10px; letter-spacing: 1.5px;"><i class="fa-solid fa-ticket"></i> CLIQUE PARA APROVEITAR O CUPOM NOTA10</div>
         </div>
     </div>
 </div>
@@ -2167,6 +2179,153 @@
             </div>
         </div>
     </div>
+
+    <!-- ==========================================
+         ROCKSTAR ACHIEVEMENTS TOAST (XBOX/PS5 STYLE)
+         ========================================== -->
+    <div id="achievement-toast" class="achievement-toast" role="status" aria-live="polite">
+        <div class="achievement-badge-glow"></div>
+        <div class="achievement-icon-box" id="achievement-toast-icon">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+        <div class="achievement-text-box">
+            <div class="achievement-eyebrow"><i class="fa-solid fa-star"></i> CONQUISTA DESBLOQUEADA</div>
+            <div class="achievement-name" id="achievement-toast-title">Cineasta do IFPI</div>
+            <div class="achievement-desc" id="achievement-toast-desc">Descobriu os segredos da sabedoria universal.</div>
+        </div>
+        <div class="achievement-points">+100 XP</div>
+    </div>
+
+    <!-- ==========================================
+         IFPI ULTIMATE TEAM - CARTA HOLOGRÁFICA 3D & DUELO 1V1
+         ========================================== -->
+    <div id="student-card-modal-overlay" class="student-card-modal-overlay" onclick="window.handleStudentCardOverlayClick(event)">
+        <div class="student-card-dialog">
+            <button type="button" class="student-card-close-btn" onclick="window.closeStudentCardModal()" aria-label="Fechar Carta">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <!-- Palco do Card 3D com Tilt & Rainbow Foil -->
+            <div class="card-3d-stage" id="card-3d-stage">
+                <div class="holographic-card-3d" id="holographic-card-3d">
+                    <div class="card-foil-shine"></div>
+                    <div class="card-foil-glare"></div>
+                    <div class="card-inner-content" id="card-inner-content">
+                        <!-- Renderizado dinamicamente via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel de Controles & Duelo 1v1 -->
+            <div class="student-card-actions">
+                <div class="card-hint-text"><i class="fa-solid fa-wand-magic-sparkles"></i> Mova o cursor ou incline o celular para o brilho holográfico</div>
+                <div class="card-action-buttons">
+                    <button type="button" class="btn-card-action duel" onclick="window.openStudentDuelSelect()" title="Desafiar Colega da Turma para um Duelo 1v1">
+                        <i class="fa-solid fa-swords"></i> ⚔️ Desafiar Colega (1v1)
+                    </button>
+                    <button type="button" class="btn-card-action share" onclick="window.copyStudentCardQuote()" title="Copiar Frase Lendária">
+                        <i class="fa-solid fa-quote-right"></i> Copiar Lema
+                    </button>
+                </div>
+            </div>
+
+            <!-- Painel de Duelo 1v1 (Expandível) -->
+            <div id="duel-arena-box" class="duel-arena-box" style="display: none;">
+                <div class="duel-header">
+                    <h3><i class="fa-solid fa-bolt"></i> COLISEU ACADÊMICO - DUELO 1v1</h3>
+                    <p>Quem tem mais oratória, código e poder contra o dogma?</p>
+                </div>
+                <div class="duel-select-row">
+                    <label for="duel-opponent-select">Escolha o Oponente:</label>
+                    <select id="duel-opponent-select" class="duel-select-dropdown" onchange="window.onDuelOpponentChanged()">
+                        <!-- Preenchido via JS com os outros alunos -->
+                    </select>
+                    <button type="button" class="btn-start-duel" onclick="window.startStudentDuelFight()">
+                        <i class="fa-solid fa-fire"></i> LUTAR!
+                    </button>
+                </div>
+                <div class="duel-arena-fighters" id="duel-arena-fighters" style="display: none;">
+                    <!-- Visualização dos dois lutadores e barras de HP/Poder -->
+                </div>
+                <div class="duel-battle-log" id="duel-battle-log" style="display: none;">
+                    <!-- Narrativa épica do combate -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         CHECKOUT PARÓDIA DO IFPIFLIX (R$ 67,90)
+         ========================================== -->
+    <div id="subscription-checkout-modal" class="subscription-checkout-overlay" onclick="window.handleCheckoutOverlayClick(event)">
+        <div class="subscription-checkout-box">
+            <button type="button" class="checkout-close-btn" onclick="window.closeSubscriptionCheckout()" aria-label="Fechar Assinatura">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="checkout-header">
+                <div class="checkout-badge">PLANO VIP ACADÊMICO</div>
+                <h2>ASSINATURA PREMIUM IFPIFLIX</h2>
+                <p>Acesso vitalício à sabedoria filosófica, séries de T.I. e trabalhos da turma.</p>
+            </div>
+
+            <div class="checkout-price-card">
+                <div class="price-row">
+                    <span class="price-label">Mensalidade Padrão:</span>
+                    <span class="price-value original" id="checkout-original-price">R$ 67,90</span>
+                </div>
+                <div class="price-row discount-row" id="checkout-discount-row" style="display: none;">
+                    <span class="price-label"><i class="fa-solid fa-tag"></i> Desconto Especial:</span>
+                    <span class="price-value discount" id="checkout-discount-value">- R$ 67,90 (100% OFF)</span>
+                </div>
+                <div class="price-divider"></div>
+                <div class="price-row total-row">
+                    <span class="price-label">TOTAL HOJE:</span>
+                    <span class="price-value total" id="checkout-final-price">R$ 67,90</span>
+                </div>
+            </div>
+
+            <div class="checkout-coupon-section" id="checkout-coupon-section">
+                <label for="checkout-coupon-input"><i class="fa-solid fa-ticket"></i> Possui cupom do Professor ou Grupo?</label>
+                <div class="coupon-input-group">
+                    <input type="text" id="checkout-coupon-input" placeholder="Digite NOTA10 ou GRUPO6" autocomplete="off" autocapitalize="characters">
+                    <button type="button" id="btn-apply-coupon" onclick="window.applyCheckoutCoupon()">Aplicar</button>
+                </div>
+                <div class="coupon-msg" id="checkout-coupon-msg">Dica: Os alunos ganharam 100% de desconto se tirarem NOTA 10!</div>
+            </div>
+
+            <div class="checkout-guarantee-list">
+                <div><i class="fa-solid fa-shield-halved"></i> Garantia incondicional contra o Dogma Escolástico</div>
+                <div><i class="fa-solid fa-bolt"></i> Servidores 100% livres de bugs e com 60 FPS garantidos</div>
+                <div><i class="fa-solid fa-graduation-cap"></i> Aprovado pelo conselho do IFPI Campus Picos</div>
+            </div>
+
+            <div class="checkout-action-footer">
+                <button type="button" class="btn-confirm-subscription" id="btn-confirm-subscription" onclick="window.confirmSubscriptionPurchase()">
+                    <i class="fa-solid fa-lock"></i> FINALIZAR ASSINATURA AGORA
+                </button>
+            </div>
+
+            <!-- TELA DE SUCESSO / COMPROVANTE DE APROVAÇÃO -->
+            <div id="checkout-success-view" class="checkout-success-view" style="display: none;">
+                <div class="success-stamp">APROVADO COM LOUVOR</div>
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h3>PARABÉNS! VOCÊ É UM MEMBRO VIP!</h3>
+                <p>Sua assinatura foi processada com <strong style="color: #46d369;">100% de bolsa acadêmica</strong> pelo código <span id="success-code-label">NOTA10</span>.</p>
+                <div class="success-receipt-card">
+                    <div><strong>Aluno/Assinante:</strong> Turma de Filosofia & T.I. - IFPI</div>
+                    <div><strong>Nota Estimada:</strong> 10.0 ⭐⭐⭐⭐⭐</div>
+                    <div><strong>Status:</strong> Acesso Vitalício Ilimitado</div>
+                </div>
+                <button type="button" class="btn-receipt-close" onclick="window.closeSubscriptionCheckout()">
+                    <i class="fa-solid fa-clapperboard"></i> Voltar ao Catálogo Master
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CANVAS PARA A FÍSICA DE MAÇÃS DE NEWTON -->
+    <canvas id="newton-canvas-overlay" class="newton-canvas-overlay"></canvas>
 
 </body>
 </html>

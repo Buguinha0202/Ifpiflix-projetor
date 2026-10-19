@@ -60,6 +60,233 @@ let currentSlide = -1;
 let currentCineIdx = -1;
 let tickerIntervalC, tickerIntervalM;
 let toastTimeout;
+let isLisActive = false;
+let globalSfxEnabled = (localStorage.getItem('ifpiflix_sfx_enabled') !== 'false');
+let sharedAudioCtx = null;
+
+function getSharedAudioContext() {
+    try {
+        if (!sharedAudioCtx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) sharedAudioCtx = new AudioCtx();
+        }
+        if (sharedAudioCtx && sharedAudioCtx.state === 'suspended') {
+            sharedAudioCtx.resume().catch(() => {});
+        }
+        return sharedAudioCtx;
+    } catch (err) {
+        return null;
+    }
+}
+
+window.toggleIfpiflixSfx = function() {
+    globalSfxEnabled = !globalSfxEnabled;
+    localStorage.setItem('ifpiflix_sfx_enabled', globalSfxEnabled ? 'true' : 'false');
+    const btns = [document.getElementById('nav-sfx-btn'), document.getElementById('nav-acervo-sfx-btn')];
+    btns.forEach(b => {
+        if (!b) return;
+        if (globalSfxEnabled) {
+            b.classList.remove('muted');
+            b.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            b.title = 'Efeitos Sonoros Cinemáticos: ATIVOS (Clique para desativar)';
+        } else {
+            b.classList.add('muted');
+            b.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            b.title = 'Efeitos Sonoros Cinemáticos: MUTADOS (Clique para ativar)';
+        }
+    });
+    if (globalSfxEnabled) {
+        window.playIfpiflixSfx('click');
+        if (typeof window.showToastNotification === 'function') {
+            window.showToastNotification('Efeitos Sonoros Cinemáticos Ativados!');
+        }
+    } else {
+        if (typeof window.showToastNotification === 'function') {
+            window.showToastNotification('Efeitos Sonoros Mutados.');
+        }
+    }
+};
+
+window.playIfpiflixSfx = function(type) {
+    if (!globalSfxEnabled) return;
+    try {
+        const ctx = getSharedAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        if (type === 'tudum') {
+            // Sintetizador procedural do icônico TUDUM do IFPIFLIX
+            // 1. Batida grave profunda (Boom sub-bass)
+            const oscBass1 = ctx.createOscillator();
+            const oscBass2 = ctx.createOscillator();
+            const bassGain = ctx.createGain();
+            
+            oscBass1.type = 'triangle';
+            oscBass1.frequency.setValueAtTime(82.4, now); // E2
+            oscBass1.frequency.exponentialRampToValueAtTime(32.7, now + 1.2); // C1
+
+            oscBass2.type = 'sine';
+            oscBass2.frequency.setValueAtTime(65.4, now); // C2
+            oscBass2.frequency.exponentialRampToValueAtTime(28.0, now + 1.5);
+
+            bassGain.gain.setValueAtTime(0.001, now);
+            bassGain.gain.exponentialRampToValueAtTime(0.7, now + 0.08);
+            bassGain.gain.exponentialRampToValueAtTime(0.001, now + 2.4);
+
+            oscBass1.connect(bassGain);
+            oscBass2.connect(bassGain);
+            bassGain.connect(ctx.destination);
+
+            oscBass1.start(now);
+            oscBass2.start(now);
+            oscBass1.stop(now + 2.5);
+            oscBass2.stop(now + 2.5);
+
+            // 2. Acorde brilhante harmônico (O 'DUM' ressonante que expande)
+            const notes = [130.81, 196.00, 261.63, 392.00, 523.25];
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const filter = ctx.createBiquadFilter();
+
+                osc.type = (idx % 2 === 0) ? 'sawtooth' : 'triangle';
+                osc.frequency.setValueAtTime(freq, now + 0.28);
+                osc.frequency.exponentialRampToValueAtTime(freq * 1.02, now + 2.0);
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(400, now + 0.28);
+                filter.frequency.exponentialRampToValueAtTime(2600, now + 0.9);
+                filter.frequency.exponentialRampToValueAtTime(600, now + 2.8);
+
+                gain.gain.setValueAtTime(0.001, now + 0.28);
+                gain.gain.linearRampToValueAtTime(0.12 / notes.length, now + 0.5);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now + 0.28);
+                osc.stop(now + 3.0);
+            });
+
+        } else if (type === 'card-hover') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(540, now);
+            osc.frequency.exponentialRampToValueAtTime(720, now + 0.06);
+            gain.gain.setValueAtTime(0.025, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.09);
+
+        } else if (type === 'click') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(880, now);
+            osc.frequency.exponentialRampToValueAtTime(220, now + 0.04);
+            gain.gain.setValueAtTime(0.04, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.06);
+
+        } else if (type === 'achievement') {
+            // Fanfarra Xbox / PS5 Style polifônica
+            const arpeggio = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            arpeggio.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const startTime = now + idx * 0.08;
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, startTime);
+                gain.gain.setValueAtTime(0.001, startTime);
+                gain.gain.linearRampToValueAtTime(0.08, startTime + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.9);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 1.0);
+            });
+
+        } else if (type === 'quiz-correct') {
+            [880, 1318.5].forEach((f, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const startTime = now + i * 0.09;
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(f, startTime);
+                gain.gain.setValueAtTime(0.06, startTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.25);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 0.28);
+            });
+
+        } else if (type === 'quiz-wrong') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(240, now);
+            osc.frequency.linearRampToValueAtTime(130, now + 0.3);
+            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.38);
+
+        } else if (type === 'coins' || type === 'discount') {
+            [987.77, 1318.51, 1567.98, 2093.00].forEach((f, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const startTime = now + i * 0.07;
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(f, startTime);
+                gain.gain.setValueAtTime(0.07, startTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 0.45);
+            });
+
+        } else if (type === 'duel-hit') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.exponentialRampToValueAtTime(60, now + 0.15);
+            gain.gain.setValueAtTime(0.09, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.2);
+
+        } else if (type === 'apple-bounce') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.exponentialRampToValueAtTime(160, now + 0.08);
+            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.12);
+        }
+    } catch (e) {
+        // Áudio desativado ou sem suporte no navegador
+    }
+};
 
         /* =========================================================
            BANCO DE DADOS COMPLETO DA MODAL
@@ -1011,7 +1238,11 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
                 secBtn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Enviar Slides';
                 secBtn.onclick = function() {
                     window.closeTitleModal(null, true);
-                    if (typeof window.openUploadModal === 'function') window.openUploadModal();
+                    if (typeof window.openSubmitWorkModal === 'function') {
+                        window.openSubmitWorkModal();
+                    } else if (typeof window.openUploadModal === 'function') {
+                        window.openUploadModal();
+                    }
                 };
                 secBtn.style.display = 'inline-flex';
             }
@@ -2942,7 +3173,10 @@ function showVideoNextEpisodeButton() {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <button type="button" class="btn-view-card-3d" onclick="window.openStudentCardModal('${student.id || student.name}')" title="Ver Card Holográfico 3D & Duelo 1v1">
+                            <i class="fa-solid fa-id-card-clip"></i> Carta 3D (RPG)
+                        </button>
                         <button type="button" class="student-portfolio-close-btn" onclick="window.clearAcervoAuthorFilter()">
                             <i class="fa-solid fa-xmark"></i> Remover Filtro
                         </button>
@@ -3119,12 +3353,10 @@ function showVideoNextEpisodeButton() {
         ];
 
         function playWrappedSoundEffect(type) {
-            if (!wrappedSoundEnabled) return;
+            if (!wrappedSoundEnabled && !globalSfxEnabled) return;
             try {
-                const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                if (!AudioCtx) return;
-                const ctx = new AudioCtx();
-                if (ctx.state === 'suspended') ctx.resume();
+                const ctx = getSharedAudioContext();
+                if (!ctx) return;
                 const now = ctx.currentTime;
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
@@ -3458,12 +3690,12 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(summaryText).then(() => {
-                    showGlobalToast("Resumo da Retrospectiva copiado para a Área de Transferência!");
+                    if (typeof window.showToastNotification === 'function') window.showToastNotification("Resumo da Retrospectiva copiado para a Área de Transferência!");
                 }).catch(() => {
-                    showGlobalToast("Resumo pronto para compartilhamento!");
+                    if (typeof window.showToastNotification === 'function') window.showToastNotification("Resumo pronto para compartilhamento!");
                 });
             } else {
-                showGlobalToast("Resumo copiado com sucesso!");
+                if (typeof window.showToastNotification === 'function') window.showToastNotification("Resumo copiado com sucesso!");
             }
         };
 
@@ -3501,7 +3733,7 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                 return;
             }
             if (item.pdf || item.slideKey) {
-                window.openPdfViewer(item.pdf || '', id);
+                window.openPdfViewer(item.pdf || '', item.title || '', id);
             } else {
                 window.openTitleModal(id);
             }
@@ -3556,7 +3788,7 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             const safeAuthors = (w.cast || 'Turma IFPI').replace(/"/g, '&quot;');
 
             return `
-                <div class="academic-card ${w.hasNoPdf ? 'has-no-pdf-card' : ''}" data-movie="${e.id}" role="button" tabindex="0" aria-label="${safeTitle}">
+                <div class="academic-card ${w.hasNoPdf ? 'has-no-pdf-card' : ''}" data-movie="${e.id}" role="button" tabindex="0" aria-label="${safeTitle}" onmouseenter="if(typeof window.playIfpiflixSfx==='function') window.playIfpiflixSfx('card-hover');">
                     <div class="academic-card-thumb">
                         <img src="${coverUrl}" alt="${safeTitle}" class="academic-card-img" loading="lazy">
                         ${epBadgeHtml}
@@ -4969,11 +5201,14 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
 
         // Inicializa partículas quando entra no modo cinematográfico
         const originalSwitchScreen = window.switchScreen;
-        window.switchScreen = function(id) {
-            originalSwitchScreen(id);
+        window.switchScreen = function(id, syncNav = true) {
+            originalSwitchScreen(id, syncNav);
 
             if (id === 'cinematic-stage') {
                 setTimeout(() => generateSpaceParticles(), 500);
+                if (typeof window.unlockAchievement === 'function') {
+                    window.unlockAchievement('cine-master');
+                }
             }
         };
 
@@ -5016,6 +5251,10 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             logo.classList.remove('play-tudum');
             void logo.offsetWidth; 
             logo.classList.add('play-tudum');
+            
+            if (typeof window.playIfpiflixSfx === 'function') {
+                window.playIfpiflixSfx('tudum');
+            }
             
             if (skipBtn) skipBtn.classList.add('show');
             window.currentIntroCallback = callback;
@@ -5649,7 +5888,13 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             
             const optionsContainer = document.getElementById('quiz-options');
             optionsContainer.innerHTML = '';
-            document.getElementById('btn-next-quiz').style.display = 'none';
+            
+            const nextBtn = document.getElementById('btn-next-quiz');
+            if (nextBtn) {
+                nextBtn.innerHTML = 'Próxima Questão <i class="fa-solid fa-arrow-right"></i>';
+                nextBtn.onclick = () => window.nextQuizQuestion();
+                nextBtn.style.display = 'none';
+            }
 
             q.options.forEach((opt, index) => {
                 const btn = document.createElement('div');
@@ -5671,14 +5916,17 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             if (isCorrect) {
                 btnElement.classList.add('correct');
                 quizScore++;
+                if (typeof window.playIfpiflixSfx === 'function') window.playIfpiflixSfx('quiz-correct');
             } else {
                 btnElement.classList.add('wrong');
                 // Destaca a correta
                 const correctIndex = q.options.findIndex(o => o.correct);
-                allBtns[correctIndex].classList.add('correct');
+                if (allBtns[correctIndex]) allBtns[correctIndex].classList.add('correct');
+                if (typeof window.playIfpiflixSfx === 'function') window.playIfpiflixSfx('quiz-wrong');
             }
 
-            document.getElementById('btn-next-quiz').style.display = 'block';
+            const nextBtn = document.getElementById('btn-next-quiz');
+            if (nextBtn) nextBtn.style.display = 'block';
         }
 
         window.nextQuizQuestion = function() {
@@ -5694,9 +5942,15 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             document.getElementById('quiz-options').innerHTML = '';
             
             const btn = document.getElementById('btn-next-quiz');
-            btn.innerHTML = '<i class="fa-solid fa-list"></i> Voltar aos Episódios';
-            btn.style.display = 'block';
-            btn.onclick = () => window.exitQuiz();
+            if (btn) {
+                btn.innerHTML = '<i class="fa-solid fa-list"></i> Voltar aos Episódios';
+                btn.style.display = 'block';
+                btn.onclick = () => window.exitQuiz();
+            }
+
+            if (typeof window.unlockAchievement === 'function') {
+                window.unlockAchievement('quiz-master');
+            }
         }
 
 
@@ -5989,7 +6243,7 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 if(data.isMain) window.startCinematicMovie();
                 else if(data.ytTrailer) window.openVideoPlayer(data.ytTrailer, true);
                 else if(data.trailer) window.openVideoPlayer(mediaUrl(data.trailer), false);
-                else if(data.pdf) window.openPdfViewer(data.pdf, data.title);
+                else if(data.pdf) window.openPdfViewer(data.pdf, data.title, movieId);
             };
             
             // Botão de Minha Lista na Mini Tela
@@ -6069,6 +6323,12 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
         document.addEventListener('keydown', (e) => {
             // Ignora se o usuário estiver digitando na barra de pesquisa
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            const videoModal = document.getElementById('video-modal');
+            const isVideoOpen = (videoModal && videoModal.classList.contains('show')) ||
+                                document.fullscreenElement ||
+                                (typeof ytMainPlayerActive !== 'undefined' && ytMainPlayerActive);
+            if (isVideoOpen) return;
 
             if (e.key.toLowerCase() === 'f') {
                 isSpotlightActive = !isSpotlightActive;
@@ -6596,5 +6856,768 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 window.closeSecurityPresentation();
             }
         });
+
+        /* =========================================================
+           SISTEMA DE GAMIFICAÇÃO & CONQUISTAS (ROCKSTAR ACHIEVEMENTS)
+           ========================================================= */
+        const ACHIEVEMENTS_DB = {
+            'cine-master': {
+                title: 'Cineasta do IFPI',
+                desc: 'Iniciou a experiência cinematográfica 3D pelo espaço-tempo.',
+                icon: 'fa-film',
+                xp: '+100 XP'
+            },
+            'quiz-master': {
+                title: 'Inimigo do Dogma',
+                desc: 'Enfrentou e concluiu o Quiz Épico da Revolução Científica.',
+                icon: 'fa-graduation-cap',
+                xp: '+150 XP'
+            },
+            'card-collector': {
+                title: 'Colecionador Lendário',
+                desc: 'Inspecionou a Carta Holográfica 3D de um colega da turma.',
+                icon: 'fa-id-card-clip',
+                xp: '+80 XP'
+            },
+            'duel-master': {
+                title: 'Gladiador do IFPI',
+                desc: 'Disputou uma batalha épica 1v1 no Coliseu Acadêmico.',
+                icon: 'fa-bolt',
+                xp: '+120 XP'
+            },
+            'newton-genius': {
+                title: 'Gênio de Cambridge',
+                desc: 'Descobriu o segredo e invocou a gravidade da maçã de Newton.',
+                icon: 'fa-apple-whole',
+                xp: '+200 XP'
+            },
+            'patron-academic': {
+                title: 'Mecenas Aprovado',
+                desc: 'Assinou o IFPIFLIX com o cupom NOTA10 (100% de bolsa acadêmica).',
+                icon: 'fa-receipt',
+                xp: '+250 XP'
+            },
+            'rat-library': {
+                title: 'Rato de Biblioteca',
+                desc: 'Aprofundou seus estudos abrindo múltiplos trabalhos em PDF.',
+                icon: 'fa-book-open',
+                xp: '+100 XP'
+            },
+            'wrapped-master': {
+                title: 'Viajante do Tempo',
+                desc: 'Assistiu à Retrospectiva Wrapped dos Trabalhos da Turma.',
+                icon: 'fa-trophy',
+                xp: '+150 XP'
+            }
+        };
+
+        let unlockedAchievements = [];
+        try {
+            unlockedAchievements = JSON.parse(localStorage.getItem('ifpiflix_achievements') || '[]');
+        } catch (e) {
+            unlockedAchievements = [];
+        }
+
+        let achievementToastTimeout = null;
+
+        window.unlockAchievement = function(id) {
+            const ach = ACHIEVEMENTS_DB[id];
+            if (!ach) return;
+            if (unlockedAchievements.includes(id)) return;
+
+            unlockedAchievements.push(id);
+            try {
+                localStorage.setItem('ifpiflix_achievements', JSON.stringify(unlockedAchievements));
+            } catch (e) {}
+
+            const toast = document.getElementById('achievement-toast');
+            const titleEl = document.getElementById('achievement-toast-title');
+            const descEl = document.getElementById('achievement-toast-desc');
+            const iconBox = document.getElementById('achievement-toast-icon');
+
+            if (titleEl) titleEl.textContent = ach.title;
+            if (descEl) descEl.textContent = ach.desc;
+            if (iconBox) iconBox.innerHTML = `<i class="fa-solid ${ach.icon}"></i>`;
+
+            if (toast) {
+                toast.classList.add('show');
+                if (typeof window.playIfpiflixSfx === 'function') {
+                    window.playIfpiflixSfx('achievement');
+                }
+
+                clearTimeout(achievementToastTimeout);
+                achievementToastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4800);
+            }
+        };
+
+        // Rastreamento para Rato de Biblioteca
+        let openedPdfsCount = 0;
+        const originalOpenPdfViewer = window.openPdfViewer;
+        if (typeof originalOpenPdfViewer === 'function') {
+            window.openPdfViewer = function(pdfUrl, title, movieId) {
+                openedPdfsCount++;
+                if (openedPdfsCount >= 3) {
+                    window.unlockAchievement('rat-library');
+                }
+                return originalOpenPdfViewer(pdfUrl, title, movieId);
+            };
+        }
+
+        /* =========================================================
+           IFPI ULTIMATE TEAM - BANCO DE DADOS RPG DOS ALUNOS
+           ========================================================= */
+        const STUDENT_RPG_STATS = {
+            'francisco-lucas': {
+                ovr: 99,
+                pos: 'DEV / ARCH',
+                classTitle: 'Mestre Arquiteto de Sistemas',
+                skill: 'Compilação Sem Erros & Dúvida Metódica',
+                quote: 'Se o código roda a 60 FPS e a dúvida é cartesiana, a nota 10 é inevitável.',
+                stats: { oratoria: 98, filosofia: 99, codigo: 99, antiDogma: 97 }
+            },
+            'joao-pedro-santos': {
+                ovr: 98,
+                pos: 'LEAD / STRAT',
+                classTitle: 'Marechal da Turma',
+                skill: 'Liderança Tática & Demolição Dogmática',
+                quote: 'Aqui a escolástica medieval não passa do primeiro slide de abertura.',
+                stats: { oratoria: 99, filosofia: 97, codigo: 95, antiDogma: 99 }
+            },
+            'pedro-victor': {
+                ovr: 97,
+                pos: 'CYBER / SOC',
+                classTitle: 'Guardião de Defesa Cibernética',
+                skill: 'Firewall Hipotético-Dedutivo',
+                quote: 'Nenhum exploit corrompe quem pesquisa com empirismo e rigor.',
+                stats: { oratoria: 94, filosofia: 95, codigo: 99, antiDogma: 98 }
+            },
+            'davi-costa': {
+                ovr: 97,
+                pos: 'RHETOR / PHI',
+                classTitle: 'Orador Socrático Supremo',
+                skill: 'Maiêutica de Alta Precisão',
+                quote: 'Só sei que nada sei... exceto que nosso seminário é cinema puro.',
+                stats: { oratoria: 99, filosofia: 98, codigo: 93, antiDogma: 99 }
+            },
+            'samuel-soares': {
+                ovr: 96,
+                pos: 'HW / ARCH',
+                classTitle: 'Engenheiro de Arquitetura de Silício',
+                skill: 'Overclock Filosófico das Máquinas',
+                quote: 'Das válvulas de 1940 aos transistores quânticos, a razão guia o hardware.',
+                stats: { oratoria: 94, filosofia: 96, codigo: 98, antiDogma: 95 }
+            },
+            'joao-pedro-silva': {
+                ovr: 96,
+                pos: 'SCI / ASTRO',
+                classTitle: 'Cientista Empirista Galileano',
+                skill: 'Luneta Astrofísica Reveladora',
+                quote: 'E contudo, ela se move! A física não pede licença à tradição.',
+                stats: { oratoria: 95, filosofia: 97, codigo: 96, antiDogma: 97 }
+            },
+            'nicolas-marcell': {
+                ovr: 96,
+                pos: 'LIT / CRITIC',
+                classTitle: 'Mestre do Realismo & Modernismo',
+                skill: 'Ironia Machadiana Implacável',
+                quote: 'Aos vencedores, as batatas... e nota máxima para o nosso grupo.',
+                stats: { oratoria: 97, filosofia: 96, codigo: 94, antiDogma: 98 }
+            },
+            'micaias-lima': {
+                ovr: 95,
+                pos: 'SOC / MEDIA',
+                classTitle: 'Voz da Sociologia & Mídia',
+                skill: 'Ruptura Cultural & Dialética',
+                quote: 'Tecnologia sem pensamento sociológico vira apenas algoritmo alienante.',
+                stats: { oratoria: 96, filosofia: 97, codigo: 95, antiDogma: 96 }
+            },
+            'marcelo': {
+                ovr: 95,
+                pos: 'RATIO / MATH',
+                classTitle: 'Cavaleiro do Racionalismo Cartesiano',
+                skill: 'Geometria Analítica contra a Incerteza',
+                quote: 'Dividir cada problema em partes tão pequenas quanto possível para resolvê-lo.',
+                stats: { oratoria: 95, filosofia: 98, codigo: 94, antiDogma: 96 }
+            },
+            'maria-helena': {
+                ovr: 97,
+                pos: 'ELOQ / ART',
+                classTitle: 'Estrategista do Renascimento',
+                skill: 'Eloquência Iluminista & Diplomacia',
+                quote: 'A verdadeira sabedoria está em transformar conceitos complexos em arte.',
+                stats: { oratoria: 98, filosofia: 98, codigo: 96, antiDogma: 97 }
+            },
+            'marcos-felipe': {
+                ovr: 95,
+                pos: 'SIM / ENG',
+                classTitle: 'Comandante da Dinâmica de Trânsito',
+                skill: 'Leis de Newton no Tráfego Urbano',
+                quote: 'No trânsito e na ciência: acelerar a razão, frear os dogmas.',
+                stats: { oratoria: 95, filosofia: 94, codigo: 97, antiDogma: 96 }
+            }
+        };
+
+        function getStudentRpgData(student) {
+            const key = student.id || student.name.toLowerCase().replace(/\s+/g, '-');
+            if (STUDENT_RPG_STATS[key]) return { ...student, ...STUDENT_RPG_STATS[key] };
+            
+            // Gerador automático equilibrado para os demais integrantes
+            return {
+                ...student,
+                ovr: 95,
+                pos: 'ACAD / STAR',
+                classTitle: 'Pioneiro da Revolução Intelectual',
+                skill: 'Raciocínio Lógico & Defesa de Tese',
+                quote: 'A busca pelo conhecimento transforma a turma em lenda viva.',
+                stats: { oratoria: 95, filosofia: 96, codigo: 95, antiDogma: 96 }
+            };
+        }
+
+        let currentActiveCardStudent = null;
+
+        window.openStudentCardModal = function(studentKey) {
+            if (!studentKey) return;
+            const normKey = studentKey.toString().trim().toLowerCase();
+            const student = STUDENTS_REGISTRY.find(s => 
+                s.id === normKey || 
+                s.name.toLowerCase() === normKey || 
+                (s.aliases && s.aliases.some(a => a.toLowerCase() === normKey))
+            ) || {
+                id: normKey,
+                name: studentKey,
+                fullName: studentKey,
+                initials: studentKey.slice(0, 2).toUpperCase(),
+                color: '#e50914'
+            };
+
+            currentActiveCardStudent = getStudentRpgData(student);
+            const data = currentActiveCardStudent;
+
+            const modal = document.getElementById('student-card-modal-overlay');
+            const cardInner = document.getElementById('card-inner-content');
+            const duelArena = document.getElementById('duel-arena-box');
+
+            if (duelArena) duelArena.style.display = 'none';
+
+            const avatarHtml = data.avatar 
+                ? `<img src="${imgUrl(data.avatar, 300)}" alt="${data.name}" class="card-avatar-img">`
+                : `<div class="card-avatar-img" style="background: linear-gradient(135deg, ${data.color || '#e50914'}, #400);">${data.initials}</div>`;
+
+            if (cardInner) {
+                cardInner.innerHTML = `
+                    <div class="card-rpg-header">
+                        <div class="card-ovr-badge">
+                            <span class="card-ovr-num">${data.ovr}</span>
+                            <span class="card-ovr-pos">${data.pos}</span>
+                        </div>
+                        <div class="card-header-titles">
+                            <div class="card-class-tag">${data.classTitle}</div>
+                            <div class="card-student-name">${data.name}</div>
+                        </div>
+                    </div>
+
+                    <div class="card-avatar-wrap">
+                        ${avatarHtml}
+                    </div>
+
+                    <div class="card-special-skill">
+                        <strong><i class="fa-solid fa-wand-magic-sparkles"></i> HABILIDADE: ${data.skill}</strong>
+                        "${data.quote}"
+                    </div>
+
+                    <div class="card-stats-grid">
+                        <div class="card-stat-item">
+                            <span class="card-stat-label"><i class="fa-solid fa-microphone-lines"></i> Oratória</span>
+                            <span class="card-stat-value">${data.stats.oratoria}</span>
+                        </div>
+                        <div class="card-stat-item">
+                            <span class="card-stat-label"><i class="fa-solid fa-brain"></i> Filosofia</span>
+                            <span class="card-stat-value">${data.stats.filosofia}</span>
+                        </div>
+                        <div class="card-stat-item">
+                            <span class="card-stat-label"><i class="fa-solid fa-code"></i> Código & T.I.</span>
+                            <span class="card-stat-value">${data.stats.codigo}</span>
+                        </div>
+                        <div class="card-stat-item">
+                            <span class="card-stat-label"><i class="fa-solid fa-shield-halved"></i> Anti-Dogma</span>
+                            <span class="card-stat-value">${data.stats.antiDogma}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (modal) {
+                modal.classList.add('show');
+                window.bindHolographicCardTilt();
+                if (typeof window.playIfpiflixSfx === 'function') {
+                    window.playIfpiflixSfx('card-hover');
+                }
+                if (typeof window.unlockAchievement === 'function') {
+                    window.unlockAchievement('card-collector');
+                }
+            }
+        };
+
+        window.closeStudentCardModal = function() {
+            const modal = document.getElementById('student-card-modal-overlay');
+            if (modal) modal.classList.remove('show');
+        };
+
+        window.handleStudentCardOverlayClick = function(e) {
+            if (e.target && e.target.id === 'student-card-modal-overlay') {
+                window.closeStudentCardModal();
+            }
+        };
+
+        window.copyStudentCardQuote = function() {
+            if (!currentActiveCardStudent) return;
+            const text = `"${currentActiveCardStudent.quote}" — ${currentActiveCardStudent.name} (OVR ${currentActiveCardStudent.ovr} / ${currentActiveCardStudent.classTitle})`;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    if (typeof window.showToastNotification === 'function') {
+                        window.showToastNotification('Lema do colega copiado!');
+                    }
+                }).catch(() => {});
+            }
+        };
+
+        /* FÍSICA E TILT 3D DO CARD COM GLOW REFLEXIVO */
+        let cardTiltBound = false;
+        window.bindHolographicCardTilt = function() {
+            const card = document.getElementById('holographic-card-3d');
+            const stage = document.getElementById('card-3d-stage');
+            if (!card || !stage || cardTiltBound) return;
+            cardTiltBound = true;
+
+            const handleMove = (clientX, clientY) => {
+                const rect = card.getBoundingClientRect();
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -16;
+                const rotateY = ((x - centerX) / centerX) * 16;
+
+                const glareX = (x / rect.width) * 100;
+                const glareY = (y / rect.height) * 100;
+                const foilDeg = 90 + (rotateY * 4);
+
+                card.style.setProperty('--rx', `${rotateX.toFixed(2)}deg`);
+                card.style.setProperty('--ry', `${rotateY.toFixed(2)}deg`);
+                card.style.setProperty('--glare-x', `${glareX.toFixed(1)}%`);
+                card.style.setProperty('--glare-y', `${glareY.toFixed(1)}%`);
+                card.style.setProperty('--foil-deg', `${foilDeg.toFixed(1)}deg`);
+            };
+
+            stage.addEventListener('pointermove', (e) => {
+                handleMove(e.clientX, e.clientY);
+            });
+
+            stage.addEventListener('pointerleave', () => {
+                card.style.setProperty('--rx', `0deg`);
+                card.style.setProperty('--ry', `0deg`);
+                card.style.setProperty('--glare-x', `50%`);
+                card.style.setProperty('--glare-y', `50%`);
+            });
+
+            // Giroscópio para mobile
+            if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', (e) => {
+                    if (!e.gamma || !e.beta) return;
+                    const rotateY = Math.max(-18, Math.min(18, e.gamma * 0.8));
+                    const rotateX = Math.max(-18, Math.min(18, (e.beta - 45) * 0.8));
+                    card.style.setProperty('--rx', `${(-rotateX).toFixed(2)}deg`);
+                    card.style.setProperty('--ry', `${rotateY.toFixed(2)}deg`);
+                    card.style.setProperty('--glare-x', `${(50 + rotateY * 2).toFixed(1)}%`);
+                    card.style.setProperty('--glare-y', `${(50 + rotateX * 2).toFixed(1)}%`);
+                });
+            }
+        };
+
+        /* =========================================================
+           COLISEU ACADÊMICO - DUELO 1V1
+           ========================================================= */
+        window.openStudentDuelSelect = function() {
+            if (!currentActiveCardStudent) return;
+            const arena = document.getElementById('duel-arena-box');
+            const select = document.getElementById('duel-opponent-select');
+            const fighters = document.getElementById('duel-arena-fighters');
+            const log = document.getElementById('duel-battle-log');
+
+            if (!arena || !select) return;
+
+            arena.style.display = 'block';
+            if (fighters) fighters.style.display = 'none';
+            if (log) log.style.display = 'none';
+
+            // Popula opções excluindo o aluno atual
+            select.innerHTML = STUDENTS_REGISTRY
+                .filter(s => s.name.toLowerCase() !== currentActiveCardStudent.name.toLowerCase())
+                .map(s => `<option value="${s.id || s.name}">${s.name} (${s.fullName})</option>`)
+                .join('');
+
+            arena.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        };
+
+        window.onDuelOpponentChanged = function() {
+            if (typeof window.playIfpiflixSfx === 'function') window.playIfpiflixSfx('click');
+        };
+
+        window.startStudentDuelFight = function() {
+            if (!currentActiveCardStudent) return;
+            const select = document.getElementById('duel-opponent-select');
+            const fighters = document.getElementById('duel-arena-fighters');
+            const log = document.getElementById('duel-battle-log');
+            if (!select || !fighters || !log) return;
+
+            const oppId = select.value;
+            const opponentBase = STUDENTS_REGISTRY.find(s => (s.id || s.name) === oppId) || { name: oppId, fullName: oppId };
+            const opponent = getStudentRpgData(opponentBase);
+
+            fighters.style.display = 'flex';
+            log.style.display = 'block';
+
+            fighters.innerHTML = `
+                <div class="duel-fighter">
+                    <span class="duel-fighter-name">${currentActiveCardStudent.name} (OVR ${currentActiveCardStudent.ovr})</span>
+                    <div class="duel-fighter-hp"><div id="duel-p1-hp" class="duel-hp-bar"></div></div>
+                </div>
+                <div class="duel-vs-badge">VS</div>
+                <div class="duel-fighter">
+                    <span class="duel-fighter-name">${opponent.name} (OVR ${opponent.ovr})</span>
+                    <div class="duel-fighter-hp"><div id="duel-p2-hp" class="duel-hp-bar"></div></div>
+                </div>
+            `;
+
+            log.innerHTML = `<div class="duel-battle-round">⚔️ <strong>O DUELO COMEÇOU!</strong> A plateia do IFPI vai ao delírio no Coliseu Acadêmico!</div>`;
+
+            let p1Hp = 100;
+            let p2Hp = 100;
+
+            const rounds = [
+                {
+                    attr: 'oratoria',
+                    title: 'DISPUTA DE ORATÓRIA & RETÓRICA',
+                    val1: currentActiveCardStudent.stats.oratoria,
+                    val2: opponent.stats.oratoria,
+                    action1: `desferiu um discurso avassalador usando a arte da dialética!`,
+                    action2: `respondeu com uma refutação irônica digna de Machado de Assis!`
+                },
+                {
+                    attr: 'codigo',
+                    title: 'BATALHA DE CÓDIGO & ARQUITETURA',
+                    val1: currentActiveCardStudent.stats.codigo,
+                    val2: opponent.stats.codigo,
+                    action1: `compilou um algoritmo otimizado em O(log n) sem warnings!`,
+                    action2: `subiu um script defensivo com criptografia pós-quântica!`
+                },
+                {
+                    attr: 'antiDogma',
+                    title: 'CLÍMAX: DÚVIDA METÓDICA & ANTI-DOGMA',
+                    val1: currentActiveCardStudent.stats.antiDogma,
+                    val2: opponent.stats.antiDogma,
+                    action1: `usou a síntese newtoniana e abalou as certezas medievais!`,
+                    action2: `aplicou a dúvida hiperbólica de Descartes com potência máxima!`
+                }
+            ];
+
+            let roundIdx = 0;
+            const fightInterval = setInterval(() => {
+                if (roundIdx < rounds.length) {
+                    const r = rounds[roundIdx];
+                    const diff = r.val1 - r.val2;
+
+                    let roundText = '';
+                    if (diff >= 0) {
+                        const dmg = Math.floor(25 + Math.random() * 15 + diff * 2);
+                        p2Hp = Math.max(10, p2Hp - dmg);
+                        roundText = `<div class="duel-battle-round"><strong>Round ${roundIdx + 1} - ${r.title}:</strong> ${currentActiveCardStudent.name} ${r.action1} Causou <strong>${dmg} de dano epistemológico</strong> em ${opponent.name}!</div>`;
+                    } else {
+                        const dmg = Math.floor(25 + Math.random() * 15 + Math.abs(diff) * 2);
+                        p1Hp = Math.max(10, p1Hp - dmg);
+                        roundText = `<div class="duel-battle-round"><strong>Round ${roundIdx + 1} - ${r.title}:</strong> ${opponent.name} ${r.action2} Causou <strong>${dmg} de dano epistemológico</strong> em ${currentActiveCardStudent.name}!</div>`;
+                    }
+
+                    if (typeof window.playIfpiflixSfx === 'function') window.playIfpiflixSfx('duel-hit');
+
+                    const p1Bar = document.getElementById('duel-p1-hp');
+                    const p2Bar = document.getElementById('duel-p2-hp');
+                    if (p1Bar) p1Bar.style.width = `${p1Hp}%`;
+                    if (p2Bar) p2Bar.style.width = `${p2Hp}%`;
+
+                    log.innerHTML += roundText;
+                    log.scrollTop = log.scrollHeight;
+                    roundIdx++;
+                } else {
+                    clearInterval(fightInterval);
+                    const winner = (p1Hp >= p2Hp) ? currentActiveCardStudent : opponent;
+                    log.innerHTML += `
+                        <div class="duel-battle-round" style="color: #ffd700; font-weight: 800; font-size: 0.95rem; text-align: center; margin-top: 8px;">
+                            🏆 FIM DE COMBATE! O VENCEDOR É <strong>${winner.name.toUpperCase()}</strong>!
+                            <div style="font-size: 0.8rem; color: #46d369; margin-top: 4px;">Ambos provaram que na Turma do IFPI não há espaço para o dogma! Nota 10 geral!</div>
+                        </div>
+                    `;
+                    log.scrollTop = log.scrollHeight;
+                    if (typeof window.playIfpiflixSfx === 'function') window.playIfpiflixSfx('achievement');
+                    if (typeof window.unlockAchievement === 'function') window.unlockAchievement('duel-master');
+                }
+            }, 1000);
+        };
+
+        /* =========================================================
+           CHECKOUT PARÓDIA DO IFPIFLIX (R$ 67,90 COM CUPOM NOTA10)
+           ========================================================= */
+        let hasApplied100Discount = false;
+
+        window.openSubscriptionCheckout = function() {
+            const modal = document.getElementById('subscription-checkout-modal');
+            const normalView = document.getElementById('checkout-coupon-section');
+            const successView = document.getElementById('checkout-success-view');
+            const actionFooter = document.querySelector('.checkout-action-footer');
+            const guaranteeList = document.querySelector('.checkout-guarantee-list');
+
+            if (normalView) normalView.style.display = 'block';
+            if (actionFooter) actionFooter.style.display = 'block';
+            if (guaranteeList) guaranteeList.style.display = 'flex';
+            if (successView) successView.style.display = 'none';
+
+            if (modal) {
+                modal.classList.add('show');
+                if (typeof window.playIfpiflixSfx === 'function') window.playIfpiflixSfx('click');
+            }
+        };
+
+        window.closeSubscriptionCheckout = function() {
+            const modal = document.getElementById('subscription-checkout-modal');
+            if (modal) modal.classList.remove('show');
+        };
+
+        window.handleCheckoutOverlayClick = function(e) {
+            if (e.target && e.target.id === 'subscription-checkout-modal') {
+                window.closeSubscriptionCheckout();
+            }
+        };
+
+        window.applyCheckoutCoupon = function() {
+            const input = document.getElementById('checkout-coupon-input');
+            const msg = document.getElementById('checkout-coupon-msg');
+            const originalPrice = document.getElementById('checkout-original-price');
+            const discountRow = document.getElementById('checkout-discount-row');
+            const finalPrice = document.getElementById('checkout-final-price');
+
+            if (!input) return;
+            const val = input.value.trim().toUpperCase().replace(/\s+/g, '');
+
+            if (['NOTA10', 'GRUPO6', 'IFPI', '10', 'NOTA_10', 'PROFESSOR'].includes(val)) {
+                hasApplied100Discount = true;
+                if (originalPrice) originalPrice.classList.add('struck');
+                if (discountRow) discountRow.style.display = 'flex';
+                if (finalPrice) {
+                    finalPrice.textContent = 'R$ 0,00';
+                    finalPrice.style.color = '#46d369';
+                }
+                if (msg) {
+                    msg.innerHTML = '<strong style="color:#46d369;"><i class="fa-solid fa-circle-check"></i> CUPOM APLICADO COM SUCESSO! 100% DE BOLSA POR MERECIMENTO!</strong>';
+                }
+                if (typeof window.playIfpiflixSfx === 'function') {
+                    window.playIfpiflixSfx('coins');
+                }
+            } else {
+                if (msg) {
+                    msg.innerHTML = '<span style="color:#ff4444;"><i class="fa-solid fa-circle-exclamation"></i> Cupom inválido! Experimente digitar <strong>NOTA10</strong> ou <strong>GRUPO6</strong>!</span>';
+                }
+                if (typeof window.playIfpiflixSfx === 'function') {
+                    window.playIfpiflixSfx('quiz-wrong');
+                }
+            }
+        };
+
+        window.confirmSubscriptionPurchase = function() {
+            const couponInput = document.getElementById('checkout-coupon-input');
+            if (!hasApplied100Discount) {
+                // Aplica automaticamente para uma experiência engraçada
+                if (couponInput) couponInput.value = 'NOTA10';
+                window.applyCheckoutCoupon();
+            }
+
+            const normalView = document.getElementById('checkout-coupon-section');
+            const successView = document.getElementById('checkout-success-view');
+            const actionFooter = document.querySelector('.checkout-action-footer');
+            const guaranteeList = document.querySelector('.checkout-guarantee-list');
+
+            if (normalView) normalView.style.display = 'none';
+            if (actionFooter) actionFooter.style.display = 'none';
+            if (guaranteeList) guaranteeList.style.display = 'none';
+            if (successView) successView.style.display = 'block';
+
+            if (typeof window.playIfpiflixSfx === 'function') {
+                window.playIfpiflixSfx('achievement');
+            }
+            if (typeof window.unlockAchievement === 'function') {
+                window.unlockAchievement('patron-academic');
+            }
+        };
+
+        /* =========================================================
+           EASTER EGG: A FÍSICA E GRAVIDADE DE NEWTON (CANVAS)
+           ========================================================= */
+        let newtonClickCount = 0;
+        let newtonClickTimer = null;
+        let newtonCanvasActive = false;
+        let newtonAnimId = null;
+
+        window.triggerNewtonGravityEasterEgg = function(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            newtonClickCount++;
+
+            if (typeof window.playIfpiflixSfx === 'function') {
+                window.playIfpiflixSfx('click');
+            }
+
+            clearTimeout(newtonClickTimer);
+            newtonClickTimer = setTimeout(() => { newtonClickCount = 0; }, 1800);
+
+            if (newtonClickCount >= 3) {
+                newtonClickCount = 0;
+                window.startNewtonPhysicsSimulation();
+            } else {
+                if (typeof window.showToastNotification === 'function') {
+                    window.showToastNotification(`🍎 Maçã de Newton atingida! Clique mais ${3 - newtonClickCount}x para romper a gravidade!`);
+                }
+            }
+        };
+
+        // Código Secreto digitado: "NEWTON"
+        let newtonKeySequence = "";
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            newtonKeySequence += e.key.toUpperCase();
+            if (newtonKeySequence.length > 10) newtonKeySequence = newtonKeySequence.slice(-10);
+
+            if (newtonKeySequence.endsWith('NEWTON')) {
+                newtonKeySequence = "";
+                window.startNewtonPhysicsSimulation();
+            }
+        });
+
+        window.startNewtonPhysicsSimulation = function() {
+            const canvas = document.getElementById('newton-canvas-overlay');
+            if (!canvas) return;
+
+            window.unlockAchievement('newton-genius');
+            if (typeof window.showToastNotification === 'function') {
+                window.showToastNotification('🍏 SÍNTESE NEWTONIANA ATIVADA: F = G(m₁m₂)/r² !');
+            }
+            if (typeof window.playIfpiflixSfx === 'function') {
+                window.playIfpiflixSfx('achievement');
+            }
+
+            canvas.classList.add('active');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const formulas = [
+                'F = G(m₁m₂)/r²', 'F = m·a', 'E = mc²', '∇ × B = μ₀J',
+                'v = v₀ + gt', 'ΔS = v₀t + ½gt²', 'p = m·v', 'T = 2π√(L/g)'
+            ];
+
+            const particles = [];
+            const count = 35;
+
+            for (let i = 0; i < count; i++) {
+                const isFormula = (i % 2 === 0);
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: -50 - Math.random() * 300,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: Math.random() * 3 + 2,
+                    gravity: 0.45 + Math.random() * 0.2,
+                    bounce: 0.65,
+                    radius: isFormula ? 25 : 20,
+                    rotation: Math.random() * Math.PI * 2,
+                    vRot: (Math.random() - 0.5) * 0.1,
+                    isFormula: isFormula,
+                    text: formulas[Math.floor(Math.random() * formulas.length)],
+                    color: isFormula ? '#ffd700' : '#e50914',
+                    bounces: 0
+                });
+            }
+
+            let frames = 0;
+            const maxFrames = 360; // Duração aprox de 6 segundos a 60fps
+
+            function animate() {
+                frames++;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(p => {
+                    p.vy += p.gravity;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.rotation += p.vRot;
+
+                    // Colisão com o chão
+                    if (p.y + p.radius >= canvas.height) {
+                        p.y = canvas.height - p.radius;
+                        p.vy = -p.vy * p.bounce;
+                        p.vx *= 0.95;
+                        p.bounces++;
+                        if (p.bounces <= 2 && typeof window.playIfpiflixSfx === 'function') {
+                            window.playIfpiflixSfx('apple-bounce');
+                        }
+                    }
+
+                    // Colisão com paredes laterais
+                    if (p.x - p.radius <= 0 || p.x + p.radius >= canvas.width) {
+                        p.vx = -p.vx * 0.8;
+                    }
+
+                    // Desenho da partícula
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation);
+
+                    if (p.isFormula) {
+                        ctx.font = 'bold 18px "Inter", sans-serif';
+                        ctx.fillStyle = p.color;
+                        ctx.shadowColor = 'rgba(255, 215, 0, 0.7)';
+                        ctx.shadowBlur = 10;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(p.text, 0, 0);
+                    } else {
+                        // Desenha uma maçã estilizada
+                        ctx.fillStyle = p.color;
+                        ctx.shadowColor = 'rgba(229, 9, 20, 0.8)';
+                        ctx.shadowBlur = 12;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, 16, 0, Math.PI * 2);
+                        ctx.fill();
+                        // Folha verde
+                        ctx.fillStyle = '#46d369';
+                        ctx.beginPath();
+                        ctx.ellipse(4, -18, 6, 3, Math.PI / 4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    ctx.restore();
+                });
+
+                if (frames < maxFrames) {
+                    newtonAnimId = requestAnimationFrame(animate);
+                } else {
+                    canvas.classList.remove('active');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            cancelAnimationFrame(newtonAnimId);
+            animate();
+        };
 
 
