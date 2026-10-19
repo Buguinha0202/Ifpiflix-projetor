@@ -225,7 +225,7 @@ let toastTimeout;
             // ================= TRABALHOS REAIS DA TURMA (ACERVO) =================
             "teorias-politicas-antiguidade": {
                 title: "TEORIAS POLÍTICAS NA ANTIGUIDADE", subtitle: "PLATÃO, ARISTÓTELES E O NASCIMENTO DA POLÍTICA",
-                bg: "midia/capas/capa_teorias_politicas.jpg", banner: "midia/capas/capa_teorias_politicas.jpg",
+                bg: "midia/capas/poster_teorias_politicas.jpg", banner: "midia/capas/poster_teorias_politicas.jpg", customCover: "midia/capas/poster_teorias_politicas.jpg",
                 pdf: "trabalhos/Teorias Políticas na Antiguidade - Teorias Políticas de Platão e Aristóteles.pdf",
                 slideKey: "teorias_politicas",
                 match: "97% Relevante", year: "2025", age: "Livre", duration: "13 Slides • Filosofia Política",
@@ -236,7 +236,7 @@ let toastTimeout;
             },
             "guerra-fria": {
                 title: "GUERRA FRIA", subtitle: "BIPOLARIDADE, CORRIDA ARMAMENTISTA E O MUNDO DIVIDIDO",
-                bg: "midia/capas/capa_guerra_fria.jpg", banner: "midia/capas/capa_guerra_fria.jpg",
+                bg: "midia/capas/poster_guerra_fria.jpg", banner: "midia/capas/poster_guerra_fria.jpg", customCover: "midia/capas/poster_guerra_fria.jpg",
                 pdf: "trabalhos/GUERRA FRIA.pdf",
                 slideKey: "guerra_fria",
                 match: "97% Relevante", year: "2025", age: "Livre", duration: "15 Slides • Apresentação",
@@ -247,7 +247,7 @@ let toastTimeout;
             },
             "padre-amaro": {
                 title: "O CRIME DO PADRE AMARO", subtitle: "REALISMO PORTUGUÊS E CRÍTICA SOCIAL DE EÇA DE QUEIRÓS",
-                bg: "midia/capas/capa_padre_amaro.jpg", banner: "midia/capas/capa_padre_amaro.jpg",
+                bg: "midia/capas/poster_classicos_realismo.jpg", banner: "midia/capas/poster_classicos_realismo.jpg", customCover: "midia/capas/poster_classicos_realismo.jpg",
                 pdf: "trabalhos/O Crime do Padre Amaro.pdf",
                 slideKey: "padre_amaro",
                 match: "95% Relevante", year: "2025", age: "14", duration: "10 Slides • Análise Literária",
@@ -258,7 +258,7 @@ let toastTimeout;
             },
             "sociologia-desenvolvimento": {
                 title: "SOCIOLOGIA DO DESENVOLVIMENTO", subtitle: "CONTRADIÇÕES SOCIAIS, CAPITALISMO E DESIGUALDADE",
-                bg: "midia/capas/capa_sociologia_desenvolvimento.jpg", banner: "midia/capas/capa_sociologia_desenvolvimento.jpg",
+                bg: "midia/capas/poster_sociologia_desenvolvimento.jpg", banner: "midia/capas/poster_sociologia_desenvolvimento.jpg", customCover: "midia/capas/poster_sociologia_desenvolvimento.jpg",
                 pdf: "trabalhos/Sociologia do Desenvolvimento.pptx.pdf",
                 slideKey: "sociologia_desenvolvimento",
                 match: "96% Relevante", year: "2025", age: "Livre", duration: "10 Slides • Pesquisa Social",
@@ -271,6 +271,7 @@ let toastTimeout;
                 title: "PODCAST: DESIGUALDADE SOCIAL", subtitle: "DEBATE EM ÁUDIO E VÍDEO • IFPI 2025",
                 bg: "https://img.youtube.com/vi/M4rHhajry4A/hqdefault.jpg", 
                 banner: "https://img.youtube.com/vi/M4rHhajry4A/hqdefault.jpg",
+                customCover: "midia/capas/poster_sociologia_podcasts.jpg",
                 ytTrailer: "M4rHhajry4A",
                 match: "98% Relevante", year: "2025", age: "Livre", duration: "Vídeo / Podcast",
                 synopsis: "Episódio especial gravado em formato podcast pelos alunos da turma, debatendo com profundidade as raízes históricas, os dados estatísticos e os reflexos modernos da desigualdade social e econômica.",
@@ -282,6 +283,7 @@ let toastTimeout;
                 title: "JORNAL CYBER NEWS", subtitle: "POLÍTICA DE SEGURANÇA DA INFORMAÇÃO • IFPI 2026",
                 bg: "https://img.youtube.com/vi/AAhPhj00K0g/hqdefault.jpg", 
                 banner: "https://img.youtube.com/vi/AAhPhj00K0g/hqdefault.jpg",
+                customCover: "midia/capas/poster_defesa_cibernetica.jpg",
                 ytTrailer: "AAhPhj00K0g",
                 match: "99% Relevante", year: "2026", age: "Livre", duration: "Vídeo / Telejornal",
                 synopsis: "Edição especial do telejornal acadêmico 'Cyber News' produzida pelos alunos, cobrindo as políticas de segurança da informação (PSI), boas práticas corporativas, senhas fortes e prevenção a vazamentos de dados.",
@@ -292,8 +294,9 @@ let toastTimeout;
             "seguranca-informacao": {
                 title: "SEGURANÇA DA INFORMAÇÃO",
                 subtitle: "VULNERABILIDADES WEB, S.O.C., NUVEM E AMEAÇAS SINTÉTICAS",
-                bg: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop",
-                banner: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop",
+                bg: "midia/capas/poster_defesa_cibernetica.jpg",
+                banner: "midia/capas/poster_defesa_cibernetica.jpg",
+                customCover: "midia/capas/poster_defesa_cibernetica.jpg",
                 match: "99% Relevante", year: "2025", age: "14", duration: "6 Tópicos Interativos • IFPI",
                 synopsis: "Série original acadêmica sobre Segurança da Informação: análise prática e simulação visual de vulnerabilidades web em PHP (SQL Injection, XSS, LFI/RFI), arquitetura defensiva do S.O.C. (Tiers 1, 2, 3 e Red/Blue/Purple Team), responsabilidade compartilhada em Cloud Computing, novos vetores de ataque com Inteligência Artificial e Deepfakes, e governança corporativa com a norma ISO 27001.",
                 cast: "Francisco Lucas, João Pedro Santos, Pedro Victor, João Pedro Silva, Nícolas Marcell",
@@ -307,7 +310,7 @@ let toastTimeout;
             },
             "memoria-cache": {
                 title: "MEMÓRIA CACHE E ARMAZENAMENTO", subtitle: "HIERARQUIA DE MEMÓRIAS E DISCOS MAGNÉTICOS",
-                bg: "midia/capas/capa_memoria_cache.jpg", banner: "midia/capas/capa_memoria_cache.jpg",
+                bg: "midia/capas/poster_hardware_arquitetura.jpg", banner: "midia/capas/poster_hardware_arquitetura.jpg", customCover: "midia/capas/poster_hardware_arquitetura.jpg",
                 pdf: "trabalhos/Blue and Purple Modern Computer Presentation.pdf",
                 slideKey: "memoria_cache",
                 match: "94% Relevante", year: "2025", age: "Livre", duration: "6 Slides • Apresentação Técnica",
@@ -318,7 +321,7 @@ let toastTimeout;
             },
             "evolucao-computadores": {
                 title: "EVOLUÇÃO DOS COMPUTADORES", subtitle: "DA PRIMEIRA GERAÇÃO À COMPUTAÇÃO MODERNA",
-                bg: "midia/capas/capa_evolucao_computadores.jpg", banner: "midia/capas/capa_evolucao_computadores.jpg",
+                bg: "midia/capas/poster_hardware_arquitetura.jpg", banner: "midia/capas/poster_hardware_arquitetura.jpg", customCover: "midia/capas/poster_hardware_arquitetura.jpg",
                 pdf: "trabalhos/Digital evolution.pdf",
                 slideKey: "evolucao_computadores",
                 match: "93% Relevante", year: "2025", age: "Livre", duration: "9 Slides • Manutenção",
@@ -329,7 +332,7 @@ let toastTimeout;
             },
             "podcast-round6": {
                 title: "CLÁSSICOS EM SÉRIE", subtitle: "ROUND 6 E AS TEORIAS SOCIOLÓGICAS (MARX, DURKHEIM E WEBER)",
-                bg: "midia/capas/capa_podcast_round6.jpg", banner: "midia/capas/capa_podcast_round6.jpg",
+                bg: "midia/capas/poster_sociologia_podcasts.jpg", banner: "midia/capas/poster_sociologia_podcasts.jpg", customCover: "midia/capas/poster_sociologia_podcasts.jpg",
                 pdf: "https://canva.link/nynn6ibes7h9adb",
                 match: "99% Relevante", year: "2025", age: "14", duration: "Podcast • Canva",
                 synopsis: "Episódio de estreia do podcast 'Clássicos em Série': os alunos analisam a série Round 6 através dos conceitos clássicos da sociologia — a luta de classes e desumanização em Marx, a anomia moral em Durkheim e a ação social racional calculista em Weber.",
@@ -339,7 +342,7 @@ let toastTimeout;
             },
             "ia-ingles": {
                 title: "INTELIGÊNCIA ARTIFICIAL NO INGLÊS", subtitle: "COMO A IA PODE AJUDAR NO APRENDIZADO DE IDIOMAS",
-                bg: "midia/capas/capa_ia_ingles.jpg", banner: "midia/capas/capa_ia_ingles.jpg",
+                bg: "midia/capas/poster_ia_ingles.jpg", banner: "midia/capas/poster_ia_ingles.jpg", customCover: "midia/capas/poster_ia_ingles.jpg",
                 pdf: "trabalhos/Usam dados para aprender, adaptar e responder. Aplicações em diversas áreas, inclusive na educação..pdf",
                 slideKey: "ia_ingles",
                 match: "96% Relevante", year: "2025", age: "Livre", duration: "11 Slides • Apresentação",
@@ -350,7 +353,7 @@ let toastTimeout;
             },
             "padre-amaro-jogo": {
                 title: "O CRIME DO PADRE AMARO: TABULEIRO", subtitle: "A NARRATIVA ATRAVÉS DO JOGO DE TABULEIRO",
-                bg: "midia/capas/capa_padre_amaro_jogo.jpg", banner: "midia/capas/capa_padre_amaro_jogo.jpg",
+                bg: "midia/capas/poster_classicos_realismo.jpg", banner: "midia/capas/poster_classicos_realismo.jpg", customCover: "midia/capas/poster_classicos_realismo.jpg",
                 pdf: "trabalhos/O Crime do Padre Amaro jp.pdf",
                 slideKey: "padre_amaro_jogo",
                 match: "96% Relevante", year: "2025", age: "14", duration: "6 Slides • Gamificação Literária",
@@ -361,7 +364,7 @@ let toastTimeout;
             },
             "jogo-transito": {
                 title: "JOGO EDUCATIVO DE TRÂNSITO", subtitle: "PROJETO INTEGRADOR EM REACT NATIVE E PIXEL ART",
-                bg: "midia/capas/capa_jogo_transito.jpg", banner: "midia/capas/capa_jogo_transito.jpg",
+                bg: "midia/capas/poster_jogo_transito.jpg", banner: "midia/capas/poster_jogo_transito.jpg", customCover: "midia/capas/poster_jogo_transito.jpg",
                 pdf: "trabalhos/Trabalho de Tópicos Especiais em desenvolvimento e projeto integrador.pdf",
                 slideKey: "jogo_transito",
                 match: "95% Relevante", year: "2025", age: "Livre", duration: "3 Slides • Projeto de Software",
@@ -372,7 +375,7 @@ let toastTimeout;
             },
             "sargento-milicias": {
                 title: "MEMÓRIAS DE UM SARGENTO DE MILÍCIAS", subtitle: "O ROMANCE URBANO E O ANTI-HERÓI MALANDRO",
-                bg: "midia/capas/capa_sargento_milicias.jpg", banner: "midia/capas/capa_sargento_milicias.jpg",
+                bg: "midia/capas/poster_sargento_milicias.jpg", banner: "midia/capas/poster_sargento_milicias.jpg", customCover: "midia/capas/poster_sargento_milicias.jpg",
                 pdf: "trabalhos/Memórias de um sargento de Milícias.pdf",
                 slideKey: "sargento_milicias",
                 match: "94% Relevante", year: "2025", age: "Livre", duration: "6 Slides • Análise Literária",
@@ -383,7 +386,7 @@ let toastTimeout;
             },
             "prosa-1930": {
                 title: "A PROSA DE 1930: JORGE AMADO", subtitle: "RETRATOS DA BAHIA E A SEGUNDA GERAÇÃO MODERNISTA",
-                bg: "midia/capas/capa_prosa_1930.jpg", banner: "midia/capas/capa_prosa_1930.jpg",
+                bg: "midia/capas/poster_prosa_1930.jpg", banner: "midia/capas/poster_prosa_1930.jpg", customCover: "midia/capas/poster_prosa_1930.jpg",
                 pdf: "trabalhos/A prosa de 1930 Jorge Amado (Retratos da Bahia).pdf",
                 slideKey: "prosa_1930",
                 match: "97% Relevante", year: "2025", age: "12", duration: "11 Slides • Segunda Geração Modernista",
@@ -394,8 +397,9 @@ let toastTimeout;
             },
             "primo-basilio": {
                 title: "O PRIMO BASÍLIO", subtitle: "REALISMO PORTUGUÊS E CRÍTICA À BURGUESIA • EÇA DE QUEIRÓS",
-                bg: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1200&auto=format&fit=crop",
-                banner: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=1200&auto=format&fit=crop",
+                bg: "midia/capas/poster_classicos_realismo.jpg",
+                banner: "midia/capas/poster_classicos_realismo.jpg",
+                customCover: "midia/capas/poster_classicos_realismo.jpg",
                 match: "96% Relevante", year: "2025", age: "14", duration: "Em Breve • Sem PDF",
                 synopsis: "Análise crítica do romance realista de Eça de Queirós: as falsas aparências e o tédio existencial de Luísa, a sedução maquiavélica de seu primo Basílio e a chantagem impiedosa da criada Juliana, desmascarando a decadência moral da sociedade burguesa de Lisboa.",
                 cast: "Equipe de Literatura • Turma IFPI",
@@ -409,8 +413,9 @@ let toastTimeout;
             },
             "memorias-postumas": {
                 title: "MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS", subtitle: "A RUPTURA DO REALISMO BRASILEIRO • MACHADO DE ASSIS",
-                bg: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop",
-                banner: "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1200&auto=format&fit=crop",
+                bg: "midia/capas/poster_classicos_realismo.jpg",
+                banner: "midia/capas/poster_classicos_realismo.jpg",
+                customCover: "midia/capas/poster_classicos_realismo.jpg",
                 match: "99% Relevante", year: "2025", age: "14", duration: "Em Breve • Sem PDF",
                 synopsis: "Estudo da obra-prima fundadora do Realismo no Brasil: a genial audácia do 'defunto autor' narrando suas memórias do além-túmulo, o pessimismo filosófico machadiano, a sátira às elites do Segundo Reinado e o célebre legado das 'negativas' existenciais.",
                 cast: "Equipe de Literatura • Turma IFPI",
@@ -424,8 +429,9 @@ let toastTimeout;
             },
             "dom-casmurro": {
                 title: "DOM CASMURRO", subtitle: "O ENIGMA DE CAPITU E A VOZ DO CIÚME • MACHADO DE ASSIS",
-                bg: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?q=80&w=1200&auto=format&fit=crop",
-                banner: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?q=80&w=1200&auto=format&fit=crop",
+                bg: "midia/capas/poster_classicos_realismo.jpg",
+                banner: "midia/capas/poster_classicos_realismo.jpg",
+                customCover: "midia/capas/poster_classicos_realismo.jpg",
                 match: "98% Relevante", year: "2025", age: "14", duration: "Em Breve • Sem PDF",
                 synopsis: "Investigação literária e psicológica sobre o narrador não confiável Bento Santiago (Bentinho): a paixão de infância por Capitu, os inesquecíveis 'olhos de ressaca', a obsessão corrosiva pelo fantasma da traição com Escobar e o debate eterno sobre a verdade dos fatos.",
                 cast: "Equipe de Literatura • Turma IFPI",
@@ -553,7 +559,7 @@ const SERIES_REGISTRY = {
         subtitle: 'Da Escolástica Medieval aos Dilemas da Inteligência Artificial',
         season: '1ª Temporada • 3º Ano 2026',
         materia: 'Filosofia',
-        cover: 'guerra_civil.png',
+        cover: 'midia/capas/poster_filosofia_serie.jpg',
         episodes: [
             {
                 id: 'tema-1',
@@ -603,7 +609,7 @@ const SERIES_REGISTRY = {
         subtitle: 'Romances Canônicos do Século XIX e Adaptações Gamificadas',
         season: '2 Temporadas • 5 Episódios',
         materia: 'Língua Portuguesa',
-        cover: 'midia/capas/capa_padre_amaro.jpg',
+        cover: 'midia/capas/poster_classicos_realismo.jpg',
         episodes: [
             // TEMPORADA 1: LIVROS / ROMANCES DO REALISMO
             {
@@ -668,7 +674,7 @@ const SERIES_REGISTRY = {
         subtitle: 'Debates em Áudio e Vídeo sobre Desigualdades e Cultura Pop',
         season: '1ª Temporada • 2025',
         materia: 'Sociologia',
-        cover: 'https://img.youtube.com/vi/M4rHhajry4A/hqdefault.jpg',
+        cover: 'midia/capas/poster_sociologia_podcasts.jpg',
         episodes: [
             {
                 id: 'podcast-desigualdade',
@@ -694,7 +700,7 @@ const SERIES_REGISTRY = {
         subtitle: 'Evolução, Microarquitetura e Hierarquia de Memória',
         season: '1ª Temporada • T.I.',
         materia: 'Hardware & Arquitetura',
-        cover: 'midia/capas/capa_evolucao_computadores.jpg',
+        cover: 'midia/capas/poster_hardware_arquitetura.jpg',
         episodes: [
             {
                 id: 'evolucao-computadores',
@@ -720,7 +726,7 @@ const SERIES_REGISTRY = {
         subtitle: 'Ataques Web, S.O.C., Engenharia Social e Governança',
         season: '1ª Temporada • Cibersegurança',
         materia: 'Segurança & Redes',
-        cover: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop',
+        cover: 'midia/capas/poster_defesa_cibernetica.jpg',
         episodes: [
             {
                 id: 'seguranca-informacao',
@@ -785,6 +791,14 @@ function renderSeriesEpisodesHtml(seriesInfo, currentMovieId) {
         const topicHtml = ep.topic ? `<div class="ep-topic">${ep.topic}</div>` : '';
         const descText = ep.desc || epData.synopsis || '';
 
+        // Barra de progresso vermelha estilo Netflix
+        const savedProgress = parseInt(localStorage.getItem('ifpiflix_progress_' + ep.id), 10) || 0;
+        const progressBarHtml = savedProgress > 0 ? `
+            <div class="ep-progress-bar-wrap" title="${savedProgress}% assistido">
+                <div class="ep-progress-bar-fill" style="width: ${savedProgress}%;"></div>
+            </div>
+        ` : '';
+
         return `
             ${seasonHeaderHtml}
             <div class="episode-item ${isActive ? 'is-active-episode' : ''} ${isPending ? 'is-pending-episode' : ''}" 
@@ -794,6 +808,7 @@ function renderSeriesEpisodesHtml(seriesInfo, currentMovieId) {
                 <div class="ep-number">${epNum}</div>
                 <div class="ep-img" style="background-image: url('${thumb}')">
                     ${isActive ? '<span class="ep-playing-pill"><i class="fa-solid fa-play"></i></span>' : (isPending ? '<span class="ep-pending-badge"><i class="fa-regular fa-clock"></i></span>' : '<i class="fa-solid fa-play"></i>')}
+                    ${progressBarHtml}
                 </div>
                 <div class="ep-details">
                     <div class="ep-title-row">
@@ -1059,35 +1074,122 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
             }
         }
 
-        // Episódios (se pertence a uma série canônica) ou recomendações da turma
-        const recContainer = document.getElementById('m-recommendations');
-        const bottomTitle = document.getElementById('m-bottom-title');
-
+        // Abas estilo Netflix no Modal (Episódios, Títulos Semelhantes, Detalhes & Elenco)
+        const modalMoreLike = document.querySelector('.modal-more-like');
         const seriesInfo = getSeriesForMovie(movieId);
-        if (seriesInfo) {
-            bottomTitle.innerHTML = `
-                <div class="series-episodes-header">
-                    <div>
-                        <span class="series-tag"><i class="fa-solid fa-layer-group"></i> SÉRIE ORIGINAL IFPI</span>
-                        <h3 class="series-name">${seriesInfo.title}</h3>
-                    </div>
-                    <span class="series-season-badge">${seriesInfo.season || '1ª Temporada'} &bull; ${seriesInfo.episodes.length} Episódios</span>
-                </div>
-            `;
-            recContainer.className = 'episodes-list';
-            recContainer.innerHTML = renderSeriesEpisodesHtml(seriesInfo, movieId);
-        } else {
-            bottomTitle.textContent = 'Recomendações da Turma';
-            recContainer.className = 'more-grid';
+        const mData = filmesDB[movieId] || {};
 
-            const outros = Object.keys(filmesDB).filter(id => id !== movieId);
-            const sorteados = outros.sort(() => 0.5 - Math.random()).slice(0, 3);
-            recContainer.innerHTML = sorteados.map(recId => {
-                const recData = filmesDB[recId];
-                const titulo = recData.title.length > 18 ? recData.title.substring(0, 18) + '...' : recData.title;
-                return renderMovieCard(recId, Object.assign({}, recData, { title: titulo }), 300);
-            }).join('');
+        // Gera recomendações (títulos semelhantes)
+        const outros = Object.keys(filmesDB).filter(id => id !== movieId && (!seriesInfo || !seriesInfo.episodes.some(e => e.id === id)));
+        const sorteados = outros.sort(() => 0.5 - Math.random()).slice(0, 6);
+        const similarCardsHtml = sorteados.map(recId => {
+            const recData = filmesDB[recId];
+            const titulo = recData.title.length > 22 ? recData.title.substring(0, 22) + '...' : recData.title;
+            return renderMovieCard(recId, Object.assign({}, recData, { title: titulo }), 300);
+        }).join('');
+
+        // Ficha técnica / Detalhes & Elenco
+        const materiaNome = mData.materia || (seriesInfo ? seriesInfo.materia : 'Geral');
+        const materiaSt = getMateriaStyle(materiaNome);
+        const safeCast = mData.cast || 'Turma IFPI';
+        const castMembers = safeCast.split(',').map(s => s.trim()).filter(Boolean);
+        const castChips = castMembers.map(m => `
+            <span class="materia-filter-pill" style="margin: 2px 4px 2px 0; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 5px; cursor: pointer;" onclick="window.filterAcervoByAuthor('${m.replace(/'/g, "\\'")}')">
+                <i class="fa-solid fa-user-graduate" style="color: var(--netflix-red);"></i> ${m}
+            </span>
+        `).join('');
+
+        const detailsHtml = `
+            <div class="modal-details-grid">
+                <div class="modal-details-item">
+                    <h5><i class="fa-solid fa-book-bookmark" style="color: ${materiaSt.color}; margin-right: 6px;"></i> Matéria & Período</h5>
+                    <p style="color: #fff; font-weight: 700; margin: 0 0 4px 0;">${materiaNome}</p>
+                    <span style="color: #999; font-size: 0.85rem;">${mData.periodo || (seriesInfo ? seriesInfo.season : 'Acervo da Turma')}</span>
+                </div>
+                <div class="modal-details-item">
+                    <h5><i class="fa-solid fa-user-group" style="color: #00d26a; margin-right: 6px;"></i> Integrantes do Trabalho</h5>
+                    <div style="display: flex; flex-wrap: wrap; margin-top: 6px;">
+                        ${castChips || '<span style="color:#aaa;">Turma IFPI</span>'}
+                    </div>
+                </div>
+                <div class="modal-details-item">
+                    <h5><i class="fa-solid fa-tags" style="color: #3b82f6; margin-right: 6px;"></i> Gêneros & Tópicos</h5>
+                    <p style="color: #ddd; font-size: 0.9rem; margin: 0 0 6px 0;">${mData.genres || 'Trabalho Acadêmico'}</p>
+                    <span style="color: #888; font-size: 0.82rem;">${mData.tags || ''}</span>
+                </div>
+                <div class="modal-details-item">
+                    <h5><i class="fa-solid fa-circle-info" style="color: #ffd700; margin-right: 6px;"></i> Formato da Apresentação</h5>
+                    <p style="color: #fff; font-size: 0.9rem; margin: 0;">${mData.duration || (seriesInfo ? seriesInfo.season : 'Apresentação')} &bull; ${mData.year || '2025/2026'}</p>
+                    <span style="color: #888; font-size: 0.82rem;">Classificação: ${mData.age || 'Livre'}</span>
+                </div>
+            </div>
+        `;
+
+        if (modalMoreLike) {
+            if (seriesInfo) {
+                modalMoreLike.innerHTML = `
+                    <div class="netflix-modal-tabs">
+                        <button type="button" class="netflix-tab-btn active" data-tab="episodes" onclick="window.switchModalTab('episodes')">
+                            <i class="fa-solid fa-list-ul"></i> Episódios
+                        </button>
+                        <button type="button" class="netflix-tab-btn" data-tab="similar" onclick="window.switchModalTab('similar')">
+                            <i class="fa-solid fa-layer-group"></i> Títulos Semelhantes
+                        </button>
+                        <button type="button" class="netflix-tab-btn" data-tab="details" onclick="window.switchModalTab('details')">
+                            <i class="fa-solid fa-circle-info"></i> Detalhes & Elenco
+                        </button>
+                    </div>
+                    <div class="modal-tab-pane active" id="tab-pane-episodes">
+                        <div class="series-episodes-header" style="margin-bottom: 18px;">
+                            <div>
+                                <span class="series-tag"><i class="fa-solid fa-layer-group"></i> SÉRIE ORIGINAL IFPI</span>
+                                <h3 class="series-name">${seriesInfo.title}</h3>
+                            </div>
+                            <span class="series-season-badge">${seriesInfo.season || '1ª Temporada'} &bull; ${seriesInfo.episodes.length} Episódios</span>
+                        </div>
+                        <div class="episodes-list" id="m-recommendations">
+                            ${renderSeriesEpisodesHtml(seriesInfo, movieId)}
+                        </div>
+                    </div>
+                    <div class="modal-tab-pane" id="tab-pane-similar">
+                        <div class="more-grid">
+                            ${similarCardsHtml}
+                        </div>
+                    </div>
+                    <div class="modal-tab-pane" id="tab-pane-details">
+                        ${detailsHtml}
+                    </div>
+                `;
+            } else {
+                modalMoreLike.innerHTML = `
+                    <div class="netflix-modal-tabs">
+                        <button type="button" class="netflix-tab-btn active" data-tab="similar" onclick="window.switchModalTab('similar')">
+                            <i class="fa-solid fa-layer-group"></i> Títulos Semelhantes
+                        </button>
+                        <button type="button" class="netflix-tab-btn" data-tab="details" onclick="window.switchModalTab('details')">
+                            <i class="fa-solid fa-circle-info"></i> Detalhes & Elenco
+                        </button>
+                    </div>
+                    <div class="modal-tab-pane active" id="tab-pane-similar">
+                        <div class="more-grid" id="m-recommendations">
+                            ${similarCardsHtml}
+                        </div>
+                    </div>
+                    <div class="modal-tab-pane" id="tab-pane-details">
+                        ${detailsHtml}
+                    </div>
+                `;
+            }
         }
+    };
+
+    window.switchModalTab = function(tabName) {
+        document.querySelectorAll('.netflix-tab-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-tab') === tabName);
+        });
+        document.querySelectorAll('.modal-tab-pane').forEach(p => {
+            p.classList.toggle('active', p.getAttribute('id') === 'tab-pane-' + tabName);
+        });
     };
 
     // Animação de troca de título quando o modal já está aberto
@@ -1899,8 +2001,13 @@ function showVideoNextEpisodeButton() {
             }
 
             if (fill) {
-                const pct = ((currentSlideIndex + 1) / currentActiveSlides.length) * 100;
+                const pct = Math.round(((currentSlideIndex + 1) / currentActiveSlides.length) * 100);
                 fill.style.width = `${pct}%`;
+                if (currentPlayingMovieId) {
+                    try {
+                        localStorage.setItem('ifpiflix_progress_' + currentPlayingMovieId, pct);
+                    } catch (e) {}
+                }
             }
 
             if (prevBtn) prevBtn.style.opacity = currentSlideIndex === 0 ? '0.3' : '1';
@@ -3380,6 +3487,38 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             `;
         }
 
+        const ACERVO_VERTICAL_POSTERS = {
+            'filosofia-3ano': 'midia/capas/poster_filosofia_serie.jpg',
+            'guerra-civil': 'midia/capas/poster_filosofia_serie.jpg',
+            'tema-1': 'midia/capas/poster_filosofia_serie.jpg',
+            'tema-3': 'midia/capas/poster_filosofia_serie.jpg',
+            'tema-4': 'midia/capas/poster_filosofia_serie.jpg',
+            'tema-5': 'midia/capas/poster_filosofia_serie.jpg',
+            'teorias-politicas-antiguidade': 'midia/capas/poster_teorias_politicas.jpg',
+            'teorias-politicas': 'midia/capas/poster_teorias_politicas.jpg',
+            'guerra-fria': 'midia/capas/poster_guerra_fria.jpg',
+            'literatura-realismo': 'midia/capas/poster_classicos_realismo.jpg',
+            'padre-amaro': 'midia/capas/poster_classicos_realismo.jpg',
+            'primo-basilio': 'midia/capas/poster_classicos_realismo.jpg',
+            'memorias-postumas': 'midia/capas/poster_classicos_realismo.jpg',
+            'dom-casmurro': 'midia/capas/poster_classicos_realismo.jpg',
+            'padre-amaro-jogo': 'midia/capas/poster_classicos_realismo.jpg',
+            'sargento-milicias': 'midia/capas/poster_sargento_milicias.jpg',
+            'prosa-1930': 'midia/capas/poster_prosa_1930.jpg',
+            'ia-ingles': 'midia/capas/poster_ia_ingles.jpg',
+            'sociologia-podcasts': 'midia/capas/poster_sociologia_podcasts.jpg',
+            'podcast-desigualdade': 'midia/capas/poster_sociologia_podcasts.jpg',
+            'podcast-round6': 'midia/capas/poster_sociologia_podcasts.jpg',
+            'sociologia-desenvolvimento': 'midia/capas/poster_sociologia_desenvolvimento.jpg',
+            'seguranca-ciberdefesa': 'midia/capas/poster_defesa_cibernetica.jpg',
+            'seguranca-informacao': 'midia/capas/poster_defesa_cibernetica.jpg',
+            'cyber-news': 'midia/capas/poster_defesa_cibernetica.jpg',
+            'hardware-arquitetura': 'midia/capas/poster_hardware_arquitetura.jpg',
+            'evolucao-computadores': 'midia/capas/poster_hardware_arquitetura.jpg',
+            'memoria-cache': 'midia/capas/poster_hardware_arquitetura.jpg',
+            'jogo-transito': 'midia/capas/poster_jogo_transito.jpg'
+        };
+
         function renderAcervoPosterCardHtml(grpOrEntry) {
             const isGroup = !!(grpOrEntry && grpOrEntry.items && Array.isArray(grpOrEntry.items));
             const grp = isGroup ? grpOrEntry : {
@@ -3392,24 +3531,24 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             const firstEntry = grp.items[0] || {};
             const firstItem = firstEntry.item || {};
             const firstId = firstEntry.id || '';
-            const st = getMateriaStyle(grp.materia);
             const sInfo = getSeriesForMovie(firstId);
+
+            // Selo NOVO exclusivo para os trabalhos mais recentes (Filosofia 2026)
+            const isNovo = (grp.materia === 'Filosofia' || (sInfo && sInfo.materia === 'Filosofia')) &&
+                           (firstId.startsWith('tema-') || firstId === 'guerra-civil' || (sInfo && sInfo.id === 'filosofia-3ano'));
+            const badgeHtml = isNovo ? `
+                <div class="netflix-card-badge">
+                    <span class="netflix-badge-novo">NOVO</span>
+                </div>
+            ` : '';
 
             if (count === 1 && !sInfo) {
                 // Trabalho individual / standalone
                 const w = firstItem;
                 const e = firstEntry;
-                const coverFile = w.bg || w.banner || w.customCover || 
+                const coverFile = ACERVO_VERTICAL_POSTERS[e.id] || w.customCover || w.banner || w.bg || 
                     (w.ytTrailer ? `https://img.youtube.com/vi/${w.ytTrailer}/hqdefault.jpg` : '');
                 const coverUrl = coverFile ? imgUrl(coverFile, 800) : generateAutoPosterDataUri(w.title, e.materia, w.cast);
-                const hasSlides = !!(w.pdf || w.slideKey || e.hasPdf || w.isSecurityPresentation);
-                const hasVideo = !!(w.ytTrailer || w.trailer || e.hasVideo);
-
-                let formatTag = '<i class="fa-solid fa-file-powerpoint"></i> SLIDES';
-                if (w.hasNoPdf) formatTag = '<i class="fa-regular fa-clock"></i> EM BREVE';
-                else if (w.isSecurityPresentation) formatTag = '<i class="fa-solid fa-laptop-code"></i> INTERATIVO';
-                else if (hasSlides && hasVideo) formatTag = '<i class="fa-solid fa-photo-film"></i> SLIDES + VÍDEO';
-                else if (hasVideo) formatTag = '<i class="fa-solid fa-clapperboard"></i> VÍDEO';
 
                 const safeTitle = (w.title || '').replace(/"/g, '&quot;');
                 const safeAuthors = (w.cast || 'Turma IFPI').replace(/"/g, '&quot;');
@@ -3420,14 +3559,7 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
                          data-movie="${e.id}" 
                          onclick="window.openTitleModal('${e.id}')" 
                          role="button" tabindex="0" aria-label="${safeTitle}">
-                        <div class="acervo-card-top-badges">
-                            <span class="acervo-tag-materia" style="background: ${st.color};">
-                                <i class="${st.icon}"></i> ${e.materia}
-                            </span>
-                            <span class="acervo-tag-format">
-                                ${formatTag}
-                            </span>
-                        </div>
+                        ${badgeHtml}
                         <div class="acervo-card-play-overlay">
                             <div class="acervo-card-play-btn"><i class="fa-solid fa-play"></i></div>
                         </div>
@@ -3446,7 +3578,8 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
 
             // Série ou Coleção de Trabalhos
             const isSeries = !!sInfo;
-            const repImg = (sInfo && sInfo.cover) || firstItem.bg || firstItem.banner || firstItem.customCover || 
+            const repImg = (sInfo && ACERVO_VERTICAL_POSTERS[sInfo.id]) || ACERVO_VERTICAL_POSTERS[firstId] || 
+                (sInfo && sInfo.cover) || firstItem.customCover || firstItem.banner || firstItem.bg || 
                 (firstItem.ytTrailer ? `https://img.youtube.com/vi/${firstItem.ytTrailer}/hqdefault.jpg` : '');
             const cardTitle = sInfo ? sInfo.title : grp.trabalhoGrupo;
             const cardSubtitle = sInfo ? (sInfo.season || `Série • ${count} Episódios`) : `Coleção • ${count} trabalhos`;
@@ -3462,25 +3595,13 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             const safeAuthors = (authorsList || firstItem.cast || 'Turma IFPI').replace(/"/g, '&quot;');
             const safeTitle = (cardTitle || '').replace(/"/g, '&quot;');
 
-            let epBadgeText = `<i class="fa-solid fa-tv"></i> SÉRIE • ${count} EPS`;
-            if (!isSeries && grp.trabalhoGrupo.toLowerCase().includes('podcast')) {
-                epBadgeText = `<i class="fa-solid fa-microphone-lines"></i> ${count} PODCASTS`;
-            }
-
             return `
                 <div class="acervo-card-portrait is-series-card" 
                      style="background-image: url('${repImgUrl}');"
                      data-movie="${firstId}" 
                      onclick="window.openTitleModal('${firstId}')" 
                      role="button" tabindex="0" aria-label="${safeTitle}">
-                    <div class="acervo-card-top-badges">
-                        <span class="acervo-tag-materia" style="background: ${st.color};">
-                            <i class="${st.icon}"></i> ${grp.materia}
-                        </span>
-                        <span class="acervo-tag-series">
-                            ${epBadgeText}
-                        </span>
-                    </div>
+                    ${badgeHtml}
                     <div class="acervo-card-play-overlay">
                         <div class="acervo-card-play-btn"><i class="fa-solid fa-play"></i></div>
                     </div>

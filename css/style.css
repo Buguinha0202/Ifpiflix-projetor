@@ -6272,27 +6272,28 @@
             overflow: hidden;
             position: relative;
             background-size: cover;
-            background-position: center;
+            background-position: center top;
             background-repeat: no-repeat;
             cursor: pointer;
-            border: 2px solid #222;
+            border: 1px solid rgba(255, 255, 255, 0.12);
             background-color: #141414;
             transition: transform 0.28s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.28s ease, box-shadow 0.28s ease;
             user-select: none;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
         }
 
         .acervo-card-portrait:hover {
             transform: translateY(-8px) scale(1.04);
-            border-color: var(--netflix-red);
-            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.85), 0 0 20px rgba(229, 9, 20, 0.45);
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9), 0 0 20px rgba(229, 9, 20, 0.45);
             z-index: 15;
         }
 
         .acervo-card-portrait.is-series-card {
-            border-color: rgba(229, 9, 20, 0.5);
+            border-color: rgba(229, 9, 20, 0.4);
         }
 
         .acervo-card-portrait.is-series-card:hover {
@@ -6300,69 +6301,37 @@
             box-shadow: 0 16px 36px rgba(229, 9, 20, 0.6);
         }
 
-        /* Badges no topo do cartaz */
-        .acervo-card-top-badges {
+        /* Selo minimalista oficial estilo Netflix (exclusivo para trabalhos novos) */
+        .netflix-card-badge {
             position: absolute;
             top: 8px;
             left: 8px;
-            right: 8px;
-            display: flex;
+            z-index: 5;
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 6px;
-            z-index: 4;
+            gap: 5px;
             pointer-events: none;
         }
 
-        .acervo-tag-materia {
-            font-size: 0.64rem;
-            font-weight: 800;
-            color: #fff;
-            padding: 3px 8px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 110px;
+        .netflix-card-badge .n-logo {
+            color: var(--netflix-red);
+            font-weight: 900;
+            font-size: 1.25rem;
+            font-family: 'Impact', 'Inter', sans-serif;
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.95));
         }
 
-        .acervo-tag-series {
-            font-size: 0.64rem;
-            font-weight: 800;
+        .netflix-badge-novo {
+            background: var(--netflix-red);
             color: #fff;
-            background: linear-gradient(135deg, var(--netflix-red), #990000);
-            padding: 3px 8px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            padding: 2px 6px;
+            border-radius: 2px;
             text-transform: uppercase;
-            box-shadow: 0 2px 8px rgba(229, 9, 20, 0.6);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
-        }
-
-        .acervo-tag-format {
-            font-size: 0.64rem;
-            font-weight: 700;
-            color: #eee;
-            background: rgba(0, 0, 0, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 3px 8px;
-            border-radius: 4px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            backdrop-filter: blur(4px);
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
         }
 
         /* Overlay de Play no Hover (Centro) */
@@ -6372,9 +6341,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.25);
             opacity: 0;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.22s ease;
             z-index: 2;
         }
 
@@ -6383,15 +6352,15 @@
         }
 
         .acervo-card-play-btn {
-            width: 48px;
-            height: 48px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             background: var(--netflix-red);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             box-shadow: 0 4px 18px rgba(229, 9, 20, 0.7);
             transform: scale(0.85);
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -6401,23 +6370,31 @@
             transform: scale(1);
         }
 
-        /* Informações do Rodapé do Cartaz */
+        /* Informações do Rodapé do Cartaz - Visíveis apenas no hover para visual 100% limpo */
         .acervo-card-bottom-info {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             padding: 28px 10px 10px 10px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.82) 65%, transparent 100%);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.96) 0%, rgba(0, 0, 0, 0.78) 60%, transparent 100%);
             z-index: 3;
             display: flex;
             flex-direction: column;
             gap: 3px;
             pointer-events: none;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.22s ease, transform 0.22s ease;
+        }
+
+        .acervo-card-portrait:hover .acervo-card-bottom-info {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .acervo-card-title {
-            font-size: 0.92rem;
+            font-size: 0.90rem;
             font-weight: 800;
             color: #fff;
             line-height: 1.25;
@@ -6440,15 +6417,112 @@
             letter-spacing: 0.4px;
         }
 
-        .acervo-card-authors {
-            font-size: 0.68rem;
-            color: #aaa;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        /* ABAS ESTILO NETFLIX DENTRO DO MODAL */
+        .netflix-modal-tabs {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 24px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+            margin: 28px 0 20px 0;
+            padding-bottom: 0;
+        }
+
+        .netflix-tab-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 10px 4px 14px 4px;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s ease;
+            font-family: inherit;
+        }
+
+        .netflix-tab-btn:hover {
+            color: #fff;
+        }
+
+        .netflix-tab-btn.active {
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .netflix-tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--netflix-red, #e50914);
+            border-radius: 2px 2px 0 0;
+            box-shadow: 0 0 10px rgba(229, 9, 20, 0.6);
+        }
+
+        .modal-tab-pane {
+            display: none;
+        }
+
+        .modal-tab-pane.active {
+            display: block;
+            animation: fadeInModalTab 0.22s ease-out;
+        }
+
+        @keyframes fadeInModalTab {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            padding: 14px 0 24px 0;
+        }
+
+        .modal-details-item {
+            background: #181818;
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .modal-details-item h5 {
+            color: #888;
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+        }
+
+        .modal-details-item p {
+            color: #fff;
+            font-size: 0.95rem;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        /* BARRINHA VERMELHA DE PROGRESSO NO EPISÓDIO */
+        .ep-progress-bar-wrap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.25);
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .ep-progress-bar-fill {
+            height: 100%;
+            background: var(--netflix-red, #e50914);
+            box-shadow: 0 0 6px rgba(229, 9, 20, 0.8);
+            transition: width 0.3s ease;
         }
 
         /* Grid de cartazes para modo filtrado (Matéria específica ou Aluno) */

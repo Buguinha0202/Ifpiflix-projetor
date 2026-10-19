@@ -554,10 +554,10 @@
     </div>
 
     <!-- =======================================================
-         TELA: TRABALHOS ANTIGOS (DESIGN 100% AUTÊNTICO NETFLIX)
+         TELA: TRABALHOS ANTIGOS (MESMO DESIGN DA TELA INICIAL)
          ======================================================= -->
     <div id="acervo-screen" class="screen">
-        <nav class="home-nav scrolled">
+        <nav class="home-nav" id="acervo-home-nav">
             <div class="nav-left-group">
                 <div class="nav-logo" onclick="window.filterNavCategory('inicio')">IFPIFLIX</div>
                 <ul class="nav-categories" id="acervo-nav-categories">
@@ -624,36 +624,12 @@
             </div>
         </nav>
 
-        <!-- SUB-NAV ESTILO NETFLIX (TÍTULO DA SEÇÃO + SELETOR DE GÊNEROS/MATÉRIAS + FILTRO DE FORMATO) -->
-        <div class="netflix-subnav-bar">
-            <div class="netflix-subnav-left">
-                <h1 class="netflix-subnav-title">Trabalhos Antigos</h1>
-                <div class="netflix-genre-dropdown-wrapper">
-                    <button type="button" class="netflix-genre-select-btn" id="materia-dropdown-btn" onclick="window.toggleMateriaDropdown(event)">
-                        <span id="current-materia-label">Todas as Matérias</span>
-                        <i class="fa-solid fa-caret-down"></i>
-                    </button>
-                    <div class="netflix-genre-popover" id="materia-dropdown-menu">
-                        <!-- Itens das matérias gerados via JS -->
-                    </div>
-                </div>
-
-                <!-- Pílulas de Filtro de Formato Estilo Streaming -->
-                <div class="acervo-format-pills">
-                    <button type="button" class="format-pill active" id="pill-format-all" onclick="window.setAcervoFormat('all')">Todos</button>
-                    <button type="button" class="format-pill" id="pill-format-pdf" onclick="window.setAcervoFormat('pdf')"><i class="fa-solid fa-file-powerpoint"></i> Slides / PDF</button>
-                    <button type="button" class="format-pill" id="pill-format-video" onclick="window.setAcervoFormat('video')"><i class="fa-solid fa-clapperboard"></i> Vídeos &amp; Podcasts</button>
-                </div>
-            </div>
-
-            <!-- Chip de Aluno / Elenco Ativo -->
-            <div id="acervo-author-chip" class="acervo-author-chip" style="display: none;">
-                <span>Filtrado por: <strong id="acervo-author-name">Aluno</strong></span>
-                <button type="button" onclick="window.clearAcervoAuthorFilter()" title="Remover filtro de aluno"><i class="fa-solid fa-xmark"></i></button>
-            </div>
+        <!-- BANNER PRINCIPAL (HERO / CARROSSEL DA TELA INICIAL) -->
+        <div class="hero acervo-hero" id="acervo-hero" onmouseenter="window.pauseAcervoHeroTimer()" onmouseleave="window.resumeAcervoHeroTimer()">
+            <!-- Injetado dinamicamente com .hero-content, Bebas Neue 4.8rem, botões .btn-play e .btn-info e pagers -->
         </div>
 
-        <!-- CATÁLOGO DAS FILEIRAS EM PURO ESTILO NETFLIX -->
+        <!-- CATÁLOGO GERAL (EXATAMENTE COMO NA TELA INICIAL) -->
         <div class="catalog-container acervo-catalog" id="acervo-rows-container">
             <!-- Fileiras geradas via JS exatamente iguais à Home -->
         </div>
