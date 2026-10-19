@@ -6034,6 +6034,33 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
         /* =========================================================
            SISTEMA: MINHA LISTA (Persistência no localStorage)
            ========================================================= */
+        // Atalhos de teclado para tornar a busca mais rápida.
+        // "/" abre a pesquisa e "Escape" limpa/fecha a pesquisa quando a página inicial está ativa.
+        document.addEventListener('keydown', (e) => {
+            const homeScreen = document.getElementById('home-screen');
+            if (!searchInput || !searchBox || !homeScreen || !homeScreen.classList.contains('active')) return;
+
+            const target = e.target;
+            const isTyping = target instanceof HTMLElement &&
+                (target.matches('input, textarea, select') || target.isContentEditable);
+
+            if (e.key === '/' && !isTyping && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                e.preventDefault();
+                searchBox.classList.add('active');
+                searchInput.focus();
+                return;
+            }
+
+            if (e.key === 'Escape' && document.activeElement === searchInput) {
+                if (searchInput.value.trim() !== '') {
+                    searchInput.value = '';
+                    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                searchInput.blur();
+                searchBox.classList.remove('active');
+            }
+        });
+
         let minhaLista = [];
         try {
             const savedLista = localStorage.getItem('ifpiflix_minha_lista');
