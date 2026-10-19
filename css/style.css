@@ -2315,50 +2315,50 @@
         @media (max-width: 768px) {
             /* 1. Barra de Navegação no Mobile */
             .home-nav {
-                height: 60px;
-                padding: 0 16px;
+                height: 56px;
+                padding: 0 14px;
             }
             .nav-left-group {
-                gap: 14px;
+                gap: 12px;
                 min-width: 0;
                 flex-shrink: 1;
             }
             .nav-logo {
-                font-size: 1.7rem;
-                letter-spacing: 1.5px;
+                font-size: 1.6rem;
+                letter-spacing: 1.2px;
             }
             .nav-categories {
                 display: flex !important;
-                gap: 14px;
+                gap: 12px;
                 overflow-x: auto;
                 white-space: nowrap;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
                 padding: 4px 0;
-                max-width: calc(100vw - 180px);
+                max-width: calc(100vw - 170px);
             }
             .nav-categories::-webkit-scrollbar {
                 display: none;
             }
             .nav-cat-item {
-                font-size: 0.86rem;
+                font-size: 0.84rem;
                 flex-shrink: 0;
             }
             .nav-right {
-                gap: 10px;
+                gap: 8px;
                 flex-shrink: 0;
             }
             .search-box.active input[type="search"],
             .search-box:focus-within input,
             .search-box.active #search-input,
             .search-box.active #acervo-search-input {
-                width: 130px !important;
-                padding: 0 8px !important;
-                font-size: 0.85rem !important;
+                width: 120px !important;
+                padding: 0 6px !important;
+                font-size: 0.82rem !important;
             }
             .btn-surprise {
-                width: 36px;
-                height: 36px;
+                width: 34px;
+                height: 34px;
                 padding: 0;
                 display: inline-flex;
                 align-items: center;
@@ -2366,140 +2366,208 @@
             }
             .nav-profile-btn img,
             .nav-profile-btn .avatar {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
             }
 
-            /* 2. Textos e Botões da Tela Inicial (Home) */
+            /* 2. Hero Billboard Compacto na Tela Inicial (Home) - Libera espaço para ver conteúdo imediatamente */
             .hero {
-                min-height: 80vh;
-                padding: 0 18px;
-            }
-            .hero h1 {
-                font-size: 2.3rem;
-                line-height: 1.05;
-                margin-bottom: 8px;
+                min-height: 52vh !important;
+                height: auto !important;
+                padding: 0 16px 20px 16px !important;
             }
             .hero-content {
-                margin-top: 60px;
-                max-width: 100%;
+                margin-top: 45px !important;
+                max-width: 100% !important;
+            }
+            .hero h1 {
+                font-size: 1.9rem !important;
+                line-height: 1.05 !important;
+                margin-bottom: 6px !important;
             }
             .hero-desc {
-                font-size: 0.88rem;
-                line-height: 1.35;
-                -webkit-line-clamp: 3;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                margin-bottom: 16px;
+                font-size: 0.84rem !important;
+                line-height: 1.3 !important;
+                -webkit-line-clamp: 2 !important;
+                display: -webkit-box !important;
+                -webkit-box-orient: vertical !important;
+                overflow: hidden !important;
+                margin-bottom: 12px !important;
             }
             .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-                gap: 10px;
+                flex-direction: row !important;
+                width: 100% !important;
+                gap: 8px !important;
             }
             .btn-play, .btn-info {
-                width: 100%;
-                justify-content: center;
-                padding: 11px 18px;
-                font-size: 0.95rem;
+                flex: 1 !important;
+                width: auto !important;
+                justify-content: center !important;
+                padding: 9px 12px !important;
+                font-size: 0.88rem !important;
             }
 
             /* 3. Hero Billboard no Acervo */
             .acervo-hero-banner {
-                min-height: 380px;
-                height: auto;
-                padding: 22px 16px;
-                border-radius: 8px;
-                margin-bottom: 22px;
+                min-height: 270px !important;
+                height: auto !important;
+                padding: 16px 14px !important;
+                border-radius: 8px !important;
+                margin-bottom: 16px !important;
             }
             .acervo-hero-title {
-                font-size: 1.7rem;
-                line-height: 1.1;
-                margin-bottom: 6px;
+                font-size: 1.45rem !important;
+                line-height: 1.1 !important;
+                margin-bottom: 4px !important;
             }
             .acervo-hero-subtitle {
-                font-size: 0.88rem;
-                margin-bottom: 8px;
+                font-size: 0.82rem !important;
+                margin-bottom: 6px !important;
             }
             .acervo-hero-synopsis {
-                font-size: 0.82rem;
-                line-height: 1.35;
-                margin-bottom: 14px;
-                -webkit-line-clamp: 2;
+                font-size: 0.78rem !important;
+                line-height: 1.3 !important;
+                margin-bottom: 10px !important;
+                -webkit-line-clamp: 2 !important;
             }
             .acervo-hero-actions {
-                width: 100%;
-                flex-direction: column;
-                gap: 8px;
+                width: 100% !important;
+                flex-direction: row !important;
+                gap: 8px !important;
             }
             .acervo-hero-btn-play,
             .acervo-hero-btn-info {
-                width: 100%;
-                justify-content: center;
-                text-align: center;
-                padding: 10px 14px;
-                font-size: 0.92rem;
+                flex: 1 !important;
+                width: auto !important;
+                justify-content: center !important;
+                text-align: center !important;
+                padding: 8px 12px !important;
+                font-size: 0.85rem !important;
             }
             .acervo-hero-pagers {
-                right: 14px;
-                bottom: 12px;
-                gap: 6px;
+                right: 12px !important;
+                bottom: 10px !important;
+                gap: 5px !important;
             }
             .acervo-hero-dot {
-                width: 8px;
-                height: 8px;
+                width: 7px !important;
+                height: 7px !important;
             }
             .acervo-hero-dot.active {
-                width: 22px;
+                width: 18px !important;
             }
 
-            /* 4. Prateleiras e Cards no Mobile */
+            /* 4. Sessões e Títulos no Mobile */
             .shelf-container,
             .catalog-section {
-                padding: 0 16px;
-                margin-bottom: 26px;
+                padding: 0 14px !important;
+                margin-bottom: 20px !important;
             }
+            .row-title,
             .shelf-header h3,
             .catalog-section h3 {
-                font-size: 1.15rem;
-                margin-bottom: 10px;
+                font-size: 1.05rem !important;
+                margin-bottom: 8px !important;
+                font-weight: 700 !important;
             }
+
+            /* 5. Cards em Pé (Portrait) - Proporcionais no Mobile (Cabem ~3 por tela) */
+            .card-portrait,
             .acervo-card-portrait {
-                flex: 0 0 135px;
-                width: 135px;
-                height: 205px;
-                border-radius: 6px;
+                flex: 0 0 115px !important;
+                width: 115px !important;
+                height: 172px !important;
+                border-radius: 5px !important;
             }
             .acervo-card-badge {
-                font-size: 0.62rem;
-                padding: 2px 6px;
+                font-size: 0.58rem !important;
+                padding: 2px 5px !important;
             }
             .acervo-card-title {
-                font-size: 0.78rem;
-                line-height: 1.2;
+                font-size: 0.74rem !important;
+                line-height: 1.2 !important;
             }
+
+            /* 6. Cards Deitados (Landscape) */
+            .card-landscape {
+                flex: 0 0 160px !important;
+                width: 160px !important;
+                height: 96px !important;
+                border-radius: 5px !important;
+            }
+
+            /* Fileiras horizontais */
+            .posters-container,
+            .landscape-row,
+            .acervo-row-slider {
+                gap: 8px !important;
+                padding-bottom: 10px !important;
+            }
+            .posters-container::-webkit-scrollbar,
+            .landscape-row::-webkit-scrollbar,
+            .top10-container::-webkit-scrollbar,
+            .acervo-row-slider::-webkit-scrollbar {
+                display: none !important;
+                height: 0 !important;
+            }
+
+            /* 7. TOP 5 NO MOBILE: 100% CORRIGIDO E ALINHADO (ESTILO OFICIAL NETFLIX) */
+            .top10-container {
+                gap: 10px !important;
+                padding: 5px 0 15px 4px !important;
+                align-items: flex-end !important;
+            }
+            .top10-item {
+                display: flex !important;
+                align-items: flex-end !important;
+                padding-right: 6px !important;
+            }
+            .top10-item .card-portrait {
+                flex: 0 0 110px !important;
+                width: 110px !important;
+                height: 165px !important;
+                margin: 0 !important;
+            }
+            .top10-rank {
+                font-size: 7.2rem !important;
+                line-height: 0.84 !important;
+                height: 125px !important;
+                margin-right: -16px !important;
+                letter-spacing: -6px !important;
+                -webkit-text-stroke: 2.5px #666 !important;
+                -webkit-text-fill-color: #0d0d0d !important;
+                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9)) !important;
+            }
+
+            /* 8. Coleções Disney+, Slides, Podcasts e Elenco da Turma */
             .disney-col-card {
-                flex: 0 0 185px;
-                height: 110px;
+                flex: 0 0 145px !important;
+                height: 85px !important;
             }
             .slide-col-card {
-                flex: 0 0 200px;
-                height: 125px;
+                flex: 0 0 155px !important;
+                height: 100px !important;
             }
             .podcast-col-card {
-                flex: 0 0 220px;
-                height: 95px;
+                flex: 0 0 180px !important;
+                height: 78px !important;
             }
             .student-col-card {
-                flex: 0 0 120px;
-                padding: 10px 8px;
+                flex: 0 0 95px !important;
+                padding: 8px 6px !important;
             }
             .student-col-avatar {
-                width: 50px;
-                height: 50px;
-                font-size: 1.3rem;
+                width: 44px !important;
+                height: 44px !important;
+                font-size: 1.1rem !important;
             }
+            .student-col-name {
+                font-size: 0.75rem !important;
+            }
+            .student-col-role {
+                font-size: 0.65rem !important;
+            }
+
             .acervo-slider-nav-btn,
             .slide-nav-btn {
                 display: none !important;
@@ -2515,7 +2583,7 @@
                 scroll-snap-type: x proximity;
             }
             
-            /* 5. Modal de Detalhes do Filme */
+            /* 9. Modal de Detalhes do Filme */
             .title-modal-container {
                 width: 95%;
                 max-width: 100%;
@@ -2547,12 +2615,12 @@
                 flex-shrink: 0;
             }
             
-            /* 6. Lista de Episódios */
+            /* 10. Lista de Episódios */
             .episode-item { flex-direction: column; text-align: center; gap: 10px; }
             .ep-img { width: 100%; height: 150px; }
             .ep-number { width: 100%; text-align: center; margin-bottom: -5px; }
 
-            /* 7. Player Clássico (Slides) */
+            /* 11. Player Clássico (Slides) */
             .slide-grid { flex-direction: column; gap: 10px; margin-top: 20px; }
             .text-col { padding-right: 0; text-align: center; }
             .text-col h2 { font-size: 2.2rem; border-left: none; border-bottom: 3px solid var(--netflix-red); padding-left: 0; padding-bottom: 5px; }
@@ -2560,7 +2628,7 @@
             .slide-area { padding-top: 50px; }
             .lis-container { flex-direction: column; height: auto; }
             
-            /* 8. Player 3D (Modo Cinematográfico) */
+            /* 12. Player 3D (Modo Cinematográfico) */
             .cine-title { font-size: 2.5rem; }
             .cine-desc { font-size: 1rem; }
             .cine-text-box {
@@ -2583,7 +2651,7 @@
             .cine-giant-apple { font-size: 8rem; }
             .cine-math-wave { font-size: 3rem; top: 50px; }
             
-            /* 9. Video Player Overlay & Controls */
+            /* 13. Video Player Overlay & Controls */
             #custom-video-player .close-video-btn {
                 top: 12px;
                 left: 12px;
@@ -2612,7 +2680,7 @@
                 padding: 10px 16px;
             }
 
-            /* 10. Modais de Perfil & Envio de Trabalho */
+            /* 14. Modais de Perfil & Envio de Trabalho */
             .add-profile-box,
             .submit-work-box {
                 width: 95%;
@@ -2639,26 +2707,50 @@
         }
 
         @media (max-width: 480px) {
+            .hero {
+                min-height: 48vh !important;
+            }
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.7rem !important;
             }
-            .acervo-hero-title {
-                font-size: 1.5rem;
-            }
+            .card-portrait,
             .acervo-card-portrait {
-                flex: 0 0 125px;
-                width: 125px;
-                height: 190px;
+                flex: 0 0 102px !important;
+                width: 102px !important;
+                height: 153px !important;
+            }
+            .card-landscape {
+                flex: 0 0 145px !important;
+                width: 145px !important;
+                height: 88px !important;
+            }
+            .top10-item .card-portrait {
+                flex: 0 0 98px !important;
+                width: 98px !important;
+                height: 147px !important;
+            }
+            .top10-rank {
+                font-size: 6.5rem !important;
+                height: 112px !important;
+                margin-right: -14px !important;
+                letter-spacing: -5px !important;
+                -webkit-text-stroke: 2.2px #666 !important;
             }
             .disney-col-card {
-                flex: 0 0 170px;
-                height: 100px;
+                flex: 0 0 135px !important;
+                height: 80px !important;
+            }
+            .acervo-hero-banner {
+                min-height: 240px !important;
+            }
+            .acervo-hero-title {
+                font-size: 1.35rem !important;
             }
             .modal-hero {
-                height: 210px;
+                height: 210px !important;
             }
             .modal-hero.modal-hero-expanded {
-                height: 270px;
+                height: 270px !important;
             }
         }
 
