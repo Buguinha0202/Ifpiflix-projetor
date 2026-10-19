@@ -1710,6 +1710,16 @@
 
                             <!-- Botão Compartilhar Título -->
                             <button type="button" class="modal-btn-icon" id="m-btn-share" aria-label="Compartilhar título" title="Compartilhar" onclick="window.shareCurrentMovie()"><i class="fa-solid fa-share-nodes"></i></button>
+
+                            <!-- Botão Curtir com Animação Burst(Heart) -->
+                            <div class="demo-like-zone">
+                                <button type="button" class="demo-like-btn" id="m-btn-burst-like" onclick="window.triggerBurstLike(event)" title="Curtir este Trabalho da Turma">
+                                    <svg class="heart" viewBox="0 0 24 24">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                                    </svg>
+                                    <span class="demo-like-count" id="m-like-count">128</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2226,6 +2236,14 @@
                     <button type="button" class="btn-card-action share" onclick="window.copyStudentCardQuote()" title="Copiar Frase Lendária">
                         <i class="fa-solid fa-quote-right"></i> Copiar Lema
                     </button>
+                    <div class="demo-like-zone">
+                        <button type="button" class="demo-like-btn" id="card-student-like-btn" onclick="window.triggerStudentCardBurstLike(event)" title="Dar Like e Apoiar o Colega!">
+                            <svg class="heart" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                            </svg>
+                            <span class="demo-like-count" id="card-student-like-count">128</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 

@@ -1109,6 +1109,9 @@ window.openTitleModal = function(movieId, fromSurprise = false) {
     currentModalMovieId = movieId;
     updateListButtonIcon(document.getElementById('m-btn-list'), movieId);
     updateRatingButton(movieId);
+    if (typeof updateMovieBurstLikeButton === 'function') {
+        updateMovieBurstLikeButton(movieId);
+    }
 
     const surpriseBadge = document.getElementById('m-surprise-badge');
     if (surpriseBadge) {
@@ -7151,6 +7154,9 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             if (modal) {
                 modal.classList.add('show');
                 window.bindHolographicCardTilt();
+                if (typeof updateStudentCardBurstLikeButton === 'function') {
+                    updateStudentCardBurstLikeButton(data.id || data.name);
+                }
                 if (typeof window.playIfpiflixSfx === 'function') {
                     window.playIfpiflixSfx('card-hover');
                 }
@@ -7619,5 +7625,176 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             cancelAnimationFrame(newtonAnimId);
             animate();
         };
+
+        /* =========================================================
+           SISTEMA DE LIKES COM ANIMAÇÃO BURST(HEART) & PARTÍCULAS
+           ========================================================= */
+
+        // Função geradora de partículas de coração flutuantes (Burst)
+        window.createHeartBurst = function(targetElement) {
+            if (!targetElement) return;
+            const zone = targetElement.closest('.demo-like-zone') || targetElement.parentElement;
+            if (!zone) return;
+
+            const particleCount = 8;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'burst-particle-heart';
+                
+                particle.style.left = '50%';
+                particle.style.top = '50%';
+                
+                const angle = (i * (360 / particleCount) + (Math.random() * 20 - 10)) * (Math.PI / 180);
+                const distance = 40 + Math.random() * 35;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance - 18;
+                const rot = (Math.random() - 0.5) * 60;
+                
+                particle.style.setProperty('--tx', `${tx.toFixed(1)}px`);
+                particle.style.setProperty('--ty', `${ty.toFixed(1)}px`);
+                particle.style.setProperty('--tr', `${rot.toFixed(1)}deg`);
+                
+                const colors = ['#e50914', '#ff4d5a', '#ffd700', '#ff6b81', '#ffffff'];
+                const chosenColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.innerHTML = `
+                    <svg viewBox="0 0 24 24" style="width: 100%; height: 100%; fill: ${chosenColor}; filter: drop-shadow(0 0 6px ${chosenColor});">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                    </svg>
+                `;
+                
+                zone.appendChild(particle);
+                setTimeout(() => particle.remove(), 750);
+            }
+        };
+
+        // Likes no Modal de Detalhes dos Filmes/Trabalhos
+        function getMovieLikesData(movieId) {
+            let likesStore = {};
+            try {
+                likesStore = JSON.parse(localStorage.getItem('ifpiflix_movie_likes_store') || '{}');
+            } catch (e) { likesStore = {}; }
+            
+            const defaultLikes = Math.abs(movieId.split('').reduce((acc, c) => acc + c.charCodeAt(0), 100));
+            
+            if (!likesStore[movieId]) {
+                likesStore[movieId] = { count: defaultLikes, liked: false };
+            }
+            return { store: likesStore, data: likesStore[movieId] };
+        }
+
+        window.updateMovieBurstLikeButton = function(movieId) {
+            const btn = document.getElementById('m-btn-burst-like');
+            const countEl = document.getElementById('m-like-count');
+            if (!btn || !countEl || !movieId) return;
+            
+            const { data } = getMovieLikesData(movieId);
+            countEl.textContent = data.count;
+            if (data.liked) {
+                btn.classList.add('liked');
+            } else {
+                btn.classList.remove('liked');
+            }
+        };
+
+        window.triggerBurstLike = function(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            if (!currentModalMovieId) return;
+            
+            const btn = document.getElementById('m-btn-burst-like');
+            const countEl = document.getElementById('m-like-count');
+            const { store, data } = getMovieLikesData(currentModalMovieId);
+            
+            data.liked = !data.liked;
+            if (data.liked) {
+                data.count++;
+                if (btn) btn.classList.add('liked');
+                window.createHeartBurst(btn);
+                if (typeof window.playIfpiflixSfx === 'function') {
+                    window.playIfpiflixSfx('click');
+                    window.playIfpiflixSfx('coins');
+                }
+                if (typeof window.showToastNotification === 'function') {
+                    window.showToastNotification('Você curtiu este trabalho da turma! ❤️');
+                }
+            } else {
+                data.count = Math.max(0, data.count - 1);
+                if (btn) btn.classList.remove('liked');
+                if (typeof window.playIfpiflixSfx === 'function') {
+                    window.playIfpiflixSfx('click');
+                }
+            }
+            
+            if (countEl) countEl.textContent = data.count;
+            store[currentModalMovieId] = data;
+            try {
+                localStorage.setItem('ifpiflix_movie_likes_store', JSON.stringify(store));
+            } catch (err) {}
+        };
+
+        // Likes na Carta 3D do Aluno
+        function getStudentLikesData(studentKey) {
+            let studentLikes = {};
+            try {
+                studentLikes = JSON.parse(localStorage.getItem('ifpiflix_student_likes_store') || '{}');
+            } catch (e) { studentLikes = {}; }
+            
+            const defaultLikes = Math.abs(studentKey.split('').reduce((acc, c) => acc + c.charCodeAt(0), 180));
+            if (!studentLikes[studentKey]) {
+                studentLikes[studentKey] = { count: defaultLikes, liked: false };
+            }
+            return { store: studentLikes, data: studentLikes[studentKey] };
+        }
+
+        window.updateStudentCardBurstLikeButton = function(studentKey) {
+            const btn = document.getElementById('card-student-like-btn');
+            const countEl = document.getElementById('card-student-like-count');
+            if (!btn || !countEl || !studentKey) return;
+            
+            const { data } = getStudentLikesData(studentKey);
+            countEl.textContent = data.count;
+            if (data.liked) {
+                btn.classList.add('liked');
+            } else {
+                btn.classList.remove('liked');
+            }
+        };
+
+        window.triggerStudentCardBurstLike = function(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            if (!currentActiveCardStudent) return;
+            
+            const studentKey = currentActiveCardStudent.id || currentActiveCardStudent.name;
+            const btn = document.getElementById('card-student-like-btn');
+            const countEl = document.getElementById('card-student-like-count');
+            const { store, data } = getStudentLikesData(studentKey);
+            
+            data.liked = !data.liked;
+            if (data.liked) {
+                data.count++;
+                if (btn) btn.classList.add('liked');
+                window.createHeartBurst(btn);
+                if (typeof window.playIfpiflixSfx === 'function') {
+                    window.playIfpiflixSfx('click');
+                    window.playIfpiflixSfx('coins');
+                }
+                if (typeof window.showToastNotification === 'function') {
+                    window.showToastNotification(`Você apoiou ${currentActiveCardStudent.name}! ❤️`);
+                }
+            } else {
+                data.count = Math.max(0, data.count - 1);
+                if (btn) btn.classList.remove('liked');
+                if (typeof window.playIfpiflixSfx === 'function') {
+                    window.playIfpiflixSfx('click');
+                }
+            }
+            
+            if (countEl) countEl.textContent = data.count;
+            store[studentKey] = data;
+            try {
+                localStorage.setItem('ifpiflix_student_likes_store', JSON.stringify(store));
+            } catch (err) {}
+        };
+
 
 

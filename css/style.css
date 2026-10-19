@@ -13,14 +13,17 @@
             align-items: center;
             background: transparent;
             border: 1px solid transparent;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 4px 6px;
-            border-radius: 4px;
+            border-radius: 6px;
+            overflow: hidden;
         }
+        .search-box:hover,
         .search-box.active,
         .search-box:focus-within {
-            background: rgba(0, 0, 0, 0.85);
-            border-color: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.88);
+            border-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
         .search-icon {
             background: transparent;
@@ -34,6 +37,12 @@
             justify-content: center;
             padding: 4px;
             flex-shrink: 0;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .search-box:hover .search-icon,
+        .search-box:focus-within .search-icon {
+            transform: scale(1.1);
+            color: var(--netflix-red);
         }
         .search-box input[type="search"],
         .search-box input,
@@ -44,7 +53,7 @@
             background: transparent !important;
             color: #fff !important;
             outline: none !important;
-            transition: width 0.3s ease, padding 0.3s ease;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 0;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
@@ -52,6 +61,8 @@
             -webkit-appearance: none;
             appearance: none;
         }
+        .search-box:hover input[type="search"],
+        .search-box:hover input,
         .search-box.active input[type="search"],
         .search-box.active input,
         .search-box:focus-within input[type="search"],
@@ -60,7 +71,7 @@
         .search-box.active #acervo-search-input,
         #search-input:focus,
         #acervo-search-input:focus {
-            width: 220px;
+            width: 230px;
             padding: 0 10px;
         }
         .search-box input::placeholder {
@@ -9484,6 +9495,121 @@
                 padding: 20px;
             }
         }
+
+        /* =========================================================
+           BURST(HEART) LIKE BUTTON & PARTICLE ANIMATIONS
+           ========================================================= */
+        .demo-like-zone {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+            user-select: none;
+        }
+
+        .demo-like-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 30px;
+            padding: 8px 16px;
+            color: #eee;
+            font-size: 0.92rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-like-btn:hover {
+            background: rgba(229, 9, 20, 0.15);
+            border-color: rgba(229, 9, 20, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(229, 9, 20, 0.3);
+            color: #fff;
+        }
+
+        .demo-like-btn:active {
+            transform: scale(0.95);
+        }
+
+        .demo-like-btn svg.heart {
+            width: 20px;
+            height: 20px;
+            fill: #999;
+            flex-shrink: 0;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), fill 0.25s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+        }
+
+        .demo-like-btn:hover svg.heart {
+            fill: #ff6b81;
+            transform: scale(1.15);
+        }
+
+        .demo-like-btn.liked {
+            background: rgba(229, 9, 20, 0.22);
+            border-color: #E50914;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.45);
+        }
+
+        .demo-like-btn.liked svg.heart {
+            fill: #E50914;
+            filter: drop-shadow(0 0 10px rgba(229, 9, 20, 0.85));
+            animation: heartBurstPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes heartBurstPop {
+            0% { transform: scale(0.8); }
+            45% { transform: scale(1.55) rotate(-12deg); }
+            75% { transform: scale(0.95) rotate(6deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .demo-like-count {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.3px;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .demo-like-btn.liked .demo-like-count {
+            color: #ff4d5a;
+            text-shadow: 0 0 8px rgba(229, 9, 20, 0.5);
+        }
+
+        /* Partícula Flutuante de Burst */
+        .burst-particle-heart {
+            position: absolute;
+            pointer-events: none;
+            width: 16px;
+            height: 16px;
+            z-index: 100;
+            animation: burstParticleFloat 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes burstParticleFloat {
+            0% {
+                transform: translate(0, 0) scale(0.3) rotate(0deg);
+                opacity: 1;
+            }
+            60% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(var(--tx, 0px), var(--ty, -50px)) scale(1.2) rotate(var(--tr, 20deg));
+                opacity: 0;
+            }
+        }
+
 
 
 
