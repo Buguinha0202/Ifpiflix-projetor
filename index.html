@@ -2345,5 +2345,152 @@
     <!-- CANVAS PARA A FÍSICA DE MAÇÃS DE NEWTON -->
     <canvas id="newton-canvas-overlay" class="newton-canvas-overlay"></canvas>
 
+    <!-- ==========================================
+         BOTÃO DISCRETO DO MODO DEUS (DEBUG)
+         ========================================== -->
+    <button type="button" id="god-mode-toggle-btn" class="god-mode-toggle-btn" onclick="window.toggleGodModePanel()" title="Abrir Painel Modo Deus / Debug (Atalho: F2)" aria-label="Modo Deus">
+        <span class="god-btn-icon">🛠️</span>
+        <span class="god-btn-text">DEBUG (F2)</span>
+    </button>
+
+    <!-- ==========================================
+         PAINEL MODO DEUS / CONSOLE DE TESTES (F2)
+         ========================================== -->
+    <div id="god-mode-overlay" class="god-mode-overlay" onclick="window.handleGodModeOverlayClick(event)">
+        <div class="god-mode-panel" id="god-mode-panel">
+            <div class="god-panel-header">
+                <div class="god-header-title">
+                    <span class="god-badge">DEV TOOLS</span>
+                    <h3>PAINEL MODO DEUS</h3>
+                    <span class="god-hint">(Pressione F2 para alternar)</span>
+                </div>
+                <button type="button" class="god-panel-close-btn" onclick="window.toggleGodModePanel()" aria-label="Fechar Painel">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Métricas ao Vivo -->
+            <div class="god-live-metrics">
+                <div class="god-metric-card">
+                    <span class="metric-label">TELA ATIVA</span>
+                    <span class="metric-value" id="god-metric-screen">home-screen</span>
+                </div>
+                <div class="god-metric-card">
+                    <span class="metric-label">SLIDE / CAPÍTULO</span>
+                    <span class="metric-value" id="god-metric-slide">Slide -1</span>
+                </div>
+                <div class="god-metric-card">
+                    <span class="metric-label">PERFIL</span>
+                    <span class="metric-value" id="god-metric-profile">Admin</span>
+                </div>
+                <div class="god-metric-card">
+                    <span class="metric-label">CONQUISTAS</span>
+                    <span class="metric-value" id="god-metric-achievements">0 / 8</span>
+                </div>
+                <div class="god-metric-card">
+                    <span class="metric-label">DESEMPENHO</span>
+                    <span class="metric-value fps" id="god-metric-fps">60 FPS</span>
+                </div>
+            </div>
+
+            <div class="god-panel-body">
+                <!-- Seção 1: Teleporte Rápido -->
+                <div class="god-section">
+                    <h4><i class="fa-solid fa-compass"></i> TELEPORTE RÁPIDO DE TELAS</h4>
+                    <div class="god-buttons-grid">
+                        <button type="button" class="god-action-btn" onclick="window.godSwitchScreen('home-screen')">
+                            <i class="fa-solid fa-house"></i> Home (Catálogo)
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godSwitchScreen('acervo-screen')">
+                            <i class="fa-solid fa-shapes"></i> Acervo da Turma
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godStartSlide(0)">
+                            <i class="fa-solid fa-chalkboard-user"></i> Apresentador 2D
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godStartCinema(0)">
+                            <i class="fa-solid fa-film"></i> Cinema 3D
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godOpenCyberPresentation()">
+                            <i class="fa-solid fa-shield-halved"></i> Defesa Cibernética
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godSwitchScreen('quiz-screen')">
+                            <i class="fa-solid fa-gamepad"></i> Quiz Científico
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godOpenWrapped()">
+                            <i class="fa-solid fa-chart-pie"></i> Retrospectiva Wrapped
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godOpenSubscriptionVIP()">
+                            <i class="fa-solid fa-ticket"></i> Checkout VIP (Paródia)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Seção 2: Apresentação & Slides -->
+                <div class="god-section">
+                    <h4><i class="fa-solid fa-forward-step"></i> CONTROLE DE SLIDES & INTRODUÇÃO</h4>
+                    <div class="god-row-controls">
+                        <label for="god-slide-select">Ir direto ao Slide:</label>
+                        <select id="god-slide-select" class="god-select">
+                            <!-- Preenchido via script com os 14 capítulos -->
+                        </select>
+                        <button type="button" class="god-small-btn" onclick="window.godJumpToSelectedSlide(false)">
+                            Modo 2D
+                        </button>
+                        <button type="button" class="god-small-btn primary" onclick="window.godJumpToSelectedSlide(true)">
+                            Modo 3D
+                        </button>
+                        <button type="button" class="god-small-btn accent" onclick="window.godTriggerTudum()">
+                            🔊 TUDUM
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Seção 3: Gamificação, RPG & Duelos -->
+                <div class="god-section">
+                    <h4><i class="fa-solid fa-trophy"></i> GAMIFICAÇÃO, CARTAS 3D & CONQUISTAS</h4>
+                    <div class="god-buttons-grid">
+                        <button type="button" class="god-action-btn" onclick="window.godUnlockAllAchievements()">
+                            <i class="fa-solid fa-medal"></i> Desbloquear Todas (8/8)
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godResetAchievements()">
+                            <i class="fa-solid fa-rotate-left"></i> Resetar Conquistas
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godOpenRandomCard()">
+                            <i class="fa-solid fa-id-card-clip"></i> Carta 3D Randômica
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godStartRandomDuel()">
+                            <i class="fa-solid fa-swords"></i> Duelo 1v1 Randômico
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Seção 4: Físicas, Áudio Procedural & Paródias -->
+                <div class="god-section">
+                    <h4><i class="fa-solid fa-wand-magic-sparkles"></i> FÍSICA & MOTOR DE ÁUDIO</h4>
+                    <div class="god-buttons-grid">
+                        <button type="button" class="god-action-btn" onclick="window.godTriggerNewtonGravity()">
+                            🍏 Chuva de Newton (Gravidade)
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godToggleSfx()">
+                            🔊 Alternar Som Procedural
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godPlayTestSound('achievement')">
+                            🎺 Fanfarra de Conquista
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godPlayTestSound('success')">
+                            ✨ Acorde Sucesso
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godPlayTestSound('heartBurst')">
+                            ❤️ Som Burst Heart
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godPlayTestSound('error')">
+                            ⚠️ Tom de Erro Sutil
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

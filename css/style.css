@@ -9610,6 +9610,397 @@
             }
         }
 
+        /* =========================================================
+           PAINEL MODO DEUS (DEBUG CONSOLE) & BOTÃO FLUTUANTE
+           ========================================================= */
+        .god-mode-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100000;
+            background: rgba(18, 20, 26, 0.85);
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: #ffd700;
+            border-radius: 30px;
+            padding: 8px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 215, 0, 0.15);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+
+        .god-mode-toggle-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            background: rgba(28, 30, 40, 0.95);
+            border-color: #ffd700;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 215, 0, 0.35);
+            color: #fff;
+        }
+
+        .god-mode-toggle-btn:active {
+            transform: scale(0.96);
+        }
+
+        .god-btn-icon {
+            font-size: 1rem;
+        }
+
+        .god-mode-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 5, 8, 0.82);
+            backdrop-filter: blur(16px);
+            z-index: 130000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+        }
+
+        .god-mode-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .god-mode-panel {
+            position: relative;
+            background: linear-gradient(135deg, rgba(16, 18, 24, 0.98), rgba(10, 11, 15, 0.98));
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-top: 3px solid #ffd700;
+            border-radius: 16px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 215, 0, 0.15);
+            color: #eee;
+            transform: scale(0.94);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .god-mode-overlay.show .god-mode-panel {
+            transform: scale(1);
+        }
+
+        .god-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .god-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .god-badge {
+            background: #ffd700;
+            color: #000;
+            font-size: 0.68rem;
+            font-weight: 900;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .god-header-title h3 {
+            margin: 0;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .god-hint {
+            font-size: 0.78rem;
+            color: #888;
+        }
+
+        .god-panel-close-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .god-panel-close-btn:hover {
+            background: var(--netflix-red);
+            transform: rotate(90deg);
+        }
+
+        /* Métricas ao vivo */
+        .god-live-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+            padding: 14px 20px;
+            background: rgba(0, 0, 0, 0.45);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .god-metric-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .metric-label {
+            font-size: 0.65rem;
+            color: #888;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-family: 'Inter', monospace;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .metric-value.fps {
+            color: #46d369;
+        }
+
+        .god-panel-body {
+            padding: 18px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .god-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .god-section h4 {
+            margin: 0 0 10px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #ffd700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .god-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 8px;
+        }
+
+        .god-action-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ddd;
+            border-radius: 8px;
+            padding: 9px 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .god-action-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: rgba(255, 215, 0, 0.5);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .god-action-btn:active {
+            transform: scale(0.96);
+        }
+
+        .god-row-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .god-row-controls label {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .god-select {
+            background: #0d0f14;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.82rem;
+            outline: none;
+            flex-grow: 1;
+        }
+
+        .god-small-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .god-small-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .god-small-btn.primary {
+            background: linear-gradient(135deg, var(--netflix-red), #900);
+            border-color: var(--netflix-red);
+        }
+
+        .god-small-btn.primary:hover {
+            filter: brightness(1.15);
+        }
+
+        .god-small-btn.accent {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border-color: #ffd700;
+            color: #000;
+        }
+
+        /* =========================================================
+           POLIMENTO VISUAL (JUICE) & MICRO-INTERAÇÕES
+           ========================================================= */
+        /* Micro-punch físico em cliques de botões */
+        .btn-play:active,
+        .btn-info:active,
+        .modal-btn-play:active,
+        .modal-btn-secondary:active,
+        .modal-btn-icon:active,
+        .academic-btn-primary:active,
+        .academic-btn-info:active,
+        .nav-cat-item:active,
+        .btn-card-action:active,
+        .btn-start-duel:active,
+        .btn-confirm-subscription:active,
+        .wrapped-arrow-btn:active,
+        .student-avatar-card:active {
+            transform: scale(0.95) !important;
+            transition: transform 0.08s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        /* Transição suave entre telas */
+        .screen {
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+        }
+
+        .screen.active {
+            animation: screenFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes screenFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateZ(0) scale(0.995);
+            }
+            100% {
+                opacity: 1;
+                transform: translateZ(0) scale(1);
+            }
+        }
+
+        /* Efeito de brilho de foco nos cards */
+        .academic-card {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .academic-card:hover {
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(229, 9, 20, 0.25) !important;
+        }
+
+        /* Feedback tátil ao favoritar na lista */
+        .modal-btn-icon.pop {
+            animation: iconPopAnim 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes iconPopAnim {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.35) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @media (max-width: 600px) {
+            .god-mode-toggle-btn {
+                bottom: 12px;
+                right: 12px;
+                padding: 6px 10px;
+                font-size: 0.72rem;
+            }
+            .god-mode-panel {
+                max-height: 94vh;
+            }
+            .god-live-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        }
+
+        @keyframes burstParticleFloat {
+            0% {
+                transform: translate(0, 0) scale(0.3) rotate(0deg);
+                opacity: 1;
+            }
+            60% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(var(--tx, 0px), var(--ty, -50px)) scale(1.2) rotate(var(--tr, 20deg));
+                opacity: 0;
+            }
+        }
+
 
 
 

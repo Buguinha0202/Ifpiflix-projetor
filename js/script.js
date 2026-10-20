@@ -64,6 +64,91 @@ let isLisActive = false;
 let globalSfxEnabled = (localStorage.getItem('ifpiflix_sfx_enabled') !== 'false');
 let sharedAudioCtx = null;
 
+/* =========================================================
+   1. MAPEAMENTO E ESTADO ÚNICO CENTRALIZADO (STORE)
+   ========================================================= */
+const _stateListeners = new Set();
+
+window.IFPIFLIX_STATE = {
+    get activeScreen() {
+        const activeEl = document.querySelector('.screen.active');
+        return activeEl ? activeEl.id : 'home-screen';
+    },
+    get activeProfile() { return activeProfile; },
+    set activeProfile(val) { activeProfile = val; this._notify(); },
+
+    get currentSlide() { return currentSlide; },
+    set currentSlide(val) { currentSlide = val; this._notify(); },
+
+    get currentCineIdx() { return currentCineIdx; },
+    set currentCineIdx(val) { currentCineIdx = val; this._notify(); },
+
+    get currentModalMovieId() { return (typeof currentModalMovieId !== 'undefined') ? currentModalMovieId : ''; },
+    set currentModalMovieId(val) { if (typeof currentModalMovieId !== 'undefined') currentModalMovieId = val; this._notify(); },
+
+    get sfxEnabled() { return globalSfxEnabled; },
+    set sfxEnabled(val) { globalSfxEnabled = !!val; this._notify(); },
+
+    get minhaLista() { return (typeof minhaLista !== 'undefined') ? minhaLista : []; },
+    
+    get currentAcervoMateria() { return (typeof currentAcervoMateria !== 'undefined') ? currentAcervoMateria : 'all'; },
+    set currentAcervoMateria(val) { if (typeof currentAcervoMateria !== 'undefined') currentAcervoMateria = val; this._notify(); },
+
+    get currentAcervoFormat() { return (typeof currentAcervoFormat !== 'undefined') ? currentAcervoFormat : 'all'; },
+    set currentAcervoFormat(val) { if (typeof currentAcervoFormat !== 'undefined') currentAcervoFormat = val; this._notify(); },
+
+    get currentAcervoAuthor() { return (typeof currentAcervoAuthor !== 'undefined') ? currentAcervoAuthor : null; },
+    set currentAcervoAuthor(val) { if (typeof currentAcervoAuthor !== 'undefined') currentAcervoAuthor = val; this._notify(); },
+
+    get currentAcervoViewMode() { return (typeof currentAcervoViewMode !== 'undefined') ? currentAcervoViewMode : 'collections'; },
+    set currentAcervoViewMode(val) { if (typeof currentAcervoViewMode !== 'undefined') currentAcervoViewMode = val; this._notify(); },
+
+    get unlockedAchievements() { return (typeof unlockedAchievements !== 'undefined') ? unlockedAchievements : []; },
+
+    get currentActiveCardStudent() { return (typeof currentActiveCardStudent !== 'undefined') ? currentActiveCardStudent : null; },
+
+    get quizIndex() { return (typeof currentQuizIndex !== 'undefined') ? currentQuizIndex : 0; },
+    get quizScore() { return (typeof quizScore !== 'undefined') ? quizScore : 0; },
+
+    get secCurrentSlide() { return (typeof secCurrentSlide !== 'undefined') ? secCurrentSlide : 0; },
+    get secCurrentStep() { return (typeof secCurrentStep !== 'undefined') ? secCurrentStep : 1; },
+
+    subscribe(fn) {
+        if (typeof fn === 'function') {
+            _stateListeners.add(fn);
+            return () => _stateListeners.delete(fn);
+        }
+        return () => {};
+    },
+
+    _notify() {
+        const snapshot = this.getSnapshot();
+        _stateListeners.forEach(fn => {
+            try { fn(snapshot); } catch (e) {}
+        });
+    },
+
+    getSnapshot() {
+        return {
+            activeScreen: this.activeScreen,
+            activeProfile: this.activeProfile,
+            currentSlide: this.currentSlide,
+            currentCineIdx: this.currentCineIdx,
+            currentModalMovieId: this.currentModalMovieId,
+            sfxEnabled: this.sfxEnabled,
+            minhaListaCount: (this.minhaLista || []).length,
+            currentAcervoMateria: this.currentAcervoMateria,
+            currentAcervoAuthor: this.currentAcervoAuthor,
+            unlockedAchievementsCount: (this.unlockedAchievements || []).length,
+            quizIndex: this.quizIndex,
+            quizScore: this.quizScore
+        };
+    }
+};
+
+/* =========================================================
+   2. MOTOR DE SOM PROCEDURAL PURO (WEB AUDIO API)
+   ========================================================= */
 function getSharedAudioContext() {
     try {
         if (!sharedAudioCtx) {
@@ -78,6 +163,315 @@ function getSharedAudioContext() {
         return null;
     }
 }
+
+window.SoundEngine = {
+    play(type, options = {}) {
+        if (!globalSfxEnabled) return;
+        try {
+            const ctx = getSharedAudioContext();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+
+            switch (type) {
+                // Clique limpo de botão
+                case 'click': {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(880, now);
+                    osc.frequency.exponentialRampToValueAtTime(220, now + 0.04);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.06);
+                    break;
+                }
+
+                // Micro-tick delicado ao passar o cursor
+                case 'hover':
+                case 'card-hover': {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(540, now);
+                    osc.frequency.exponentialRampToValueAtTime(720, now + 0.05);
+                    gain.gain.setValueAtTime(0.02, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.07);
+                    break;
+                }
+
+                // Abertura de Modal (Swoosh ascendente harmônico com filtro)
+                case 'openModal':
+                case 'open': {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    const filter = ctx.createBiquadFilter();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(280, now);
+                    osc.frequency.exponentialRampToValueAtTime(640, now + 0.14);
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(400, now);
+                    filter.frequency.exponentialRampToValueAtTime(1800, now + 0.14);
+                    gain.gain.setValueAtTime(0.001, now);
+                    gain.gain.linearRampToValueAtTime(0.06, now + 0.04);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                    break;
+                }
+
+                // Fechamento de Modal (Swoosh descendente suave)
+                case 'closeModal':
+                case 'close': {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(600, now);
+                    osc.frequency.exponentialRampToValueAtTime(220, now + 0.12);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                    break;
+                }
+
+                // Notificação / Alerta suave (Chime duplo F5 -> A5)
+                case 'alert':
+                case 'toast': {
+                    [698.46, 880.00].forEach((freq, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const startTime = now + idx * 0.09;
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, startTime);
+                        gain.gain.setValueAtTime(0.04, startTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.22);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(startTime);
+                        osc.stop(startTime + 0.25);
+                    });
+                    break;
+                }
+
+                // Sucesso / Confirmação (Acorde Maior arpejado C5 - E5 - G5)
+                case 'success': {
+                    [523.25, 659.25, 783.99].forEach((f, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const startTime = now + i * 0.07;
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(f, startTime);
+                        gain.gain.setValueAtTime(0.05, startTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(startTime);
+                        osc.stop(startTime + 0.4);
+                    });
+                    break;
+                }
+
+                // Erro sutil (Tom fosco descendente)
+                case 'error':
+                case 'quiz-wrong': {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(240, now);
+                    osc.frequency.linearRampToValueAtTime(130, now + 0.28);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                    break;
+                }
+
+                // Acerto no Quiz
+                case 'quiz-correct': {
+                    [880, 1318.5].forEach((f, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const startTime = now + i * 0.09;
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(f, startTime);
+                        gain.gain.setValueAtTime(0.06, startTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.25);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(startTime);
+                        osc.stop(startTime + 0.28);
+                    });
+                    break;
+                }
+
+                // O Icônico TUDUM da Netflix sintetizado proceduralmente
+                case 'tudum': {
+                    const oscBass1 = ctx.createOscillator();
+                    const oscBass2 = ctx.createOscillator();
+                    const bassGain = ctx.createGain();
+                    
+                    oscBass1.type = 'triangle';
+                    oscBass1.frequency.setValueAtTime(82.4, now);
+                    oscBass1.frequency.exponentialRampToValueAtTime(32.7, now + 1.2);
+
+                    oscBass2.type = 'sine';
+                    oscBass2.frequency.setValueAtTime(65.4, now);
+                    oscBass2.frequency.exponentialRampToValueAtTime(28.0, now + 1.5);
+
+                    bassGain.gain.setValueAtTime(0.001, now);
+                    bassGain.gain.exponentialRampToValueAtTime(0.7, now + 0.08);
+                    bassGain.gain.exponentialRampToValueAtTime(0.001, now + 2.4);
+
+                    oscBass1.connect(bassGain);
+                    oscBass2.connect(bassGain);
+                    bassGain.connect(ctx.destination);
+
+                    oscBass1.start(now);
+                    oscBass2.start(now);
+                    oscBass1.stop(now + 2.5);
+                    oscBass2.stop(now + 2.5);
+
+                    const notes = [130.81, 196.00, 261.63, 392.00, 523.25];
+                    notes.forEach((freq, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const filter = ctx.createBiquadFilter();
+
+                        osc.type = (idx % 2 === 0) ? 'sawtooth' : 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + 0.28);
+                        osc.frequency.exponentialRampToValueAtTime(freq * 1.02, now + 2.0);
+
+                        filter.type = 'lowpass';
+                        filter.frequency.setValueAtTime(400, now + 0.28);
+                        filter.frequency.exponentialRampToValueAtTime(2600, now + 0.9);
+                        filter.frequency.exponentialRampToValueAtTime(600, now + 2.8);
+
+                        gain.gain.setValueAtTime(0.001, now + 0.28);
+                        gain.gain.linearRampToValueAtTime(0.12 / notes.length, now + 0.5);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
+
+                        osc.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(ctx.destination);
+
+                        osc.start(now + 0.28);
+                        osc.stop(now + 3.0);
+                    });
+                    break;
+                }
+
+                // Conquista Rockstar Xbox/PS5
+                case 'achievement': {
+                    const arpeggio = [523.25, 659.25, 783.99, 1046.50];
+                    arpeggio.forEach((freq, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const startTime = now + idx * 0.08;
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, startTime);
+                        gain.gain.setValueAtTime(0.001, startTime);
+                        gain.gain.linearRampToValueAtTime(0.08, startTime + 0.02);
+                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.9);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(startTime);
+                        osc.stop(startTime + 1.0);
+                    });
+                    break;
+                }
+
+                // Moedas / Likes / Cupom
+                case 'coins':
+                case 'discount':
+                case 'heartBurst': {
+                    [987.77, 1318.51, 1567.98, 2093.00].forEach((f, i) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const startTime = now + i * 0.07;
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(f, startTime);
+                        gain.gain.setValueAtTime(0.07, startTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(startTime);
+                        osc.stop(startTime + 0.45);
+                    });
+                    break;
+                }
+
+                // Golpe em Duelo
+                case 'duel-hit': {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(60, now + 0.15);
+                    gain.gain.setValueAtTime(0.09, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                    break;
+                }
+
+                // Quique da Maçã de Newton
+                case 'apple-bounce': {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.exponentialRampToValueAtTime(160, now + 0.08);
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                    break;
+                }
+
+                default: {
+                    if (options.freq) {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = options.type || 'sine';
+                        osc.frequency.setValueAtTime(options.freq, now);
+                        gain.gain.setValueAtTime(options.volume || 0.05, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + (options.duration || 0.1));
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now);
+                        osc.stop(now + (options.duration || 0.12));
+                    }
+                }
+            }
+        } catch (e) {
+            // Áudio indisponível ou bloqueado
+        }
+    }
+};
+
+window.playIfpiflixSfx = function(type, options) {
+    if (window.SoundEngine) {
+        window.SoundEngine.play(type, options);
+    }
+};
 
 window.toggleIfpiflixSfx = function() {
     globalSfxEnabled = !globalSfxEnabled;
@@ -105,190 +499,10 @@ window.toggleIfpiflixSfx = function() {
             window.showToastNotification('Efeitos Sonoros Mutados.');
         }
     }
+    if (window.IFPIFLIX_STATE) window.IFPIFLIX_STATE._notify();
 };
 
-window.playIfpiflixSfx = function(type) {
-    if (!globalSfxEnabled) return;
-    try {
-        const ctx = getSharedAudioContext();
-        if (!ctx) return;
-        const now = ctx.currentTime;
-
-        if (type === 'tudum') {
-            // Sintetizador procedural do icônico TUDUM do IFPIFLIX
-            // 1. Batida grave profunda (Boom sub-bass)
-            const oscBass1 = ctx.createOscillator();
-            const oscBass2 = ctx.createOscillator();
-            const bassGain = ctx.createGain();
-            
-            oscBass1.type = 'triangle';
-            oscBass1.frequency.setValueAtTime(82.4, now); // E2
-            oscBass1.frequency.exponentialRampToValueAtTime(32.7, now + 1.2); // C1
-
-            oscBass2.type = 'sine';
-            oscBass2.frequency.setValueAtTime(65.4, now); // C2
-            oscBass2.frequency.exponentialRampToValueAtTime(28.0, now + 1.5);
-
-            bassGain.gain.setValueAtTime(0.001, now);
-            bassGain.gain.exponentialRampToValueAtTime(0.7, now + 0.08);
-            bassGain.gain.exponentialRampToValueAtTime(0.001, now + 2.4);
-
-            oscBass1.connect(bassGain);
-            oscBass2.connect(bassGain);
-            bassGain.connect(ctx.destination);
-
-            oscBass1.start(now);
-            oscBass2.start(now);
-            oscBass1.stop(now + 2.5);
-            oscBass2.stop(now + 2.5);
-
-            // 2. Acorde brilhante harmônico (O 'DUM' ressonante que expande)
-            const notes = [130.81, 196.00, 261.63, 392.00, 523.25];
-            notes.forEach((freq, idx) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                const filter = ctx.createBiquadFilter();
-
-                osc.type = (idx % 2 === 0) ? 'sawtooth' : 'triangle';
-                osc.frequency.setValueAtTime(freq, now + 0.28);
-                osc.frequency.exponentialRampToValueAtTime(freq * 1.02, now + 2.0);
-
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(400, now + 0.28);
-                filter.frequency.exponentialRampToValueAtTime(2600, now + 0.9);
-                filter.frequency.exponentialRampToValueAtTime(600, now + 2.8);
-
-                gain.gain.setValueAtTime(0.001, now + 0.28);
-                gain.gain.linearRampToValueAtTime(0.12 / notes.length, now + 0.5);
-                gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
-
-                osc.connect(filter);
-                filter.connect(gain);
-                gain.connect(ctx.destination);
-
-                osc.start(now + 0.28);
-                osc.stop(now + 3.0);
-            });
-
-        } else if (type === 'card-hover') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(540, now);
-            osc.frequency.exponentialRampToValueAtTime(720, now + 0.06);
-            gain.gain.setValueAtTime(0.025, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.09);
-
-        } else if (type === 'click') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(880, now);
-            osc.frequency.exponentialRampToValueAtTime(220, now + 0.04);
-            gain.gain.setValueAtTime(0.04, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.06);
-
-        } else if (type === 'achievement') {
-            // Fanfarra Xbox / PS5 Style polifônica
-            const arpeggio = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-            arpeggio.forEach((freq, idx) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                const startTime = now + idx * 0.08;
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(freq, startTime);
-                gain.gain.setValueAtTime(0.001, startTime);
-                gain.gain.linearRampToValueAtTime(0.08, startTime + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.9);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start(startTime);
-                osc.stop(startTime + 1.0);
-            });
-
-        } else if (type === 'quiz-correct') {
-            [880, 1318.5].forEach((f, i) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                const startTime = now + i * 0.09;
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(f, startTime);
-                gain.gain.setValueAtTime(0.06, startTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.25);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start(startTime);
-                osc.stop(startTime + 0.28);
-            });
-
-        } else if (type === 'quiz-wrong') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(240, now);
-            osc.frequency.linearRampToValueAtTime(130, now + 0.3);
-            gain.gain.setValueAtTime(0.06, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.38);
-
-        } else if (type === 'coins' || type === 'discount') {
-            [987.77, 1318.51, 1567.98, 2093.00].forEach((f, i) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                const startTime = now + i * 0.07;
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(f, startTime);
-                gain.gain.setValueAtTime(0.07, startTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start(startTime);
-                osc.stop(startTime + 0.45);
-            });
-
-        } else if (type === 'duel-hit') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(440, now);
-            osc.frequency.exponentialRampToValueAtTime(60, now + 0.15);
-            gain.gain.setValueAtTime(0.09, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.2);
-
-        } else if (type === 'apple-bounce') {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(320, now);
-            osc.frequency.exponentialRampToValueAtTime(160, now + 0.08);
-            gain.gain.setValueAtTime(0.06, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.12);
-        }
-    } catch (e) {
-        // Áudio desativado ou sem suporte no navegador
-    }
-};
-
-        /* =========================================================
+/* =========================================================
            BANCO DE DADOS COMPLETO DA MODAL
            ========================================================= */
         const filmesDB = {
@@ -7825,3 +8039,292 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
 
 
 
+
+
+        /* =========================================================
+           3. PAINEL MODO DEUS (DEBUG CONSOLE) & ATALHO F2
+           ========================================================= */
+        let isGodModeOpen = false;
+        let godMetricsTimer = null;
+        let fpsFrameCount = 0;
+        let fpsLastTime = performance.now();
+        let currentFps = 60;
+
+        // Medição em tempo real de FPS
+        function godFpsLoop() {
+            fpsFrameCount++;
+            const now = performance.now();
+            if (now - fpsLastTime >= 1000) {
+                currentFps = Math.round((fpsFrameCount * 1000) / (now - fpsLastTime));
+                fpsFrameCount = 0;
+                fpsLastTime = now;
+                const fpsEl = document.getElementById('god-metric-fps');
+                if (fpsEl) fpsEl.textContent = currentFps + ' FPS';
+            }
+            if (isGodModeOpen) {
+                requestAnimationFrame(godFpsLoop);
+            }
+        }
+
+        function updateGodLiveMetrics() {
+            if (!isGodModeOpen) return;
+            const screenEl = document.getElementById('god-metric-screen');
+            const slideEl = document.getElementById('god-metric-slide');
+            const profileEl = document.getElementById('god-metric-profile');
+            const achEl = document.getElementById('god-metric-achievements');
+
+            const activeScreen = window.IFPIFLIX_STATE ? window.IFPIFLIX_STATE.activeScreen : 'home-screen';
+            const curSlide = window.IFPIFLIX_STATE ? window.IFPIFLIX_STATE.currentSlide : -1;
+            const profile = window.IFPIFLIX_STATE ? window.IFPIFLIX_STATE.activeProfile : 'Admin';
+            const achCount = window.IFPIFLIX_STATE ? (window.IFPIFLIX_STATE.unlockedAchievements || []).length : 0;
+
+            if (screenEl) screenEl.textContent = activeScreen;
+            if (slideEl) slideEl.textContent = curSlide >= 0 ? ('Slide ' + curSlide) : 'Nenhum';
+            if (profileEl) profileEl.textContent = profile;
+            if (achEl) achEl.textContent = achCount + ' / 8';
+        }
+
+        window.toggleGodModePanel = function() {
+            isGodModeOpen = !isGodModeOpen;
+            const overlay = document.getElementById('god-mode-overlay');
+            if (!overlay) return;
+
+            if (isGodModeOpen) {
+                overlay.classList.add('show');
+                if (window.SoundEngine) window.SoundEngine.play('openModal');
+
+                // Popula select de slides
+                const select = document.getElementById('god-slide-select');
+                if (select && typeof script !== 'undefined' && select.children.length === 0) {
+                    select.innerHTML = script.map((s, idx) => 
+                        `<option value="${idx}">[${s.id}] ${s.title} (${s.presenter})</option>`
+                    ).join('');
+                }
+
+                // Inicia loop de FPS e atualização de métricas
+                fpsLastTime = performance.now();
+                fpsFrameCount = 0;
+                requestAnimationFrame(godFpsLoop);
+                updateGodLiveMetrics();
+                clearInterval(godMetricsTimer);
+                godMetricsTimer = setInterval(updateGodLiveMetrics, 500);
+            } else {
+                overlay.classList.remove('show');
+                if (window.SoundEngine) window.SoundEngine.play('closeModal');
+                clearInterval(godMetricsTimer);
+            }
+        };
+
+        window.handleGodModeOverlayClick = function(e) {
+            if (e && e.target && e.target.id === 'god-mode-overlay') {
+                window.toggleGodModePanel();
+            }
+        };
+
+        // Tecla F2 para alternar o Painel Modo Deus
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F2') {
+                e.preventDefault();
+                window.toggleGodModePanel();
+            } else if (e.key === 'Escape' && isGodModeOpen) {
+                e.preventDefault();
+                window.toggleGodModePanel();
+            }
+        });
+
+        // Ações do Painel Modo Deus
+        window.godSwitchScreen = function(screenId) {
+            if (typeof window.switchScreen === 'function') {
+                window.switchScreen(screenId);
+                if (window.SoundEngine) window.SoundEngine.play('success');
+                window.toggleGodModePanel();
+            }
+        };
+
+        window.godStartSlide = function(slideIdx) {
+            if (typeof window.startPresentationAt === 'function' && typeof script !== 'undefined') {
+                const targetId = script[slideIdx] ? script[slideIdx].id : 0;
+                window.startPresentationAt(targetId);
+                window.toggleGodModePanel();
+            }
+        };
+
+        window.godStartCinema = function(cineIdx) {
+            if (typeof window.startCinematicMovieAt === 'function' && typeof script !== 'undefined') {
+                const targetId = script[cineIdx] ? script[cineIdx].id : 0;
+                window.startCinematicMovieAt(targetId);
+                window.toggleGodModePanel();
+            }
+        };
+
+        window.godJumpToSelectedSlide = function(is3D = false) {
+            const select = document.getElementById('god-slide-select');
+            const idx = select ? parseInt(select.value, 10) : 0;
+            if (is3D) {
+                window.godStartCinema(idx);
+            } else {
+                window.godStartSlide(idx);
+            }
+        };
+
+        window.godOpenCyberPresentation = function() {
+            if (typeof window.openSecurityPresentation === 'function') {
+                window.openSecurityPresentation(0);
+                window.toggleGodModePanel();
+            }
+        };
+
+        window.godOpenWrapped = function() {
+            if (typeof window.openIfpiflixWrapped === 'function') {
+                window.openIfpiflixWrapped();
+                window.toggleGodModePanel();
+            }
+        };
+
+        window.godOpenSubscriptionVIP = function() {
+            if (typeof window.openSubscriptionCheckout === 'function') {
+                window.openSubscriptionCheckout();
+                const couponInput = document.getElementById('checkout-coupon-input');
+                if (couponInput) couponInput.value = 'NOTA10';
+                if (typeof window.applyCheckoutCoupon === 'function') {
+                    window.applyCheckoutCoupon();
+                }
+                window.toggleGodModePanel();
+            }
+        };
+
+        window.godTriggerTudum = function() {
+            window.toggleGodModePanel();
+            if (typeof window.switchScreen === 'function') {
+                window.switchScreen('splash-screen');
+                if (window.SoundEngine) window.SoundEngine.play('tudum');
+                setTimeout(() => {
+                    window.switchScreen('home-screen');
+                }, 2800);
+            }
+        };
+
+        window.godUnlockAllAchievements = function() {
+            if (typeof ACHIEVEMENTS_DB !== 'undefined' && typeof window.unlockAchievement === 'function') {
+                const keys = Object.keys(ACHIEVEMENTS_DB);
+                keys.forEach((key, i) => {
+                    setTimeout(() => {
+                        window.unlockAchievement(key);
+                    }, i * 400);
+                });
+                if (typeof window.showToastNotification === 'function') {
+                    window.showToastNotification('Todas as 8 Conquistas foram Desbloqueadas!');
+                }
+            }
+        };
+
+        window.godResetAchievements = function() {
+            unlockedAchievements = [];
+            try {
+                localStorage.removeItem('ifpiflix_achievements');
+            } catch (e) {}
+            if (window.SoundEngine) window.SoundEngine.play('error');
+            if (typeof window.showToastNotification === 'function') {
+                window.showToastNotification('Conquistas Resetadas com sucesso!');
+            }
+            updateGodLiveMetrics();
+        };
+
+        window.godOpenRandomCard = function() {
+            if (typeof STUDENTS_REGISTRY !== 'undefined' && STUDENTS_REGISTRY.length > 0) {
+                const rand = STUDENTS_REGISTRY[Math.floor(Math.random() * STUDENTS_REGISTRY.length)];
+                window.toggleGodModePanel();
+                if (typeof window.openStudentCardModal === 'function') {
+                    window.openStudentCardModal(rand.id || rand.name);
+                }
+            }
+        };
+
+        window.godStartRandomDuel = function() {
+            if (typeof STUDENTS_REGISTRY !== 'undefined' && STUDENTS_REGISTRY.length >= 2) {
+                const randIndex1 = Math.floor(Math.random() * STUDENTS_REGISTRY.length);
+                let randIndex2 = Math.floor(Math.random() * STUDENTS_REGISTRY.length);
+                if (randIndex2 === randIndex1) randIndex2 = (randIndex1 + 1) % STUDENTS_REGISTRY.length;
+
+                const s1 = STUDENTS_REGISTRY[randIndex1];
+                const s2 = STUDENTS_REGISTRY[randIndex2];
+
+                window.toggleGodModePanel();
+                if (typeof window.openStudentCardModal === 'function') {
+                    window.openStudentCardModal(s1.id || s1.name);
+                    setTimeout(() => {
+                        if (typeof window.openStudentDuelSelect === 'function') {
+                            window.openStudentDuelSelect();
+                            const select = document.getElementById('duel-opponent-select');
+                            if (select) select.value = (s2.id || s2.name);
+                            setTimeout(() => {
+                                if (typeof window.startStudentDuelFight === 'function') {
+                                    window.startStudentDuelFight();
+                                }
+                            }, 300);
+                        }
+                    }, 400);
+                }
+            }
+        };
+
+        window.godTriggerNewtonGravity = function() {
+            window.toggleGodModePanel();
+            if (typeof window.startNewtonPhysicsSimulation === 'function') {
+                window.startNewtonPhysicsSimulation();
+            }
+        };
+
+        window.godToggleSfx = function() {
+            if (typeof window.toggleIfpiflixSfx === 'function') {
+                window.toggleIfpiflixSfx();
+            }
+        };
+
+        window.godPlayTestSound = function(type) {
+            if (window.SoundEngine) {
+                window.SoundEngine.play(type);
+            }
+        };
+
+        /* =========================================================
+           4. POLIMENTO VISUAL (JUICE) & CONEXÃO GLOBAL DE ÁUDIO
+           ========================================================= */
+        // Conexão sutil de feedback sonoro e tátil nos cliques
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('button, .quiz-btn, .academic-card, .nav-cat-item, .student-avatar-card');
+            if (!btn) return;
+
+            // Se não for um botão de áudio/mudo ou botão com som exclusivo já tratado
+            if (btn.id === 'nav-sfx-btn' || btn.id === 'nav-acervo-sfx-btn' || btn.id === 'm-btn-burst-like' || btn.id === 'card-student-like-btn') {
+                return;
+            }
+
+            if (window.SoundEngine) {
+                window.SoundEngine.play('click');
+            }
+        }, true);
+
+        // Feedback sonoro suave em toasts e notificações
+        if (typeof window.showToastNotification === 'function') {
+            const originalShowToast = window.showToastNotification;
+            window.showToastNotification = function(msg, icon) {
+                if (window.SoundEngine) window.SoundEngine.play('alert');
+                return originalShowToast(msg, icon);
+            };
+        }
+
+        // Feedback sonoro ao favoritar na Minha Lista
+        if (typeof window.toggleMinhaLista === 'function') {
+            const originalToggleLista = window.toggleMinhaLista;
+            window.toggleMinhaLista = function() {
+                const listBtn = document.getElementById('m-btn-list');
+                if (listBtn) {
+                    listBtn.classList.remove('pop');
+                    void listBtn.offsetWidth;
+                    listBtn.classList.add('pop');
+                }
+                if (window.SoundEngine) window.SoundEngine.play('success');
+                return originalToggleLista();
+            };
+        }
