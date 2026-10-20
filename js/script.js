@@ -2221,9 +2221,15 @@ function showVideoNextEpisodeButton() {
                 isLisActive = false;
 
                 // Limpa os intervalos para não travar a memória
+                // Limpa os intervalos para não travar a memória e oculta o toast de turno
                 clearInterval(tickerIntervalC);
                 clearInterval(tickerIntervalM);
                 clearTimeout(toastTimeout);
+                const toastEl = document.getElementById('turn-toast');
+                if (toastEl) toastEl.classList.remove('show');
+                if (typeof currentPresenter !== 'undefined') {
+                    currentPresenter = "";
+                }
             }
 
             if (id === 'acervo-screen') {
@@ -5170,6 +5176,12 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
         }
         
         let currentPresenter = "";
+
+        window.hideTurnToast = function() {
+            clearTimeout(toastTimeout);
+            const toastEl = document.getElementById('turn-toast');
+            if (toastEl) toastEl.classList.remove('show');
+        };
 
         function applyPresenter(name, toast = false) {
             if (!name || name === "Todos") return;
@@ -8394,6 +8406,12 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
 
             // Se o navegador estiver em tela cheia nativa, deixa o browser sair do fullscreen
             if (document.fullscreenElement) return;
+
+            // Se o toast de turno estiver visível, fecha imediatamente
+            const turnToast = document.getElementById('turn-toast');
+            if (turnToast && turnToast.classList.contains('show')) {
+                if (typeof window.hideTurnToast === 'function') window.hideTurnToast();
+            }
 
             // 1. Se o usuário estiver digitando na busca da Home ou Acervo, desfoque e feche
             const searchInput = document.getElementById('search-input');

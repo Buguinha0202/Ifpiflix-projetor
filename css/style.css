@@ -1135,7 +1135,7 @@
         .details-content h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; line-height: 1; margin-bottom: 15px; }
 
         /* NOTIFICAÇÕES GLOBAIS */
-        #turn-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.95); border: 2px solid var(--netflix-red); padding: 15px 30px; border-radius: 50px; color: #fff; z-index: 10000; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(229,9,20,0.4); display: flex; align-items: center; gap: 15px; pointer-events: none;}
+        #turn-toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.95); border: 2px solid var(--netflix-red); padding: 15px 30px; border-radius: 50px; color: #fff; z-index: 10000; transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px rgba(229,9,20,0.4); display: flex; align-items: center; gap: 15px; pointer-events: auto; cursor: pointer;}
         #turn-toast.show { top: 30px; }
         
         #ach-popup { position: fixed; bottom: -100px; right: 20px; background: rgba(20,20,20,0.95); border-left: 5px solid var(--rpg-gold); border-radius: 4px; padding: 15px 25px; color: #fff; font-family: 'Inter', sans-serif; font-weight: bold; box-shadow: 0 0 20px rgba(0,0,0,0.8); transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10000; display: flex; align-items: center; gap: 15px; pointer-events: none;}
