@@ -22,7 +22,7 @@ Ifpiflix/
 ├── css/
 │   └── style.css                # Estilização completa (~9.5k linhas), temas, 3D e animações
 ├── js/
-│   └── script.js                # Lógica central (~7.8k linhas), engines, dados e eventos
+│   └── script.js                # Lógica central (~8.3k linhas), engines, dados e eventos
 ├── midia/
 │   └── capas/                   # Pôsteres verticais de cinema gerados para os cursos/séries
 ├── trabalhos/                   # Arquivos PDF dos trabalhos e apresentações dos alunos
@@ -56,8 +56,8 @@ O roteamento entre telas é controlado pela função `window.switchScreen(screen
 | `#pdf-modal` | Visualizador de apresentações em PDF nativo e integrado com iframe e atalhos. |
 | `#video-modal` | Player de vídeo em tela cheia com scrubber interativo e controles de cinema. |
 | `#wrapped-modal` | Retrospectiva dos trabalhos da turma estilo Spotify Wrapped em stories. |
-| `#student-card-modal-overlay` | Carta holográfica 3D (RPG) do aluno com giro giroscópico, rainbow foil e botão de लाइक. |
-| `#duel-arena-box` | Coliseu Acadêmico: arena de combate 1v1 por turnos entre colegas da turma. |
+| `#student-card-modal-overlay` | Carta holográfica 3D (RPG) do aluno com giro giroscópico, rainbow foil e botão de like. |
+| `#duel-arena-box` | Coliseu Acadêmico: arena de combate 1v1 por turnos com motor assíncrono blindado contra race conditions. |
 | `#subscription-checkout-modal` | Checkout paródia (R$ 67,90) com cupom `NOTA10` (100% de desconto) e comprovante de louvor. |
 | `#achievement-toast` | Banner de conquistas estilo Xbox/PS5 deslizando no topo da tela com áudio procedural. |
 | `#newton-canvas-overlay` | Simulação física elástica de queda de maçãs e fórmulas físicas ($g = 9.8\,\text{m/s}^2$). |
@@ -129,16 +129,20 @@ window.IFPIFLIX_STATE = {
 |---|---|
 | **`F2`** | Abre / fecha o **Painel Modo Deus (Debug Console)** |
 | **`F`** | Liga / desliga o **Holofote (Teatro das Sombras)** (quando não há vídeos abertos) |
-| **`Esc`** | Fecha qualquer modal aberto (Detalhes, PDF, Vídeo, Wrapped, Carta 3D, Checkout, Debug) |
+| **`Esc`** | Fecha ordenadamente o modal no topo da pilha (LIFO: busca ➔ debug ➔ checkout ➔ card 3D ➔ submissão ➔ wrapped ➔ vídeo ➔ pdf ➔ detalhes) |
 | **`Espaço` / `→`** | Avança slide no Player 2D, Cinema 3D ou Apresentação Cyber |
 | **`←`** | Volta slide anterior |
 | **`M`** | Liga / desliga mudo no player de vídeo |
+| **`/`** | Foca instantaneamente na barra de pesquisa da Home |
 | **Digitar `NEWTON`** | Easter Egg: Invoca imediatamente a Gravidade da Maçã de Newton na tela |
 
 ---
 
-## 8. Módulos de Suporte
+## 8. Módulos de Suporte & Blindagem Arquitetural
 
+* **`window.handleGlobalModalEscape` (Gerenciador Central de Pilha de Modais):** Ouvinte em fase de captura (`capture: true`) que intercepta o `Escape` e fecha de forma hierárquica e estrita apenas o modal que está em primeiro plano, prevenindo qualquer fechamento em cascata indesejado.
+* **`window.stopStudentDuelFight` (Blindagem Anti-Race Condition):** Trava e cancelamento limpo de intervalos no Coliseu Acadêmico ao trocar de oponente, fechar o card ou reiniciar o duelo, evitando múltiplos combates paralelos.
+* **Carregamento Sólido no DOM:** A tag `<script src="js/script.js?v=4.0"></script>` está ancorada imediatamente antes do fechamento de `</body>`, garantindo que todos os modais e overlays existam no DOM antes de qualquer rotina síncrona.
 * **`window.SoundEngine` (Web Audio API):** Síntese procedural nativa sem arquivos de áudio externos para cliques, abertura/fechamento de modais, acertos, erros, TUDUM, alertas e conquistas.
 * **`window.GodModePanel`:** Interface de inspeção ao vivo e manipulação instantânea do estado.
 * **`window.createHeartBurst`:** Animação física de partículas e dispersão radial de corações.
