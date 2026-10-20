@@ -7408,8 +7408,12 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
         };
 
         window.closeStudentCardModal = function() {
+            if (typeof window.stopStudentDuelFight === 'function') {
+                window.stopStudentDuelFight();
+            }
             const modal = document.getElementById('student-card-modal-overlay');
             if (modal) modal.classList.remove('show');
+            if (window.SoundEngine) window.SoundEngine.play('closeModal');
         };
 
         window.handleStudentCardOverlayClick = function(e) {
@@ -7486,8 +7490,26 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
         };
 
         /* =========================================================
-           COLISEU ACADÊMICO - DUELO 1V1
+           COLISEU ACADÊMICO - DUELO 1V1 (BLINDADO CONTRA RACE CONDITIONS)
            ========================================================= */
+        let activeDuelFightInterval = null;
+        let isDuelFightActive = false;
+
+        window.stopStudentDuelFight = function() {
+            if (activeDuelFightInterval) {
+                clearInterval(activeDuelFightInterval);
+                activeDuelFightInterval = null;
+            }
+            isDuelFightActive = false;
+            const btnFight = document.querySelector('.btn-start-duel');
+            if (btnFight) {
+                btnFight.disabled = false;
+                btnFight.style.opacity = '1';
+                btnFight.style.cursor = 'pointer';
+                btnFight.innerHTML = '<i class="fa-solid fa-fire"></i> LUTAR!';
+            }
+        };
+
         window.openStudentDuelSelect = function() {
             if (!currentActiveCardStudent) return;
             const arena = document.getElementById('duel-arena-box');
@@ -7511,6 +7533,16 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
         };
 
         window.onDuelOpponentChanged = function() {
+            if (typeof window.stopStudentDuelFight === 'function') {
+                window.stopStudentDuelFight();
+            }
+            const fighters = document.getElementById('duel-arena-fighters');
+            const log = document.getElementById('duel-battle-log');
+            if (fighters) fighters.style.display = 'none';
+            if (log) {
+                log.style.display = 'none';
+                log.innerHTML = '';
+            }
             if (typeof window.playIfpiflixSfx === 'function') window.playIfpiflixSfx('click');
         };
 
@@ -7519,7 +7551,21 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             const select = document.getElementById('duel-opponent-select');
             const fighters = document.getElementById('duel-arena-fighters');
             const log = document.getElementById('duel-battle-log');
+            const btnFight = document.querySelector('.btn-start-duel');
             if (!select || !fighters || !log) return;
+
+            // Se já houver um duelo em andamento, cancela o anterior de forma limpa antes de reiniciar
+            if (activeDuelFightInterval) {
+                clearInterval(activeDuelFightInterval);
+                activeDuelFightInterval = null;
+            }
+            isDuelFightActive = true;
+            if (btnFight) {
+                btnFight.disabled = true;
+                btnFight.style.opacity = '0.6';
+                btnFight.style.cursor = 'not-allowed';
+                btnFight.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> LUTANDO...';
+            }
 
             const oppId = select.value;
             const opponentBase = STUDENTS_REGISTRY.find(s => (s.id || s.name) === oppId) || { name: oppId, fullName: oppId };
@@ -7573,7 +7619,7 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             ];
 
             let roundIdx = 0;
-            const fightInterval = setInterval(() => {
+            activeDuelFightInterval = setInterval(() => {
                 if (roundIdx < rounds.length) {
                     const r = rounds[roundIdx];
                     const diff = r.val1 - r.val2;
@@ -7600,7 +7646,18 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                     log.scrollTop = log.scrollHeight;
                     roundIdx++;
                 } else {
-                    clearInterval(fightInterval);
+                    if (activeDuelFightInterval) {
+                        clearInterval(activeDuelFightInterval);
+                        activeDuelFightInterval = null;
+                    }
+                    isDuelFightActive = false;
+                    if (btnFight) {
+                        btnFight.disabled = false;
+                        btnFight.style.opacity = '1';
+                        btnFight.style.cursor = 'pointer';
+                        btnFight.innerHTML = '<i class="fa-solid fa-rotate-right"></i> LUTAR NOVAMENTE';
+                    }
+
                     const winner = (p1Hp >= p2Hp) ? currentActiveCardStudent : opponent;
                     log.innerHTML += `
                         <div class="duel-battle-round" style="color: #ffd700; font-weight: 800; font-size: 0.95rem; text-align: center; margin-top: 8px;">
@@ -8328,3 +8385,151 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
                 return originalToggleLista();
             };
         }
+
+        /* =========================================================
+           GERENCIADOR CENTRAL DE PILHA DE MODAIS (ESCAPE INTELIGENTE)
+           ========================================================= */
+        window.handleGlobalModalEscape = function(e) {
+            if (e.key !== 'Escape') return;
+
+            // Se o navegador estiver em tela cheia nativa, deixa o browser sair do fullscreen
+            if (document.fullscreenElement) return;
+
+            // 1. Se o usuário estiver digitando na busca da Home ou Acervo, desfoque e feche
+            const searchInput = document.getElementById('search-input');
+            const searchBox = document.getElementById('search-box');
+            if (document.activeElement === searchInput) {
+                if (searchInput && searchInput.value.trim() !== '') {
+                    searchInput.value = '';
+                    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+                if (searchInput) searchInput.blur();
+                if (searchBox) searchBox.classList.remove('active');
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 2. Painel Modo Deus (F2)
+            const godOverlay = document.getElementById('god-mode-overlay');
+            if (godOverlay && godOverlay.classList.contains('show')) {
+                window.toggleGodModePanel();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 3. Checkout Paródia VIP
+            const checkoutModal = document.getElementById('subscription-checkout-modal');
+            if (checkoutModal && checkoutModal.classList.contains('show')) {
+                window.closeSubscriptionCheckout();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 4. Modal de Carta 3D e Duelo RPG do Aluno
+            const studentCardModal = document.getElementById('student-card-modal-overlay');
+            if (studentCardModal && studentCardModal.classList.contains('show')) {
+                window.closeStudentCardModal();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 5. Modais de Perfil & Cadastro de Trabalhos
+            const submitModal = document.getElementById('submit-work-modal');
+            if (submitModal && submitModal.classList.contains('show')) {
+                window.closeSubmitWorkModal(null, true);
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            const addProfModal = document.getElementById('add-profile-modal');
+            if (addProfModal && addProfModal.classList.contains('show')) {
+                window.closeAddProfileModal(null, true);
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 6. Retrospectiva Wrapped
+            const wrappedModal = document.getElementById('wrapped-modal');
+            if (wrappedModal && wrappedModal.classList.contains('show')) {
+                window.closeIfpiflixWrapped(null, true);
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 7. Grid de Miniaturas de Slides
+            const thumbsOverlay = document.getElementById('slide-thumbnails-overlay');
+            if (thumbsOverlay && thumbsOverlay.classList.contains('show')) {
+                window.closeSlideThumbnailsModal(null, true);
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 8. Player de Vídeo Customizado / Trailer
+            const videoPlayer = document.getElementById('custom-video-player');
+            if (videoPlayer && (videoPlayer.classList.contains('show') || (typeof ytMainPlayerActive !== 'undefined' && ytMainPlayerActive))) {
+                window.closeVideoPlayer();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 9. Visualizador de PDF
+            const pdfViewer = document.getElementById('custom-pdf-viewer');
+            if (pdfViewer && pdfViewer.classList.contains('show')) {
+                window.closePdfViewer();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 10. Modal de Resumo / Guia de Estudos
+            const resumoModal = document.getElementById('resumo-modal');
+            if (resumoModal && resumoModal.classList.contains('show')) {
+                window.closeResumoModal();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 11. Modal Principal de Detalhes do Filme
+            const titleModal = document.getElementById('title-modal-overlay');
+            if (titleModal && titleModal.classList.contains('show')) {
+                window.closeTitleModal(null, true);
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+
+            // 12. Apresentação Interativa de Cyber SOC
+            const secScreen = document.getElementById('security-player-screen');
+            if (secScreen && secScreen.classList.contains('active')) {
+                window.closeSecurityPresentation();
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return;
+            }
+        };
+
+        // Ouvinte global em fase de captura para garantir ordem estrita LIFO (Last In, First Out)
+        document.addEventListener('keydown', window.handleGlobalModalEscape, true);
