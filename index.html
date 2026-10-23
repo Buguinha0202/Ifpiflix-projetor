@@ -492,6 +492,9 @@
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
                     <div class="posters-container" id="ti-posters-shelf">
+                        <div class="card-portrait p-vibecoding" data-movie="vibe-coding" role="button" tabindex="0" aria-label="Vibe Coding: Criação de Sites com IA" style="border: 2px solid #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.45);">
+                            <div class="card-portrait-content"><span style="font-size: 0.65rem; color: #00f0ff; font-weight: bold; margin-bottom: 4px; letter-spacing: 0.5px;">NOVO • IA 2026</span><h4 style="color:#fff;">Vibe Coding</h4></div>
+                        </div>
                         <div class="card-portrait p-stranger" data-movie="stranger-pings" role="button" tabindex="0" aria-label="Stranger Pings"><div class="card-portrait-content"><h4>Stranger Pings</h4></div></div>
                         <div class="card-portrait p-dragon" data-movie="treinar-ia" role="button" tabindex="0" aria-label="Como Treinar a sua I.A."><div class="card-portrait-content"><h4>Como Treinar a sua I.A.</h4></div></div>
                         <div class="card-portrait p-pix" data-movie="deepfake-pix" role="button" tabindex="0" aria-label="Deepfake: O Preço do Pix"><div class="card-portrait-content"><h4>Deepfake: O Preço do Pix</h4></div></div>
@@ -1259,7 +1262,333 @@
     <!-- =======================================================
          PLAYER 2: MODO CINEMATOGRÁFICO 3D
          ======================================================= -->
-    <div id="cinematic-stage" class="screen">
+        <!-- =======================================================
+         PLAYER 4: SLIDES INTERATIVOS VIBE CODING (IA & WEB DESIGN)
+         ======================================================= -->
+    <div id="vibe-coding-screen" class="screen vibe-screen">
+        <!-- Fundo com Grade Neon Cibernética e Auras -->
+        <div class="vibe-ambient-glow"></div>
+        <div class="vibe-cyber-grid"></div>
+
+        <!-- HEADER DA APRESENTAÇÃO VIBE CODING -->
+        <div class="vibe-header">
+            <button type="button" class="vibe-back-btn" onclick="window.closeVibeCodingPresentation()" aria-label="Voltar ao Catálogo">
+                <i class="fa-solid fa-arrow-left"></i> Voltar
+            </button>
+            <div class="vibe-header-info">
+                <span class="vibe-badge-top"><i class="fa-solid fa-wand-magic-sparkles"></i> VIBE CODING &bull; APRESENTAÇÃO INTERATIVA</span>
+                <h2 id="vibe-slide-title" class="vibe-ep-title">Ato 1: O Que é Vibe Coding?</h2>
+            </div>
+            <div class="vibe-header-actions">
+                <span class="vibe-counter-pill" id="vibe-act-counter">Ato 1 de 5</span>
+                <button type="button" class="vibe-sound-btn" onclick="window.toggleIfpiflixSfx()" title="Alternar Efeitos Sonoros">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ÁREA CENTRAL DOS SLIDES -->
+        <div class="vibe-slide-stage">
+
+            <!-- SLIDE 1: O QUE É VIBE CODING? (TERMINAL E DIGITAÇÃO AO VIVO) -->
+            <div class="vibe-slide active" id="vibe-slide-0">
+                <div class="vibe-slide-content">
+                    <div class="vibe-text-pane">
+                        <div class="vibe-pill-tag">ATO 01 &bull; O NOVO PARADIGMA</div>
+                        <h1 class="vibe-title-glow">A Morte do Boilerplate</h1>
+                        <p class="vibe-lead">
+                            O <strong>Vibe Coding</strong> não é sobre digitar tags HTML ou decorar sintaxe de CSS. É sobre sentar na cadeira de <strong>Diretor de Criação de Software</strong> e articular sua visão em alta frequência com modelos de IA de última geração.
+                        </p>
+                        <div class="vibe-highlight-quote">
+                            <i class="fa-solid fa-quote-left"></i>
+                            <span>"Eu apenas sinto a vibe do que quero criar, converso com a IA e ela cospe a arquitetura em segundos. O código é o meio, a visão é o fim."</span>
+                        </div>
+                        <div class="vibe-action-cta">
+                            <button type="button" class="vibe-run-prompt-btn" id="vibe-prompt-trigger-btn" onclick="window.vibeRunPromptDemo()">
+                                <i class="fa-solid fa-bolt"></i> Simular Injeção de Prompt IA
+                            </button>
+                            <span class="vibe-hint-text"><i class="fa-solid fa-keyboard"></i> Teste a transmutação em tempo real ao lado!</span>
+                        </div>
+                    </div>
+
+                    <div class="vibe-interactive-pane">
+                        <div class="vibe-terminal-window">
+                            <div class="vibe-terminal-bar">
+                                <div class="vibe-dots">
+                                    <span class="dot red"></span>
+                                    <span class="dot yellow"></span>
+                                    <span class="dot green"></span>
+                                </div>
+                                <span class="vibe-terminal-title"><i class="fa-solid fa-terminal"></i> ai-orchestrator.ts &bull; 60 FPS</span>
+                                <span class="vibe-badge-live">LIVE IA</span>
+                            </div>
+                            <div class="vibe-terminal-body">
+                                <div class="vibe-prompt-line">
+                                    <span class="prompt-prefix">user@vibecoder:~$</span>
+                                    <span class="prompt-text" id="vibe-typing-prompt">"Crie uma interface cinemática estilo Netflix com áudio procedural e física elástica..."</span>
+                                </div>
+                                <div class="vibe-stream-box" id="vibe-stream-box">
+                                    <div class="vibe-pulse-ai">
+                                        <div class="vibe-spinner-ring"></div>
+                                        <span>Orquestrando Agentes de IA & MCPs...</span>
+                                    </div>
+                                    <pre class="vibe-code-highlight" id="vibe-code-display"><code class="language-javascript">// Sintetizando arquitetura de componentes...
+const App = () => ({
+  state: useUnifiedStore(),
+  audio: new WebAudioProcedural(),
+  motion: springPhysics({ damping: 15 })
+});</code></pre>
+                                </div>
+                                <div class="vibe-live-preview-box" id="vibe-live-preview-box">
+                                    <div class="vibe-preview-badge">✨ COMPONENTE GERADO EM 1.2s</div>
+                                    <div class="vibe-preview-card-demo">
+                                        <div class="demo-chip-ai"><i class="fa-solid fa-circle-check"></i> 100% Funcional</div>
+                                        <h4>Cartão de Assinatura VIP</h4>
+                                        <div class="demo-price">R$ 0,00 <span>(Bolsa Nota 10)</span></div>
+                                        <button type="button" class="demo-test-click-btn" onclick="if(window.SoundEngine) window.SoundEngine.play('coins'); window.createHeartBurst(this);">
+                                            <i class="fa-solid fa-heart"></i> Testar Interatividade Tátil
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: OS 3 PILARES DO VIBE CODER (CARDS 3D COM TILT) -->
+            <div class="vibe-slide" id="vibe-slide-1">
+                <div class="vibe-slide-content centered">
+                    <div class="vibe-pill-tag">ATO 02 &bull; TRIPÉ DA VELOCIDADE SUPREMA</div>
+                    <h1 class="vibe-title-glow">Os 3 Pilares do Vibe Coder</h1>
+                    <p class="vibe-lead max-w">
+                        Para criar softwares extraordinários com IA, você não precisa ser uma enciclopédia ambulante de sintaxe. Você precisa dominar estes 3 fundamentos:
+                    </p>
+
+                    <div class="vibe-pillars-grid">
+                        <div class="vibe-pillar-card" onmouseenter="if(window.SoundEngine) window.SoundEngine.play('hover')">
+                            <div class="pillar-icon-box cyan">
+                                <i class="fa-solid fa-eye"></i>
+                            </div>
+                            <h3>1. Visão & Intenção Criativa</h3>
+                            <p>A IA é um multiplicador: se sua visão for genérica, o resultado será um protótipo sem vida. O Vibe Coder define o tom de estúdio, o <em>Game Feel</em> e os requisitos com clareza cirúrgica.</p>
+                            <div class="pillar-metric">Multiplicador: <strong>10x Velocidade</strong></div>
+                        </div>
+
+                        <div class="vibe-pillar-card" onmouseenter="if(window.SoundEngine) window.SoundEngine.play('hover')">
+                            <div class="pillar-icon-box magenta">
+                                <i class="fa-solid fa-network-wired"></i>
+                            </div>
+                            <h3>2. Orquestração de Agentes & MCP</h3>
+                            <p>O poder real surge conectando subagentes especializados, documentação oficial via Context7 MCP e testes ponta a ponta com Playwright sem trabalho braçal.</p>
+                            <div class="pillar-metric">Execução: <strong>Zero Retrabalho</strong></div>
+                        </div>
+
+                        <div class="vibe-pillar-card" onmouseenter="if(window.SoundEngine) window.SoundEngine.play('hover')">
+                            <div class="pillar-icon-box gold">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <h3>3. Polimento de Estúdio (Juice)</h3>
+                            <p>O abismo entre um site amador e uma obra-prima: física elástica de mola, áudio procedural nativo via Web Audio API, micro-punch táteis e animações a 60 FPS.</p>
+                            <div class="pillar-metric">Qualidade: <strong>Nível Estúdio AAA</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: O DUELO: DEV 2018 VS VIBE CODER 2026 -->
+            <div class="vibe-slide" id="vibe-slide-2">
+                <div class="vibe-slide-content">
+                    <div class="vibe-text-pane">
+                        <div class="vibe-pill-tag">ATO 03 &bull; O DUELO DAS ERAS</div>
+                        <h1 class="vibe-title-glow">Dev Tradicional vs Vibe Coder</h1>
+                        <p class="vibe-lead">
+                            Veja o contraste absoluto entre passar dias digitando boilerplate repetitivo versus projetar arquiteturas inteiras na velocidade do pensamento.
+                        </p>
+
+                        <div class="vibe-duel-selector">
+                            <button type="button" class="vibe-tab-btn active" id="vibe-tab-old" onclick="window.setVibeDuelTab('old')">
+                                <i class="fa-solid fa-hourglass-end"></i> O Dev Tradicional (2018)
+                            </button>
+                            <button type="button" class="vibe-tab-btn" id="vibe-tab-new" onclick="window.setVibeDuelTab('new')">
+                                <i class="fa-solid fa-bolt"></i> O Vibe Coder (2026)
+                            </button>
+                        </div>
+
+                        <div class="vibe-duel-bullet-box" id="vibe-duel-bullets">
+                            <!-- Injetado dinamicamente via JS -->
+                        </div>
+                    </div>
+
+                    <div class="vibe-interactive-pane">
+                        <div class="vibe-split-card" id="vibe-split-card">
+                            <div class="vibe-split-banner" id="vibe-split-banner">
+                                <div class="split-tag" id="vibe-split-tag">MODO TRADICIONAL</div>
+                                <h3 id="vibe-split-heading">Centralizando uma DIV por 3 Horas...</h3>
+                                <div class="vibe-code-box" id="vibe-split-code">
+/* 2018: 300 linhas de CSS, builds quebrados */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Por que não tá centralizando?! */
+}
+                                </div>
+                                <div class="vibe-split-status" id="vibe-split-status">
+                                    <span class="status-icon"><i class="fa-solid fa-face-tired"></i></span>
+                                    <span>Produtividade: 1 tela por semana</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: O ARSENAL DE ELITE (TECH MATRIX INTERATIVA) -->
+            <div class="vibe-slide" id="vibe-slide-3">
+                <div class="vibe-slide-content centered">
+                    <div class="vibe-pill-tag">ATO 04 &bull; TECH MATRIX INTERATIVA</div>
+                    <h1 class="vibe-title-glow">O Arsenal do Vibe Coder</h1>
+                    <p class="vibe-lead max-w">
+                        Clique em cada chip tecnológico abaixo para acionar a matriz de recursos e ouvir a frequência sonora de cada ferramenta:
+                    </p>
+
+                    <div class="vibe-tech-matrix">
+                        <button type="button" class="vibe-tech-chip" onclick="window.activateVibeTech(this, 'context7')">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                            <div class="chip-info">
+                                <strong>Context7 MCP</strong>
+                                <span>Docs Oficiais em Tempo Real</span>
+                            </div>
+                        </button>
+                        <button type="button" class="vibe-tech-chip" onclick="window.activateVibeTech(this, 'playwright')">
+                            <i class="fa-solid fa-robot"></i>
+                            <div class="chip-info">
+                                <strong>Playwright Autônomo</strong>
+                                <span>Testes e Validação Sem Esforço</span>
+                            </div>
+                        </button>
+                        <button type="button" class="vibe-tech-chip" onclick="window.activateVibeTech(this, 'webaudio')">
+                            <i class="fa-solid fa-headphones"></i>
+                            <div class="chip-info">
+                                <strong>Web Audio API</strong>
+                                <span>Sons Procedurais sem MP3s Pesados</span>
+                            </div>
+                        </button>
+                        <button type="button" class="vibe-tech-chip" onclick="window.activateVibeTech(this, 'shadcn')">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <div class="chip-info">
+                                <strong>Shadcn & Tailwind</strong>
+                                <span>Design Linear de Alto Contraste</span>
+                            </div>
+                        </button>
+                        <button type="button" class="vibe-tech-chip" onclick="window.activateVibeTech(this, 'store')">
+                            <i class="fa-solid fa-database"></i>
+                            <div class="chip-info">
+                                <strong>Single Store Reativa</strong>
+                                <span>Zero Acoplamento e Estado Limpo</span>
+                            </div>
+                        </button>
+                        <button type="button" class="vibe-tech-chip" onclick="window.activateVibeTech(this, 'memory')">
+                            <i class="fa-solid fa-brain"></i>
+                            <div class="chip-info">
+                                <strong>Memory Graph</strong>
+                                <span>Padrões e Estilos Memorizados</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="vibe-tech-detail-card" id="vibe-tech-detail-card">
+                        <div class="tech-detail-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="tech-detail-text">
+                            <h4 id="vibe-tech-title">Selecione uma tecnologia acima</h4>
+                            <p id="vibe-tech-desc">Descubra como cada engrenagem deste projeto acelera a entrega de ponta a ponta sem gambiarras.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: VIBE GENERATOR PLAYGROUND (TRANSMUTAÇÃO AO VIVO!) -->
+            <div class="vibe-slide" id="vibe-slide-4">
+                <div class="vibe-slide-content">
+                    <div class="vibe-text-pane">
+                        <div class="vibe-pill-tag">ATO 05 &bull; O SIMULADOR AO VIVO</div>
+                        <h1 class="vibe-title-glow">Vibe Generator</h1>
+                        <p class="vibe-lead">
+                            Experimente o superpoder do Vibe Coding na prática: escolha uma "Vibe" abaixo e assista o componente transmutar estética, cores e comportamento instantaneamente na tela!
+                        </p>
+
+                        <div class="vibe-theme-buttons">
+                            <button type="button" class="vibe-palette-btn active" data-vibe="cyber" onclick="window.setPlaygroundVibe('cyber')">
+                                <i class="fa-solid fa-gamepad"></i> Cyberpunk Neon
+                            </button>
+                            <button type="button" class="vibe-palette-btn" data-vibe="apple" onclick="window.setPlaygroundVibe('apple')">
+                                <i class="fa-solid fa-apple-whole"></i> Apple Glassmorphism
+                            </button>
+                            <button type="button" class="vibe-palette-btn" data-vibe="vercel" onclick="window.setPlaygroundVibe('vercel')">
+                                <i class="fa-solid fa-terminal"></i> Linear / Vercel Pro
+                            </button>
+                            <button type="button" class="vibe-palette-btn" data-vibe="gold" onclick="window.setPlaygroundVibe('gold')">
+                                <i class="fa-solid fa-crown"></i> IFPIFLIX Prestige Gold
+                            </button>
+                        </div>
+
+                        <div class="vibe-playground-tip">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Dica: Clique no botão do card para disparar partículas físicas e feedback de áudio Web Audio API!</span>
+                        </div>
+                    </div>
+
+                    <div class="vibe-interactive-pane">
+                        <div class="vibe-sandbox-frame" id="vibe-sandbox-frame">
+                            <div class="sandbox-header">
+                                <div class="sandbox-lights"><span></span><span></span><span></span></div>
+                                <span class="sandbox-title" id="sandbox-vibe-name">VIBE: CYBERPUNK NEON</span>
+                            </div>
+                            <div class="sandbox-card" id="sandbox-card">
+                                <div class="sb-badge" id="sb-badge">IA GENERATIVE 2026</div>
+                                <h3 id="sb-title">Acelerador de Desenvolvimento</h3>
+                                <p id="sb-desc">Interface sintetizada em tempo real via comandos de voz e intenção de design.</p>
+                                <div class="sb-metrics-row">
+                                    <div class="sb-m"><span class="val">99.8%</span><span class="lbl">Precisão</span></div>
+                                    <div class="sb-m"><span class="val">120 FPS</span><span class="lbl">Fluidez</span></div>
+                                    <div class="sb-m"><span class="val">0.3s</span><span class="lbl">Deploy</span></div>
+                                </div>
+                                <button type="button" class="sb-btn" id="sb-btn" onclick="window.vibeSandboxAction(this)">
+                                    <i class="fa-solid fa-rocket"></i> Testar Interação Tátil
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONTROLES INFERIORES DOS SLIDES -->
+        <div class="vibe-footer-controls">
+            <div class="vibe-progress-bar-container" onclick="window.vibeSeek(event)">
+                <div class="vibe-progress-fill" id="vibe-progress-fill"></div>
+            </div>
+            <div class="vibe-nav-row">
+                <button type="button" class="vibe-nav-btn" id="vibe-prev-btn" onclick="window.navVibeSlide(-1)" aria-label="Ato Anterior">
+                    <i class="fa-solid fa-chevron-left"></i> Anterior
+                </button>
+                <div class="vibe-dots-indicator" id="vibe-dots-indicator">
+                    <span class="vibe-dot active" onclick="window.renderVibeSlide(0)"></span>
+                    <span class="vibe-dot" onclick="window.renderVibeSlide(1)"></span>
+                    <span class="vibe-dot" onclick="window.renderVibeSlide(2)"></span>
+                    <span class="vibe-dot" onclick="window.renderVibeSlide(3)"></span>
+                    <span class="vibe-dot" onclick="window.renderVibeSlide(4)"></span>
+                </div>
+                <button type="button" class="vibe-nav-btn next" id="vibe-next-btn" onclick="window.navVibeSlide(1)" aria-label="Próximo Ato">
+                    Próximo <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+<div id="cinematic-stage" class="screen">
         <!-- Luz Dinâmica Seguindo Cursor -->
         <div class="dynamic-light" id="dynamic-light"></div>
 
@@ -2409,6 +2738,9 @@
                         </button>
                         <button type="button" class="god-action-btn" onclick="window.godStartCinema(0)">
                             <i class="fa-solid fa-film"></i> Cinema 3D
+                        </button>
+                        <button type="button" class="god-action-btn" onclick="window.godOpenVibeCoding()" style="border-color: #00f0ff; color: #00f0ff;">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Slides Vibe Coding (IA)
                         </button>
                         <button type="button" class="god-action-btn" onclick="window.godOpenCyberPresentation()">
                             <i class="fa-solid fa-shield-halved"></i> Defesa Cibernética
