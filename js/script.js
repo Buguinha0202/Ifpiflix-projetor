@@ -61,7 +61,12 @@ let currentCineIdx = -1;
 let tickerIntervalC, tickerIntervalM;
 let toastTimeout;
 let isLisActive = false;
-let globalSfxEnabled = (localStorage.getItem('ifpiflix_sfx_enabled') !== 'false');
+let globalSfxEnabled = true;
+try {
+    globalSfxEnabled = (localStorage.getItem('ifpiflix_sfx_enabled') !== 'false');
+} catch (e) {
+    globalSfxEnabled = true;
+}
 let sharedAudioCtx = null;
 
 /* =========================================================
@@ -509,7 +514,7 @@ window.toggleIfpiflixSfx = function() {
            // ================= TEMAS DE FILOSOFIA =================
             "tema-1": {
                 title: "INVOCAÇÃO DO DOGMA", subtitle: "O Julgamento da Escolástica",
-                bg: "invocacao_do_dogma.png", 
+                bg: "invocacao_do_dogma.jpg", 
                 banner: "binvocacao_do_dogm.jpg",
                 pdf: "https://buguinha0202.github.io/Ifpiflix-projetor/trabalho_grupo1.pdf",
                 ytTrailer: "n0sq-r0mBXQ", // Invocação do Mal (Dublado)
@@ -6608,7 +6613,7 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             
             overlay.style.display = 'flex';
             
-            video.src = mediaUrl('trailer2.mp4');
+            video.src = mediaUrl('pos_credito.mp4');
             
             playWithFallback(video).catch(() => {
                 skipFinalCredits();
