@@ -596,7 +596,7 @@ window.toggleIfpiflixSfx = function() {
             "kpop": {
                 title: "GUERREIRAS DO POP 3", subtitle: "",
                 bg: "guerreiras_kpop.jpg", 
-                ytTrailer: "Wkl9xeIAp90", // A Escolha Perfeita 3
+                ytTrailer: "XKD_DDX7hqA", // Guerreiras do K-Pop (Trailer Dublado)
                 match: "82% Relevante", year: "2017", age: "10", duration: "1h 33m",
                 synopsis: "O famoso grupo de idols precisa usar suas habilidades de canto, coreografia sincronizada e injeção de SQL para desativar um vírus mundial durante a turnê de despedida.",
                 cast: "Anna Kernel, Rebel Wireless", genres: "Musical, Comédia de Ação", tags: "K-pop, Hacking", isMain: false
