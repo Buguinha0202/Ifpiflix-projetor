@@ -28,6 +28,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- GSAP (GreenSock) para Motion Design de Elite AAA (Awwwards / Apple / Netflix) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <link rel="stylesheet" href="css/style.css?v=4.0">
 </head>
 <body>
@@ -678,6 +680,9 @@
          PLAYER 1: APRESENTAÇÃO CLÁSSICA
          ======================================================= -->
     <div id="player-screen" class="screen">
+        <!-- Motion Designer 4-Layer Stage Architecture: Ken Burns Background & Dynamic Atmosphere Canvas -->
+        <div class="stage-kenburns-bg" id="stage-kenburns-bg" aria-hidden="true"></div>
+        <canvas id="stage-particles-canvas" class="stage-particles-canvas" aria-hidden="true"></canvas>
         <div class="player-header">
             <button type="button" class="control-btn" aria-label="Voltar" onclick="window.switchScreen('series-details-screen')"><i class="fa-solid fa-arrow-left"></i></button>
             <div style="display:flex; flex-direction: column; margin-left: 10px;">
@@ -910,6 +915,9 @@
          PLAYER 3: APRESENTAÇÃO INTERATIVA DE SEGURANÇA DA INFORMAÇÃO
          ======================================================= -->
     <div id="security-player-screen" class="screen">
+        <!-- Motion Designer 4-Layer Stage Architecture: Ken Burns Background & Dynamic Atmosphere Canvas -->
+        <div class="stage-kenburns-bg" id="sec-stage-kenburns-bg" aria-hidden="true"></div>
+        <canvas id="sec-stage-particles-canvas" class="stage-particles-canvas" aria-hidden="true"></canvas>
         <audio id="deepfake-audio" preload="auto" src="midia/deepfake.mp3"></audio>
         <div class="player-header">
             <button type="button" class="control-btn" aria-label="Voltar" onclick="window.closeSecurityPresentation()"><i class="fa-solid fa-arrow-left"></i></button>

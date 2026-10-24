@@ -1151,11 +1151,102 @@
         .slide:not(.active) * { pointer-events: none !important; }
         .slide-grid { display: flex; align-items: center; width: 100%; position: relative; gap: 20px;}
         
-        .text-col { flex: 1; padding-right: 20px; z-index: 1; transform: translateX(100%); opacity: 0; transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
-        .slide.active .text-col { transform: translateX(0); opacity: 1; transition-delay: 0.2s; }
-        .visual-col { flex: 1; background: #111; border-radius: 8px; border: 1px solid #333; height: 450px; position: relative; overflow: hidden; box-shadow: -20px 0 40px rgba(0,0,0,0.9); z-index: 10; display: flex; flex-direction: column;}
-        
-        .text-col h2 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; color: #fff; margin-bottom: 5px; border-left: 4px solid var(--netflix-red); padding-left: 15px; line-height: 1;}
+        /* ==========================================================================
+           MOTION DESIGN SENIOR (AWWWARDS / APPLE / NETFLIX) - PALCO 4 CAMADAS
+           ========================================================================== */
+        .stage-kenburns-bg {
+            position: absolute;
+            inset: -6%;
+            width: 112%;
+            height: 112%;
+            z-index: 1;
+            pointer-events: none;
+            background: radial-gradient(circle at 70% 30%, rgba(45, 10, 15, 0.45) 0%, rgba(18, 18, 22, 0.88) 55%, rgba(8, 8, 10, 0.98) 100%);
+            animation: kenBurnsAmbientMotion 35s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+
+        @keyframes kenBurnsAmbientMotion {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.07) translate(-1.8%, 1.2%); }
+            100% { transform: scale(1.04) translate(1.4%, -1%); }
+        }
+
+        .stage-particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .slide-area {
+            perspective: 1200px;
+            perspective-origin: center center;
+        }
+
+        .slide-grid {
+            transform-style: preserve-3d;
+        }
+
+        /* LEI 1: Zero animação estática de CSS. O GSAP assume 100% do controle */
+        .text-col {
+            flex: 1;
+            padding-right: 20px;
+            z-index: 10;
+            transform: none !important;
+            opacity: 1 !important;
+            transition: none !important;
+        }
+        .slide.active .text-col {
+            transform: none !important;
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+        /* LEI 2 (d): Título preparado para revelação por máscara de navalha (clip-path) */
+        .text-col h2 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 5px;
+            border-left: 4px solid var(--netflix-red);
+            padding-left: 15px;
+            line-height: 1;
+            overflow: hidden;
+            will-change: clip-path, transform, opacity;
+        }
+
+        /* LEI 2 (c): Elemento central com profundidade 3D & iluminação reativa ao mouse */
+        .visual-col {
+            flex: 1;
+            background: #111;
+            border-radius: 8px;
+            border: 1px solid #333;
+            height: 450px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.85), 0 0 25px rgba(229, 9, 20, 0.08);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .visual-col::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.09) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 25;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
         .text-col p { font-size: 1.25rem; line-height: 1.6; color: #ccc; margin-top: 10px; }
         .highlight { color: var(--netflix-red); font-weight: bold; }
         .ticker-box { background: rgba(229, 9, 20, 0.1); border-left: 3px solid #E50914; padding: 8px 12px; margin-top: 10px; margin-bottom: 15px; font-style: italic; color: #aaa; font-size: 1rem; transition: opacity 0.4s; min-height: 40px; display: flex; align-items: center;}

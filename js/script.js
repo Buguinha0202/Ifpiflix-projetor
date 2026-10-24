@@ -324,6 +324,63 @@ window.SoundEngine = {
                 }
 
                 // O Icônico TUDUM da Netflix sintetizado proceduralmente
+                // Impacto Cinematográfico de Trailer / Whoosh Sub-Grave (Leis de Motion Design AAA)
+                case 'slideImpact':
+                case 'cinematicImpact': {
+                    // 1. Sub-bass visceral sweep (95Hz -> 32Hz)
+                    const subOsc = ctx.createOscillator();
+                    const subGain = ctx.createGain();
+                    subOsc.type = 'sine';
+                    subOsc.frequency.setValueAtTime(95, now);
+                    subOsc.frequency.exponentialRampToValueAtTime(32, now + 0.38);
+                    subGain.gain.setValueAtTime(0.24, now);
+                    subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.46);
+                    subOsc.connect(subGain);
+                    subGain.connect(ctx.destination);
+                    subOsc.start(now);
+                    subOsc.stop(now + 0.48);
+
+                    // 2. Whoosh de ar atmosférico filtrado (passa-baixa modulada)
+                    try {
+                        const bufferSize = Math.floor(ctx.sampleRate * 0.36);
+                        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                        const output = noiseBuffer.getChannelData(0);
+                        for (let i = 0; i < bufferSize; i++) {
+                            output[i] = Math.random() * 2 - 1;
+                        }
+                        const whiteNoise = ctx.createBufferSource();
+                        whiteNoise.buffer = noiseBuffer;
+                        const filter = ctx.createBiquadFilter();
+                        filter.type = 'lowpass';
+                        filter.frequency.setValueAtTime(180, now);
+                        filter.frequency.exponentialRampToValueAtTime(1500, now + 0.12);
+                        filter.frequency.exponentialRampToValueAtTime(80, now + 0.36);
+                        const noiseGain = ctx.createGain();
+                        noiseGain.gain.setValueAtTime(0.001, now);
+                        noiseGain.gain.linearRampToValueAtTime(0.09, now + 0.08);
+                        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+                        whiteNoise.connect(filter);
+                        filter.connect(noiseGain);
+                        noiseGain.connect(ctx.destination);
+                        whiteNoise.start(now);
+                        whiteNoise.stop(now + 0.37);
+                    } catch (nErr) {}
+
+                    // 3. Shimmer cristalino harmônico no topo (C6 -> C5)
+                    const chimeOsc = ctx.createOscillator();
+                    const chimeGain = ctx.createGain();
+                    chimeOsc.type = 'triangle';
+                    chimeOsc.frequency.setValueAtTime(1046.5, now);
+                    chimeOsc.frequency.exponentialRampToValueAtTime(523.25, now + 0.26);
+                    chimeGain.gain.setValueAtTime(0.035, now);
+                    chimeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.29);
+                    chimeOsc.connect(chimeGain);
+                    chimeGain.connect(ctx.destination);
+                    chimeOsc.start(now);
+                    chimeOsc.stop(now + 0.31);
+                    break;
+                }
+
                 case 'tudum': {
                     const oscBass1 = ctx.createOscillator();
                     const oscBass2 = ctx.createOscillator();
@@ -471,6 +528,363 @@ window.SoundEngine = {
         }
     }
 };
+
+/* ==========================================================================
+   MOTION DESIGN SENIOR ENGINE (NÍVEL AWWWARDS / APPLE / NETFLIX)
+   Arquitetura de Palco em 4 Camadas, Parallax 2.5D, GSAP Timelines & Canvas
+   ========================================================================== */
+window.MotionEngine = (function() {
+    let canvas = null;
+    let ctx = null;
+    let animId = null;
+    let isRunning = false;
+    let particles = [];
+    const PARTICLE_COUNT = 45;
+
+    // Estado do mouse para Parallax 2.5D interpolado com inércia (lerp)
+    let mouse = { x: 0, y: 0, targetX: 0, targetY: 0, rawX: 0.5, rawY: 0.5 };
+    let currentSlideTimeline = null;
+    let activeVisualCol = null;
+
+    class CinematicDustParticle {
+        constructor(w, h, burst = false) {
+            this.reset(w, h, burst);
+        }
+
+        reset(w, h, burst = false) {
+            this.x = Math.random() * (w || 1200);
+            this.y = burst ? (Math.random() * (h || 800) * 0.7 + (h || 800) * 0.15) : Math.random() * (h || 800);
+            this.radius = Math.random() * 2.2 + 0.6;
+            this.baseSpeedX = (Math.random() - 0.5) * 0.35;
+            this.baseSpeedY = -Math.random() * 0.45 - 0.15;
+            this.vx = this.baseSpeedX + (burst ? (Math.random() - 0.5) * 2.5 : 0);
+            this.vy = this.baseSpeedY + (burst ? -Math.random() * 2.0 - 0.5 : 0);
+            this.alpha = burst ? 0.8 : Math.random() * 0.6 + 0.2;
+            this.targetAlpha = Math.random() * 0.6 + 0.2;
+            this.colorType = Math.random(); // 70% ouro/âmbar, 20% luz branca, 10% rubi
+            this.pulseSpeed = Math.random() * 0.02 + 0.008;
+            this.pulse = Math.random() * Math.PI;
+        }
+
+        update(w, h, mouseWindX, mouseWindY) {
+            this.pulse += this.pulseSpeed;
+            this.alpha = this.targetAlpha * (0.6 + 0.4 * Math.sin(this.pulse));
+
+            this.vx += (this.baseSpeedX - this.vx) * 0.02;
+            this.vy += (this.baseSpeedY - this.vy) * 0.02;
+
+            this.x += this.vx + mouseWindX * 0.3;
+            this.y += this.vy + mouseWindY * 0.3;
+
+            if (this.y < -10) this.y = h + 10;
+            if (this.y > h + 10) this.y = -10;
+            if (this.x < -10) this.x = w + 10;
+            if (this.x > w + 10) this.x = -10;
+        }
+
+        draw(c) {
+            c.save();
+            c.globalAlpha = Math.max(0, Math.min(1, this.alpha));
+            if (this.colorType > 0.3) {
+                // Ouro / Âmbar cinematográfico
+                c.fillStyle = '#f5c518';
+                c.shadowColor = 'rgba(245, 197, 24, 0.45)';
+                c.shadowBlur = 6;
+            } else if (this.colorType > 0.1) {
+                // Luz branca pura
+                c.fillStyle = '#ffffff';
+                c.shadowColor = 'rgba(255, 255, 255, 0.55)';
+                c.shadowBlur = 4;
+            } else {
+                // Rubi Netflix
+                c.fillStyle = '#e50914';
+                c.shadowColor = 'rgba(229, 9, 20, 0.55)';
+                c.shadowBlur = 8;
+            }
+            c.beginPath();
+            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            c.fill();
+            c.restore();
+        }
+    }
+
+    function init() {
+        getActiveCanvas();
+        resize();
+        window.addEventListener('resize', resize, { passive: true });
+
+        // Instancia partículas
+        particles = [];
+        const w = (canvas && canvas.width) ? canvas.width : window.innerWidth;
+        const h = (canvas && canvas.height) ? canvas.height : window.innerHeight;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push(new CinematicDustParticle(w, h));
+        }
+
+        // Listeners de Parallax 2.5D nos palcos de apresentação
+        ['player-screen', 'security-player-screen'].forEach(id => {
+            const screenEl = document.getElementById(id);
+            if (screenEl) {
+                screenEl.addEventListener('mousemove', onMouseMove, { passive: true });
+                screenEl.addEventListener('mouseleave', onMouseLeave, { passive: true });
+            }
+        });
+
+        startLoop();
+    }
+
+    function getActiveCanvas() {
+        const secScreen = document.getElementById('security-player-screen');
+        if (secScreen && secScreen.classList.contains('active')) {
+            canvas = document.getElementById('sec-stage-particles-canvas') || document.getElementById('stage-particles-canvas');
+        } else {
+            canvas = document.getElementById('stage-particles-canvas');
+        }
+        if (canvas) {
+            ctx = canvas.getContext('2d');
+        }
+        return canvas;
+    }
+
+    function resize() {
+        getActiveCanvas();
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = (rect.width || window.innerWidth) * dpr;
+        canvas.height = (rect.height || window.innerHeight) * dpr;
+    }
+
+    function onMouseMove(e) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 a +1
+        const normY = ((e.clientY - rect.top) / rect.height) * 2 - 1; // -1 a +1
+        mouse.targetX = normX;
+        mouse.targetY = normY;
+        mouse.rawX = (e.clientX - rect.left) / rect.width;
+        mouse.rawY = (e.clientY - rect.top) / rect.height;
+
+        // Atualiza reflexo especular na coluna visual ativa
+        if (activeVisualCol) {
+            activeVisualCol.style.setProperty('--mouse-x', `${(mouse.rawX * 100).toFixed(1)}%`);
+            activeVisualCol.style.setProperty('--mouse-y', `${(mouse.rawY * 100).toFixed(1)}%`);
+        }
+    }
+
+    function onMouseLeave() {
+        mouse.targetX = 0;
+        mouse.targetY = 0;
+    }
+
+    function startLoop() {
+        if (isRunning) return;
+        isRunning = true;
+        loop();
+    }
+
+    function stopLoop() {
+        isRunning = false;
+        if (animId) cancelAnimationFrame(animId);
+    }
+
+    function loop() {
+        if (!isRunning) return;
+
+        // Verifica se qualquer um dos palcos de apresentação está ativo
+        const playerScreen = document.getElementById('player-screen');
+        const secScreen = document.getElementById('security-player-screen');
+        const isPlayerActive = (playerScreen && playerScreen.classList.contains('active')) ||
+                               (secScreen && secScreen.classList.contains('active'));
+
+        if (isPlayerActive) {
+            getActiveCanvas();
+            if (ctx && canvas) {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const w = canvas.width / dpr;
+                const h = canvas.height / dpr;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.save();
+                ctx.scale(dpr, dpr);
+
+                // Lerp do mouse (inércia fluida orgânica de estúdio)
+                mouse.x += (mouse.targetX - mouse.x) * 0.08;
+                mouse.y += (mouse.targetY - mouse.y) * 0.08;
+
+                // LEI 2 (c): Aplica Parallax 3D com inércia no elemento visual central
+                if (activeVisualCol) {
+                    const rotX = -mouse.y * 7.5; // -7.5deg a +7.5deg
+                    const rotY = mouse.x * 9.5;  // -9.5deg a +9.5deg
+                    activeVisualCol.style.transform = `perspective(1200px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(28px)`;
+                }
+
+                // Renderiza partículas dinâmicas (poeira de cinema & feixes de luz)
+                const mouseWindX = mouse.x * 0.65;
+                const mouseWindY = mouse.y * 0.65;
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update(w, h, mouseWindX, mouseWindY);
+                    particles[i].draw(ctx);
+                }
+
+                ctx.restore();
+            }
+        }
+
+        animId = requestAnimationFrame(loop);
+    }
+
+    function burst() {
+        getActiveCanvas();
+        if (!canvas) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = canvas.width / dpr;
+        const h = canvas.height / dpr;
+        for (let i = 0; i < 18; i++) {
+            const p = particles[i % particles.length];
+            if (p) p.reset(w, h, true);
+        }
+    }
+
+    // LEI 3: GATILHO ON_SLIDE_CHANGE
+    function onSlideChange(idx, slideEl, slideData) {
+        if (!slideEl) return;
+
+        // Atualiza a coluna visual ativa para o Parallax 3D
+        activeVisualCol = slideEl.querySelector('.visual-col') || 
+                          slideEl.querySelector('.sim-screen') ||
+                          slideEl.querySelector('.step-card') ||
+                          slideEl.querySelector('.slide-col-card');
+
+        // Dispara aceleração nas partículas (ar cinematográfico)
+        burst();
+
+        // Dispara som de impacto de trailer cinematográfico
+        if (window.SoundEngine && typeof window.SoundEngine.play === 'function') {
+            window.SoundEngine.play('cinematicImpact');
+        }
+
+        // Se o GSAP estiver disponível, coreografa a timeline da cena
+        if (window.gsap) {
+            playGsapTimeline(slideEl, idx);
+        }
+    }
+
+    // LEI 1: TIMELINE GSAP MULTIESTÁGIO
+    function playGsapTimeline(slideEl, idx) {
+        if (currentSlideTimeline) {
+            currentSlideTimeline.kill();
+        }
+
+        const h2 = slideEl.querySelector('.text-col h2') || slideEl.querySelector('h2');
+        const ticker = slideEl.querySelector('.ticker-box') || slideEl.querySelector('.concept-tag');
+        const paragraphs = slideEl.querySelectorAll('.text-col p, .text-col .control-btn, .text-col ul, .text-col .student-pill, .text-col .challenge-desc');
+        const visualCol = slideEl.querySelector('.visual-col') || 
+                          slideEl.querySelector('.sim-screen') ||
+                          slideEl.querySelector('.step-card') ||
+                          slideEl.querySelector('.slide-col-card');
+        const bgKenBurns = document.getElementById('stage-kenburns-bg') || document.getElementById('sec-stage-kenburns-bg');
+
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        currentSlideTimeline = tl;
+
+        // Estágio 0: Movimento contínuo de câmera Ken Burns (Pan & Zoom orgânico)
+        if (bgKenBurns) {
+            const panX = (idx % 2 === 0 ? 1 : -1) * 2.2;
+            const panY = (idx % 3 === 0 ? 1.6 : -1.6);
+            gsap.to(bgKenBurns, {
+                scale: 1.08,
+                xPercent: panX,
+                yPercent: panY,
+                duration: 12,
+                ease: 'sine.out'
+            });
+        }
+
+        // Estágio 1: Revelação do Título com Máscara de Navalha (clip-path)
+        if (h2) {
+            tl.fromTo(h2, 
+                { 
+                    clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)',
+                    x: -38,
+                    opacity: 0 
+                }, 
+                { 
+                    clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.85,
+                    ease: 'expo.out'
+                }, 0.05
+            );
+        }
+
+        // Estágio 2: Ticker Box com Desfoque Inverso & Escala
+        if (ticker) {
+            tl.fromTo(ticker,
+                {
+                    opacity: 0,
+                    y: 18,
+                    scale: 0.94,
+                    filter: 'blur(8px)'
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    filter: 'blur(0px)',
+                    duration: 0.65,
+                    ease: 'power2.out'
+                }, 0.18
+            );
+        }
+
+        // Estágio 3: Parágrafos e texto com Stagger Cinematográfico
+        if (paragraphs && paragraphs.length > 0) {
+            tl.fromTo(paragraphs,
+                {
+                    opacity: 0,
+                    y: 22
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.7,
+                    stagger: 0.08,
+                    ease: 'power2.out'
+                }, 0.28
+            );
+        }
+
+        // Estágio 4: Elemento Central Visual 3D entra com Mola Orgânica
+        if (visualCol) {
+            tl.fromTo(visualCol,
+                {
+                    opacity: 0,
+                    scale: 0.89,
+                    rotateY: -13,
+                    y: 28,
+                    transformPerspective: 1200
+                },
+                {
+                    opacity: 1,
+                    scale: 1,
+                    rotateY: 0,
+                    y: 0,
+                    duration: 0.95,
+                    ease: 'back.out(1.25)'
+                }, 0.14
+            );
+        }
+    }
+
+    return {
+        init,
+        onSlideChange,
+        burst,
+        startLoop,
+        stopLoop
+    };
+})();
 
 window.playIfpiflixSfx = function(type, options) {
     if (window.SoundEngine) {
@@ -2199,6 +2613,14 @@ function showVideoNextEpisodeButton() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(id);
             if (target) target.classList.add('active');
+
+            if (window.MotionEngine) {
+                if (id === 'player-screen' || id === 'security-player-screen') {
+                    window.MotionEngine.startLoop();
+                } else {
+                    window.MotionEngine.stopLoop();
+                }
+            }
 
             if (syncNav) {
                 if (id === 'home-screen') {
@@ -5244,7 +5666,12 @@ https://buguinha0202.github.io/Ifpiflix-projetor/`;
             
             document.querySelectorAll('#player-screen .slide').forEach(s => s.classList.remove('active')); 
             const targetSlide = document.getElementById(`slide-${data.id}`);
-            if (targetSlide) targetSlide.classList.add('active');
+            if (targetSlide) {
+                targetSlide.classList.add('active');
+                if (window.MotionEngine && typeof window.MotionEngine.onSlideChange === 'function') {
+                    window.MotionEngine.onSlideChange(idx, targetSlide, data);
+                }
+            }
 
             const tickerEl = document.getElementById(`ticker-${data.id}`);
             if(tickerEl && data.tickers && data.tickers.length > 0) {
@@ -6641,6 +7068,11 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
            DELEGAÇÃO DE EVENTOS CENTRALIZADA (ACESSÍVEL / MOBILE / TOUCH)
            ========================================================= */
         document.addEventListener('DOMContentLoaded', () => {
+            // Inicializa Motion Design Senior Engine (Awwwards / Apple / Netflix)
+            if (window.MotionEngine && typeof window.MotionEngine.init === 'function') {
+                window.MotionEngine.init();
+            }
+
             // 1. Carrega Perfis da Turma, Minha Lista e Continuar Assistindo
             if (typeof window.renderProfiles === 'function') window.renderProfiles();
             if (typeof initAvatarPicker === 'function') initAvatarPicker();
@@ -6860,6 +7292,9 @@ window.addEventListener('DOMContentLoaded', initEpistemologicalPhysics);
             const activeS = document.getElementById(`sec-slide-${idx}`);
             if (activeS) {
                 activeS.classList.add('active');
+                if (window.MotionEngine && typeof window.MotionEngine.onSlideChange === 'function') {
+                    window.MotionEngine.onSlideChange(idx, activeS);
+                }
                 window.updateSecurityStepVisuals(activeS, 1);
             }
         };
